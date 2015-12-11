@@ -326,6 +326,100 @@
 }
 @end
 
+//新的动态回复cell
+@implementation NewsTableViewCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+       
+        
+        self.headImgeView = [UIImageView new];
+        self.headImgeView.layer.cornerRadius = self.headImgeView.bounds.size.width / 2;
+        self.headImgeView.layer.masksToBounds = YES;
+        [self addSubview:self.headImgeView];
+        
+        self.headLabel = [UILabel new];
+        self.headLabel.textColor = [UIColor colorWithRed:255/255.0 green:125/255.0 blue:40/255.0 alpha:1];
+        self.headLabel.font = [UIFont fontWithName:FONT size:viewHeight/39.235];
+       
+        [self addSubview:self.headLabel];
+        
+        self.contentLabel = [UILabel new];
+        self.contentLabel.textColor = [UIColor whiteColor];
+        self.contentLabel.font = [UIFont fontWithName:FONT size:viewHeight/39.235];
+        
+        
+        
+        self.dateLabel = [UILabel new];
+        self.dateLabel.textColor = [UIColor lightGrayColor];
+        self.dateLabel.font = [UIFont fontWithName:FONT size:viewHeight/66.7];
+        [self addSubview:self.dateLabel];
+        
+        self.photoImageView = [UIImageView new];
+        self.photoImageView.layer.cornerRadius = 3;
+        self.photoImageView.layer.masksToBounds = YES;
+        [self addSubview:self.photoImageView];
+        
+        
+        self.line = [UILabel new];
+        self.line.backgroundColor = [UIColor colorWithRed:94/255.0 green:94/255.0 blue:94/255.0 alpha:1];
+        [self addSubview:self.line];
+        
+       
+        }
+                          
+   return self;
+}
+@end
+//新的动态回复cell
+@implementation NewsTableViewZanCell
 
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        
+        
+        self.headImgeView = [UIImageView new];
+        self.headImgeView.layer.cornerRadius = self.headImgeView.bounds.size.width / 2;
+        self.headImgeView.layer.masksToBounds = YES;
+        [self addSubview:self.headImgeView];
+        
+        self.headLabel = [UILabel new];
+        self.headLabel.textColor = [UIColor colorWithRed:255/255.0 green:125/255.0 blue:40/255.0 alpha:1];
+        self.headLabel.font = [UIFont fontWithName:FONT size:viewHeight/39.235];
+        
+        [self addSubview:self.headLabel];
+        
+        self.zanImageView = [UIImageView new];
+        [self addSubview:self.zanImageView];
+        
+        
+        
+        self.dateLabel = [UILabel new];
+        self.dateLabel.textColor = [UIColor lightGrayColor];
+        self.dateLabel.font = [UIFont fontWithName:FONT size:viewHeight/66.7];
+        [self addSubview:self.dateLabel];
+        
+        self.photoImageView = [UIImageView new];
+        self.photoImageView.layer.cornerRadius = 3;
+        self.photoImageView.layer.masksToBounds = YES;
+        [self addSubview:self.photoImageView];
+        
+        
+        self.line = [UILabel new];
+        self.line.backgroundColor = [UIColor colorWithRed:94/255.0 green:94/255.0 blue:94/255.0 alpha:1];
+        [self addSubview:self.line];
+        
+        
+    }
+    
+    return self;
+}
+@end
 
+                          
+                          
+                          

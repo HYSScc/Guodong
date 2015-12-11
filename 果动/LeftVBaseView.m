@@ -58,7 +58,9 @@
 {
     //获取课程数量
     NSString *classnumberURL = [NSString stringWithFormat:@"%@api/?method=index.index",BASEURL];
+   
     [HttpTool postWithUrl:classnumberURL params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+        
         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
             class_idArray = [[NSMutableArray alloc] initWithCapacity:0];
             classnameArray = [[NSMutableArray alloc] initWithCapacity:0];

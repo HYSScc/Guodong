@@ -17,6 +17,7 @@
 #import "AsynImageView.h"
 #import "LoginViewController.h"
 #import "SJAvatarBrowser.h"
+#import "NewsViewController.h"
 @interface GBViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
 {
     UITableView *_tableView;
@@ -81,6 +82,13 @@
     lineImage1.frame=CGRectMake(0, 0, viewWidth, 0.5);
     [self.view addSubview:lineImage1];
     
+    //左边消息列表
+    UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    messageButton.frame = CGRectMake(13, viewHeight/24.7037,viewHeight/27.224,viewHeight/38.114);
+    messageButton.backgroundColor = [UIColor lightGrayColor];
+    [messageButton addTarget:self action:@selector(messageButton) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     //右边发送按钮
     UIButton *amentButton=[UIButton buttonWithType:UIButtonTypeSystem];
@@ -156,7 +164,11 @@
     [secondButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [secondTFView addSubview:secondButton];
 }
-
+-(void)messageButton
+{
+    NewsViewController *new = [NewsViewController new];
+    [self.navigationController pushViewController:new animated:YES];
+}
 
 -(void)tongzhi
 {
@@ -236,6 +248,10 @@
     }else{
         url = [NSString stringWithFormat:@"%@api/?method=gdb.index",BASEURL];
     }
+    if (url) {
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:url]];
+        NSLog(@"cookies %@",cookies);
+    }
     [HttpTool postWithUrl:url params:nil contentType: CONTENTTYPE success:^(id responseObject)
      {
          //   NSLog(@"res  %@",responseObject);
@@ -295,7 +311,7 @@
     headImageView.layer.cornerRadius = headImageView.bounds.size.width/2;
     [headImageView setImageWithURL:[NSURL URLWithString:gdcomment.headimg] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
     [headView addSubview:headImageView];
-    //  NSLog(@"hedImage.tag %ld",(long)section);
+    
     
     //添加点击手势
     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyHead:)];
@@ -810,7 +826,6 @@
         keyName = @"First";
         [textcell.textfield becomeFirstResponder];
     }
-    
 }
 -(void)liuyan:(UIButton *)button
 {

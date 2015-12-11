@@ -84,3 +84,23 @@
 @property (nonatomic,retain) UITextField * textfield;
 @property (nonatomic,retain) UIButton *sendButton;
 @end
+
+//新的动态回复内容cell
+@interface NewsTableViewCell : UITableViewCell
+@property (nonatomic,retain) UIImageView *headImgeView;
+@property (nonatomic,retain) UIImageView *photoImageView;
+@property (nonatomic,retain) UILabel *headLabel;
+@property (nonatomic,retain) UILabel *contentLabel;
+@property (nonatomic,retain) UILabel *dateLabel;
+@property (nonatomic,retain) UILabel *line;
+@end
+
+//新的动态赞cell
+@interface NewsTableViewZanCell : UITableViewCell
+@property (nonatomic,retain) UIImageView *headImgeView;
+@property (nonatomic,retain) UIImageView *photoImageView;
+@property (nonatomic,retain) UILabel *headLabel;
+@property (nonatomic,retain) UIImageView *zanImageView;
+@property (nonatomic,retain) UILabel *dateLabel;
+@property (nonatomic,retain) UILabel *line;
+@end

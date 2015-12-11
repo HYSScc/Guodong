@@ -22,6 +22,11 @@
 #import "Version.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CoreLocation/CLLocationManagerDelegate.h>
+
+
+
+
+#import "NewsViewController.h"
 @interface AppDelegate ()<UIAlertViewDelegate,CLLocationManagerDelegate>
 {
     //位置管理器
@@ -72,6 +77,10 @@
         
         MainController *main = [MainController new];
         self.window.rootViewController = main;
+        
+        
+      //  NewsViewController *news = [NewsViewController new];
+      //  self.window.rootViewController = news;
         
         
          //  AppraiseViewController *app = [AppraiseViewController new];

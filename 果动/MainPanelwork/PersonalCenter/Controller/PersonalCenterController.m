@@ -95,8 +95,11 @@
     
     addressLabel.bounds = CGRectMake(0, 0, userNameSize.width, userNameSize.height);
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.get_userinfo",BASEURL];
-    
-    [HttpTool postWithUrl:url params:nil contentType:@"application/json" success:^(id responseObject) {
+    if (url) {
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:url]];
+        NSLog(@"cookies %@",cookies);
+    }
+    [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         
         NSLog(@"response   %@",responseObject);
         
@@ -237,7 +240,7 @@
     addressLabel.text = @"北京市.朝阳区";
     addressLabel.textAlignment = 2;
     addressLabel.font = [UIFont fontWithName:FONT size:viewHeight/51.308];
-    addressLabel.textColor=[UIColor lightGrayColor];
+    addressLabel.textColor=[UIColor whiteColor];
     addressLabel.frame = CGRectMake((headbaseView.bounds.size.width - viewHeight/6.67)/2 + 12.5, CGRectGetMaxY(_lab.frame) + viewHeight/83.375, viewHeight/6.67, viewHeight/52.109);
     [headbaseView addSubview:addressLabel];
     
