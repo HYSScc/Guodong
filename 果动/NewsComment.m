@@ -21,7 +21,8 @@
         self.headImageStr = [NSURL URLWithString:[[dictionary objectForKey:@"source_user"] objectForKey:@"headimg"]] ;
         self.phototStr = [NSURL URLWithString:[dictionary  objectForKey:@"talkphoto"]] ;
         self.type = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"types"]];
-        
+        self.talk_id = [dictionary objectForKey:@"talkid"];
+               
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setTimeStyle:NSDateFormatterShortStyle];

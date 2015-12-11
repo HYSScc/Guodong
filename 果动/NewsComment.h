@@ -17,6 +17,7 @@
 @property (nonatomic,retain) NSString *dateStr;
 @property (nonatomic,retain) NSURL *phototStr;
 @property (nonatomic,retain) NSString *type;
+@property (nonatomic,retain) NSString  *talk_id;
 
 -(NewsComment *)initWithDictionary:(NSDictionary *)dictionary;
 +(NewsComment *)statusWithDictionary:(NSDictionary *)dictionary;

@@ -10,6 +10,7 @@
 #import "Commonality.h"
 #import "GBTableViewCell.h"
 #import "NewsComment.h"
+#import "GBViewController.h"
 @interface NewsViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableView;
@@ -144,5 +145,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   NewsComment *news = [self.newsMutableArray objectAtIndex:indexPath.row];
+    GBViewController *gbView = [GBViewController new];
+    gbView.news_talkid = news.talk_id;
+    gbView.isNews = @"news";
+    [self.navigationController pushViewController:gbView animated:YES];
+    
 }
 @end

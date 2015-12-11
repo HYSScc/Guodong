@@ -47,6 +47,7 @@
     UIView *secondTFView;
     UITextField *secondTF;
     UIButton *secondButton;
+    UIButton *messageButton;
 }
 @end
 
@@ -66,40 +67,50 @@
     //默认使用textCell的输入框
     keyName = @"First";
     
-    
-    
-    if ([self.isMy intValue] == 999) {
-        BackView *backView = [[BackView alloc] initWithbacktitle:@"返回" viewController:self];
+    if ([self.isNews isEqual:@"news"]) {
+        BackView *backView = [[BackView alloc] initWithbacktitle:@"消息" viewController:self];
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
         self.navigationItem.leftBarButtonItem = backItem;
+        self.navigationItem.titleView = [HeadComment titleLabeltext:@"详情"];
+    } else {
+        if ([self.isMy intValue] == 999) {
+            BackView *backView = [[BackView alloc] initWithbacktitle:@"返回" viewController:self];
+            UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
+            self.navigationItem.leftBarButtonItem = backItem;
+            
+        }
         
+        self.navigationItem.titleView = [self.isMy intValue] == 999 ? [HeadComment titleLabeltext:@"我的发布"]: [HeadComment titleLabeltext:@"果吧"];
+        // self.title = @"果吧";
+        UIImageView * lineImage1=[UIImageView new];
+        lineImage1.image=[UIImage imageNamed:@"home__line1"];
+        lineImage1.frame=CGRectMake(0, 0, viewWidth, 0.5);
+        [self.view addSubview:lineImage1];
+        
+        //左边消息列表
+        messageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        messageButton.frame = CGRectMake(13, viewHeight/24.7037,viewHeight/37.056,viewHeight/31.762);
+        [messageButton addTarget:self action:@selector(messageButton) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
+        self.navigationItem.leftBarButtonItem = leftButtonItem;
+        
+        //右边发送按钮
+        UIButton *amentButton=[UIButton buttonWithType:UIButtonTypeSystem];
+        amentButton.frame = CGRectMake(viewHeight/2.0212, viewHeight/24.7037,viewHeight/27.224,viewHeight/38.114);
+        [amentButton setBackgroundImage:[UIImage imageNamed:@"GD_fabu"] forState:UIControlStateNormal];
+        [amentButton addTarget:self action:@selector(goTosenderView:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *releaseButtonItem = [[UIBarButtonItem alloc] initWithCustomView:amentButton];
+        self.navigationItem.rightBarButtonItem = releaseButtonItem;
+        
+
     }
     
-    self.navigationItem.titleView = [self.isMy intValue] == 999 ? [HeadComment titleLabeltext:@"我的发布"]: [HeadComment titleLabeltext:@"果吧"];
-    // self.title = @"果吧";
-    UIImageView * lineImage1=[UIImageView new];
-    lineImage1.image=[UIImage imageNamed:@"home__line1"];
-    lineImage1.frame=CGRectMake(0, 0, viewWidth, 0.5);
-    [self.view addSubview:lineImage1];
-    
-    //左边消息列表
-    UIButton *messageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    messageButton.frame = CGRectMake(13, viewHeight/24.7037,viewHeight/27.224,viewHeight/38.114);
-    messageButton.backgroundColor = [UIColor lightGrayColor];
-    [messageButton addTarget:self action:@selector(messageButton) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
-    self.navigationItem.leftBarButtonItem = leftButtonItem;
-    
-    //右边发送按钮
-    UIButton *amentButton=[UIButton buttonWithType:UIButtonTypeSystem];
-    amentButton.frame = CGRectMake(viewHeight/2.0212, viewHeight/24.7037,viewHeight/27.224,viewHeight/38.114);
-    [amentButton setBackgroundImage:[UIImage imageNamed:@"GD_fabu"] forState:UIControlStateNormal];
-    [amentButton addTarget:self action:@selector(goTosenderView:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *releaseButtonItem = [[UIBarButtonItem alloc] initWithCustomView:amentButton];
-    self.navigationItem.rightBarButtonItem = releaseButtonItem;
-    
-    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight - NavigationBar_Height - Tabbar_Height) style:UITableViewStylePlain];
+
+    if ([self.isNews isEqualToString:@"news"]) {
+        _tableView.frame = CGRectMake(0, 0, viewWidth, viewHeight - NavigationBar_Height);
+    }
+    
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle =UITableViewCellSeparatorStyleNone;
     _tableView.dataSource = self;
@@ -163,6 +174,7 @@
     [secondButton setTitle:@"留言" forState:UIControlStateNormal];
     [secondButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [secondTFView addSubview:secondButton];
+   
 }
 -(void)messageButton
 {
@@ -181,10 +193,14 @@
 -(void)setupRefresh
 {
     //下拉刷新
+    
+    if (![self.isNews isEqualToString:@"news"]) {
+        // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+        [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    }
     [_tableView addHeaderWithTarget:self action:@selector(headerRereshing) dateKey:@"table"];
     [_tableView headerBeginRefreshing];
-    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
-    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+    
     // 设置文字(也可以不设置,默认的文字在MJRefreshConst中修改)
     _tableView.headerPullToRefreshText = HEADERPULLTOREFRESH;
     _tableView.headerReleaseToRefreshText = HEADERRELEASETOREFRESH;
@@ -193,10 +209,76 @@
     _tableView.footerReleaseToRefreshText =FOOTERRELEASETOREFRESH;
     _tableView.footerRefreshingText = FOOTERREFRESHING;
 }
+-(void)headerRereshing
+{
+    if ([self.isNews isEqual:@"news"]) {
+        url = [NSString stringWithFormat:@"%@api/?method=gdb.talk&talkid=%@",BASEURL,self.news_talkid];
+    } else {
+        if ([self.isMy intValue] == 999) {
+            url = [NSString stringWithFormat:@"%@api/?method=gdb.personal_center",BASEURL];
+        } else {
+            url = [NSString stringWithFormat:@"%@api/?method=gdb.index",BASEURL];
+        }
+    }
+    NSLog(@"url %@",url);
+       [HttpTool postWithUrl:url params:nil contentType: CONTENTTYPE success:^(id responseObject)
+     {
+          
+         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+ 
+             if ([self.isNews isEqualToString:@"news"]) {
+                 [allstatus removeAllObjects];
+                     GDComment *gdc = [GDComment  statusWithDictionary: [responseObject objectForKey:@"data"]];
+                     [allstatus  addObject:gdc];
+             } else {
+                 NSArray *array = responseObject[@"data"][@"data_list"];
+                 if (array.count == 0) {
+                     [allstatus removeAllObjects];
+                     [_tableView addSubview:image2];
+                     [_tableView addSubview:noMoneyLabelTop];
+                     [_tableView addSubview:noMoneyLabel];
+                     [_tableView addSubview:shareButton];
+                     
+                 } else {
+                     [image2 removeFromSuperview];
+                     [noMoneyLabelTop removeFromSuperview];
+                     [noMoneyLabel removeFromSuperview];
+                     [shareButton removeFromSuperview];
+                     [allstatus removeAllObjects];
+                     
+                     NSString *newsNumber = [[[responseObject objectForKey:@"data"] objectForKey:@"sys"] objectForKey:@"dynamic"];
+                     if ([newsNumber intValue] != 0) {
+                         [messageButton setBackgroundImage:[UIImage imageNamed:@"news_have"] forState:UIControlStateNormal];
+                     } else {
+                         [messageButton setBackgroundImage:[UIImage imageNamed:@"news_nohave"] forState:UIControlStateNormal];
+                     }
+                     
+                     for (NSDictionary *dict in array) {
+                         GDComment *gdc = [GDComment  statusWithDictionary: dict];
+                         [allstatus  addObject:gdc];
+                     }
+                 }
+             }
+            
+             [_tableView reloadData];
+             [_tableView headerEndRefreshing];
+             
+         }else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number){
+             [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+             
+         }else{
+             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+             [alert show];
+         }
+     }fail:^(NSError *error){
+         NSLog(@"error   %@",error);
+     }];
+}
+
+
 - (void)footerRereshing
 {
     page++;
-    NSLog(@"page  %d",page);
     if ([self.isMy intValue] == 999) {
         url = [NSString stringWithFormat:@"%@api/?method=gdb.personal_center&page=%d",BASEURL,page];
     }else{
@@ -241,58 +323,6 @@
     
 }
 
--(void)headerRereshing
-{
-    if ([self.isMy intValue] == 999) {
-        url = [NSString stringWithFormat:@"%@api/?method=gdb.personal_center",BASEURL];
-    }else{
-        url = [NSString stringWithFormat:@"%@api/?method=gdb.index",BASEURL];
-    }
-    if (url) {
-        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:url]];
-        NSLog(@"cookies %@",cookies);
-    }
-    [HttpTool postWithUrl:url params:nil contentType: CONTENTTYPE success:^(id responseObject)
-     {
-         //   NSLog(@"res  %@",responseObject);
-         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-             
-             NSArray *array = responseObject[@"data"][@"data_list"];
-             if (array.count == 0) {
-                 [allstatus removeAllObjects];
-                 [_tableView addSubview:image2];
-                 [_tableView addSubview:noMoneyLabelTop];
-                 [_tableView addSubview:noMoneyLabel];
-                 [_tableView addSubview:shareButton];
-                 
-             }else{
-                 [image2 removeFromSuperview];
-                 [noMoneyLabelTop removeFromSuperview];
-                 [noMoneyLabel removeFromSuperview];
-                 [shareButton removeFromSuperview];
-                 [allstatus removeAllObjects];
-                 
-                 for (NSDictionary *dict in array){
-                     GDComment *gdc = [GDComment  statusWithDictionary: dict];
-                     [allstatus  addObject:gdc];
-                     
-                 }
-                 
-             }
-             [_tableView reloadData];
-             [_tableView headerEndRefreshing];
-             
-         }else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number){
-             [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-             
-         }else{
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-             [alert show];
-         }
-     }fail:^(NSError *error){
-         NSLog(@"error   %@",error);
-     }];
-}
 
 //自定义区头
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{

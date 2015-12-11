@@ -16,5 +16,6 @@
 @property (nonatomic,retain) NSString *isMy;
 @property (nonatomic,retain) NSString *talkid;
 @property (nonatomic,retain) NSString *replay_id,*info_id;
+@property (nonatomic,retain) NSString *isNews,*news_talkid;
 @property (nonatomic,assign) GBTextFieldCell * (^createTextFieldCellBlock)(void);
 @end
