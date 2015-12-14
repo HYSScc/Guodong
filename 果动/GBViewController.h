@@ -18,4 +18,6 @@
 @property (nonatomic,retain) NSString *replay_id,*info_id;
 @property (nonatomic,retain) NSString *isNews,*news_talkid;
 @property (nonatomic,assign) GBTextFieldCell * (^createTextFieldCellBlock)(void);
+@property (nonatomic,retain)NSMutableArray *reportArray;
+@property (nonatomic,retain)NSMutableArray *report_idArray;
 @end
