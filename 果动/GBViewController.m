@@ -70,33 +70,37 @@
     self.replay_id = @"0";
     //默认使用textCell的输入框
     keyName = @"First";
-    
+     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight - NavigationBar_Height) style:UITableViewStylePlain];
     if ([self.isNews isEqual:@"news"]) {
         BackView *backView = [[BackView alloc] initWithbacktitle:@"消息" viewController:self];
         UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
         self.navigationItem.leftBarButtonItem = backItem;
         self.navigationItem.titleView = [HeadComment titleLabeltext:@"详情"];
+       
+        
     } else {
         if ([self.isMy intValue] == 999) {
             BackView *backView = [[BackView alloc] initWithbacktitle:@"返回" viewController:self];
             UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
             self.navigationItem.leftBarButtonItem = backItem;
             
+        } else {
+            //左边消息列表
+            messageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            messageButton.frame = CGRectMake(13, viewHeight/24.7037,viewHeight/37.056,viewHeight/31.762);
+            [messageButton addTarget:self action:@selector(messageButton) forControlEvents:UIControlEventTouchUpInside];
+            UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
+            self.navigationItem.leftBarButtonItem = leftButtonItem;
+
+             _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight - NavigationBar_Height - Tabbar_Height) style:UITableViewStylePlain];
         }
         
         self.navigationItem.titleView = [self.isMy intValue] == 999 ? [HeadComment titleLabeltext:@"我的发布"]: [HeadComment titleLabeltext:@"果吧"];
-        // self.title = @"果吧";
         UIImageView * lineImage1=[UIImageView new];
         lineImage1.image=[UIImage imageNamed:@"home__line1"];
         lineImage1.frame=CGRectMake(0, 0, viewWidth, 0.5);
         [self.view addSubview:lineImage1];
         
-        //左边消息列表
-        messageButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        messageButton.frame = CGRectMake(13, viewHeight/24.7037,viewHeight/37.056,viewHeight/31.762);
-        [messageButton addTarget:self action:@selector(messageButton) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:messageButton];
-        self.navigationItem.leftBarButtonItem = leftButtonItem;
         
         //右边发送按钮
         UIButton *amentButton=[UIButton buttonWithType:UIButtonTypeSystem];
@@ -109,11 +113,8 @@
 
     }
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight - NavigationBar_Height - Tabbar_Height) style:UITableViewStylePlain];
+   
 
-    if ([self.isNews isEqualToString:@"news"]) {
-        _tableView.frame = CGRectMake(0, 0, viewWidth, viewHeight - NavigationBar_Height);
-    }
     
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle =UITableViewCellSeparatorStyleNone;
