@@ -228,11 +228,7 @@
         [self addSubview:self.xinImage];
         
         for (int a = 0; a < 6; a++) {
-<<<<<<< HEAD
-        
-=======
-           
->>>>>>> server/master
+
             self.zanheadimg = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.xinImage.frame) + viewHeight/44.467 + a*(viewHeight/19.057), 7, viewHeight/22.233, viewHeight/22.233)];
             self.zanheadimg.tag = a+100;
             self.zanheadimg.hidden = YES;
@@ -242,11 +238,9 @@
         }
         
         self.reportButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-<<<<<<< HEAD
-        self.reportButton.frame = CGRectMake(viewWidth - 13 - 30, (self.bounds.size.height - 15)/2, 30, 13);
-=======
+
         self.reportButton.frame = CGRectMake(viewWidth - Adaptive(13) - Adaptive(30), (self.bounds.size.height - Adaptive(13))/2, Adaptive(30), Adaptive(13));
->>>>>>> server/master
+
         [self.reportButton setTitle:@"更多" forState:UIControlStateNormal];
         [self.reportButton setTintColor:[UIColor whiteColor]];
         self.reportButton.titleLabel.font = [UIFont fontWithName:FONT size:12];

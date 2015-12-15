@@ -18,10 +18,7 @@
 #import "LoginViewController.h"
 #import "SJAvatarBrowser.h"
 #import "NewsViewController.h"
-<<<<<<< HEAD
 #import "ReportActionSheet.h"
-=======
->>>>>>> server/master
 @interface GBViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 {
     UITableView *_tableView;
@@ -54,8 +51,7 @@
     UITextField *secondTF;
     UIButton *secondButton;
     UIButton *messageButton;
-    ReportActionSheet *reportActionSheet;
-    NSString *report_typeid;
+  
 }
 @end
 
@@ -521,10 +517,7 @@
                 [imagevire setImageWithURL:[NSURL URLWithString:gdc.praise_listArray[a]] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
             }
         }
-<<<<<<< HEAD
-        
-=======
->>>>>>> server/master
+
         [cell.reportButton addTarget:self action:@selector(reportButton:) forControlEvents:UIControlEventTouchUpInside];
         cell.reportButton.tag = indexPath.section;
         return cell;
@@ -679,10 +672,6 @@
     [alert show];
     
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> server/master
 -(void)playButton:(UIButton *)button
 {
     __block NSString *str = moviecell.videoURL;
