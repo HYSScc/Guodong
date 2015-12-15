@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GBViewController.h"
-
+#import "ReportActionSheet.h"
 #import "Commonality.h"
 #import "publish_ViewController.h"
 #import "MJRefresh.h"
@@ -18,7 +18,10 @@
 #import "LoginViewController.h"
 #import "SJAvatarBrowser.h"
 #import "NewsViewController.h"
+<<<<<<< HEAD
 #import "ReportActionSheet.h"
+=======
+>>>>>>> server/master
 @interface GBViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 {
     UITableView *_tableView;
@@ -29,6 +32,8 @@
     GBTableViewCell *picturecell;
     GBTextFieldCell *textcell;
     GBMovieCell *moviecell;
+    ReportActionSheet *reportActionSheet;
+    NSString *report_typeid;
     BOOL isopen[100];
     CGFloat openSection;
     UIImageView *headImageView;
@@ -516,7 +521,10 @@
                 [imagevire setImageWithURL:[NSURL URLWithString:gdc.praise_listArray[a]] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
             }
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> server/master
         [cell.reportButton addTarget:self action:@selector(reportButton:) forControlEvents:UIControlEventTouchUpInside];
         cell.reportButton.tag = indexPath.section;
         return cell;
@@ -671,7 +679,10 @@
     [alert show];
     
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> server/master
 -(void)playButton:(UIButton *)button
 {
     __block NSString *str = moviecell.videoURL;
@@ -855,6 +866,8 @@
             [self.navigationController pushViewController:[LoginViewController new] animated:YES];
         }
     }
+    
+    
 }
 //放大头像
 -(void)magnifyHead:(UIGestureRecognizer *)gesture

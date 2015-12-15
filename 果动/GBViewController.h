@@ -20,4 +20,6 @@
 @property (nonatomic,retain)NSMutableArray *reportArray;
 @property (nonatomic,retain)NSMutableArray *report_idArray;
 @property (nonatomic,assign) GBTextFieldCell * (^createTextFieldCellBlock)(void);
+@property (nonatomic,retain)NSMutableArray *reportArray;
+@property (nonatomic,retain)NSMutableArray *report_idArray;
 @end
