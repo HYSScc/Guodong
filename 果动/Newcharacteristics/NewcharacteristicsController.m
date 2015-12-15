@@ -78,7 +78,7 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap:)];
         [imageView addGestureRecognizer:tap];
         
-        
+    
         if (i == 3) {
          //   pageControl.hidden = YES;
             imageView.userInteractionEnabled = YES;
@@ -146,6 +146,7 @@
             
             roundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(viewHeight/8.3375, viewHeight/60.6364, viewHeight/37.056, viewHeight/37.056)];
             roundImageView.image = [UIImage imageNamed:@"login_round"];
+          
     }
 }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];

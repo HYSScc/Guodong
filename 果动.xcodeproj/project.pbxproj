@@ -125,6 +125,7 @@
 		6374D0E11A88519300939BFF /* 教练头像.png in Resources */ = {isa = PBXBuildFile; fileRef = 6374D0DF1A88519300939BFF /* 教练头像.png */; };
 		63779CB91B8B1B45005722D7 /* nav.png in Resources */ = {isa = PBXBuildFile; fileRef = 63779CB81B8B1B45005722D7 /* nav.png */; };
 		638677F91AE7A19000F772C7 /* TNSexyImageUploadProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 638677F81AE7A19000F772C7 /* TNSexyImageUploadProgress.m */; };
+		638F82491C1FF9C300B15CCD /* ReportActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 638F82481C1FF9C300B15CCD /* ReportActionSheet.m */; };
 		6394906C1AB40D11002ACD6B /* SportComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 6394906B1AB40D11002ACD6B /* SportComment.m */; };
 		639803811AE8C12C0017A5A1 /* bofang.png in Resources */ = {isa = PBXBuildFile; fileRef = 639803801AE8C12C0017A5A1 /* bofang.png */; };
 		63A0C8371BAFDEF600167BB2 /* SinaWeiboConnection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A0C8161BAFDEF600167BB2 /* SinaWeiboConnection.framework */; };
@@ -593,6 +594,8 @@
 		63779CB81B8B1B45005722D7 /* nav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav.png; sourceTree = "<group>"; };
 		638677F71AE7A19000F772C7 /* TNSexyImageUploadProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TNSexyImageUploadProgress.h; sourceTree = "<group>"; };
 		638677F81AE7A19000F772C7 /* TNSexyImageUploadProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TNSexyImageUploadProgress.m; sourceTree = "<group>"; };
+		638F82471C1FF9BB00B15CCD /* ReportActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportActionSheet.h; sourceTree = "<group>"; };
+		638F82481C1FF9C300B15CCD /* ReportActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportActionSheet.m; sourceTree = "<group>"; };
 		6394906A1AB40D11002ACD6B /* SportComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SportComment.h; path = MainPanelwork/Home/Model/SportComment.h; sourceTree = "<group>"; };
 		6394906B1AB40D11002ACD6B /* SportComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SportComment.m; path = MainPanelwork/Home/Model/SportComment.m; sourceTree = "<group>"; };
 		639803801AE8C12C0017A5A1 /* bofang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bofang.png; path = Other/Image/bofang.png; sourceTree = "<group>"; };
@@ -1621,6 +1624,8 @@
 			children = (
 				63CF61061B9D2A2B001AC050 /* GBTableViewCell.h */,
 				63CF61071B9D2A2B001AC050 /* GBTableViewCell.m */,
+				638F82471C1FF9BB00B15CCD /* ReportActionSheet.h */,
+				638F82481C1FF9C300B15CCD /* ReportActionSheet.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -2732,6 +2737,7 @@
 				63CBF4241B732B4A002ADB6C /* UUMessageContentButton.m in Sources */,
 				63C9E60A1AE8990D004EBC19 /* AFURLRequestSerialization.m in Sources */,
 				63C9E6061AE8990D004EBC19 /* AFHTTPSessionManager.m in Sources */,
+				638F82491C1FF9C300B15CCD /* ReportActionSheet.m in Sources */,
 				63CA0B891AEA371300929AF5 /* GZSComment.m in Sources */,
 				63593FF01A8CB21000660110 /* PersonalCenterController.m in Sources */,
 				63C9E6251AE89918004EBC19 /* UIWebView+AFNetworking.m in Sources */,
