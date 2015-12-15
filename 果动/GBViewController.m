@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GBViewController.h"
-
+#import "ReportActionSheet.h"
 #import "Commonality.h"
 #import "publish_ViewController.h"
 #import "MJRefresh.h"
@@ -18,7 +18,11 @@
 #import "LoginViewController.h"
 #import "SJAvatarBrowser.h"
 #import "NewsViewController.h"
-@interface GBViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
+<<<<<<< HEAD
+#import "ReportActionSheet.h"
+=======
+>>>>>>> server/master
+@interface GBViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 {
     UITableView *_tableView;
     UIImageView *imageView;
@@ -28,6 +32,8 @@
     GBTableViewCell *picturecell;
     GBTextFieldCell *textcell;
     GBMovieCell *moviecell;
+    ReportActionSheet *reportActionSheet;
+    NSString *report_typeid;
     BOOL isopen[100];
     CGFloat openSection;
     UIImageView *headImageView;
@@ -48,6 +54,8 @@
     UITextField *secondTF;
     UIButton *secondButton;
     UIButton *messageButton;
+    ReportActionSheet *reportActionSheet;
+    NSString *report_typeid;
 }
 @end
 
@@ -223,7 +231,7 @@
     NSLog(@"url %@",url);
        [HttpTool postWithUrl:url params:nil contentType: CONTENTTYPE success:^(id responseObject)
      {
-          
+         NSLog(@"responseObject  %@",responseObject);
          if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
  
              if ([self.isNews isEqualToString:@"news"]) {
@@ -513,6 +521,12 @@
                 [imagevire setImageWithURL:[NSURL URLWithString:gdc.praise_listArray[a]] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
             }
         }
+<<<<<<< HEAD
+        
+=======
+>>>>>>> server/master
+        [cell.reportButton addTarget:self action:@selector(reportButton:) forControlEvents:UIControlEventTouchUpInside];
+        cell.reportButton.tag = indexPath.section;
         return cell;
     } else if (indexPath.row - 2 < gdc.comments_list.count + gdc.replay_listArray.count){
         //评论的cell
@@ -629,6 +643,46 @@
         return viewHeight/15.159;
     }
 }
+-(void)reportButton:(UIButton *)button
+{
+    NSString *reportUrl = [NSString stringWithFormat:@"%@api/?method=gdb.report_content",BASEURL];
+    [HttpTool postWithUrl:reportUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+            GDComment *gdc = [allstatus objectAtIndex:button.tag];
+            NSDictionary *data = [responseObject objectForKey:@"data"];
+            self.reportArray = [NSMutableArray array];
+            self.report_idArray = [NSMutableArray array];
+            reportActionSheet = [[ReportActionSheet alloc] initWithTitle:@"我们将在24小时内验证并处理您的反馈,请严肃选择举报类型" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles: nil];
+            for (NSString *key in [data allKeys]) {
+                [reportActionSheet addButtonWithTitle:[data objectForKey:key]];
+                [self.reportArray addObject:[data objectForKey:key]];
+                [self.report_idArray addObject:key];
+                
+            }
+            reportActionSheet.name = gdc.nickname;
+            reportActionSheet.date = gdc.hour;
+            reportActionSheet.content = gdc.content;
+            reportActionSheet.talkid = gdc.talkid;
+            [reportActionSheet showInView:self.view];
+        }
+    } fail:^(NSError *error) {
+        NSLog(@"error %@",error);
+    }];
+}
+- (void)actionSheet:(ReportActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) return;
+    report_typeid = [self.report_idArray objectAtIndex:buttonIndex - 1];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    alert.message = [NSString stringWithFormat:@"您将举报 %@ 在 %@ 发布的 %@ 为 %@，请确认",actionSheet.name,actionSheet.date,actionSheet.content,[self.reportArray objectAtIndex:buttonIndex - 1]];
+    alert.tag = 980;
+    [alert show];
+    
+}
+<<<<<<< HEAD
+
+=======
+>>>>>>> server/master
 -(void)playButton:(UIButton *)button
 {
     __block NSString *str = moviecell.videoURL;
@@ -793,11 +847,27 @@
                 [alert show];
             }];
         }
+    } else if (alertView.tag == 980) {
+        
+        NSString *reporturl = [NSString stringWithFormat:@"%@api/?method=gdb.report&typeid=%@&talkid=%@",BASEURL,report_typeid,reportActionSheet.talkid];
+        [HttpTool postWithUrl:reporturl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+            
+            [alert show];
+            
+        } fail:^(NSError *error) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            
+            [alert show];
+        }];
     } else {
         if (buttonIndex == 1) {
             [self.navigationController pushViewController:[LoginViewController new] animated:YES];
         }
     }
+    
+    
 }
 //放大头像
 -(void)magnifyHead:(UIGestureRecognizer *)gesture
@@ -875,6 +945,8 @@
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             NSLog(@"%@",error);
         }];
+        
+        //hhh
         
     } else if ([liuyanType isEqual:@"1"]) {
         //回复评论

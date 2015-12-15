@@ -51,6 +51,7 @@
 @property (nonatomic,retain) UIImageView *xinImage;
 @property (nonatomic,retain) GDComment *data;
 @property (nonatomic,retain) UIImageView *zanheadimg;
+@property (nonatomic,retain) UIButton *reportButton;
 @end
 
 
