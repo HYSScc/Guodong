@@ -254,6 +254,7 @@
 #pragma mark 选择图片按钮绑定事件
 - (void)imagePick:(UIButton *)sender
 {
+    [_textView resignFirstResponder];
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"相册",@"视频", nil];
     [sheet showInView:self.view];
 }

@@ -100,7 +100,7 @@
         
         cell.photoImageView.frame = CGRectMake(viewWidth - viewHeight/13.34 - viewHeight/51.308, viewHeight/39.235, viewHeight/13.34, viewHeight/13.34);
         
-        [cell.photoImageView setImageWithURL:news.phototStr placeholderImage:[UIImage imageNamed:@"person_nohead"]];
+        [cell.photoImageView setImageWithURL:news.phototStr placeholderImage:[UIImage imageNamed:@"base_logo"]];
         
         cell.line.frame = CGRectMake(viewHeight/51.308, CGRectGetMaxY(cell.dateLabel.frame) + viewHeight/60.636, viewWidth - viewHeight/25.654, .5);
         frame.size.height = CGRectGetMaxY(cell.line.frame);
@@ -132,7 +132,7 @@
         
         cell.photoImageView.frame = CGRectMake(viewWidth - viewHeight/13.34 - viewHeight/51.308, viewHeight/39.235, viewHeight/13.34, viewHeight/13.34);
         
-        [cell.photoImageView setImageWithURL:news.phototStr placeholderImage:[UIImage imageNamed:@"person_nohead"]];
+        [cell.photoImageView setImageWithURL:news.phototStr placeholderImage:[UIImage imageNamed:@"base_logo"]];
         
         cell.line.frame = CGRectMake(viewHeight/51.308, CGRectGetMaxY(cell.dateLabel.frame) + viewHeight/60.636, viewWidth - viewHeight/25.654, .5);
         frame.size.height = CGRectGetMaxY(cell.line.frame);

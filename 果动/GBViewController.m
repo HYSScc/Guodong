@@ -172,7 +172,7 @@
     secondTF.textColor = [UIColor whiteColor];
     secondTF.font = [UIFont fontWithName:FONT size:viewHeight/47.643];
     [secondTFView addSubview:secondTF];
-    
+    //当texCell未创建的时候点击单元格弹出自定义输入框
     secondButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     secondButton.frame = CGRectMake(CGRectGetMaxX(secondTF.frame) + viewHeight/133.4, (secondTFView.bounds.size.height - viewHeight/26.68)/2, viewHeight/13.34, viewHeight/26.68);
     [secondButton addTarget:self action:@selector(liuyan:) forControlEvents:UIControlEventTouchUpInside];
@@ -402,19 +402,26 @@
         //第一行的cell处理
         if ([gdc.type intValue] == 2) {
             //图片
+             __weak GBTableViewCell *picture = picturecell;
+             __weak GBViewController *gbView = self;
             picturecell = [tableView dequeueReusableCellWithIdentifier:@"pictureCell"];
+           
             if (!picturecell) {
                 picturecell = [[GBTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"pictureCell"];
             }
             
             _talkid = gdc.talkid;
-            //   NSLog(@"talk %@",_talkid);
-            [picturecell.photoImageView setImageWithURL:gdc.photos[0]];
+           
+            [picturecell.photoImageView setImageWithURL:gdc.photos[0] placeholderImage:[UIImage imageNamed:@"base_logo"] success:^(UIImage *image, BOOL cached) {
+                //添加点击手势
+                UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:gbView action:@selector(magnifyHead:)];
+                [picture.photoImageView addGestureRecognizer:tap];
+            } failure:^(NSError *error) {
+                //
+            }];
             
-            //  NSLog(@"图片URL  %@",gdc.photos[0]);
-            //添加点击手势
-            UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyHead:)];
-            [picturecell.photoImageView addGestureRecognizer:tap];
+            
+            
             picturecell.photocommentLabel.text  = gdc.content;
             CGSize textSize = [gdc.content boundingRectWithSize:CGSizeMake(viewWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:viewHeight/44.467]} context:nil].size;
             picturecell.photocommentLabel.frame = CGRectMake(viewHeight/44.467, (viewHeight/13.34 - textSize.height)/2, textSize.width, textSize.height);
@@ -689,21 +696,16 @@
             
             [button popInsideWithDuration:0.4];
             [button setBackgroundImage:[UIImage imageNamed:@"GD_zan"] forState:UIControlStateNormal];
-        }
-        else if ([[responseObject objectForKey:@"rc"] integerValue] == 10)
-        {
+        } else if ([[responseObject objectForKey:@"rc"] integerValue] == 10) {
             [button popOutsideWithDuration:0.5];
             [button setBackgroundImage:[UIImage imageNamed:@"GD_yizan"] forState:UIControlStateNormal];
             [button animate];
-        }
-        else
-        {
+        } else {
             [HeadComment showAlert:@"温馨提示" withMessage:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         }
+        
         NSNotification *notification =[NSNotification notificationWithName:@"tongzhi" object:nil userInfo:nil];
-        
         //通过通知中心发送通知
-        
         [[NSNotificationCenter defaultCenter] postNotification:notification];
         
     } fail:^(NSError *error) {
@@ -742,7 +744,6 @@
             }
         }];
     } else {
-        
         if ([keyName isEqual:@"First"]) {
            
             [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{
@@ -838,26 +839,25 @@
             }];
         }
     } else if (alertView.tag == 980) {
-        
-        NSString *reporturl = [NSString stringWithFormat:@"%@api/?method=gdb.report&typeid=%@&talkid=%@",BASEURL,report_typeid,reportActionSheet.talkid];
-        [HttpTool postWithUrl:reporturl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
-            
-            [alert show];
-            
-        } fail:^(NSError *error) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
-        }];
+         if (buttonIndex == 1) {
+             NSString *reporturl = [NSString stringWithFormat:@"%@api/?method=gdb.report&typeid=%@&talkid=%@",BASEURL,report_typeid,reportActionSheet.talkid];
+             [HttpTool postWithUrl:reporturl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+                 
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
+                 
+                 [alert show];
+                 
+             } fail:^(NSError *error) {
+                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                 
+                 [alert show];
+             }];
+         }
     } else {
         if (buttonIndex == 1) {
             [self.navigationController pushViewController:[LoginViewController new] animated:YES];
         }
     }
-    
-    
 }
 //放大头像
 -(void)magnifyHead:(UIGestureRecognizer *)gesture
