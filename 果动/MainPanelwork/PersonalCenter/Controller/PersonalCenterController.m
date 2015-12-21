@@ -113,9 +113,7 @@
                 [vipView setImage:[UIImage imageNamed:@"person_notiao"]];
                 [vipView addSubview:viplabel];
                 [self.view addSubview:vipheadImage];
-            }
-            else
-            {
+            } else {
                 vipView.userInteractionEnabled = YES;
                 [vipView setImage:[UIImage imageNamed:@"person_tiao"]];
                 [viplabel removeFromSuperview];
@@ -123,7 +121,7 @@
             }
             iconString=data[@"headimg"];
             headbaseImageString = data[@"backimg"];
-           // [headbaseView setImageWithURL:[NSURL URLWithString:headbaseImageString]];
+         
             [headbaseView setImageWithURL:[NSURL URLWithString:headbaseImageString] success:^(UIImage *image, BOOL cached) {
                 NSLog(@"cached %d",cached);
                 succImage = YES;
@@ -131,11 +129,8 @@
                 NSLog(@"error %@",error);
             }];
             
-            
             [_iconImageView setImageWithURL:[NSURL URLWithString:iconString] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
 
-           
-            
             if ([[data objectForKey:@"isview"] intValue] != 0)
             {
                 [shujuView addSubview:looknumberImageView];
@@ -472,7 +467,6 @@
                                 else if (state == SSResponseStateFail)
                                 {
                                     NSLog(@"发布失败!error code == %ld, error code == %@", (long)[error errorCode], [error errorDescription]);
-                                    // NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
                                 }
                             }];
     

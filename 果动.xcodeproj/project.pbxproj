@@ -113,6 +113,7 @@
 		63593FC81A8C895F00660110 /* GDComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 63593FC71A8C895F00660110 /* GDComment.m */; };
 		63593FEC1A8C937E00660110 /* SportsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63593FEB1A8C937E00660110 /* SportsViewController.m */; };
 		63593FF01A8CB21000660110 /* PersonalCenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63593FEF1A8CB21000660110 /* PersonalCenterController.m */; };
+		635AD0B41C278C4900B8AD57 /* base_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 635AD0B31C278C4900B8AD57 /* base_logo.png */; };
 		63636B2E1BD62239007F19AD /* yindaoye_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 63636B2D1BD62239007F19AD /* yindaoye_1.png */; };
 		63636B301BD636A7007F19AD /* appraise_fiveStar.png in Resources */ = {isa = PBXBuildFile; fileRef = 63636B2F1BD636A7007F19AD /* appraise_fiveStar.png */; };
 		63636B321BD63B56007F19AD /* telephone.png in Resources */ = {isa = PBXBuildFile; fileRef = 63636B311BD63B56007F19AD /* telephone.png */; };
@@ -580,6 +581,7 @@
 		63593FEA1A8C937E00660110 /* SportsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SportsViewController.h; path = MainPanelwork/Home/Controller/SportsViewController.h; sourceTree = "<group>"; };
 		63593FEB1A8C937E00660110 /* SportsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SportsViewController.m; path = MainPanelwork/Home/Controller/SportsViewController.m; sourceTree = "<group>"; };
 		63593FEF1A8CB21000660110 /* PersonalCenterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonalCenterController.m; path = MainPanelwork/PersonalCenter/Controller/PersonalCenterController.m; sourceTree = "<group>"; };
+		635AD0B31C278C4900B8AD57 /* base_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = base_logo.png; sourceTree = "<group>"; };
 		63636B2D1BD62239007F19AD /* yindaoye_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yindaoye_1.png; sourceTree = "<group>"; };
 		63636B2F1BD636A7007F19AD /* appraise_fiveStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = appraise_fiveStar.png; sourceTree = "<group>"; };
 		63636B311BD63B56007F19AD /* telephone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = telephone.png; sourceTree = "<group>"; };
@@ -1856,6 +1858,7 @@
 		63CBD3691B7866C40040F1D9 /* image */ = {
 			isa = PBXGroup;
 			children = (
+				635AD0B31C278C4900B8AD57 /* base_logo.png */,
 				63030FFA1C196A5B00258071 /* news_nohave.png */,
 				63030FFB1C196A5B00258071 /* news_have.png */,
 				63030FF81C196A4600258071 /* news_zan.png */,
@@ -2597,6 +2600,7 @@
 				63D685BA1B95484100D6F733 /* GD_baixin.png in Resources */,
 				63DFE1F81BCFAE070086BB1E /* class_xiadan.png in Resources */,
 				63E6A4381BB5463700A0BB12 /* yindaoye_4.png in Resources */,
+				635AD0B41C278C4900B8AD57 /* base_logo.png in Resources */,
 				63E4C0351BC8FACF00E58936 /* shouye_dingwei.png in Resources */,
 				63EA134A1BEB530F00319549 /* locationStart.png in Resources */,
 				0488CC2B1A86F48200E0AA5E /* Overlay.png in Resources */,
