@@ -122,12 +122,12 @@
         
         self.SLTImageView = [[UIImageView alloc] init];
         self.SLTImageView.userInteractionEnabled = YES;
-        self.SLTImageView.frame = CGRectMake(0, 0, viewWidth, viewHeight/1.6675);
+        self.SLTImageView.frame = CGRectMake(0, 0, viewWidth, viewWidth);
         [self addSubview:self.SLTImageView];
         
         /*************内容View****************************/
         contentView = [[UIView alloc] init];
-        contentView.frame = CGRectMake(0, viewHeight/2.223, viewWidth, viewHeight/13.34);
+        contentView.frame = CGRectMake(0, self.SLTImageView.bounds.size.height-(viewHeight/13.34 * 2), viewWidth, viewHeight/13.34);
         contentView.userInteractionEnabled = YES;
         contentView.backgroundColor = [UIColor blackColor];
         contentView.alpha = 0.5;

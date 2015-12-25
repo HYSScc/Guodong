@@ -7,10 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Map.h"
-#import <MapKit/MapKit.h>
-#import "MapOverlay.h"
-#import "MapOverlayView.h"
-@interface RightVBaseView : UIView<MKMapViewDelegate>
 
+@interface RightVBaseView : UIView<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic,retain) NSMutableArray *modelArray;
 @end

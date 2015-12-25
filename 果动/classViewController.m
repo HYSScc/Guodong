@@ -16,6 +16,8 @@
 #import "FeSpinnerTenDot.h"//加载界面
 #import <CoreText/CoreText.h>
 #import "BackView.h"
+#import "TopView.h"
+#import "priceList.h"
 @interface classViewController ()<FeSpinnerTenDotDelegate>
 {
     UIImageView *topimage;
@@ -27,18 +29,22 @@
     UILabel *classnumberLabel;
     NSMutableAttributedString *str;
     UILabel *numberLabel;
-    
+    NSString *requestURL;
+    NSString *zanUrl;
+    NSString *sureUrl;
     BOOL selected;
     int ipraised;
     int personNmuber;
     int classNumber;
     int zanNumber;
+    int topImagetype;
     CGFloat firstHeigth;
     CGFloat secondHeigth;
     CGFloat pictureHeight;
     
     UIView *moneyView;
     UIButton *sureButton;
+    
 }
 @property (strong, nonatomic) FeSpinnerTenDot *spinner;
 @end
@@ -48,10 +54,14 @@
 {
     [super viewWillAppear:YES];
     
-    
     BackView *backView = [[BackView alloc] initWithbacktitle:@"首页" viewController:self];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     self.navigationItem.leftBarButtonItem = backItem;
+    
+    
+    NSLog(@"self.isShop %d",self.isShop);
+    
+    
     
     _spinner = [[FeSpinnerTenDot alloc] initWithView:self.view withBlur:NO];
     _spinner.titleLabelText = @"LOADING";
@@ -60,33 +70,37 @@
     [self.view addSubview:_spinner];
     [_spinner show];
     
-    
     [imageArray removeAllObjects];
     [classScrollView removeFromSuperview];
-    NSString *url = [NSString stringWithFormat:@"%@api/?method=gdcourse.introduce&class_id=%@",BASEURL,self.class_id];
-    [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+    //成立则表示从体验店进入
+    if (self.isShop) {
+        requestURL = [NSString stringWithFormat:@"%@api/?method=gdcourse.gdstore_inc&id=%@",BASEURL,self.shop_id];
+            } else {
+        //从订课界面进入
+        requestURL = [NSString stringWithFormat:@"%@api/?method=gdcourse.introduce&class_id=%d",BASEURL,self.class_id];
+        
+    }
+    [HttpTool postWithUrl:requestURL params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         NSLog(@"res  %@",responseObject);
         imageArray = [[NSMutableArray alloc] initWithCapacity:0];
         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
             [_spinner dismiss];
             NSDictionary *data = [responseObject objectForKey:@"data"];
             personNmuber = [[data objectForKey:@"courseTotal"] intValue];
-            classNumber = [[data objectForKey:@"price"] intValue];
+            if (!self.isShop) {
+                 classNumber = [[data objectForKey:@"price"] intValue];
+            }
             zanNumber = [[data objectForKey:@"praiseTotal"] intValue];
             ipraised = [[data objectForKey:@"ipraised"] intValue];
             for (NSDictionary *dict in [data objectForKey:@"imgUrl"]) {
                 image *imageModel = [[image alloc] initWithDictionary:dict];
                 [imageArray addObject:imageModel];
+                
             }
-            
             [self setTopImage];
-        }
-        else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number)
-        {
+        } else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number) {
             [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-        }
-        else
-        {
+        } else {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             
             [alert show];
@@ -94,129 +108,76 @@
         
     } fail:^(NSError *error) {
         NSLog(@"error %@",error);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
         
+        [alert show];
     }];
+
     
-}
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:YES];
     
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+     NSLog(@"22222");
+    
+    
     self.view.backgroundColor = [UIColor blackColor];
-    
     self.navigationItem.titleView = [HeadComment titleLabeltext:self.titleString];
-  //
-   
-    [self setTopImage];
-    
-    
+  
+   // [self setTopImage];
 }
 -(void)setTopImage
 {
-    NSArray *topImageArray   = @[@"fitness_topImage",@"yoga_topImage",@"fat_topImage",@"core_topImage"];
-    NSArray *smallImageArray = @[@"fitness_image1"  ,@"yoga_image1"  ,@"fat_image1",  @"core_image1"  ];
-    NSArray *bigImageArray   = @[@"fitness_image2"  ,@"yoga_image2"  ,@"fat_image2"  ,@"core_image2"  ];
-    
+    NSLog(@"33333");
+   
     classScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
     classScrollView.backgroundColor = [UIColor blackColor];
-    if ([self.class_id intValue] == 2 || [self.class_id intValue] == 4) {
-        
+   
+    if (self.class_id == 2 || self.class_id == 4) {
         classScrollView.backgroundColor = [UIColor whiteColor];
     }
     classScrollView.bounces = NO; //不允许弹性滑动
+    
     [self.view addSubview:classScrollView];
     
-    NSLog(@"self.type  %d",self.type);
-    
-    
-    topimage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight/3.032)];
-    [topimage setImage:[UIImage imageNamed:topImageArray[self.type - 1]]];
-    [classScrollView addSubview:topimage];
-    
-    UIImageView *smallImage = [[UIImageView alloc] init];
-    switch (self.type) {
-        case 1:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/17.37)/2 , viewHeight/17.5526, viewHeight/17.37, viewHeight/16.51);
-            break;
-        case 2:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/12.83)/2 , viewHeight/17.5526, viewHeight/12.83, viewHeight/18.53);
-            break;
-        case 3:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/14.5)/2 , viewHeight/17.5526, viewHeight/14.5, viewHeight/15.2982);
-            break;
-        case 4:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/14.5)/2 , viewHeight/17.5526, viewHeight/14.5, viewHeight/15.2982);
-            break;
-            
-        default:
-            break;
-    }
-    
-    [smallImage setImage:[UIImage imageNamed:smallImageArray[self.type - 1]]];
-    [classScrollView addSubview:smallImage];
-    
-    UIImageView *bigImage = [[UIImageView alloc] initWithFrame:CGRectMake((topimage.bounds.size.width - viewHeight/4.94)/2 , CGRectGetMaxY(smallImage.frame)+viewHeight/55.58333, viewHeight/4.94, viewHeight/15.694)];
-    [bigImage setImage:[UIImage imageNamed:bigImageArray[self.type - 1]]];
-    [classScrollView addSubview:bigImage];
-    
-    UILabel *introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake((topimage.bounds.size.width - viewHeight/5.558)/2, CGRectGetMaxY(bigImage.frame)+viewHeight/39.2353, viewHeight/5.558, viewHeight/31.762)];
-    introduceLabel.textColor = [UIColor orangeColor];
-    introduceLabel.textAlignment = 1;
-    introduceLabel.text = @"课程介绍";
-    introduceLabel.font = [UIFont fontWithName:FONT size:viewHeight/31.762];
-    [classScrollView addSubview:introduceLabel];
-    
-    classnumberLabel = [[UILabel alloc] initWithFrame:CGRectMake((topimage.bounds.size.width - viewHeight/5.558)/2, CGRectGetMaxY(introduceLabel.frame) + viewHeight/88.9333, viewHeight/5.558, viewHeight/74.111)];
-    classnumberLabel.textColor = [UIColor whiteColor];
-    classnumberLabel.textAlignment = 1;
-    classnumberLabel.text = [NSString stringWithFormat:@"已有%d人下单",personNmuber];
-    classnumberLabel.font = [UIFont fontWithName:FONT size:viewHeight/66.7];
-    [classScrollView addSubview:classnumberLabel];
-    
+    //顶部视图
+    topImagetype = self.isShop ? 5 : self.class_id;
+    TopView *topView = [[TopView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight/3.032) imageTypeWith:topImagetype ClassNumberWith:personNmuber showClassNumberWith:YES];
+    [classScrollView addSubview:topView];
     
     /*
      计算宽高比
      宽度一定
      高度根据 屏幕宽度 与 图片宽度的比例算出
      */
+   NSLog(@"imageArray %@",imageArray);
+    
     
     for (int a = 0; a < imageArray.count; a++) {
         image *imageModel = [imageArray objectAtIndex:a];
+        
         UIImageView *classImage = [[UIImageView alloc] init];
         CGFloat interval = viewHeight/44.467;
         CGFloat proportion =  ([imageModel.height floatValue]/2)/([imageModel.width floatValue]/2);
         
-        NSLog(@"高度  %d",[imageModel.height intValue]/2);
-        NSLog(@"宽度  %d",[imageModel.width intValue]/2);
-        NSLog(@"proportion  %.2f",proportion);
-        
-        
-        if (self.type == 1) {
-            classImage.frame = CGRectMake(0,CGRectGetMaxY(topimage.frame)+a*(viewWidth * proportion), viewWidth, viewWidth * proportion);
-        } else if (self.type == 3) {
-            
+        if (self.class_id == 1) {
+            classImage.frame = CGRectMake(0,CGRectGetMaxY(topView.frame)+a*(viewWidth * proportion), viewWidth, viewWidth * proportion);
+        } else if (self.class_id == 3) {
             if (a == 0) {
-                classImage.frame = CGRectMake(0,CGRectGetMaxY(topimage.frame)+a*viewWidth, viewWidth , viewWidth*proportion);
+                classImage.frame = CGRectMake(0,CGRectGetMaxY(topView.frame)+a*viewWidth, viewWidth , viewWidth*proportion);
                 firstHeigth = classImage.bounds.size.height;
-            } else if (a == 1) {
-                classImage.frame = CGRectMake(0,CGRectGetMaxY(topimage.frame)+a*firstHeigth, viewWidth, viewWidth* proportion);
-                secondHeigth = CGRectGetMaxY(classImage.frame);
             } else {
                 classImage.frame = CGRectMake(0,secondHeigth,viewWidth,viewWidth * proportion);
             }
-        } else {
-            if (a == 0) {
-                classImage.frame = CGRectMake(interval,interval + CGRectGetMaxY(topimage.frame)+a*((viewWidth - interval*2) * proportion), viewWidth - interval*2, (viewWidth - interval*2) * proportion);
-                firstHeigth = classImage.bounds.size.height;
-            } else if (a == 1) {
-                classImage.frame = CGRectMake(interval,interval +CGRectGetMaxY(topimage.frame)+a*(firstHeigth + interval), viewWidth - interval*2, (viewWidth - interval*2) * proportion);
                 secondHeigth = CGRectGetMaxY(classImage.frame);
+        } else {
+           if (a == 0) {
+                classImage.frame = CGRectMake(interval,interval + CGRectGetMaxY(topView.frame)+a*((viewWidth - interval*2) * proportion), viewWidth - interval*2, (viewWidth - interval*2) * proportion);
             } else {
-                classImage.frame = CGRectMake(interval,secondHeigth + interval, viewWidth - interval*2, (viewWidth - interval*2) * proportion);
+                classImage.frame = CGRectMake(interval,firstHeigth + interval, viewWidth - interval*2, (viewWidth - interval*2) * proportion);
             }
+                firstHeigth = CGRectGetMaxY(classImage.frame);
         }
         [classImage setImageWithURL:[NSURL URLWithString:imageModel.imageURL]];
         classImage.tag = a+1;
@@ -229,7 +190,7 @@
     
     UIImageView *buttomImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(noticeImage.frame) + viewHeight/33.35, viewWidth, viewHeight/4.764)];
     [buttomImage setImage:[UIImage imageNamed:@"class_buttomImage"]];
-    if (self.type == 2) {
+    if (self.class_id == 2) {
         [buttomImage setImage:[UIImage imageNamed:@"yoga_buttomImage"]];
     }
     buttomImage.userInteractionEnabled = YES;
@@ -286,6 +247,19 @@
     [sureButton addTarget:self action:@selector(sureButton) forControlEvents:UIControlEventTouchUpInside];
     [sureButton setBackgroundImage:[UIImage imageNamed:@"class_xiadan"] forState:UIControlStateNormal];
     
+    if (self.isShop) {
+        
+        UIButton *shopSureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        shopSureButton.frame = CGRectMake(0, viewHeight - NavigationBar_Height - viewHeight/11.117, viewWidth, viewHeight/11.117);
+        shopSureButton.backgroundColor = [UIColor orangeColor];
+        [shopSureButton setTitle:@"订课" forState:UIControlStateNormal];
+        [shopSureButton addTarget:self action:@selector(sureButton) forControlEvents:UIControlEventTouchUpInside];
+        [shopSureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        shopSureButton.titleLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+        [self.view addSubview:shopSureButton];
+
+    }
+    
     
     NSString *attriStr = [NSString stringWithFormat:@"%d 元/课时",classNumber];
     if (classNumber) {
@@ -307,44 +281,63 @@
 }
 -(void)xinButton
 {
-    
-    NSString *url = [NSString stringWithFormat:@"%@api/?method=gdcourse.praise&class_id=%@",BASEURL,self.class_id];
-    [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+    if (self.isShop) {
+         zanUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.praise&class_id=%@&types=2",BASEURL,self.shop_id];
+    } else {
+         zanUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.praise&class_id=%d",BASEURL,self.class_id];
+    }
+   
+    [HttpTool postWithUrl:zanUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
             if ([[[responseObject objectForKey:@"data"] objectForKey:@"result"] intValue] == 1) {
                 [xinButton popOutsideWithDuration:0.5];
                 [xinButton setBackgroundImage:[UIImage imageNamed:@"class_orangexin"] forState:UIControlStateNormal];
                 [xinButton animate];
-            }
-            else
-            {
+            } else {
                 [xinButton popInsideWithDuration:0.4];
                 [xinButton setBackgroundImage:[UIImage imageNamed:@"class_grayxin"] forState:UIControlStateNormal];
             }
-            
             numberLabel.text = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"data"] objectForKey:@"total"]];
+        }else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            
+            [alert show];
         }
     } fail:^(NSError *error) {
         NSLog(@"error  %@",error);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        
+        [alert show];
     }];
 }
 -(void)sureButton
 {
-    NSString *url = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%@",BASEURL,self.class_id];
-    NSLog(@"url  %@",url);
-    [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+    if (self.isShop) {
+         sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%@&types=2",BASEURL,self.shop_id];
+    } else {
+      sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%d",BASEURL,self.class_id];
+    }
+    NSLog(@"sureUrl  %@",sureUrl);
+   // NSLog(@"self.class_id %@",self.shop_id);
+    [HttpTool postWithUrl:sureUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         NSLog(@"res  %@",responseObject);
         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
             appointViewController *appoint = [appointViewController new];
-            appoint.course = [[NSMutableArray alloc] initWithCapacity:0];
+            appoint.course = [NSMutableArray array];
             for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"course"]) {
                 Message *message = [[Message alloc] initWithDictionary:dict];
                 [appoint.course addObject:message];
                 
+                appoint.price_list = [NSMutableArray array];
+                for (NSDictionary *priceDict in [dict objectForKey:@"price_list"]) {
+                    priceList *price = [[priceList alloc] initWithDictionary:priceDict];
+                    [appoint.price_list addObject:price];
+                }
             }
+            appoint.isShop = self.isShop;
             appoint.dateArray = [[responseObject objectForKey:@"data"] objectForKey:@"pre_times"];
             appoint.isFirst = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"data"] objectForKey:@"isfirst"]] ;
-            appoint.type = self.type;
+           
             appoint.youhuijuan = [[responseObject objectForKey:@"data"] objectForKey:@"money"];
             appoint.alertString = [[responseObject objectForKey:@"data"] objectForKey:@"alert"];
             appoint.class_id = self.class_id;
@@ -360,9 +353,16 @@
             }
             
             [self.navigationController pushViewController:appoint animated:YES];
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            
+            [alert show];
         }
     } fail:^(NSError *error) {
         NSLog(@"error  %@",error);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        
+        [alert show];
     }];
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -370,6 +370,5 @@
     if (buttonIndex == 1) {
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
     }
-    
 }
 @end

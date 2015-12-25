@@ -30,7 +30,11 @@
 @end
 
 @implementation MoneyViewController
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    [self createView];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
@@ -40,7 +44,7 @@
     self.navigationItem.leftBarButtonItem = backItem;
     self.title = @"私房钱";
     
-       [self createView];
+      //  [self createView];
     
 }
 

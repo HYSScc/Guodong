@@ -13,10 +13,10 @@
 
 @property (nonatomic,retain)NSString *func_id;
 @property (nonatomic,retain)NSString *rmb;
-@property (nonatomic,retain)NSString *class_id;
+@property (nonatomic,assign)int class_id;
+@property (nonatomic,assign)BOOL isShop;
 @property (nonatomic,retain)NSString *ishave;
 @property (nonatomic,retain)NSString *total;
-@property (nonatomic,assign)int type;
 @property (nonatomic,retain)NSString *isVIP;
 @property (nonatomic,retain)NSString *isFirst;
 @property (nonatomic,retain)NSString *discont;
@@ -28,6 +28,8 @@
 @property (nonatomic,retain)NSString *userinfo_name;
 @property (nonatomic,retain)NSString *userinfo_number;
 @property (nonatomic,retain)NSString *userinfo_address;
-@property (nonatomic,retain) NSArray *dateArray;
+@property (nonatomic,retain)NSArray *dateArray;
 @property (nonatomic,retain)NSString *vip_cards;
+@property (nonatomic,retain)NSMutableArray *price_list;
+@property (nonatomic,retain)NSString *price_number;
 @end

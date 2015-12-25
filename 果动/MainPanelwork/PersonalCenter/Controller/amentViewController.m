@@ -17,6 +17,7 @@
     UITextField *messageTextField;
     UIButton *changeImageButton;
     UIButton *setSexButton;
+    UIImageView *centerImge;
 }
 @end
 
@@ -43,9 +44,7 @@
     [baseImageView setImageWithURL:[NSURL URLWithString:self.baseImageStr] success:^(UIImage *image, BOOL cached) {
         NSLog(@"caced %d   image %@",cached,image);
     } failure:^(NSError *error) {
-        UIImageView *centerImge = [[UIImageView alloc] init];
-        centerImge.frame = CGRectMake((baseImageView.bounds.size.width - viewHeight/6.67)/2, (baseImageView.bounds.size.height - viewHeight/7.021)/2, viewHeight/6.67, viewHeight/7.021);
-       
+        centerImge = [[UIImageView alloc] initWithFrame:CGRectMake((baseImageView.bounds.size.width - viewHeight/6.67)/2, (baseImageView.bounds.size.height - viewHeight/7.021)/2, viewHeight/6.67, viewHeight/7.021)];
         centerImge.image = [UIImage imageNamed:@"ament_baseimage"];
         
         centerImge.userInteractionEnabled = YES;
@@ -170,8 +169,10 @@
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.set_background",BASEURL];
     [HttpTool uploadImageWithUrl:url image:info[UIImagePickerControllerEditedImage] completion:^(id responseObject) {
         NSLog(@"res  %@",responseObject);
-        baseImageView.image = info[UIImagePickerControllerEditedImage];
         
+        baseImageView.image = info[UIImagePickerControllerEditedImage];
+        [centerImge removeFromSuperview];
+    
     } errorBlock:^(NSError *error) {
         NSLog(@"error  %@",error);
     }];

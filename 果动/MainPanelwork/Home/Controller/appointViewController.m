@@ -17,6 +17,8 @@
 #import "AppDelegate.h"
 #import "PersonalCenterController.h"
 #import "Message.h"
+#import "TopView.h"
+#import "priceList.h"
 @interface appointViewController ()<UITextFieldDelegate,UITextViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate,UIActionSheetDelegate,LXActivityDelegate,UIAlertViewDelegate>
 {
     UIButton *openClassButton;
@@ -26,9 +28,10 @@
     NSString *order_id;
     NSString *kUrl;
     BOOL ishuadong;
+    BOOL isopenClass;
     int messageNumber;
     int messageHeight;
-    //   BOOL isFirstAlert;
+    int topImagetype;
     NSArray *messageArray;
     UIView *datePickerView;
     UILabel *dateLabel;
@@ -46,7 +49,11 @@
     UITextField *nameTextField;
     UITextField *addressTextField;
     UIView *smallMessageView;
+    TopView *topView;
     
+    UIButton *openPersonButton;
+    UILabel *personNumberLabel;
+    UIPickerView *personNumberPicker;
 }
 @end
 
@@ -77,62 +84,26 @@
 }
 -(void)setView
 {
-    NSArray *topImageArray   = @[@"fitness_topImage",@"yoga_topImage",@"fat_topImage",@"core_topImage"];
-    NSArray *smallImageArray = @[@"fitness_image1"  ,@"yoga_image1"  ,@"fat_image1",  @"core_image1"  ];
-    NSArray *bigImageArray   = @[@"fitness_image2"  ,@"yoga_image2"  ,@"fat_image2"  ,@"core_image2"  ];
-
-    if ([self.class_id intValue] !=2) {
-        messageArray    = @[@"姓名",@"电话",@"日期",@"时间",@"地址"];
+    if (self.isShop) {
+         messageArray    = @[@"课程",@"姓名",@"电话",@"日期",@"时间",@"人数"];
     } else {
-        messageArray    = @[@"课程",@"姓名",@"电话",@"日期",@"时间",@"地址"];
+        if (self.class_id != 2) {
+            messageArray    = @[@"姓名",@"电话",@"日期",@"时间",@"人数",@"地址"];
+        } else {
+            messageArray    = @[@"课程",@"姓名",@"电话",@"日期",@"时间",@"人数",@"地址"];
+        }
     }
-    alertImageView = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - viewHeight/3.9235)/2, viewHeight/3.032 - viewHeight/15.512 , viewHeight/3.9235, viewHeight/15.512)];
+    
+    alertImageView = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - viewHeight/3.9235)/2, viewHeight/3.335 - viewHeight/15.512 , viewHeight/3.9235, viewHeight/15.512)];
     [self.view addSubview:alertImageView];
-    topimage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight/3.032)];
-    [topimage setImage:[UIImage imageNamed:topImageArray[[self.class_id intValue] - 1]]];
-    [self.view addSubview:topimage];
     
-    UIImageView *smallImage = [[UIImageView alloc] init];
-    switch ([self.class_id intValue]) {
-        case 1:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/17.37)/2 , viewHeight/17.5526, viewHeight/17.37, viewHeight/16.51);
-            break;
-        case 2:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/12.83)/2 , viewHeight/17.5526, viewHeight/12.83, viewHeight/18.53);
-            break;
-        case 3:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/14.5)/2 , viewHeight/17.5526, viewHeight/14.5, viewHeight/15.2982);
-            break;
-        case 4:
-            smallImage.frame = CGRectMake((topimage.bounds.size.width - viewHeight/14.5)/2 , viewHeight/17.5526, viewHeight/14.5, viewHeight/15.2982);
-            break;
-            
-        default:
-            break;
-    }
-    [smallImage setImage:[UIImage imageNamed:smallImageArray[[self.class_id intValue] - 1]]];
-    [self.view addSubview:smallImage];
+     //顶部视图
+    topImagetype = self.isShop ? 5 : self.class_id;
+    topView = [[TopView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight/3.335) imageTypeWith:topImagetype ClassNumberWith:self.personNumber showClassNumberWith:NO];
+    [self.view addSubview:topView];
+   
     
-    UIImageView *bigImage = [[UIImageView alloc] initWithFrame:CGRectMake((topimage.bounds.size.width - viewHeight/4.94)/2 , CGRectGetMaxY(smallImage.frame)+viewHeight/55.58333, viewHeight/4.94, viewHeight/15.694)];
-    [bigImage setImage:[UIImage imageNamed:bigImageArray[[self.class_id intValue] - 1]]];
-    [self.view addSubview:bigImage];
-    
-    UILabel *introduceLabel = [[UILabel alloc] initWithFrame:CGRectMake((topimage.bounds.size.width - viewHeight/5.558)/2, CGRectGetMaxY(bigImage.frame)+viewHeight/39.2353, viewHeight/5.558, viewHeight/31.762)];
-    introduceLabel.textColor = [UIColor orangeColor];
-    introduceLabel.textAlignment = 1;
-    introduceLabel.text = @"课程介绍";
-    introduceLabel.font = [UIFont fontWithName:FONT size:viewHeight/31.762];
-    [self.view addSubview:introduceLabel];
-    
-    UILabel * classnumberLabel = [[UILabel alloc] initWithFrame:CGRectMake((topimage.bounds.size.width - viewHeight/5.558)/2, CGRectGetMaxY(introduceLabel.frame) + viewHeight/88.9333, viewHeight/5.558, viewHeight/74.111)];
-    classnumberLabel.textColor = [UIColor whiteColor];
-    classnumberLabel.textAlignment = 1;
-    classnumberLabel.text = [NSString stringWithFormat:@"已有%d人下单",self.personNumber];
-    classnumberLabel.font = [UIFont fontWithName:FONT size:viewHeight/66.7];
-    [self.view addSubview:classnumberLabel];
-    
-    
-    UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topimage.frame), viewWidth, viewHeight - CGRectGetMaxY(topimage.frame) - NavigationBar_Height)];
+    UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topView.frame), viewWidth, viewHeight - CGRectGetMaxY(topView.frame) - NavigationBar_Height)];
     messageView.userInteractionEnabled = YES;
     [self.view addSubview:messageView];
     
@@ -141,10 +112,11 @@
     
     openTimePickerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     openPickerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    messageNumber = [self.class_id intValue] == 2 ? 7 : 6;
+    openPersonButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    messageNumber = (int)messageArray.count + 1;
     messageHeight = messageView.bounds.size.height/messageNumber;
     for (int a = 0; a < messageNumber-1; a++) {
-        
         
         smallMessageView = [[UIView alloc] initWithFrame:CGRectMake(0, a*messageHeight, viewWidth, messageHeight)];
         smallMessageView.userInteractionEnabled = YES;
@@ -163,18 +135,17 @@
         messageLabel.font = [UIFont fontWithName:FONT size:viewHeight/51.308];
         [smallMessageView addSubview:messageLabel];
         
-        if ([self.class_id intValue] !=2) {
-            if (a == 0 || a == 1 || a == 4) {
+        if (self.class_id != 2 && !self.isShop) {
+            if (a == 0 || a == 1 || a == 5) {
                 UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 messageTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
                 messageTextField.textAlignment = 2;
                 messageTextField.tag = a+10;
                 messageTextField.delegate = self;
                 messageTextField.textColor = [UIColor whiteColor];
-                messageTextField.font  = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                messageTextField.font  = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:messageTextField];
                 if (a == 0) {
-                    NSLog(@"self.userinfo_name %@",self.userinfo_name);
                     messageTextField.text = self.userinfo_name;
                 }
                 else if (a == 1) {
@@ -182,6 +153,7 @@
                     messageTextField.text = self.userinfo_number;
                 }
                 else{
+                    NSLog(@"接收地址 %@",self.userinfo_address);
                     messageTextField.text = self.userinfo_address;
                 }
                 
@@ -194,7 +166,7 @@
                 dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 dateLabel.textColor = [UIColor whiteColor];
                 dateLabel.textAlignment = 2;
-                dateLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                dateLabel.font = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:dateLabel];
                 
             }
@@ -208,8 +180,19 @@
                 timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 timeLabel.textColor = [UIColor whiteColor];
                 timeLabel.textAlignment = 2;
-                timeLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                timeLabel.font = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:timeLabel];
+            }
+            if (a == 4) {
+                openPersonButton.frame = CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight);
+                [openPersonButton addTarget:self action:@selector(openPerson) forControlEvents:UIControlEventTouchUpInside];
+                [smallMessageView addSubview:openPersonButton];
+                
+                personNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
+                personNumberLabel.textColor = [UIColor whiteColor];
+                personNumberLabel.textAlignment = 2;
+                personNumberLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                [smallMessageView addSubview:personNumberLabel];
             }
         }
         else
@@ -223,19 +206,19 @@
                 classLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 classLabel.textColor = [UIColor whiteColor];
                 classLabel.textAlignment = 2;
-                classLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                classLabel.font = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:classLabel];
                 
             }
             
-            if (a == 1 || a == 2 || a == 5) {
+            if (a == 1 || a == 2 || a == 6) {
                 UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 messageTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
                 messageTextField.textAlignment = 2;
                 messageTextField.tag = a+9;
                 messageTextField.delegate = self;
                 messageTextField.textColor = [UIColor whiteColor];
-                messageTextField.font  = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                messageTextField.font  = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:messageTextField];
                 if (a == 1) {
                     messageTextField.text = self.userinfo_name;
@@ -257,7 +240,7 @@
                 dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 dateLabel.textColor = [UIColor whiteColor];
                 dateLabel.textAlignment = 2;
-                dateLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                dateLabel.font = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:dateLabel];
                 
             }
@@ -271,8 +254,19 @@
                 timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 timeLabel.textColor = [UIColor whiteColor];
                 timeLabel.textAlignment = 2;
-                timeLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                timeLabel.font = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:timeLabel];
+            }
+            if (a == 5) {
+                openPersonButton.frame = CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight);
+                [openPersonButton addTarget:self action:@selector(openPerson) forControlEvents:UIControlEventTouchUpInside];
+                [smallMessageView addSubview:openPersonButton];
+                
+                personNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
+                personNumberLabel.textColor = [UIColor whiteColor];
+                personNumberLabel.textAlignment = 2;
+                personNumberLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
+                [smallMessageView addSubview:personNumberLabel];
             }
         }
     }
@@ -291,33 +285,44 @@
 #pragma mark -- ClassPicker
 -(void)openClass
 {
-    //nameTextField交互性关闭
-    [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:NO];
-    classPickView = [[UIView alloc] initWithFrame:CGRectMake(0,viewHeight - NavigationBar_Height - viewHeight/2.6055,viewWidth,viewHeight/2.6055)];
-    classPickView.backgroundColor = [UIColor whiteColor];
-    classPickView.userInteractionEnabled = YES;
-    [self.view addSubview:classPickView];
     
-    UIButton *sureClassButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    sureClassButton.frame = CGRectMake(0, 0, viewWidth, viewHeight/16.675);
-    sureClassButton.backgroundColor = [UIColor orangeColor];
-    [sureClassButton addTarget:self action:@selector(sureClass) forControlEvents:UIControlEventTouchUpInside];
-    [sureClassButton setTintColor:[UIColor whiteColor]];
-    [sureClassButton setTitle:@"完成" forState:UIControlStateNormal];
-    sureClassButton.titleLabel.font = [UIFont fontWithName:FONT size:viewHeight/41.6875];
-    [classPickView addSubview:sureClassButton];
+    if (!isopenClass) {
+        //nameTextField交互性关闭
+        [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:NO];
+        //numberTextField交互性关闭
+        [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:NO];
+        classPickView = [[UIView alloc] initWithFrame:CGRectMake(0,viewHeight - NavigationBar_Height - viewHeight/2.6055,viewWidth,viewHeight/2.6055)];
+        classPickView.backgroundColor = [UIColor whiteColor];
+        classPickView.userInteractionEnabled = YES;
+        [self.view addSubview:classPickView];
+        
+        UIButton *sureClassButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        sureClassButton.frame = CGRectMake(0, 0, viewWidth, viewHeight/16.675);
+        sureClassButton.backgroundColor = [UIColor orangeColor];
+        [sureClassButton addTarget:self action:@selector(sureClass) forControlEvents:UIControlEventTouchUpInside];
+        [sureClassButton setTintColor:[UIColor whiteColor]];
+        [sureClassButton setTitle:@"完成" forState:UIControlStateNormal];
+        sureClassButton.titleLabel.font = [UIFont fontWithName:FONT size:viewHeight/41.6875];
+        [classPickView addSubview:sureClassButton];
+        
+        classPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(sureClassButton.frame), viewWidth, viewHeight/3.088)];
+        classPicker.delegate   = self;
+        classPicker.dataSource = self;
+        classPicker.tag = 100;
+        [classPickView addSubview:classPicker];
+        isopenClass = !isopenClass;
+    }
     
-    classPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(sureClassButton.frame), viewWidth, viewHeight/3.088)];
-    classPicker.delegate   = self;
-    classPicker.dataSource = self;
-    classPicker.tag = 100;
-    [classPickView addSubview:classPicker];
 }
 -(void)sureClass
 {
     //nameTextField交互性打开
     [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:YES];
+    //numberTextField交互性打开
+    [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:YES];
+    
     [classPickView removeFromSuperview];
+     isopenClass = !isopenClass;
 }
 #pragma mark -- DatePicker
 -(void)openPicker
@@ -415,8 +420,50 @@
     [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:YES];
     //numberTextField交互性打开
     [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:YES];
-
+    
     [timePickerView removeFromSuperview];
+}
+#pragma mark -- ClassPicker
+-(void)openPerson
+{
+    //class交互性关闭
+    openClassButton.userInteractionEnabled = NO;
+    //nameTextField交互性关闭
+    [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:NO];
+    //numberTextField交互性关闭
+    [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:NO];
+
+    classPickView = [[UIView alloc] initWithFrame:CGRectMake(0,viewHeight - NavigationBar_Height - viewHeight/2.6055,viewWidth,viewHeight/2.6055)];
+    classPickView.backgroundColor = [UIColor whiteColor];
+    classPickView.userInteractionEnabled = YES;
+    [self.view addSubview:classPickView];
+    
+    UIButton *sureClassButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    sureClassButton.frame = CGRectMake(0, 0, viewWidth, viewHeight/16.675);
+    sureClassButton.backgroundColor = [UIColor orangeColor];
+    [sureClassButton addTarget:self action:@selector(surePerson) forControlEvents:UIControlEventTouchUpInside];
+    [sureClassButton setTintColor:[UIColor whiteColor]];
+    [sureClassButton setTitle:@"完成" forState:UIControlStateNormal];
+    sureClassButton.titleLabel.font = [UIFont fontWithName:FONT size:viewHeight/41.6875];
+    [classPickView addSubview:sureClassButton];
+    
+    personNumberPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(sureClassButton.frame), viewWidth, viewHeight/3.088)];
+    personNumberPicker.delegate   = self;
+    personNumberPicker.dataSource = self;
+    personNumberPicker.tag = 300;
+   
+    [classPickView addSubview:personNumberPicker];
+    
+}
+-(void)surePerson
+{
+    //nameTextField交互性打开
+    [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:YES];
+    //numberTextField交互性打开
+    [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:YES];
+    
+    [classPickView removeFromSuperview];
+   
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -426,11 +473,13 @@
 {
     if (pickerView.tag == 200) {
         return self.dateArray.count;
-    }
-    else{
+    } else if (pickerView.tag == 100){
         return  self.course.count;
+    } else {
+        
+        return self.price_list.count;
+       
     }
-    return self.dateArray.count;
 }
 // 设置某一列中的某一行的标题
 -(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -438,35 +487,37 @@
     if (pickerView.tag == 200) {
         NSString *title = [self.dateArray objectAtIndex:row];
         return title;
-    }else{
+    }else if (pickerView.tag == 100){
         Message *message = [self.course objectAtIndex:row];
         return message.name;
+    } else {
+        priceList *price = [self.price_list objectAtIndex:row];
+        return price.price_name;
     }
-    
 }
 // 选中某一列中的某一行时会调用
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (pickerView.tag == 200) {
         timeLabel.text = [self.dateArray objectAtIndex:row];
-    }
-    else
-    {
+    } else if (pickerView.tag == 100) {
         Message *message = [self.course objectAtIndex:row];
         classLabel.text = message.name;
         self.func_id = message.func_id;
-        self.rmb = message.rmb;
         self.course_time = message.course_time;
-        NSLog(@"func_id  %@",self.func_id);
+    } else {
+        priceList *price = [self.price_list objectAtIndex:row];
+        self.rmb = price.price_rmb;
+        self.price_number = price.price_num;
+        personNumberLabel.text = price.price_name;
     }
-    
 }
 
 #pragma  mark -- PayMoney
 -(void)payMoney
 {
     alertImageView.alpha = 1;
-    alertImageView.frame = CGRectMake((viewWidth - viewHeight/3.9235)/2, viewHeight/3.032 - viewHeight/15.512 , viewHeight/3.9235, viewHeight/15.512);
+    alertImageView.frame = CGRectMake((viewWidth - viewHeight/3.9235)/2, CGRectGetMaxY(topView.frame) - viewHeight/15.512 , viewHeight/3.9235, viewHeight/15.512);
     
     NSString *timeString = [timeLabel.text substringToIndex:2];
     NSString *string = [NSString stringWithFormat:@"%@ %@:00:00",dateLabel.text,timeString];
@@ -477,28 +528,35 @@
     NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[date1 timeIntervalSince1970]];
     
     
-    if ([self.class_id intValue] !=2) {
+    if (self.class_id !=2 && !self.isShop) {
         Message *message = [self.course objectAtIndex:0];
         self.func_id = message.func_id;
-        self.rmb = message.rmb;
         self.course_time = message.course_time;
     }
     nameTextField = (UITextField *)[self.view viewWithTag:10];
     numberTextField = (UITextField *)[self.view viewWithTag:11];
-    addressTextField = (UITextField *)[self.view viewWithTag:14];
+    addressTextField = (UITextField *)[self.view viewWithTag:15];
     [addressTextField resignFirstResponder];
-    if ([self.class_id intValue] != 2) {
-        
-        if (nameTextField.text.length == 0|| numberTextField.text.length == 0||addressTextField.text.length == 0||timeLabel.text.length == 0||dateLabel.text.length == 0)
+    if (self.isShop) {
+        if (nameTextField.text.length == 0|| numberTextField.text.length == 0|| classLabel.text.length == 0||timeLabel.text.length == 0||dateLabel.text.length == 0 || personNumberLabel.text.length == 0)
         {
             
             [self alertImageWithImageName:@"alert_all"];
             return;
         }
     }
-    if ([self.class_id intValue] == 2)
+    if (self.class_id != 2 && !self.isShop) {
+        
+        if (nameTextField.text.length == 0|| numberTextField.text.length == 0||addressTextField.text.length == 0||timeLabel.text.length == 0||dateLabel.text.length == 0 || personNumberLabel.text.length == 0)
+        {
+            
+            [self alertImageWithImageName:@"alert_all"];
+            return;
+        }
+    }
+    if (self.class_id  == 2 && !self.isShop)
     {
-        if (nameTextField.text.length == 0|| numberTextField.text.length == 0||addressTextField.text.length == 0||timeLabel.text.length == 0||dateLabel.text.length == 0||classLabel.text.length == 0)
+        if (nameTextField.text.length == 0|| numberTextField.text.length == 0||addressTextField.text.length == 0||timeLabel.text.length == 0||dateLabel.text.length == 0||classLabel.text.length == 0|| personNumberLabel.text.length == 0)
         {
             
             [self alertImageWithImageName:@"alert_all"];
@@ -507,26 +565,35 @@
         
     }
     //检查所有信息是否有误
-   
-        BOOL kongge = [appointViewController isValidateKongge:nameTextField.text];
-        if (!kongge) {
-            [self alertImageWithImageName:@"alert_name"];
-            return;
+    
+    BOOL kongge = [appointViewController isValidateKongge:nameTextField.text];
+    if (!kongge) {
+        [self alertImageWithImageName:@"alert_name"];
+        return;
         
-        }
-        BOOL number = [appointViewController isValidateTelNumber:numberTextField.text];
-        if (!number) {
-            
-            [self alertImageWithImageName:@"alert_telephone"];
-            return;
-        }
+    }
+    BOOL number = [appointViewController isValidateTelNumber:numberTextField.text];
+    if (!number) {
+        
+        [self alertImageWithImageName:@"alert_telephone"];
+        return;
+    }
+    if (!self.isShop) {
         BOOL addresskongge = [appointViewController isValidateKongge:addressTextField.text];
         if (!addresskongge) {
             
             [self alertImageWithImageName:@"alert_address"];
             return;
         }
-    messageDict = @{@"func_id":self.func_id,@"course_type":@"1",@"number":numberTextField.text,@"name":nameTextField.text,@"address":addressTextField.text,@"time":timeSp};
+
+    }
+    if (!self.isShop) {
+         messageDict = @{@"func_id":self.func_id,@"course_type":@"1",@"number":numberTextField.text,@"name":nameTextField.text,@"address":addressTextField.text,@"time":timeSp,@"course_num":self.price_number};
+    } else {
+         messageDict = @{@"func_id":self.func_id,@"course_type":@"2",@"number":numberTextField.text,@"name":nameTextField.text,@"time":timeSp,@"course_num":self.price_number};
+        NSLog(@"参数 %@",messageDict);
+    }
+    
     
     NSLog(@" 是不是vip会员的第一次课 %@",self.vip_cards);
     
@@ -549,8 +616,8 @@
                  NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
                  
                  shareButtonImageNameArray = @[@"pay_weixin2",@"pay_yinlian2",@"pay_zhifubao2"];
-                 
-                 LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:self.rmb time:self.course_time delegate:self discont:self.discont  youhuijuan:self.youhuijuan isFirst:self.isFirst cancelButtonTitle:@"" ShareButtonTitles:nil withShareButtonImagesName:shareButtonImageNameArray];
+                 NSLog(@"self.price_number %@",self.price_number);
+                 LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:self.rmb time:self.course_time delegate:self discont:self.discont  youhuijuan:self.youhuijuan classNumber:self.price_number isFirst:self.isFirst cancelButtonTitle:@"" ShareButtonTitles:nil withShareButtonImagesName:shareButtonImageNameArray];
                  [lxActivity showInView:self.view];
              }else{
                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -576,27 +643,18 @@
 {
     if (imageIndex == 4) {
         return;
-    }
-    else
-    {
-        NSString *amountStr = self.rmb;
-        
+    } else {
         if (self.ishave) {
             kUrl = [NSString stringWithFormat:@"%@charge/?gd_money=%@",BASEURL,self.ishave];
-        }
-        else
-        {
+        } else {
             kUrl = [NSString stringWithFormat:@"%@charge/",BASEURL];
         }
-        
-        NSLog(@"点击了确认按钮   amountStr %@  ",amountStr);
-        
         switch (imageIndex) {
             case 2:
             {
                 requestdict = @{
                                 @"channel" : @"alipay",
-                                @"amount"  :amountStr,
+                                @"course_num"  :self.price_number,
                                 @"order_no":order_id,
                                 @"subject":self.func_id,
                                 };
@@ -606,7 +664,7 @@
             {
                 requestdict = @{
                                 @"channel" : @"upacp",
-                                @"amount"  :amountStr,
+                                @"course_num"  :self.price_number,
                                 @"order_no":order_id,
                                 @"subject":self.func_id,
                                 };
@@ -616,7 +674,7 @@
             {
                 requestdict = @{
                                 @"channel" : @"wx",
-                                @"amount"  :amountStr,
+                                @"course_num"  :self.price_number,
                                 @"order_no":order_id,
                                 @"subject":self.func_id,
                                 };
@@ -634,7 +692,7 @@
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 
                 [alert show];
-
+                
             }else{
                 NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
                 NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -657,7 +715,7 @@
                                         }
                                     }];
                                });
-
+                
             }
         } fail:^(NSError *error) {
             NSLog(@"error  %@",error);
@@ -704,14 +762,20 @@
     if (textField.tag == 11) {
         //data交互性关闭
         openPickerButton.userInteractionEnabled = NO;
+        //class交互性关闭
+        openClassButton.userInteractionEnabled = NO;
+        //time交互性关闭
+        openTimePickerButton.userInteractionEnabled = NO;
     }
-    if (textField.tag == 14) {
+    if (textField.tag == 15) {
         //class交互性关闭
         openClassButton.userInteractionEnabled = NO;
         //data交互性关闭
         openPickerButton.userInteractionEnabled = NO;
         //time交互性关闭
         openTimePickerButton.userInteractionEnabled = NO;
+        //person交互性关闭
+        openPersonButton.userInteractionEnabled = NO;
         //nameTextField交互性关闭
         [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:NO];
         //numberTextField交互性关闭
@@ -737,7 +801,7 @@
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     alertImageView.alpha = 1;
-    alertImageView.frame = CGRectMake((viewWidth - viewHeight/3.9235)/2, viewHeight/3.032 - viewHeight/15.512 , viewHeight/3.9235, viewHeight/15.512);
+    alertImageView.frame = CGRectMake((viewWidth - viewHeight/3.9235)/2, CGRectGetMaxY(topView.frame) - viewHeight/15.512 , viewHeight/3.9235, viewHeight/15.512);
     if (textField.tag == 10 )
     {
         //class交互性打开
@@ -749,13 +813,17 @@
     }else if (textField.tag == 11) {
         //data交互性打开
         openPickerButton.userInteractionEnabled = YES;
+        //class交互性打开
+        openClassButton.userInteractionEnabled = YES;
+        //time交互性打开
+        openTimePickerButton.userInteractionEnabled = YES;
         BOOL number = [appointViewController isValidateTelNumber:textField.text];
         if (!number) {
             
             [self alertImageWithImageName:@"alert_telephone"];
         }
     }
-    else if  (textField.tag == 14 )
+    else if  (textField.tag == 15 )
     {
         //class交互性打开
         openClassButton.userInteractionEnabled = YES;
@@ -763,6 +831,8 @@
         openPickerButton.userInteractionEnabled = YES;
         //time交互性打开
         openTimePickerButton.userInteractionEnabled = YES;
+        //person交互性打开
+        openPersonButton.userInteractionEnabled = YES;
         //nameTextField交互性打开
         [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:YES];
         //numberTextField交互性打开
@@ -787,7 +857,7 @@
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);//调用系统震动
     [alertImageView setImage:[UIImage imageNamed:imageName]];
     [UIView animateWithDuration:.4  animations:^{
-    alertImageView.frame = CGRectMake((viewWidth - viewHeight/3.9235)/2, CGRectGetMaxY(topimage.frame) , viewHeight/3.9235, viewHeight/15.512);
+        alertImageView.frame = CGRectMake((viewWidth - viewHeight/3.9235)/2, CGRectGetMaxY(topView.frame) , viewHeight/3.9235, viewHeight/15.512);
     } completion:^(BOOL finished) {
         
         [NSThread sleepForTimeInterval:1.0f];
@@ -818,7 +888,7 @@
                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
                          alert.tag = 852;
                          [alert show];
-
+                         
                      }
                  }
                 fail:^(NSError *error)
@@ -826,7 +896,7 @@
                      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
                      
                      [alert show];
-
+                     
                  }];
             }
             break;

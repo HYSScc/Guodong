@@ -88,6 +88,7 @@
     int youhuiPrice;
     int oldPrice;
     int discontPrice;
+    NSString *oldPriceString;
 }
 
 @property (nonatomic,strong) UIView *backGroundView;
@@ -114,7 +115,7 @@
 
 #pragma mark - Public method
 
-- (id)initWithTitle:(NSString *)title time:(NSString *)time delegate:(id<LXActivityDelegate>)delegate discont:(NSString *)discont youhuijuan:(NSString*)youhuijuan isFirst:(NSString *)isFirst cancelButtonTitle:(NSString *)cancelButtonTitle ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
+- (id)initWithTitle:(NSString *)title time:(NSString *)time delegate:(id<LXActivityDelegate>)delegate discont:(NSString *)discont youhuijuan:(NSString*)youhuijuan classNumber:(NSString *)classnumber isFirst:(NSString *)isFirst cancelButtonTitle:(NSString *)cancelButtonTitle ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
 {
     self = [super init];
     if (self) {
@@ -129,7 +130,7 @@
             self.delegate = delegate;
         }
         
-        [self creatButtonsWithTitle:title  time:(NSString *)time discont:discont youhuijuan:youhuijuan isFirst:isFirst cancelButtonTitle:cancelButtonTitle shareButtonTitles:shareButtonTitlesArray withShareButtonImagesName:shareButtonImagesNameArray];
+        [self creatButtonsWithTitle:title  time:(NSString *)time discont:discont youhuijuan:youhuijuan classNumber:classnumber isFirst:isFirst cancelButtonTitle:cancelButtonTitle shareButtonTitles:shareButtonTitlesArray withShareButtonImagesName:shareButtonImagesNameArray];
         
     }
     return self;
@@ -142,7 +143,7 @@
 
 #pragma mark - Praviate method
 
-- (void)creatButtonsWithTitle:(NSString *)title time:(NSString *)time discont:(NSString*)discont youhuijuan:(NSString *)youhuijuan isFirst:(NSString *)isFirst cancelButtonTitle:(NSString *)cancelButtonTitle shareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray
+- (void)creatButtonsWithTitle:(NSString *)title time:(NSString *)time discont:(NSString*)discont youhuijuan:(NSString *)youhuijuan  classNumber:(NSString *)classnumber isFirst:(NSString *)isFirst cancelButtonTitle:(NSString *)cancelButtonTitle shareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray
 {
     //初始化
     self.isHadTitle = NO;
@@ -174,11 +175,22 @@
         NSString *nowPrise = [NSString stringWithFormat:@"%d",oldPrice - discontPrice];
         titleLabel = [self creatTitleLabelWith:nowPrise];
        
-        NSString *oldPriceString = [NSString stringWithFormat:@"原价:%d元",oldPrice];
+        if ([classnumber intValue] == 1) {
+           
+            oldPriceString = [NSString stringWithFormat:@"原价:%d元",oldPrice];
+        } else {
+            NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+            formatter.numberStyle = kCFNumberFormatterRoundHalfDown;
+            NSString *string = [formatter stringFromNumber:[NSNumber numberWithInt:[classnumber intValue]]];
+            if ([string isEqualToString:@"二"]) {
+                oldPriceString = [NSString stringWithFormat:@"原价:%d元/双人",oldPrice];
+            } else {
+                 oldPriceString = [NSString stringWithFormat:@"原价:%d元/%@人",oldPrice,string];
+            }
+        }
         NSMutableAttributedString *attri = [[NSMutableAttributedString alloc] initWithString:oldPriceString];
         [attri addAttribute:NSStrikethroughStyleAttributeName value:@(NSUnderlinePatternSolid | NSUnderlineStyleSingle) range:NSMakeRange(0, oldPriceString.length)];
-         oldprice = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)  - 20, CGRectGetMaxY(titleLabel.frame) - 15, 100, 15)];
-        NSLog(@"oldprice %f",CGRectGetMaxX(titleLabel.bounds) + 30);
+         oldprice = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleLabel.frame)  - 20, CGRectGetMaxY(titleLabel.frame) - 15, 120, 15)];
         oldprice.attributedText = attri;
         oldprice.textColor = [UIColor lightGrayColor];
         oldprice.font = [UIFont fontWithName:FONT size:14];
@@ -280,19 +292,10 @@
                 if (line == 3) {
                     [shareButton setFrame:CGRectMake(SHAREBUTTON_INTERVAL_WIDTH+((line-1)*(SHAREBUTTON_INTERVAL_WIDTH+SHAREBUTTON_WIDTH+20))-15, self.LXActivityHeight+((column-1)*(SHAREBUTTON_INTERVAL_HEIGHT+SHAREBUTTON_HEIGHT))+10.5, 99, 57.5)];
                 }
-                
-                
-                
-                
-                
                 [self.backGroundView addSubview:shareButton];
-                
-                
             }
         }
     }
-    
-    
     //再次计算加入shareButtons后LXActivity的高度
     if (shareButtonImagesNameArray && shareButtonImagesNameArray.count > 0) {
         int totalColumns = (int)ceil((float)(shareButtonImagesNameArray.count)/3);

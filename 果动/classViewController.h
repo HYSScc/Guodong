@@ -10,7 +10,7 @@
 
 @interface classViewController : UIViewController
 @property (nonatomic,retain) NSString *titleString;
-@property (nonatomic,assign) int type;
-@property (nonatomic,retain) NSString *class_id;
-
+@property (nonatomic,assign) BOOL isShop;
+@property (nonatomic,assign) int class_id;
+@property (nonatomic,retain) NSString *shop_id;
 @end

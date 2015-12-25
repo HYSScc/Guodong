@@ -60,6 +60,8 @@
     [super viewDidLoad];
     [self onCreate];
     
+  
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav"] forBarMetrics:UIBarMetricsDefault];
     self.view.backgroundColor = BASECOLOR;
@@ -100,11 +102,23 @@
         [home.navigationController pushViewController:cityVC animated:YES];
     };
     //跳转到课程界面
-    self.pushClassVCBlock = ^(NSString *titleString,int type,NSString *class_id) {
+    self.pushClassVCBlock = ^(NSString *titleString,int class_id) {
         classViewController *class = [classViewController new];
         class.titleString = titleString;
-        class.type = type;
+        //class.type = type;//课程分类
         class.class_id = class_id;
+        class.isShop = NO;
+        NSLog(@"课程的id %d titleString %@  ",class.class_id,class.titleString) ;
+        [home.navigationController pushViewController:class animated:YES];
+    };
+    //跳转到体验店界面
+    self.pushShopVCBlock = ^(NSString *classNumber,NSString *titleString){
+        classViewController *class = [classViewController new];
+        class.isShop = YES;
+        class.shop_id = classNumber;
+        class.titleString = titleString;
+        NSLog(@"class.shop_id %@",class.shop_id);
+        
         [home.navigationController pushViewController:class animated:YES];
     };
     //移除掉所有动画
@@ -166,9 +180,9 @@
     classLabel.font = [UIFont fontWithName:FONT size:viewHeight/41.6875];
     [changeImage addSubview:classLabel];
     
-    frameLabel = [[UILabel alloc] initWithFrame:CGRectMake((viewWidth*3/4) -(viewHeight/33.35), (changeImage.bounds.size.height-(viewHeight/22.233))/2, viewHeight/16.675, viewHeight/22.233)];
+    frameLabel = [[UILabel alloc] initWithFrame:CGRectMake((viewWidth*3/4) -(viewHeight/33.35), (changeImage.bounds.size.height-(viewHeight/22.233))/2, 50, viewHeight/22.233)];
     frameLabel.textColor = [UIColor lightGrayColor];
-    frameLabel.text = @"范围";
+    frameLabel.text = @"体验店";
     frameLabel.font = [UIFont fontWithName:FONT size:viewHeight/41.6875];
     [changeImage addSubview:frameLabel];
     

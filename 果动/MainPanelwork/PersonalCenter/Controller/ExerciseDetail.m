@@ -49,9 +49,6 @@
 }
 -(void)initView
 {
-    
-   
-    
     NSArray *titleArray = @[@"身高",@"体重",@"腰围",@"臀围",@"右大腿",@"左大腿",@"右小腿",@"左小腿",@"右上臂(放松)",@"右上臂(屈曲)",@"左上臂(放松)",@"左上臂(屈曲)",@"胸围(放松)",@"胸围(扩张)",@"肱三头肌",@"髋嵴上缘",@"肩胛下缘",@"腹部",@"大腿",@"总和",@"脂肪百分比",@"腰臀比例",@"BMI",@"静态心率",@"血压",@"目标心率"];
     
     timelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, viewHeight/9.529, viewHeight/16.675)];
@@ -89,14 +86,11 @@
     if (IS_IPHONE4S)
     {
         scroll.contentSize = CGSizeMake(viewWidth, viewHeight*3.3);
-    }
-    else
-    {
+    } else {
         scroll.contentSize = CGSizeMake(viewWidth, viewHeight*2);
     }
     [self.view addSubview:scroll];
     
-   
     
     UIImageView *leftdian = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - viewHeight/9.529)*0.25, -viewHeight/95.286, viewHeight/47.643, viewHeight/47.643)];
     [leftdian setImage:[UIImage imageNamed:@"shuju_dian"]];
@@ -105,9 +99,6 @@
     rightdian = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - viewHeight/9.529)*0.75, -viewHeight/95.286, viewHeight/47.643, viewHeight/47.643)];
     [rightdian setImage:[UIImage imageNamed:@"shuju_dian"]];
     
-    
-    
-   
     
     UILabel *photolabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, viewHeight/9.529, 2592/(1936/((viewWidth - viewHeight/9.529)/2)))];
     photolabel.backgroundColor = [UIColor orangeColor];
@@ -135,7 +126,6 @@
     }
     UILabel *photoline = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(photolabel.frame), viewWidth, 0.5)];
     photoline.backgroundColor = [UIColor whiteColor];
-  //  photolabel.alpha = .8;
     [scroll addSubview:photoline];
     
     
@@ -194,10 +184,8 @@
                 if (![[last_test allKeys] containsObject:@"before"]) {
                     
                     [(UIImageView *)[self.view viewWithTag:102] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
-                }
-                else
-                {
-                    [(UIImageView *)[self.view viewWithTag:102] setImageWithURL:[NSURL URLWithString:[last_test objectForKey:@"before"]]];
+                } else {
+                    [(UIImageView *)[self.view viewWithTag:102] setImageWithURL:[NSURL URLWithString:[last_test objectForKey:@"before"]]]    ;
                     //添加点击手势
                     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
                     [(UIImageView *)[self.view viewWithTag:102] addGestureRecognizer:tap];
@@ -205,9 +193,7 @@
                 
                 if (![[last_test allKeys] containsObject:@"after"]) {
                     [(UIImageView *)[self.view viewWithTag:103] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
-                }
-                else
-                {
+                } else {
                     [(UIImageView *)[self.view viewWithTag:103] setImageWithURL:[NSURL URLWithString:[last_test objectForKey:@"after"]]];
                     //添加点击手势
                     UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];

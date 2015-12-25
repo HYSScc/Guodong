@@ -226,19 +226,19 @@
         } completion:^(BOOL finished) {
             
             HomeController *home = [HomeController sharedViewControllerManager];
-            if (locationView.dingwei == YES && locationView.isCitys == YES){
+#warning 关闭定位 是模拟器能够进入订课
+         //   if (locationView.dingwei == YES && locationView.isCitys == YES){
                 //城市覆盖  定位成功
-            //    if (button.tag == 40)return;
-                home.pushClassVCBlock(classnameArray[button.tag/10 - 1],(int)button.tag/10,class_idArray[button.tag/10 - 1]);
-            } else if (locationView.dingwei == NO) {
-                home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
-                home.alertImageView.alpha = 1;
-                home.alertImageBlock(@"locationing");
-            } else {
-                home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
-                home.alertImageView.alpha = 1;
-                home.alertImageBlock(@"city_noCover");
-            }
+                home.pushClassVCBlock(classnameArray[button.tag/10 - 1],(int)button.tag/10);
+//            } else if (locationView.dingwei == NO) {
+//                home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
+//                home.alertImageView.alpha = 1;
+//                home.alertImageBlock(@"locationing");
+//            } else {
+//                home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
+//                home.alertImageView.alpha = 1;
+//                home.alertImageBlock(@"city_noCover");
+//            }
         }];
     }];
 }

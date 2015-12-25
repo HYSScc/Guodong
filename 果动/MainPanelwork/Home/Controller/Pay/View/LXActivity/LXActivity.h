@@ -17,7 +17,7 @@
 
 @interface LXActivity : UIView<QCheckBoxDelegate>
 
-- (id)initWithTitle:(NSString *)title time:(NSString *)time delegate:(id<LXActivityDelegate>)delegate discont:(NSString *)discont youhuijuan:(NSString*)youhuijuan isFirst:(NSString *)isFirst cancelButtonTitle:(NSString *)cancelButtonTitle ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
+- (id)initWithTitle:(NSString *)title time:(NSString *)time delegate:(id<LXActivityDelegate>)delegate discont:(NSString *)discont youhuijuan:(NSString*)youhuijuan classNumber:(NSString *)classnumber isFirst:(NSString *)isFirst cancelButtonTitle:(NSString *)cancelButtonTitle ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
 - (void)showInView:(UIView *)view;
 
 @end

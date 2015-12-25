@@ -228,7 +228,7 @@
     NSLog(@"url %@",url);
        [HttpTool postWithUrl:url params:nil contentType: CONTENTTYPE success:^(id responseObject)
      {
-         NSLog(@"responseObject  %@",responseObject);
+       //  NSLog(@"responseObject  %@",responseObject);
          if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
  
              if ([self.isNews isEqualToString:@"news"]) {
@@ -374,7 +374,7 @@
 //区头高度
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    return viewHeight/11.117;
+    return Adaptive(60);
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
@@ -464,13 +464,14 @@
             }
             if (gdc.video.count>1)
             {
+                NSLog(@"gdc.video[1] %@",gdc.video[1]);
                 [moviecell.SLTImageView setImageWithURL:[NSURL URLWithString:gdc.video[1]]];
                 
                 
                 moviecell.videoURL = gdc.video[0];
             }
             moviecell.photocommentLabel.text = gdc.content;
-            CGSize textSize = [gdc.content boundingRectWithSize:CGSizeMake(viewWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:viewHeight/47.643]} context:nil].size;
+            CGSize textSize = [gdc.content boundingRectWithSize:CGSizeMake(viewWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:viewHeight/44.467]} context:nil].size;
             moviecell.photocommentLabel.frame = CGRectMake(viewHeight/44.467, (viewHeight/13.34 - textSize.height)/2, textSize.width, textSize.height);
             moviecell.cnumberLabel.text = gdc.comments;
             CGSize cnumberSize = [moviecell.cnumberLabel.text sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:viewHeight/37.056]}];
@@ -484,7 +485,7 @@
             }
             moviecell.likeButton.tag = [gdc.talkid intValue];
             [moviecell.likeButton addTarget:self action:@selector(zan:) forControlEvents:UIControlEventTouchUpInside];
-            moviecell.likeButton.frame = CGRectMake(CGRectGetMaxX(moviecell.cnumberLabel.frame)+(viewHeight/66.7), CGRectGetMinY(moviecell.pImage.frame), viewHeight/29,viewHeight/35.105);
+            moviecell.likeButton.frame = CGRectMake(CGRectGetMaxX(moviecell.cnumberLabel.frame)+(viewHeight/66.7), CGRectGetMinY(moviecell.pImage.frame), viewHeight/27.2245,viewHeight/33.35);
             
             moviecell.znumberLabel.text = gdc.praises;
             CGSize znumberSize = [moviecell.znumberLabel.text sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:viewHeight/37.056]}];
