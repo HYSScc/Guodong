@@ -85,44 +85,46 @@
     NSDictionary *locationDict  = @{@"lnt":[NSString stringWithFormat:@"%f",location.coordinate.longitude],@"lat":[NSString stringWithFormat:@"%f",location.coordinate.latitude]};
     
     [HttpTool postWithUrl:urlString params:locationDict contentType:CONTENTTYPE success:^(id responseObject) {
-        allName = [[responseObject objectForKey:@"city"] objectForKey:@"name"];
-        if (!allName) {
-            NSLog(@"定位失败");
-            home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
-            home.alertImageView.alpha = 1;
-            home.alertImageBlock(@"locationStart");
-            [self createLocation];
+        if (ResponseObject_RC == 0) {
+            allName = [[responseObject objectForKey:@"city"] objectForKey:@"name"];
+            if (!allName) {
+                NSLog(@"定位失败");
+                home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
+                home.alertImageView.alpha = 1;
+                home.alertImageBlock(@"locationStart");
+                [self createLocation];
+            }
+            
+            self.dingwei = YES;
+            [self.locationButton setTitle:allName forState:UIControlStateNormal];
+            NSString *district = [[responseObject objectForKey:@"city"] objectForKey:@"district"];
+            NSString *address = [NSString stringWithFormat:@"%@.%@",allName,district];
+            succ = 0;
+            if (allName.length != 0 && district.length != 0) {
+                succ = 1;
+                NSLog(@"定位成功");
+                home.removeAnimationBlock(self.dingwei);
+            }
+            
+            NSDictionary *dict = @{@"address":address,@"succ":[NSString stringWithFormat:@"%d",succ]};
+            NSNotification *notification =[NSNotification notificationWithName:@"address" object:nil userInfo:dict];
+            //通过通知中心发送通知
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+            
+            CGRect newFrame = self.locationButton.frame;
+            CGSize userNameSize = [allName sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:23]}];
+            newFrame.size.width = userNameSize.width;
+            self.locationButton.frame = newFrame;
+            
+            if ([[responseObject objectForKey:@"allowd"] indexOfObject:[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]]) {
+                NSLog(@"城市已覆盖");
+                self.isCitys = YES;
+            }
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        
-        self.dingwei = YES;
-        [self.locationButton setTitle:allName forState:UIControlStateNormal];
-        NSString *district = [[responseObject objectForKey:@"city"] objectForKey:@"district"];
-        NSString *address = [NSString stringWithFormat:@"%@.%@",allName,district];
-        succ = 0;
-        if (allName.length != 0 && district.length != 0) {
-            succ = 1;
-            NSLog(@"定位成功");
-            home.removeAnimationBlock(self.dingwei);
-        }
-       
-        NSDictionary *dict = @{@"address":address,@"succ":[NSString stringWithFormat:@"%d",succ]};
-        NSNotification *notification =[NSNotification notificationWithName:@"address" object:nil userInfo:dict];
-        //通过通知中心发送通知
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
-        
-        CGRect newFrame = self.locationButton.frame;
-        CGSize userNameSize = [allName sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:23]}];
-        newFrame.size.width = userNameSize.width;
-        self.locationButton.frame = newFrame;
-        
-        if ([[responseObject objectForKey:@"allowd"] indexOfObject:[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]]) {
-            NSLog(@"城市已覆盖");
-            self.isCitys = YES;
-    
-        }
-    } fail:^(NSError *error) {
-        NSLog(@"error %@",error);
-    }];
+                
+    } fail:^(NSError *error) {}];
 }
 + (instancetype)sharedViewManager {
     static dispatch_once_t onceToken;

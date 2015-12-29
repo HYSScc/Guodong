@@ -113,9 +113,6 @@
 
     }
     
-   
-
-    
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle =UITableViewCellSeparatorStyleNone;
     _tableView.dataSource = self;
@@ -225,16 +222,14 @@
             url = [NSString stringWithFormat:@"%@api/?method=gdb.index",BASEURL];
         }
     }
-    NSLog(@"url %@",url);
        [HttpTool postWithUrl:url params:nil contentType: CONTENTTYPE success:^(id responseObject)
      {
-       //  NSLog(@"responseObject  %@",responseObject);
-         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
- 
+         if (ResponseObject_RC == 0) {
+             
              if ([self.isNews isEqualToString:@"news"]) {
                  [allstatus removeAllObjects];
-                     GDComment *gdc = [GDComment  statusWithDictionary: [responseObject objectForKey:@"data"]];
-                     [allstatus  addObject:gdc];
+                 GDComment *gdc = [GDComment  statusWithDictionary: [responseObject objectForKey:@"data"]];
+                 [allstatus  addObject:gdc];
              } else {
                  NSArray *array = responseObject[@"data"][@"data_list"];
                  if (array.count == 0) {
@@ -264,22 +259,16 @@
                      }
                  }
              }
-            
              [_tableView reloadData];
              [_tableView headerEndRefreshing];
+         }  else if (ResponseObject_RC == NotLogin_RC_Number){
+             [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
              
-         }else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number){
-             [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-             
-         }else{
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-             [alert show];
+         }else {
+             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
          }
-     }fail:^(NSError *error){
-         NSLog(@"error   %@",error);
-     }];
+     }fail:^(NSError *error){}];
 }
-
 
 - (void)footerRereshing
 {
@@ -289,15 +278,10 @@
     }else{
         url = [NSString stringWithFormat:@"%@api/?method=gdb.index&page=%d",BASEURL,page];
     }
-    // NSString *pageurl = [NSString stringWithFormat:@"%@api/?method=gdb.index&page=%d",BASEURL,page];
-    
     [HttpTool postWithUrl:url params:nil contentType: CONTENTTYPE success:^(id responseObject)
      {
-         //  NSLog(@"responseObject  %@",responseObject);
-         if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-             
+         if (ResponseObject_RC == 0) {
              NSArray *array = responseObject[@"data"][@"data_list"];
-             
              if (array.count == 0) {
                  _tableView.footerRefreshingText = @"已经是最后一条了";
              } else {
@@ -305,7 +289,6 @@
                  [noMoneyLabelTop removeFromSuperview];
                  [noMoneyLabel removeFromSuperview];
                  [shareButton removeFromSuperview];
-                 
                  
                  for (NSDictionary *dict in array){
                      GDComment *gdc = [GDComment  statusWithDictionary: dict];
@@ -315,19 +298,11 @@
              }
              
              [_tableView footerEndRefreshing];
-         } else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number){
-             [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-             
-         }else{
-             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-             [alert show];
+         } else {
+             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
          }
-     }fail:^(NSError *error){
-         NSLog(@"error   %@",error);
-     }];
-    
+     }fail:^(NSError *error){}];
 }
-
 
 //自定义区头
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -385,11 +360,10 @@
     GDComment *gdc = [allstatus objectAtIndex:section];
     if (isopen[section]) {
         return 3 + gdc.comments_list.count  + gdc.replay_listArray.count;
-    }else{
+    } else {
         
         return 1;
     }
-    //409  590
    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -649,7 +623,8 @@
 {
     NSString *reportUrl = [NSString stringWithFormat:@"%@api/?method=gdb.report_content",BASEURL];
     [HttpTool postWithUrl:reportUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        
+        if (ResponseObject_RC == 0) {
             GDComment *gdc = [allstatus objectAtIndex:button.tag];
             NSDictionary *data = [responseObject objectForKey:@"data"];
             self.reportArray = [NSMutableArray array];
@@ -666,16 +641,16 @@
             reportActionSheet.content = gdc.content;
             reportActionSheet.talkid = gdc.talkid;
             [reportActionSheet showInView:self.view];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    } fail:^(NSError *error) {
-        NSLog(@"error %@",error);
-    }];
+    } fail:^(NSError *error) {}];
 }
 - (void)actionSheet:(ReportActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) return;
     report_typeid = [self.report_idArray objectAtIndex:buttonIndex - 1];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
     alert.message = [NSString stringWithFormat:@"您将举报 %@ 在 %@ 发布的 %@ 为 %@，请确认",actionSheet.name,actionSheet.date,actionSheet.content,[self.reportArray objectAtIndex:buttonIndex - 1]];
     alert.tag = 980;
     [alert show];
@@ -702,16 +677,14 @@
             [button setBackgroundImage:[UIImage imageNamed:@"GD_yizan"] forState:UIControlStateNormal];
             [button animate];
         } else {
-            [HeadComment showAlert:@"温馨提示" withMessage:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         }
         
         NSNotification *notification =[NSNotification notificationWithName:@"tongzhi" object:nil userInfo:nil];
         //通过通知中心发送通知
         [[NSNotificationCenter defaultCenter] postNotification:notification];
         
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+    } fail:^(NSError *error) {}];
 }
 -(void)opencontent:(UIButton *)button
 {
@@ -824,35 +797,15 @@
             NSString *removeURL = [NSString stringWithFormat:@"%@api/?method=gdb.deletetalk&talkid=%@",BASEURL,removeCellNumber];
             NSLog(@"removeURL %@",removeURL);
             [HttpTool postWithUrl:removeURL params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-                if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-                    [self headerRereshing];
-                    
-                } else {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    
-                    [alert show];
-                }
-            } fail:^(NSError *error) {
-                NSLog(@"error %@",error);
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 
-                [alert show];
-            }];
+                    [self headerRereshing];
+            } fail:^(NSError *error) {}];
         }
     } else if (alertView.tag == 980) {
          if (buttonIndex == 1) {
              NSString *reporturl = [NSString stringWithFormat:@"%@api/?method=gdb.report&typeid=%@&talkid=%@",BASEURL,report_typeid,reportActionSheet.talkid];
              [HttpTool postWithUrl:reporturl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-                 
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确认" otherButtonTitles: nil];
-                 
-                 [alert show];
-                 
-             } fail:^(NSError *error) {
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                 
-                 [alert show];
-             }];
+             } fail:^(NSError *error) {}];
          }
     } else {
         if (buttonIndex == 1) {
@@ -924,21 +877,10 @@
     if ([liuyanType isEqual:@"3"]) {
         NSString *sendurl = [NSString stringWithFormat:@"%@api/?method=gdb.comments&",BASEURL];
         [HttpTool GET:sendurl parameters:@{@"talkid":[NSString stringWithFormat:@"%ld",(long)button.tag],@"info":textcell.textfield.text} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            
-            if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-                [self headerRereshing];
-            } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                
-                [alert show];
-            }
-            
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"%@",error);
-        }];
         
-        //hhh
+            [self headerRereshing];
         
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {}];
     } else if ([liuyanType isEqual:@"1"]) {
         //回复评论
         NSString *urlStr = [NSString stringWithFormat:@"%@api/?method=gdb.replay",BASEURL];
@@ -949,17 +891,12 @@
         NSDictionary *dict = @{@"rid":self.replay_id,@"types":@"1",@"comment_id":self.info_id,@"content":contendString};
         
         [HttpTool postWithUrl:urlStr params:dict contentType:CONTENTTYPE success:^(id responseObject) {
-           
-            if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+            if (ResponseObject_RC == 0) {
                 [self headerRereshing];
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                
-                [alert show];
+                [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
             }
-        } fail:^(NSError *error) {
-            NSLog(@"error %@",error);
-        }];
+        } fail:^(NSError *error) {}];
     } else {
         //回复别人的回复
         NSString *urlStr = [NSString stringWithFormat:@"%@api/?method=gdb.replay",BASEURL];
@@ -967,22 +904,14 @@
         if ([keyName isEqual:@"Second"]) {
             contendString = secondTF.text;
         }
-
-        
         NSDictionary *dict = @{@"rid":self.replay_id,@"comment_id":self.info_id,@"types":@"2",@"content":contendString};
         [HttpTool postWithUrl:urlStr params:dict contentType:CONTENTTYPE success:^(id responseObject) {
-           
-            if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+            if (ResponseObject_RC == 0) {
                 [self headerRereshing];
             } else {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                
-                [alert show];
+                [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
             }
-        } fail:^(NSError *error) {
-            NSLog(@"error %@",error);
-        }];
+        } fail:^(NSError *error) {}];
     }
 }
-
 @end

@@ -47,12 +47,13 @@
     [self.view addSubview:_tableView];
     NSString *url = [NSString stringWithFormat:@"%@citys/",BASEURL];
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res    %@",responseObject);
-        citys = [responseObject objectForKey:@"all_citys"];
-        [_tableView reloadData];
-    } fail:^(NSError *error) {
-        NSLog(@"errror  %@",error);
-    }];
+        if (ResponseObject_RC == 0) {
+            citys = [responseObject objectForKey:@"all_citys"];
+            [_tableView reloadData];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
+        }
+    } fail:^(NSError *error) {}];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -99,8 +100,6 @@
          cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    NSLog(@"citys.count %lu",(unsigned long)citys.count);
-    
      UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(viewHeight/33.35, viewHeight/9.5286 - .5, viewWidth - viewHeight/16.675, .5)];
     line.backgroundColor = [UIColor colorWithRed:85/255.0 green:85/255.0 blue:85/255.0 alpha:1];
     [cell addSubview:line];
@@ -114,12 +113,4 @@
     return cell;
     
 }
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 @end

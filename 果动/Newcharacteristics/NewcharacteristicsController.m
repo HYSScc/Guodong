@@ -158,12 +158,9 @@
     pageControl.currentPage = scrollView.contentOffset.x / scrollView.bounds.size.width;
     if (pageControl.currentPage == 3) {
         pageControl.hidden = YES;
-    }
-    else
-    {
+    } else {
         pageControl.hidden = NO;
     }
-  //  NSLog(@"currentPage %ld",(long)pageControl.currentPage);
 }
 
 //表随键盘高度变化
@@ -181,7 +178,6 @@
 {
     [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{
         self.view.transform = CGAffineTransformIdentity;
-        // self.view.frame = CGRectMake(0, 0, viewWidth, viewHeight);
     }];
 }
 
@@ -205,7 +201,7 @@
                 BOOL isMatch=[pred evaluateWithObject:_textUserName.text];
                 if (!isMatch) {
                     //手机号码不正确
-                    [HeadComment showAlert:nil withMessage:@"电话号码不正确" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [HeadComment message:@"电话号码不正确" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                     return;
                 }
                 break;
@@ -215,12 +211,12 @@
         if (!compareResult) {
             if (_textUserName.text.length!=11) {
                 //手机号码不正确
-                [HeadComment showAlert:nil withMessage:@"请输入正确的手机号码！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [HeadComment message:@"请输入正确的手机号码！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 return;
             }
         }
         if ([_textPassword.text isEmptyString] || [_textUserName.text isEmptyString]) {
-            [HeadComment showAlert:nil withMessage:@"内容填写不完整！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [HeadComment message:@"内容填写不完整！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
             return;
         }
     [loginBtn setTitle:@"正在登录" forState:UIControlStateNormal];
@@ -237,12 +233,9 @@
         
         NSLog(@"RegistrationID  %@",[APService registrationID]);
         NSString *loginurl = [NSString stringWithFormat:@"%@userlogin/",BASEURL];
-        [HttpTool postWithUrl:loginurl params:dict contentType:@"application/json" success:^(id responseObject) {
+        [HttpTool postWithUrl:loginurl params:dict contentType:CONTENTTYPE success:^(id responseObject) {
             
-            NSLog(@"responseBo  %@",responseObject);
-            NSString *msg = [responseObject objectForKey:@"msg"];
-            NSLog(@"msg >>>>>>>>  %@",msg);
-            if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+            if (ResponseObject_RC == 0) {
                 
                 if (![_textPassword.text  isEqual: @"1234"]) {
                     dispatch_source_cancel(_timer);
@@ -255,13 +248,10 @@
                 [roundImageView.layer removeAllAnimations];
                 [roundImageView removeFromSuperview];
                 [loginBtn setTitle:@"登录失败" forState:UIControlStateNormal];
+                
+                [HeadComment message:[responseObject objectForKey:@"msg"] delegate:self witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
             }
-        }
-    fail:^(NSError *error)
-         {
-             NSLog(@"失败%@",error);
-         }];
-
+        } fail:^(NSError *error) {}];
 }
 
 -(void)yanzhengqingqiu
@@ -278,7 +268,7 @@
             BOOL isMatch=[pred evaluateWithObject:_textUserName.text];
             if (!isMatch) {
                 //手机号码不正确
-                [HeadComment showAlert:nil withMessage:@"电话号码不正确" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                [HeadComment message:@"电话号码不正确" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
                 return;
             }
             break;
@@ -288,11 +278,11 @@
     if (!compareResult) {
         if (_textUserName.text.length!=11) {
             //手机号码不正确
-            [HeadComment showAlert:nil withMessage:@"请输入正确的手机号码！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];            return;
+            [HeadComment message:@"请输入正确的手机号码！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];            return;
         }
     }
     if ([_textUserName.text isEmptyString]) {
-        [HeadComment showAlert:nil withMessage:@"内容填写不完整！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [HeadComment message:@"内容填写不完整！" delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         return;
     }
     //13286832951
@@ -315,13 +305,9 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([strTime intValue] == 00) {
                     _timeLabel.text = @"60S";
-                }
-                else
-                {
+                } else {
                     _timeLabel.text = strTime;
                 }
-                
-                NSLog(@"倒计时 %@",strTime);
                 yanzhengmaBtn.userInteractionEnabled=NO;
             });
             timeout--;
@@ -331,9 +317,6 @@
     //获取token
     NSString *getTokenUrl = [NSString stringWithFormat:@"%@token/?number=%@",BASEURL,_textUserName.text];
     [HttpTool postWithUrl:getTokenUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"tokenRes %@",responseObject);
-        NSString *token = [responseObject objectForKey:@"token"];
-        NSLog(@"token %@",token);
         /*
          请求参数：number=18618265727&timestamp=12456&sign=e1a4b2dd5816ff40d125f836669652eb
          app_kye = guodongapps
@@ -353,17 +336,15 @@
         NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
         //时间放到数组里
         
-        //  NSLog(@"messageArray11111 %@",messageArray);
-        
-        
-        [messageArray addObject:token];
+        if ([[responseObject allKeys] containsObject:@"token"]) {
+            NSString *token = [responseObject objectForKey:@"token"];
+            [messageArray addObject:token];
+        }
         [messageArray addObject:numberSTr];
         [messageArray addObject:timeSp];
         //数组排序
-        //  NSLog(@"messageArray2222222 %@",messageArray);
+        
         NSMutableArray * sortedArray = [[messageArray sortedArrayUsingSelector:@selector(compare:)] mutableCopy];
-        // NSLog(@"sortedArray %@",sortedArray);
-        //[APService registrationID]
         for(int i = 0; i < [sortedArray count]; i++)
         {
             NSString *string = [sortedArray objectAtIndex:i];
@@ -377,18 +358,22 @@
         NSString *getMessageUrl = [NSString stringWithFormat:@"%@sendcode/",BASEURL];
         NSDictionary *messagedict = @{@"number":_textUserName.text,@"sign":sign1,@"time":timeSp};
         [HttpTool postWithUrl:getMessageUrl params:messagedict contentType:CONTENTTYPE success:^(id responseObject) {
-            NSLog(@"messageRes %@",responseObject);
-            [sortedArray removeAllObjects];
-            [messageArray removeAllObjects];
-            strr = @"(null)";
-            //   NSLog(@"哈哈哈哈哈哈 %@",sortedArray);
-        } fail:^(NSError *error) {
-            NSLog(@"error  %@",error);
-        }];
-        
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+            if (ResponseObject_RC == 0) {
+                [sortedArray removeAllObjects];
+                [messageArray removeAllObjects];
+                strr = @"(null)";
+            } else {
+                [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
+            }
+        } fail:^(NSError *error) {}];
+    } fail:^(NSError *error) {}];
     dispatch_resume(_timer);
+}
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
+    }
+    
 }
 @end

@@ -58,11 +58,6 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     self.navigationItem.leftBarButtonItem = backItem;
     
-    
-    NSLog(@"self.isShop %d",self.isShop);
-    
-    
-    
     _spinner = [[FeSpinnerTenDot alloc] initWithView:self.view withBlur:NO];
     _spinner.titleLabelText = @"LOADING";
     _spinner.delegate = self;
@@ -81,56 +76,43 @@
         
     }
     [HttpTool postWithUrl:requestURL params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
-        imageArray = [[NSMutableArray alloc] initWithCapacity:0];
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        if (ResponseObject_RC == 0) {
+            imageArray = [NSMutableArray array];
             [_spinner dismiss];
             NSDictionary *data = [responseObject objectForKey:@"data"];
             personNmuber = [[data objectForKey:@"courseTotal"] intValue];
+            
             if (!self.isShop) {
-                 classNumber = [[data objectForKey:@"price"] intValue];
+                classNumber = [[data objectForKey:@"price"] intValue];
             }
             zanNumber = [[data objectForKey:@"praiseTotal"] intValue];
             ipraised = [[data objectForKey:@"ipraised"] intValue];
+            
             for (NSDictionary *dict in [data objectForKey:@"imgUrl"]) {
                 image *imageModel = [[image alloc] initWithDictionary:dict];
                 [imageArray addObject:imageModel];
-                
             }
             [self setTopImage];
-        } else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number) {
-            [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
+            [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        
-    } fail:^(NSError *error) {
-        NSLog(@"error %@",error);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        
-        [alert show];
-    }];
-
-    
-    
+    } fail:^(NSError *error) {}];
+}
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-     NSLog(@"22222");
-    
-    
     self.view.backgroundColor = [UIColor blackColor];
     self.navigationItem.titleView = [HeadComment titleLabeltext:self.titleString];
-  
-   // [self setTopImage];
 }
 -(void)setTopImage
 {
-    NSLog(@"33333");
-   
     classScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
     classScrollView.backgroundColor = [UIColor blackColor];
    
@@ -161,16 +143,14 @@
         CGFloat interval = viewHeight/44.467;
         CGFloat proportion =  ([imageModel.height floatValue]/2)/([imageModel.width floatValue]/2);
         
-        if (self.class_id == 1) {
-            classImage.frame = CGRectMake(0,CGRectGetMaxY(topView.frame)+a*(viewWidth * proportion), viewWidth, viewWidth * proportion);
-        } else if (self.class_id == 3) {
+        if (self.class_id == 3) {
             if (a == 0) {
                 classImage.frame = CGRectMake(0,CGRectGetMaxY(topView.frame)+a*viewWidth, viewWidth , viewWidth*proportion);
                 firstHeigth = classImage.bounds.size.height;
             } else {
                 classImage.frame = CGRectMake(0,secondHeigth,viewWidth,viewWidth * proportion);
             }
-                secondHeigth = CGRectGetMaxY(classImage.frame);
+            secondHeigth = CGRectGetMaxY(classImage.frame);
         } else {
            if (a == 0) {
                 classImage.frame = CGRectMake(interval,interval + CGRectGetMaxY(topView.frame)+a*((viewWidth - interval*2) * proportion), viewWidth - interval*2, (viewWidth - interval*2) * proportion);
@@ -241,7 +221,6 @@
     moneyView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:moneyView];
     
-    
     sureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     sureButton.frame = CGRectMake(viewWidth/2+(viewWidth/2 - viewHeight/4.4467)/2, (moneyView.bounds.size.height - viewHeight/17.78667)/2, viewHeight/4.4467, viewHeight/17.78667);
     [sureButton addTarget:self action:@selector(sureButton) forControlEvents:UIControlEventTouchUpInside];
@@ -257,9 +236,7 @@
         [shopSureButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         shopSureButton.titleLabel.font = [UIFont fontWithName:FONT size:viewHeight/37.056];
         [self.view addSubview:shopSureButton];
-
     }
-    
     
     NSString *attriStr = [NSString stringWithFormat:@"%d 元/课时",classNumber];
     if (classNumber) {
@@ -288,7 +265,8 @@
     }
    
     [HttpTool postWithUrl:zanUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+       
+        if (ResponseObject_RC == 0) {
             if ([[[responseObject objectForKey:@"data"] objectForKey:@"result"] intValue] == 1) {
                 [xinButton popOutsideWithDuration:0.5];
                 [xinButton setBackgroundImage:[UIImage imageNamed:@"class_orangexin"] forState:UIControlStateNormal];
@@ -298,30 +276,20 @@
                 [xinButton setBackgroundImage:[UIImage imageNamed:@"class_grayxin"] forState:UIControlStateNormal];
             }
             numberLabel.text = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"data"] objectForKey:@"total"]];
-        }else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        
-        [alert show];
-    }];
+    } fail:^(NSError *error) {}];
 }
 -(void)sureButton
 {
     if (self.isShop) {
-         sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%@&types=2",BASEURL,self.shop_id];
+      sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%@&types=2",BASEURL,self.shop_id];
     } else {
       sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%d",BASEURL,self.class_id];
     }
-    NSLog(@"sureUrl  %@",sureUrl);
-   // NSLog(@"self.class_id %@",self.shop_id);
     [HttpTool postWithUrl:sureUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        if (ResponseObject_RC == 0) {
             appointViewController *appoint = [appointViewController new];
             appoint.course = [NSMutableArray array];
             for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"course"]) {
@@ -337,38 +305,24 @@
             appoint.isShop = self.isShop;
             appoint.dateArray = [[responseObject objectForKey:@"data"] objectForKey:@"pre_times"];
             appoint.isFirst = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"data"] objectForKey:@"isfirst"]] ;
-           
+            
             appoint.youhuijuan = [[responseObject objectForKey:@"data"] objectForKey:@"money"];
             appoint.alertString = [[responseObject objectForKey:@"data"] objectForKey:@"alert"];
             appoint.class_id = self.class_id;
             appoint.personNumber = [[[responseObject objectForKey:@"data"] objectForKey:@"courseTotal"] intValue];
-           
+            
             appoint.discont = [[responseObject objectForKey:@"data"] objectForKey:@"discont"];
             appoint.vip_cards = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"data"] objectForKey:@"vip_cards"]];
             if ([appoint.isFirst intValue] == 0) {
                 appoint.userinfo_name = [[[responseObject objectForKey:@"data"] objectForKey:@"userInfo"] objectForKey:@"name"];
                 appoint.userinfo_number = [[[responseObject objectForKey:@"data"] objectForKey:@"userInfo"] objectForKey:@"phone"];
                 appoint.userinfo_address = [[[responseObject objectForKey:@"data"] objectForKey:@"userInfo"] objectForKey:@"address"];
-                NSLog(@"appoint.userinfo_name %@",appoint.userinfo_name);
             }
-            
             [self.navigationController pushViewController:appoint animated:YES];
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        
-        [alert show];
-    }];
+    } fail:^(NSError *error) {}];
 }
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
-    }
-}
+
 @end

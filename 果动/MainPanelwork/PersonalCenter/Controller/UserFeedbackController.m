@@ -72,11 +72,9 @@
 }
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    
     if ([textView.text isEqualToString:@" 欢迎提出您的宝贵意见,我们会加倍努力！"]) {
         textView.text = @"";
     }
-    
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -97,20 +95,18 @@
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.feed&",BASEURL];
     NSDictionary *dict = @{@"info":_textView.text};
     [HttpTool postWithUrl:url params:dict contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-            
+        if (ResponseObject_RC == 0) {
             [roundImageView.layer removeAllAnimations];
             [roundImageView removeFromSuperview];
             [sureButton setTitle:@"反馈成功" forState:UIControlStateNormal];
+            
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"反馈成功" message:@"感谢您的建议,我们会做的更好" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
             [alert show];
-            
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+        
+    } fail:^(NSError *error) {}];
     
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

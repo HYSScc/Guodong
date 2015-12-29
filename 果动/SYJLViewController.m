@@ -47,15 +47,13 @@
     
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdmoney.mymoney",BASEURL];
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"使用记录  %@",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+      
+        if (ResponseObject_RC == 0) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSArray *cons = [data objectForKey:@"cons"];
             if (cons.count == 0) {
                 [self.view addSubview:baseImage];
-            }
-            else
-            {
+            } else {
                 numberLabel.text = [NSString stringWithFormat:@"%@",[data objectForKey:@"banlance"]] ;
                 self.request = [[NSMutableArray alloc] initWithCapacity:0];
                 for (NSDictionary *dict in cons)
@@ -64,29 +62,14 @@
                     if ([mingxi.code intValue] !=0) {
                         [self.request addObject:mingxi];
                     }
-                    
                 }
             }
-           
             [_tableView reloadData];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
         
-        else if ([[responseObject objectForKey:@"rc"] intValue] == 24)
-        {
-            [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-            
-        }
-        else
-        {
-            
-            [HeadComment showAlert:@"温馨提示" withMessage:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
-            
-        }
-        
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
-
+    } fail:^(NSError *error) {}];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

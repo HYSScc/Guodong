@@ -100,15 +100,12 @@
         NSLog(@"cookies %@",cookies);
     }
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        
-        NSLog(@"response   %@",responseObject);
-        
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        if (ResponseObject_RC == 0) {
             NSDictionary *data = responseObject[@"data"];
             UIImageView *vipView = (UIImageView *)[self.view viewWithTag:45*5];
             if ([[data objectForKey:@"is_vip"] intValue] == 1)
             {
-            
+                
                 vipView.userInteractionEnabled = NO;
                 [vipView setImage:[UIImage imageNamed:@"person_notiao"]];
                 [vipView addSubview:viplabel];
@@ -121,7 +118,7 @@
             }
             iconString=data[@"headimg"];
             headbaseImageString = data[@"backimg"];
-         
+            
             [headbaseView setImageWithURL:[NSURL URLWithString:headbaseImageString] success:^(UIImage *image, BOOL cached) {
                 NSLog(@"cached %d",cached);
                 succImage = YES;
@@ -130,7 +127,7 @@
             }];
             
             [_iconImageView setImageWithURL:[NSURL URLWithString:iconString] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
-
+            
             if ([[data objectForKey:@"isview"] intValue] != 0)
             {
                 [shujuView addSubview:looknumberImageView];
@@ -157,14 +154,20 @@
             }else{
                 [seximg setImage:[[data objectForKey:@"gender"]  intValue] == 1? [UIImage imageNamed:@"person_man"] : [UIImage imageNamed:@"person_woman"]];
             }
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
+            [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+            
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        
-        
-    } fail:^(NSError *error) {
-        NSLog(@"error   %@",error);
-    }];
+    } fail:^(NSError *error) {}];
 }
-
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+    }
+}
 #pragma mark 初始化背景图、按钮控件与名字
 
 -(void)onCreate
@@ -429,13 +432,10 @@
                        authOptions:nil
                       shareOptions:nil
                             result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                NSLog(@"status  %u",state);
+                               
                                 
                                 if (state == SSResponseStateBegan)
                                 {
-                                    
-                                    //    NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
-                                    NSLog(@"statusInfo  %@",statusInfo);
                                     
                                     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.share",BASEURL];
                                     NSDate *date = [NSDate date];
@@ -448,9 +448,7 @@
                                     
                                     NSDictionary *dict = @{@"platform":@"wx",@"date":timeSp};
                                     [HttpTool postWithUrl:url params:dict contentType:CONTENTTYPE success:^(id responseObject) {
-                                        NSLog(@"分享res  %@",responseObject);
-                                        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-                                            
+                                        if (ResponseObject_RC == 0) {
                                             NSDictionary *data = [responseObject objectForKey:@"data"];
                                             if (data) {
                                                 NSString *info = [data objectForKey:@"info"];
@@ -458,11 +456,10 @@
                                                 
                                                 [alert show];
                                             }
-                                            
+                                        } else {
+                                            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
                                         }
-                                    } fail:^(NSError *error) {
-                                        NSLog(@"error  %@",error);
-                                    }];
+                                    } fail:^(NSError *error) {}];
                                 }
                                 else if (state == SSResponseStateFail)
                                 {
@@ -518,12 +515,10 @@
         NSString *url = [NSString stringWithFormat:@"%@api/?method=user.set_headimg",BASEURL];
         
         [HttpTool uploadImageWithUrl:url image:info[UIImagePickerControllerEditedImage] completion:^(id responseObject) {
-            NSLog(@"res  %@",responseObject);
+           
             _iconImageView.image = info[UIImagePickerControllerEditedImage];
             
-        } errorBlock:^(NSError *error) {
-            NSLog(@"error  %@",error);
-        }];
+        } errorBlock:^(NSError *error) {}];
         
     }
     else
@@ -531,40 +526,29 @@
         NSLog(@"自己穿了图片");
         NSString *url = [NSString stringWithFormat:@"%@api/?method=user.set_background",BASEURL];
         [HttpTool uploadImageWithUrl:url image:info[UIImagePickerControllerEditedImage] completion:^(id responseObject) {
-            NSLog(@"res  %@",responseObject);
-            headbaseView.image = info[UIImagePickerControllerEditedImage];
-            
-        } errorBlock:^(NSError *error) {
-            NSLog(@"error  %@",error);
-        }];
-        
-        
-        
+           
+        headbaseView.image = info[UIImagePickerControllerEditedImage];
+
+        } errorBlock:^(NSError *error) {}];
     }
-    
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // 只要偏移量有改变  就会调用
     NSLog(@"succImage %d",succImage);
     if (succImage == YES) {
-        // NSLog(@"DidScroll-->>%f",scrollView.contentOffset.y);
+       
         if ((scrollView.contentOffset.y >= 110 || scrollView.contentOffset.y <= -120) && !magnify) {
                NSLog(@"放大之前 %d",magnify);
             [SJAvatarBrowser showImage:headbaseView];
             magnify =YES;
-            //  NSLog(@"放大之后 %d",magnify);
-            
         }
         if (scrollView.contentOffset.y == 0 || scrollView.contentOffset.y == .5) {
             magnify = NO;
-            // NSLog(@"归零 %d",magnify);
+           
         }
     }
-   
-    
 }
-
 
 + (instancetype)sharedViewControllerManager {
     static dispatch_once_t onceToken;

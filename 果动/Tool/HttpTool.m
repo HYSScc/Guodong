@@ -7,6 +7,8 @@
 //
 
 #import "HttpTool.h"
+#import "Commonality.h"
+#import "HomeController.h"
 
 @implementation HttpTool
 #pragma mark Http的GET请求
@@ -69,14 +71,17 @@
     [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"PLATFORM"];
     // 3.创建Http请求操作对象
     AFHTTPRequestOperation *op = [manager POST:urlStr parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        if (success) { //success不为空
-            //   [self connection:manager didReceiveResponse:responseObject];
-            
+        if (success) { 
+            NSLog(@"rc存在  %@ %@",urlStr,responseObject);
             success(responseObject);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         if (fail) { //fail不为空
             fail(error);
+            NSLog(@"请求失败 %@",error);
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"数据错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            
+            [alert show];
         }
     }];
     // 4.发送请求

@@ -44,8 +44,6 @@
     self.navigationItem.leftBarButtonItem = backItem;
     self.title = @"私房钱";
     
-      //  [self createView];
-    
 }
 
 -(void)createView
@@ -123,40 +121,35 @@
     
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdmoney.mymoney",BASEURL];
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        if (ResponseObject_RC == 0) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSArray *cons = [data objectForKey:@"cons"];
-             numberLabel.text = [NSString stringWithFormat:@"%@",[data objectForKey:@"banlance"]] ;
+            numberLabel.text = [NSString stringWithFormat:@"%@",[data objectForKey:@"banlance"]] ;
             if (cons.count == 0) {
                 SYJLButton.userInteractionEnabled = NO;
                 [SYJLButton setBackgroundImage:[UIImage imageNamed:@"money_nosyjl"] forState:UIControlStateNormal];
-            }
-            else
-            {
+            } else {
                 SYJLButton.userInteractionEnabled = YES;
                 [SYJLButton setBackgroundImage:[UIImage imageNamed:@"money_syjl"] forState:UIControlStateNormal];
-
+                
             }
             if ([[data objectForKey:@"banlance"] intValue] == 0) {
                 
                 if ([[data objectForKey:@"isshared"] intValue] != 0) {
-                     noMoneyLabel.text = @"上满三次课,就可以获得私房钱啦!";
+                    noMoneyLabel.text = @"上满三次课,就可以获得私房钱啦!";
                     [shareButton setBackgroundImage:[UIImage imageNamed:@"money_dingke"] forState:UIControlStateNormal];
                     isshare = YES;
                 }
-               
+                
                 [self.view addSubview:noMoneyLabelTop];
                 [self.view addSubview:noMoneyLabel];
                 [self.view addSubview:shareButton];
                 
-            }
-            else
-            {
+            } else {
                 [noMoneyLabelTop removeFromSuperview];
                 [noMoneyLabel    removeFromSuperview];
                 [shareButton     removeFromSuperview];
-               
+                
                 self.request = [[NSMutableArray alloc] initWithCapacity:0];
                 for (NSDictionary *dict in cons)
                 {
@@ -164,27 +157,15 @@
                     if ([mingxi.code isEqualToString:@"0"]) {
                         [self.request addObject:mingxi];
                     }
-                    
                 }
                 [_tableView reloadData];
-
             }
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
+            [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number)
-        {
-            [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-            
-        }
-        else
-        {
-            
-            [HeadComment showAlert:@"温馨提示" withMessage:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
-            
-        }
-        
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+    } fail:^(NSError *error) {}];
     
 }
 -(void)shareButton
@@ -200,9 +181,9 @@
          *	@param 	locationCoordinate 	地理位置 (新浪、腾讯、Twitter)
          */
         
-        NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"icon" ofType:@"png"];
+         NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"logo" ofType:@"png"];
         //构造分享内容
-        id<ISSContent> publishContent = [ShareSDK content: @"果动网络 http://itunes.apple.com/cn/app/guo-dong/id998425416?l=en&mt=8"//分享内容
+        id<ISSContent> publishContent = [ShareSDK content: @"http://itunes.apple.com/cn/app/guo-dong/id998425416?l=en&mt=8"//分享内容
                                            defaultContent: @"果动网络" //默认分享内容
                                                     image: [ShareSDK imageWithPath:imagePath] //分享图片
                                                     title: @"果动网络" //标题
@@ -233,7 +214,7 @@
                                 result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                                     NSLog(@"status  %u",state);
                                     
-                                    if (state == SSResponseStateSuccess)
+                                    if (state == SSResponseStateBegan)
                                     {
                                         
                                         //    NSLog(NSLocalizedString(@"TEXT_ShARE_SUC", @"分享成功"));
@@ -250,30 +231,24 @@
                                         
                                         NSDictionary *dict = @{@"platform":@"wx",@"date":timeSp};
                                         [HttpTool postWithUrl:url params:dict contentType:CONTENTTYPE success:^(id responseObject) {
-                                            NSLog(@"分享res  %@",responseObject);
-                                            if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-                                                
+                                            if (ResponseObject_RC == 0) {
                                                 NSDictionary *data = [responseObject objectForKey:@"data"];
                                                 if (data) {
                                                     NSString *info = [data objectForKey:@"info"];
-                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:info delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:info delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
                                                     
                                                     [alert show];
                                                 }
-                                                
+                                            } else {
+                                                [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
                                             }
-                                        } fail:^(NSError *error) {
-                                            NSLog(@"error  %@",error);
-                                        }];
+                                        } fail:^(NSError *error) {}];
                                     }
                                     else if (state == SSResponseStateFail)
                                     {
                                         NSLog(@"发布失败!error code == %ld, error code == %@", (long)[error errorCode], [error errorDescription]);
-                                        // NSLog(NSLocalizedString(@"TEXT_ShARE_FAI", @"分享失败,错误码:%d,错误描述:%@"), [error errorCode], [error errorDescription]);
                                     }
                                 }];
-        
-
     }
     else
     {

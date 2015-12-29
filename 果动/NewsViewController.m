@@ -32,18 +32,18 @@
 -(void)startRequest
 {
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.irelated",BASEURL];
-    NSLog(@"url %@",url);
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"Succ %@",responseObject);
-        self.newsMutableArray = [NSMutableArray array];
-        for (NSDictionary *dict in [responseObject objectForKey:@"data"]) {
-            NewsComment *news = [[NewsComment alloc] initWithDictionary:dict];
-            [self.newsMutableArray addObject:news];
+        if (ResponseObject_RC == 0) {
+            self.newsMutableArray = [NSMutableArray array];
+            for (NSDictionary *dict in [responseObject objectForKey:@"data"]) {
+                NewsComment *news = [[NewsComment alloc] initWithDictionary:dict];
+                [self.newsMutableArray addObject:news];
+            }
+            [_tableView reloadData];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        [_tableView reloadData];
-    } fail:^(NSError *error) {
-        NSLog(@"error %@",error);
-    }];
+    } fail:^(NSError *error) {}];
 }
 -(void)createUI
 {

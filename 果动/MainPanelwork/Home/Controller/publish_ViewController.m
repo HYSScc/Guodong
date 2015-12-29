@@ -67,7 +67,6 @@
     
     UIButton *amentButton=[UIButton buttonWithType:UIButtonTypeSystem];
     amentButton.frame = CGRectMake(viewHeight/2.0212, viewHeight/24.7037, viewHeight/19.057,viewHeight/26.865);
-    //  [amentButton setBackgroundImage:[UIImage imageNamed:@"person_set"] forState:UIControlStateNormal];
     [amentButton setTitle:@"发送" forState:UIControlStateNormal];
     [amentButton addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *releaseButtonItem = [[UIBarButtonItem alloc] initWithCustomView:amentButton];
@@ -96,10 +95,6 @@
     _textView.text = @" 说点什么...";
     _textView.textColor = [UIColor colorWithRed:136/255.0 green:136/255.0 blue:136/255.0 alpha:1];
     [self.view addSubview:_textView];
-    
-    //    UILabel *textlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_textView.frame), viewWidth, .5)];
-    //    textlabel.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1];
-    //    [self.view addSubview:textlabel];
     
     progressView = [[UIProgressView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_textView.frame), viewWidth, .5)];
     progressView.progressViewStyle= UIProgressViewStyleDefault;
@@ -132,7 +127,6 @@
     
     
     numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewWidth - 150, CGRectGetMaxY(_textView.frame)+15, 150, 14)];
-    // numberLabel.text = @"1.12MB/1.57MB";
     numberLabel.textColor = [UIColor lightGrayColor];
     numberLabel.textAlignment = 1;
     numberLabel.font = [UIFont fontWithName:FONT size:14];
@@ -145,19 +139,16 @@
     if ([[_textView.text trimString] isEmptyString] ) {
         
         
-        [HeadComment showAlert:nil withMessage:@"说点什么吧~" delegate:nil witchCancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [HeadComment message:@"说点什么吧~" delegate:nil witchCancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
         // 1.回收键盘
         [self.view endEditing:YES];
         
     }else if (pvtype !=1&&pvtype!=2){
-        [HeadComment showAlert:nil withMessage:@"来张照片或者来段视频吧" delegate:nil witchCancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [HeadComment message:@"来张照片或者来段视频吧" delegate:nil witchCancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
     }
     else
     {
         NSLog(@"pvtype   %d",pvtype);
-        
-     
-        
         NSString *urlString = pvtype == 1 ? [NSString stringWithFormat:@"%@api/?method=gdb.send_talk&type=%d",BASEURL,pvtype] : [NSString stringWithFormat:@"%@api/?method=gdb.send_talk",BASEURL];
         
         NSDictionary *dict = pvtype == 1 ? @{@"content":_textView.text} : @{@"type":[NSString stringWithFormat:@"%d",pvtype],@"content":_textView.text};
@@ -327,15 +318,12 @@
     if (picker==_imagePickerController)
     {
         _imageDatas = [[NSMutableArray alloc] initWithCapacity:0];
-        //  _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        
         //设置图片是否可以截取
         _imageView.image=info[UIImagePickerControllerEditedImage];
         [picker dismissViewControllerAnimated:YES completion:nil];
         
-        // 显示图片
-        
-        
-        //     设置图片大小
+        // 设置图片大小
         CGSize imageSize = _imageView.image.size;
         imageSize.width = viewHeight/1.6675;
         imageSize.height = viewHeight/1.6675;
@@ -473,7 +461,6 @@
         textnumberLabel.text = [NSString stringWithFormat:@"%lu字",TextNumber - _textView.text.length];
         
     }
-    
     //该判断用于联想输入
     if (textView.text.length > TextNumber)
     {

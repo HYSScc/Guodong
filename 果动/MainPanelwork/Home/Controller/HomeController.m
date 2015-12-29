@@ -16,13 +16,14 @@
 #import "SDCycleScrollView.h"
 #import "OrderFormController.h"
 #import "classViewController.h"
+#import "LoginViewController.h"
 @interface HomeController ()<UIScrollViewDelegate,UIAlertViewDelegate>
 {
     LocationView *locationView;
     LeftVBaseView *leftBaseView;
     RightVBaseView *rightBaseView;
     NSString *ORDER_ID;
-    UIView *alertView;
+    UIView *alertview;
     BOOL ischange;
     UIImageView *changeImage ;
     UILabel *classLabel;
@@ -31,7 +32,6 @@
     
     
 }
-
 /*
  MVVM
  Model        处理数据模型
@@ -60,7 +60,6 @@
     [super viewDidLoad];
     [self onCreate];
     
-  
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav"] forBarMetrics:UIBarMetricsDefault];
@@ -82,17 +81,18 @@
     //推送教练是否接单
     self.block = ^(NSString *order_id) {
         ORDER_ID = order_id;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"有教练接单啦" delegate:home cancelButtonTitle:nil otherButtonTitles:@"查看",nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"有教练接单啦" delegate:home cancelButtonTitle:nil otherButtonTitles:@"查看",nil];
+       
         [alert show];
     };
     //推送vip次数
     self.vipblock =^(NSString *alert) {
-        UIAlertView *vipalert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:alert delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        UIAlertView *vipalert = [[UIAlertView alloc] initWithTitle:@"提示" message:alert delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
         [vipalert show];
     };
     //推送无聊的消息
     self.elseblock =^(NSString *alert) {
-        UIAlertView *vipalert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:alert delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
+        UIAlertView *vipalert = [[UIAlertView alloc] initWithTitle:@"提示" message:alert delegate:nil cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
         [vipalert show];
     };
     //跳转到cityViewController
@@ -105,11 +105,15 @@
     self.pushClassVCBlock = ^(NSString *titleString,int class_id) {
         classViewController *class = [classViewController new];
         class.titleString = titleString;
-        //class.type = type;//课程分类
         class.class_id = class_id;
         class.isShop = NO;
-        NSLog(@"课程的id %d titleString %@  ",class.class_id,class.titleString) ;
         [home.navigationController pushViewController:class animated:YES];
+    };
+    //跳转到登陆界面
+    self.pushLoginVCBlock = ^(void){
+        UIAlertView *loginAlert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还没有登录呢！" delegate:home cancelButtonTitle:@"取消" otherButtonTitles:@"登录",nil];
+        loginAlert.tag = 88;
+        [loginAlert show];
     };
     //跳转到体验店界面
     self.pushShopVCBlock = ^(NSString *classNumber,NSString *titleString){
@@ -154,8 +158,16 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    OrderFormController *order = [OrderFormController new];
-    [self.navigationController pushViewController:order animated:YES];
+    if (alertView.tag == 88) {
+        if (buttonIndex == 1) {
+            LoginViewController *login = [LoginViewController new];
+            [self.navigationController pushViewController:login animated:YES];
+        }
+    } else {
+        OrderFormController *order = [OrderFormController new];
+        [self.navigationController pushViewController:order animated:YES];
+    }
+    
 }
 
 #pragma mark 初始化背景图、按钮控件与名字
@@ -246,7 +258,7 @@
 #pragma mark 触摸屏幕回收弹出view
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [alertView removeFromSuperview];
+    [alertview removeFromSuperview];
 }
 + (instancetype)sharedViewControllerManager {
     static dispatch_once_t onceToken;

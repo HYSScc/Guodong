@@ -29,31 +29,23 @@
 {
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdcourse.gdstore",BASEURL];
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"Succ %@",responseObject);
-        
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        if (ResponseObject_RC == 0) {
             self.modelArray = [NSMutableArray array];
             for (NSDictionary *dict in [responseObject objectForKey:@"data"]) {
-                 RightModel *rightModel = [[RightModel alloc] initWithDictionary:dict];
+                RightModel *rightModel = [[RightModel alloc] initWithDictionary:dict];
                 [self.modelArray addObject:rightModel];
             }
             [_tableView reloadData];
-            
+
         } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    } fail:^(NSError *error) {
-        NSLog(@"error %@",error);
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
         
-        [alert show];
-    }];
+    } fail:^(NSError *error) {}];
 }
 -(void)createUI
 {
-
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, viewHeight, viewHeight - NavigationBar_Height - Tabbar_Height - Adaptive(50)) style:UITableViewStylePlain];
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle =UITableViewCellSeparatorStyleNone;

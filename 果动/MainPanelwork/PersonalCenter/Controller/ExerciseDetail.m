@@ -164,20 +164,19 @@
 -(void)getdata
 {
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.training&id=%@",BASEURL,self.ID];
-    NSLog(@"url  %@",url);
+  
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"体侧数据res  %@",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+   
+        if (ResponseObject_RC == 0) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSDictionary *test = [data objectForKey:@"test"];
-            
             
             if ([[data allKeys] containsObject:@"last_test"]) {
                 [orangeline addSubview:rightdian];
                 [self.view addSubview:nowtime];
                 orangeline.frame = CGRectMake(CGRectGetMaxX(timelabel.frame), viewHeight/26.68, (viewWidth - viewHeight/9.529)*0.75, 1);
                 imgscroll.contentSize = CGSizeMake(((viewWidth - viewHeight/9.529)/2)*4 + 4, 2592/(1936/((viewWidth - viewHeight/9.529)/2)));
-               
+                
                 
                 NSDictionary *last_test = [data objectForKey:@"last_test"];
                 /*********************最新的数据***************************************/
@@ -273,7 +272,7 @@
             UILabel *label26 = (UILabel *)[self.view viewWithTag:27];
             
             
-           
+            
             
             if (![[test allKeys] containsObject:@"before"]) {
                 
@@ -282,10 +281,10 @@
             else
             {
                 [(UIImageView *)[self.view viewWithTag:100] setImageWithURL:[NSURL URLWithString:[test objectForKey:@"before"]]];
-                        //添加点击手势
-                        UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
-                        [(UIImageView *)[self.view viewWithTag:100] addGestureRecognizer:tap];
-
+                //添加点击手势
+                UITapGestureRecognizer *tap  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
+                [(UIImageView *)[self.view viewWithTag:100] addGestureRecognizer:tap];
+                
             }
             
             if (![[test allKeys] containsObject:@"after"]) {
@@ -357,10 +356,10 @@
             
             NSString *confromTimespStr1 = [formatter1 stringFromDate:confromTimesp1];
             oldtime.text = confromTimespStr1;
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+    } fail:^(NSError *error) {}];
     
 }
 -(void)magnifyImage:(UIGestureRecognizer *)gest

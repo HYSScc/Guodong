@@ -208,21 +208,13 @@
     NSLog(@"登陆/注册");
    
     if (islogin == YES) {
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"真得要退出吗?" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"再想想", nil];
         
         [alert show];
-
-        
-        
-    }
-    else
-    {
+    } else {
         LoginViewController *login = [LoginViewController new];
         [self.navigationController pushViewController:login animated:YES];
     }
-
-
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -242,7 +234,6 @@
         LoginViewController *login = [LoginViewController new];
         [self.navigationController pushViewController:login animated:YES];
     }
-   
 }
 
 -(void)buttonClick:(UIButton *)button

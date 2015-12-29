@@ -84,7 +84,6 @@
     roundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(loginButton.bounds.size.width/4, (loginButton.bounds.size.height - viewHeight/37.056)/2, viewHeight/37.056, viewHeight/37.056)];
     roundImageView.image = [UIImage imageNamed:@"login_round"];
 
-    
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -97,13 +96,11 @@
     [self.view endEditing:YES];
     
     if (_textUserName.text.length == 0||_password.text.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"所有项都是必填项" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"所有项都是必填项" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         
         [alert show];
         return;
     }
-    
-   // NSString *userName = [NSString stringWithFormat:@"GD%@",_textUserName.text];
     
     [loginButton setTitle:@"正在验证" forState:UIControlStateNormal];
     [loginButton addSubview:roundImageView];
@@ -115,45 +112,24 @@
     [roundImageView.layer addAnimation:basic2 forKey:@"basic1"];
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.verifyVip&number=%@&pwd=%@",BASEURL,_textUserName.text,_password.text];
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
-        [roundImageView.layer removeAllAnimations];
-        [roundImageView removeFromSuperview];
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0)
-        {
-            
+        if (ResponseObject_RC == 0) {
+            [roundImageView.layer removeAllAnimations];
+            [roundImageView removeFromSuperview];
             
             [loginButton setTitle:@"验证成功" forState:UIControlStateNormal];
             [self.navigationController popToRootViewControllerAnimated:YES];
-//            
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//            alert.tag = 77;
-//            [alert show];
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
+            [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        else if ([[responseObject objectForKey:@"rc"] intValue] == 24)
-        {
-             [loginButton setTitle:@"验证" forState:UIControlStateNormal];
-            [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-            
-        }
-        else
-        {
-             [loginButton setTitle:@"验证" forState:UIControlStateNormal];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
-        }
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
-    
+    } fail:^(NSError *error) {}];
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 77) {
         [self.navigationController popViewControllerAnimated:YES];
-    }
-    else
-    {
+    } else {
         if (buttonIndex == 1) {
             [self.navigationController pushViewController:[LoginViewController new] animated:YES];
         }

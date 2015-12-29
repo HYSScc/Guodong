@@ -19,12 +19,9 @@
     imageView.layer.cornerRadius = imageView.frame.size.width/2;
 }
 //提示框
-+(void)showAlert:(NSString *)title withMessage:(NSString *)message delegate:(id)delegate witchCancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION
++(void)message:(NSString *)message delegate:(id)delegate witchCancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION
 {
-    
-  //  NSLog(@"delegate  %@",delegate);
-    
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:otherButtonTitles, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:message delegate:delegate cancelButtonTitle:cancelButtonTitle otherButtonTitles:otherButtonTitles, nil];
     [alert show];
     
 }

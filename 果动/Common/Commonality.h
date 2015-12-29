@@ -32,8 +32,8 @@
  */
 
 //登陆接口
-//#define BASEURL   @"http://www.guodongwl.com:8065/"
-#define BASEURL @"http://192.168.1.90:8080/"
+#define BASEURL   @"http://www.guodongwl.com:8065/"
+//#define BASEURL @"http://192.168.1.90:8080/"
 //#define BASEURL @"http://192.168.1.5/"
 #define XiaZaiConnent @"http://itunes.apple.com/cn/app/guo-dong/id998425416?l=en&mt=8"
 #define CHECKURL @"http://itunes.apple.com/lookup?id=998425416"
@@ -111,6 +111,6 @@
 #define TextNumber 30
 #define NavigationBar_Height viewHeight/10.421875
 #define Tabbar_Height viewHeight/13.34
-#define NotLogin_RC_Number 3 
-
+#define NotLogin_RC_Number 24
+#define ResponseObject_RC [[responseObject objectForKey:@"rc"] intValue]
 #endif

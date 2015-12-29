@@ -157,49 +157,50 @@
 {
     NSString * hturl = [NSString stringWithFormat:@"%@api/?method=gdcourse.order_class",BASEURL];
     [HttpTool postWithUrl:hturl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
-        data = [responseObject objectForKey:@"data"];
-        NSMutableArray *nameArray = [[NSMutableArray alloc] initWithCapacity:0];
-        NSMutableArray *numberArray = [[NSMutableArray alloc] initWithCapacity:0];
-        NSMutableArray *class_idArray = [[NSMutableArray alloc] initWithCapacity:0];
-        for (NSDictionary *dict in data) {
-            [nameArray addObject:[NSString stringWithFormat:@"%@", [dict objectForKey:@"name"]]];
-            [numberArray addObject:[NSString stringWithFormat:@"%@", [dict objectForKey:@"num"]]];
-            [class_idArray addObject:[NSString stringWithFormat:@"%@", [dict objectForKey:@"class_id"]]];
+        if (ResponseObject_RC == 0) {
+            data = [responseObject objectForKey:@"data"];
+            NSMutableArray *nameArray = [[NSMutableArray alloc] initWithCapacity:0];
+            NSMutableArray *numberArray = [[NSMutableArray alloc] initWithCapacity:0];
+            NSMutableArray *class_idArray = [[NSMutableArray alloc] initWithCapacity:0];
+            for (NSDictionary *dict in data) {
+                [nameArray addObject:[NSString stringWithFormat:@"%@", [dict objectForKey:@"name"]]];
+                [numberArray addObject:[NSString stringWithFormat:@"%@", [dict objectForKey:@"num"]]];
+                [class_idArray addObject:[NSString stringWithFormat:@"%@", [dict objectForKey:@"class_id"]]];
+            }
+            for (int a = 0; a < data.count; a++) {
+                // 60+a*50
+                CGFloat height = (classView.bounds.size.height-viewHeight/66.7)/data.count;
+                NSLog(@"height  %f",height);
+                
+                UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(viewHeight/66.7,viewHeight/78.471+(a+1)* height, classView.bounds.size.width-viewHeight/33.35, .5)];
+                line.backgroundColor = [UIColor lightGrayColor];
+                [classView addSubview:line];
+                
+                
+                UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewHeight/44.467, viewHeight/66.7 +(height-viewHeight/22.233)/2 + a*height, viewHeight/6.67, viewHeight/22.233)];
+                contentLabel.text = nameArray[a];
+                contentLabel.textColor = [UIColor grayColor];
+                contentLabel.font = [UIFont fontWithName:FONT size:16];
+                [classView addSubview:contentLabel];
+                
+                UILabel *classNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(classView.frame.size.width - viewHeight/8.3375, viewHeight/66.7 +(height-viewHeight/22.233)/2 + a*height, viewHeight/10.262, viewHeight/22.233)];
+                classNumberLabel.textColor = [UIColor lightGrayColor];
+                classNumberLabel.textAlignment = 2;
+                classNumberLabel.font = [UIFont fontWithName:FONT size:viewHeight/51.308];
+                classNumberLabel.text =  [NSString stringWithFormat:@"%@单",numberArray[a]];
+                [classView addSubview:classNumberLabel];
+                
+                
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+                button.frame = CGRectMake(0, viewHeight/66.7 + a*height, classView.bounds.size.width, height);
+                button.tag = 9*a+9;
+                [button addTarget:self action:@selector(changeClassButton:) forControlEvents:UIControlEventTouchUpInside];
+                [classView addSubview:button];
+            }
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        for (int a = 0; a < data.count; a++) {
-            // 60+a*50
-            CGFloat height = (classView.bounds.size.height-viewHeight/66.7)/data.count;
-            NSLog(@"height  %f",height);
-            
-            UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(viewHeight/66.7,viewHeight/78.471+(a+1)* height, classView.bounds.size.width-viewHeight/33.35, .5)];
-            line.backgroundColor = [UIColor lightGrayColor];
-            [classView addSubview:line];
-            
-           
-            UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewHeight/44.467, viewHeight/66.7 +(height-viewHeight/22.233)/2 + a*height, viewHeight/6.67, viewHeight/22.233)];
-            contentLabel.text = nameArray[a];
-            contentLabel.textColor = [UIColor grayColor];
-            contentLabel.font = [UIFont fontWithName:FONT size:16];
-            [classView addSubview:contentLabel];
-            
-            UILabel *classNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(classView.frame.size.width - viewHeight/8.3375, viewHeight/66.7 +(height-viewHeight/22.233)/2 + a*height, viewHeight/10.262, viewHeight/22.233)];
-            classNumberLabel.textColor = [UIColor lightGrayColor];
-            classNumberLabel.textAlignment = 2;
-            classNumberLabel.font = [UIFont fontWithName:FONT size:viewHeight/51.308];
-            classNumberLabel.text =  [NSString stringWithFormat:@"%@单",numberArray[a]];
-            [classView addSubview:classNumberLabel];
-            
-            
-            UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-            button.frame = CGRectMake(0, viewHeight/66.7 + a*height, classView.bounds.size.width, height);
-            button.tag = 9*a+9;
-            [button addTarget:self action:@selector(changeClassButton:) forControlEvents:UIControlEventTouchUpInside];
-            [classView addSubview:button];
-        }
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+    } fail:^(NSError *error) {}];
     
     isshang = !isshang;
     if (isshang) {
@@ -257,10 +258,10 @@
 }
 -(void)headerRereshing
 {
-    NSLog(@"URL  URL  %@",url);
+   
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"response   %@",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0)
+       
+        if (ResponseObject_RC == 0)
         {
             NSDictionary *dict = [responseObject objectForKey:@"data"];
             NSArray *order_info = [dict objectForKey:@"order_info"];
@@ -293,20 +294,12 @@
                 [_tableView reloadData];
             }
             [_tableView headerEndRefreshing];
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
+            [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+        } else {
+           [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number)
-        {
-            [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-        }
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
-        }
-    } fail:^(NSError *error) {
-        NSLog(@"error   %@",error);
-    }];
+    } fail:^(NSError *error) {}];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -363,10 +356,7 @@
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldMT" size:viewHeight/60.636] range:NSMakeRange(2+order.course.length,3)];
     cell_total.classLabel.attributedText = str;
     
-   
-    
 
-    
     
     //订单详情 - 学员名字
     cell_total.name.text = order.name;

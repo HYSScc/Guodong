@@ -20,6 +20,7 @@
 @property (nonatomic,copy) void(^pushShopVCBlock)(NSString *classNumber,NSString *titleString);//跳转到体验店界面
 @property (nonatomic,copy) void(^alertImageBlock)(NSString *imageName);//提示框动画
 @property (nonatomic,copy) void(^removeAnimationBlock)(BOOL isSucc);   //移除所有动画
+@property (nonatomic,copy) void(^pushLoginVCBlock)(void);//跳转到登陆界面
 
 @property (nonatomic,retain) UIImageView *alertImageView;
 @property (nonatomic,assign) CGFloat longitude,latitude;

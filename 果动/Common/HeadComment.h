@@ -16,7 +16,7 @@
 +(void)cornerRadius:(UIImageView *)imageView;
 
 //提示框
-+(void)showAlert:(NSString *)title withMessage:(NSString *)message delegate:(id)delegate witchCancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
++(void)message:(NSString *)message delegate:(id)delegate witchCancelButtonTitle:(NSString *)cancelButtonTitle otherButtonTitles:(NSString *)otherButtonTitles, ... NS_REQUIRES_NIL_TERMINATION;
 
 //设置各个页面的标题
 +(UILabel *)titleLabeltext:(NSString *)text;

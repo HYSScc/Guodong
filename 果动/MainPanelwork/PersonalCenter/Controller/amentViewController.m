@@ -36,10 +36,7 @@
 }
 -(void)createView
 {
-    //NSLog(@"self.baseImage %@",self.baseImageStr);
-
-   
-    baseImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewWidth)];
+     baseImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewWidth)];
     
     [baseImageView setImageWithURL:[NSURL URLWithString:self.baseImageStr] success:^(UIImage *image, BOOL cached) {
         NSLog(@"caced %d   image %@",cached,image);
@@ -168,31 +165,28 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.set_background",BASEURL];
     [HttpTool uploadImageWithUrl:url image:info[UIImagePickerControllerEditedImage] completion:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
+       
         
         baseImageView.image = info[UIImagePickerControllerEditedImage];
         [centerImge removeFromSuperview];
     
-    } errorBlock:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+    } errorBlock:^(NSError *error) {}];
 
 }
 -(void)sure
 {
-    NSLog(@"点击了确认");
     
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.set_userinfo",BASEURL];
     NSDictionary *dict = @{@"gender":[NSString stringWithFormat:@"%d",gender],@"nickname":messageTextField.text};
     [HttpTool postWithUrl:url params:dict contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        if (ResponseObject_RC == 0) {
             [self.navigationController popViewControllerAnimated:YES];
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
+            [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
+    } fail:^(NSError *error) {}];
 }
 -(void)tapLeftDouble
 {
@@ -204,8 +198,6 @@
     setSexButton.userInteractionEnabled = NO;
     changeImageButton.userInteractionEnabled = NO;
     CGFloat offset = self.view.frame.size.height - (textField.superview.frame.origin.y + textField.frame.size.height+216);
-    NSLog(@"textField.frame.origin.y %f",textField.frame.origin.y);
-    NSLog(@"offset %f",offset);
     if (offset<=0) {
         [UIView animateWithDuration:0.3 animations:^{
             CGRect frame = self.view.frame;

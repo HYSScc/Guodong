@@ -97,8 +97,7 @@
     // 当内容太多 显示不完的时候,用scrollView
     UIScrollView * scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, viewHeight/10.421875, viewWidth, viewHeight)];
     scrollView.delegate = self;//1,设置代理
-    // 设置内容大小
-  //  scrollView.contentSize = CGSizeMake(viewWidth, viewHeight*1.5);
+   
     // 隐藏滚动条
     scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:scrollView];
@@ -178,11 +177,11 @@
     talkquestionLabel.font = [UIFont fontWithName:FONT size:viewHeight/39.2353];
     [scrollView addSubview:talkquestionLabel];
     
-   // self.coach_id = @"10110000008";
+   
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.feedques&coach_id=%@",BASEURL,self.coach_id];
-    NSLog(@"url  %@",url);
-        [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-            NSLog(@"res  %@",responseObject);
+    [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
+        
+        if (ResponseObject_RC == 0) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSDictionary *coach_info = [data objectForKey:@"coach_info"];
             //名字
@@ -199,7 +198,7 @@
                 NSLog(@"多少单 %@",[NSString stringWithFormat:@"%@ 单",[coach_info objectForKey:@"class_times"]]);
                 classNumberLabel.text = [NSString stringWithFormat:@"%@ 单",[coach_info objectForKey:@"class_times"]];
             }
-    
+            
             NSArray *feed_ques = [data objectForKey:@"feed_ques"];
             self.request = [[NSMutableArray alloc] initWithCapacity:0];
             for (NSDictionary *dict in feed_ques) {
@@ -226,7 +225,6 @@
                 questionLabel.textColor = [UIColor grayColor];
                 questionLabel.font = [UIFont fontWithName:FONT size:viewHeight/47.643];
                 [scrollView addSubview:questionLabel];
-                //
                 
             }
             for (int a = 0; a < 3; a++)
@@ -242,7 +240,6 @@
                 button.button_id = quest.ID;
                 NSLog(@"button_id  %@",button.button_id);
                 
-                
                 questionLabel = [[UILabel alloc] init];
                 questionLabel.frame = CGRectMake(viewWidth - viewHeight/51.308 - viewHeight/4.764, CGRectGetMaxY(talkquestionLabel.frame) + viewHeight/30.3182 + a*viewHeight/16.0723, viewHeight/4.764, viewHeight/44.467);
                 questionLabel.text = quest.question;
@@ -252,12 +249,10 @@
                 [scrollView addSubview:questionLabel];
                 
             }
-
-    
-    
-        } fail:^(NSError *error) {
-            NSLog(@"error  %@",error);
-        }];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
+        }
+        } fail:^(NSError *error) {}];
     
     UIButton *sureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     sureButton.frame = CGRectMake(0, viewHeight - viewHeight/11.702, viewWidth, viewHeight/11.702);
@@ -572,18 +567,12 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:CONTENTTYPE];
     //发送请求
     [manager POST:url parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
-            
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[[responseObject objectForKey:@"data"] objectForKey:@"info"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+       
+                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[[responseObject objectForKey:@"data"] objectForKey:@"info"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
             
             [alert show];
-            
-                   }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {}];
     
     
 }

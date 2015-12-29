@@ -85,23 +85,19 @@
 -(void)setView
 {
     if (self.isShop) {
-         messageArray    = @[@"课程",@"姓名",@"电话",@"日期",@"时间",@"人数"];
+        messageArray    = @[@"课程",@"姓名",@"电话",@"日期",@"时间",@"人数"];
     } else {
-        if (self.class_id != 2) {
-            messageArray    = @[@"姓名",@"电话",@"日期",@"时间",@"人数",@"地址"];
-        } else {
-            messageArray    = @[@"课程",@"姓名",@"电话",@"日期",@"时间",@"人数",@"地址"];
-        }
+        messageArray    = @[@"姓名",@"电话",@"日期",@"时间",@"人数",@"地址"];
     }
     
     alertImageView = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - viewHeight/3.9235)/2, viewHeight/3.335 - viewHeight/15.512 , viewHeight/3.9235, viewHeight/15.512)];
     [self.view addSubview:alertImageView];
     
-     //顶部视图
+    //顶部视图
     topImagetype = self.isShop ? 5 : self.class_id;
     topView = [[TopView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight/3.335) imageTypeWith:topImagetype ClassNumberWith:self.personNumber showClassNumberWith:NO];
     [self.view addSubview:topView];
-   
+    
     
     UIView *messageView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topView.frame), viewWidth, viewHeight - CGRectGetMaxY(topView.frame) - NavigationBar_Height)];
     messageView.userInteractionEnabled = YES;
@@ -135,7 +131,7 @@
         messageLabel.font = [UIFont fontWithName:FONT size:viewHeight/51.308];
         [smallMessageView addSubview:messageLabel];
         
-        if (self.class_id != 2 && !self.isShop) {
+        if (!self.isShop) {
             if (a == 0 || a == 1 || a == 5) {
                 UITextField *messageTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLabel.frame)+viewHeight/66.7, 0, viewWidth - CGRectGetMaxX(messageLabel.frame) - viewHeight/33.35, messageHeight)];
                 messageTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
@@ -322,7 +318,7 @@
     [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:YES];
     
     [classPickView removeFromSuperview];
-     isopenClass = !isopenClass;
+    isopenClass = !isopenClass;
 }
 #pragma mark -- DatePicker
 -(void)openPicker
@@ -432,7 +428,7 @@
     [(UITextField *)[self.view viewWithTag:10] setUserInteractionEnabled:NO];
     //numberTextField交互性关闭
     [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:NO];
-
+    
     classPickView = [[UIView alloc] initWithFrame:CGRectMake(0,viewHeight - NavigationBar_Height - viewHeight/2.6055,viewWidth,viewHeight/2.6055)];
     classPickView.backgroundColor = [UIColor whiteColor];
     classPickView.userInteractionEnabled = YES;
@@ -451,7 +447,7 @@
     personNumberPicker.delegate   = self;
     personNumberPicker.dataSource = self;
     personNumberPicker.tag = 300;
-   
+    
     [classPickView addSubview:personNumberPicker];
     
 }
@@ -463,7 +459,7 @@
     [(UITextField *)[self.view viewWithTag:11] setUserInteractionEnabled:YES];
     
     [classPickView removeFromSuperview];
-   
+    
 }
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
@@ -478,7 +474,7 @@
     } else {
         
         return self.price_list.count;
-       
+        
     }
 }
 // 设置某一列中的某一行的标题
@@ -528,7 +524,7 @@
     NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[date1 timeIntervalSince1970]];
     
     
-    if (self.class_id !=2 && !self.isShop) {
+    if (!self.isShop) {
         Message *message = [self.course objectAtIndex:0];
         self.func_id = message.func_id;
         self.course_time = message.course_time;
@@ -545,7 +541,7 @@
             return;
         }
     }
-    if (self.class_id != 2 && !self.isShop) {
+    if (!self.isShop) {
         
         if (nameTextField.text.length == 0|| numberTextField.text.length == 0||addressTextField.text.length == 0||timeLabel.text.length == 0||dateLabel.text.length == 0 || personNumberLabel.text.length == 0)
         {
@@ -553,16 +549,6 @@
             [self alertImageWithImageName:@"alert_all"];
             return;
         }
-    }
-    if (self.class_id  == 2 && !self.isShop)
-    {
-        if (nameTextField.text.length == 0|| numberTextField.text.length == 0||addressTextField.text.length == 0||timeLabel.text.length == 0||dateLabel.text.length == 0||classLabel.text.length == 0|| personNumberLabel.text.length == 0)
-        {
-            
-            [self alertImageWithImageName:@"alert_all"];
-            return;
-        }
-        
     }
     //检查所有信息是否有误
     
@@ -585,20 +571,19 @@
             [self alertImageWithImageName:@"alert_address"];
             return;
         }
-
+        
     }
     if (!self.isShop) {
-         messageDict = @{@"func_id":self.func_id,@"course_type":@"1",@"number":numberTextField.text,@"name":nameTextField.text,@"address":addressTextField.text,@"time":timeSp,@"course_num":self.price_number};
+        messageDict = @{@"func_id":self.func_id,@"course_type":@"1",@"number":numberTextField.text,@"name":nameTextField.text,@"address":addressTextField.text,@"time":timeSp,@"course_num":self.price_number};
     } else {
-         messageDict = @{@"func_id":self.func_id,@"course_type":@"2",@"number":numberTextField.text,@"name":nameTextField.text,@"time":timeSp,@"course_num":self.price_number};
-        NSLog(@"参数 %@",messageDict);
+        messageDict = @{@"func_id":self.func_id,@"course_type":@"2",@"number":numberTextField.text,@"name":nameTextField.text,@"time":timeSp,@"course_num":self.price_number};
     }
     
     
     NSLog(@" 是不是vip会员的第一次课 %@",self.vip_cards);
     
     if ([self.vip_cards isEqualToString:@"1"]) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"尊敬的Vip用户,您是首次购买我们的课程,将完全免费,请确认是否订课" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"尊敬的Vip用户,您是首次购买我们的课程,将完全免费,请确认是否订课" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.tag = 741;
         
         [alert show];
@@ -606,26 +591,20 @@
         NSString *url = [NSString stringWithFormat:@"%@api/?method=gdcourse.get_order",BASEURL];
         [HttpTool postWithUrl:url params:messageDict contentType: CONTENTTYPE success:^(id responseObject)
          {
-             NSLog(@"下单res  %@",responseObject);
-             
-             NSDictionary *dict = [responseObject objectForKey:@"data"];
-             order_id = [dict objectForKey:@"order_id"];
-             
-             
-             if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+             if (ResponseObject_RC == 0) {
+                 NSDictionary *dict = [responseObject objectForKey:@"data"];
+                 order_id = [dict objectForKey:@"order_id"];
+                 
                  NSArray *shareButtonImageNameArray = [[NSArray alloc] init];
                  
                  shareButtonImageNameArray = @[@"pay_weixin2",@"pay_yinlian2",@"pay_zhifubao2"];
-                 NSLog(@"self.price_number %@",self.price_number);
+                
                  LXActivity *lxActivity = [[LXActivity alloc] initWithTitle:self.rmb time:self.course_time delegate:self discont:self.discont  youhuijuan:self.youhuijuan classNumber:self.price_number isFirst:self.isFirst cancelButtonTitle:@"" ShareButtonTitles:nil withShareButtonImagesName:shareButtonImageNameArray];
                  [lxActivity showInView:self.view];
-             }else{
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                 [alert show];
+             } else {
+                 [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
              }
-         }fail:^(NSError *error){
-             NSLog(@"error   %@",error);
-         }];
+         }fail:^(NSError *error){}];
     }
 }
 
@@ -687,13 +666,7 @@
         appointViewController * __weak weakSelf = self;
         
         [HttpTool postWithUrl:kUrl params:requestdict contentType:CONTENTTYPE success:^(id responseObject) {
-            NSLog(@"response   %@",responseObject );
-            if ([responseObject objectForKey:@"rc"]) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                
-                [alert show];
-                
-            }else{
+            
                 NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil];
                 NSString* charge = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                 NSLog(@"charge = %@", charge);
@@ -715,12 +688,7 @@
                                         }
                                     }];
                                });
-                
-            }
-        } fail:^(NSError *error) {
-            NSLog(@"error  %@",error);
-        }];
-        
+        } fail:^(NSError *error) {}];
     }
 }
 //是否是有效的正则表达式
@@ -877,27 +845,21 @@
         {
             if (buttonIndex == 1) {
                 NSString *url = [NSString stringWithFormat:@"%@api/?method=gdcourse.get_order",BASEURL];
-                
-                NSLog(@"messageDict %@",messageDict);
                 [HttpTool postWithUrl:url params:messageDict contentType: CONTENTTYPE success:^(id responseObject)
                  {
-                     NSLog(@" vip第一次订课Res  %@",responseObject);
-                     
-                     //如果res中有msg这个key 就弹出提示框显示内容
-                     if ([[responseObject allKeys] containsObject:@"msg"]) {
-                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                         alert.tag = 852;
-                         [alert show];
-                         
+                     if (ResponseObject_RC == 0) {
+                         //如果res中有msg这个key 就弹出提示框显示内容
+                         if ([[responseObject allKeys] containsObject:@"msg"]) {
+                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                             alert.tag = 852;
+                             [alert show];
+                             
+                         }
+
+                     } else {
+                         [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
                      }
-                 }
-                fail:^(NSError *error)
-                 {
-                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"网络连接错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                     
-                     [alert show];
-                     
-                 }];
+            }fail:^(NSError *error){}];
             }
             break;
         case 852:

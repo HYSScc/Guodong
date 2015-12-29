@@ -42,7 +42,6 @@
     BackView *backView = [[BackView alloc] initWithbacktitle:@"个人" viewController:self];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
     self.navigationItem.leftBarButtonItem = backItem;
-   // self.title = @"身体数据";
     
     self.view.backgroundColor = BASECOLOR;
     UIImageView * image1line=[UIImageView new];
@@ -87,51 +86,36 @@
     
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.my_training",BASEURL];
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        NSLog(@"res  %@!",responseObject);
-        if ([[responseObject objectForKey:@"rc"] intValue] == 0) {
+        
+        if (ResponseObject_RC == 0) {
             NSArray *data = [responseObject objectForKey:@"data"];
             self.request = [[NSMutableArray alloc] initWithCapacity:0];
             
-            
             if (data.count == 0) {
-                
                 [_tableView addSubview:baseImage];
                 [_tableView addSubview:noMoneyLabel];
                 [_tableView addSubview:noMoneyLabelTop];
                 [_tableView addSubview:shareButton];
-               
-            }else
-            {
+                
+            } else {
                 [baseImage removeFromSuperview];
                 [noMoneyLabelTop removeFromSuperview];
                 [noMoneyLabel removeFromSuperview];
                 [shareButton removeFromSuperview];
                 
-                
                 for (NSDictionary *dict in data) {
                     exerciseComment *comment = [[exerciseComment alloc] initWithDictionary:dict];
                     [self.request addObject:comment];
-                    
                 }
                 [_tableView reloadData];
-                
             }
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
+            [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
+        } else {
+            [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-        else if ([[responseObject objectForKey:@"rc"] intValue] == NotLogin_RC_Number)
-        {
-            [HeadComment showAlert:@"温馨提示" withMessage:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-            
-        }
-        else
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:[responseObject objectForKey:@"msg"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
-        }
-    } fail:^(NSError *error) {
-        NSLog(@"error  %@",error);
-    }];
-    
+
+    } fail:^(NSError *error) {}];
 }
 -(void)shareButton
 {
@@ -143,8 +127,6 @@
 {
     return self.request.count;
 }
-
-
 
 //设置单元格的内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -199,7 +181,7 @@
     ExerciseDetail *exercise = [ExerciseDetail new];
     
     exercise.ID = comment.ID;
-    NSLog(@"exercise.ID        %@",exercise.ID);
+
     [self.navigationController pushViewController:exercise animated:YES];
 }
 

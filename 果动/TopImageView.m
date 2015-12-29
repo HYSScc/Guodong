@@ -29,7 +29,6 @@ static TopImageView *topView = nil;
 {
     self = [super init];
     if (self) {
-        NSLog(@"金初始化了");//viewHeight/2.779
         pickertag = -1;
         self.frame = CGRectMake(0, 0, viewWidth, viewWidth);
         self.backgroundColor = [UIColor colorWithRed:24/255.0 green:24/255.0 blue:24/255.0 alpha:1];
@@ -165,25 +164,18 @@ static TopImageView *topView = nil;
     if (pickertag == 777) {
         NSString *url = [NSString stringWithFormat:@"%@api/?method=user.set_headimg",BASEURL];
         [HttpTool uploadImageWithUrl:url image:info[UIImagePickerControllerEditedImage] completion:^(id responseObject) {
-            NSLog(@"res  %@",responseObject);
-            iconImageView.image = info[UIImagePickerControllerEditedImage];
-    
-        } errorBlock:^(NSError *error) {
-            NSLog(@"error  %@",error);
-        }];
-    }else{
+           
+        iconImageView.image = info[UIImagePickerControllerEditedImage];
+        } errorBlock:^(NSError *error) {}];
+    } else {
         self.contentMode = UIViewContentModeScaleAspectFill;
         NSString *url = [NSString stringWithFormat:@"%@api/?method=user.set_background",BASEURL];
         [HttpTool uploadImageWithUrl:url image:info[UIImagePickerControllerEditedImage] completion:^(id responseObject) {
-            NSLog(@"res  %@",responseObject);
+          
             
-            self.image =info[UIImagePickerControllerEditedImage];
-            
-        } errorBlock:^(NSError *error) {
-            NSLog(@"error  %@",error);
-        }];
+        self.image =info[UIImagePickerControllerEditedImage];
+        } errorBlock:^(NSError *error) {}];
     }
-    
 }
 -(void)setPersonButton
 {
