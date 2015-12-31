@@ -6,18 +6,18 @@
 //  Copyright (c) 2014年 Unique. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "QCheckBox.h"
+#import <UIKit/UIKit.h>
 @protocol LXActivityDelegate <NSObject>
 
-- (void)didClickOnImageIndex:(int )imageIndex ;
+- (void)didClickOnImageIndex:(int)imageIndex;
 @optional
 - (void)didClickOnCancelButton;
 @end
 
-@interface LXActivity : UIView<QCheckBoxDelegate>
+@interface LXActivity : UIView <QCheckBoxDelegate>
 
-- (id)initWithTitle:(NSString *)title time:(NSString *)time delegate:(id<LXActivityDelegate>)delegate discont:(NSString *)discont youhuijuan:(NSString*)youhuijuan classNumber:(NSString *)classnumber isFirst:(NSString *)isFirst cancelButtonTitle:(NSString *)cancelButtonTitle ShareButtonTitles:(NSArray *)shareButtonTitlesArray withShareButtonImagesName:(NSArray *)shareButtonImagesNameArray;
-- (void)showInView:(UIView *)view;
+- (id)initWithTitle:(NSString*)title time:(NSString*)time delegate:(id<LXActivityDelegate>)delegate discont:(NSString*)discont youhuijuan:(NSString*)youhuijuan classNumber:(NSString*)classnumber isFirst:(NSString*)isFirst cancelButtonTitle:(NSString*)cancelButtonTitle ShareButtonTitles:(NSArray*)shareButtonTitlesArray withShareButtonImagesName:(NSArray*)shareButtonImagesNameArray;
+- (void)showInView:(UIView*)view;
 
 @end

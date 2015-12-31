@@ -9,16 +9,15 @@
 #import "exerciseComment.h"
 
 @implementation exerciseComment
--(instancetype)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary
 {
-    if (self = [super init])
-    {
-        
+    if (self = [super init]) {
+
         self.coach = [dictionary objectForKey:@"coach"];
-        self.time = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"time"]];
-        self.ID = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"id"]];
-        self.isview = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"isview"]];
-          }
+        self.time = [NSString stringWithFormat:@"%@", [dictionary objectForKey:@"time"]];
+        self.ID = [NSString stringWithFormat:@"%@", [dictionary objectForKey:@"id"]];
+        self.isview = [NSString stringWithFormat:@"%@", [dictionary objectForKey:@"isview"]];
+    }
     return self;
 }
 

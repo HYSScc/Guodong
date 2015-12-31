@@ -10,8 +10,8 @@
 
 @interface MingXiTableViewCell : UITableViewCell
 
-@property (nonatomic,retain)UILabel *titleLabel;
-@property (nonatomic,retain) UILabel *timeLabel;
-@property (nonatomic,retain)UILabel *numberLabel;
-@property (nonatomic,retain) UIImageView *numberImage,*biaozhi;
+@property (nonatomic, retain) UILabel* titleLabel;
+@property (nonatomic, retain) UILabel* timeLabel;
+@property (nonatomic, retain) UILabel* numberLabel;
+@property (nonatomic, retain) UIImageView *numberImage, *biaozhi;
 @end

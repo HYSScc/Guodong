@@ -10,10 +10,10 @@
 
 @interface MingXiComment : NSObject
 
-@property (nonatomic,retain)NSString *money;
-@property (nonatomic,retain)NSString *code;
-@property (nonatomic,retain)NSString *types;
-@property (nonatomic,retain)NSString *time;
+@property (nonatomic, retain) NSString* money;
+@property (nonatomic, retain) NSString* code;
+@property (nonatomic, retain) NSString* types;
+@property (nonatomic, retain) NSString* time;
 
--(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface TopView : UIView
-@property (nonatomic,retain) UILabel *classnumberLabel;
+@property (nonatomic, retain) UILabel* classnumberLabel;
 
 - (id)initWithFrame:(CGRect)frame imageTypeWith:(int)type ClassNumberWith:(int)number showClassNumberWith:(BOOL)isShow;
 @end

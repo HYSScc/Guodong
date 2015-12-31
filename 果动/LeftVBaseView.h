@@ -6,10 +6,10 @@
 //  Copyright © 2015年 Unique. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "SDCycleScrollView.h"
+#import <UIKit/UIKit.h>
 @interface LeftVBaseView : UIView
 
-@property (nonatomic,retain) NSMutableArray *scrimgArray;
-@property (nonatomic,retain) NSString *isVIP;
+@property (nonatomic, retain) NSMutableArray* scrimgArray;
+@property (nonatomic, retain) NSString* isVIP;
 @end

@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AppraiseViewController : UIViewController
-@property (nonatomic,retain)NSString *coach_id;
-@property (nonatomic,retain)NSString *order_id;
+@property (nonatomic, retain) NSString* coach_id;
+@property (nonatomic, retain) NSString* order_id;
 
 @end

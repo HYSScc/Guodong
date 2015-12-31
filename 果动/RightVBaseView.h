@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RightVBaseView : UIView<UITableViewDataSource,UITableViewDelegate>
-@property (nonatomic,retain) NSMutableArray *modelArray;
+@interface RightVBaseView : UIView <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, retain) NSMutableArray* modelArray;
 @end

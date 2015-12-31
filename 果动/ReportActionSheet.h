@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ReportActionSheet : UIActionSheet
-@property (nonatomic,retain) NSString *name;
-@property (nonatomic,retain) NSString *date;
-@property (nonatomic,retain) NSString *content;
-@property (nonatomic,retain) NSString *talkid;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* date;
+@property (nonatomic, retain) NSString* content;
+@property (nonatomic, retain) NSString* talkid;
 @end

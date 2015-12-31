@@ -9,9 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface exerciseComment : NSObject
-@property (nonatomic,retain)NSString *coach;
-@property (nonatomic,retain)NSString *time;
-@property (nonatomic,retain)NSString *ID;
-@property (nonatomic,retain)NSString *isview;
--(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+@property (nonatomic, retain) NSString* coach;
+@property (nonatomic, retain) NSString* time;
+@property (nonatomic, retain) NSString* ID;
+@property (nonatomic, retain) NSString* isview;
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

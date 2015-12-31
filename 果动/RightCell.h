@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface RightCell : UITableViewCell
-@property (nonatomic,retain) UIImageView *backgroundImageView;
-@property (nonatomic,retain) UILabel *titleName;
-@property (nonatomic,retain) UILabel *branchName;
-@property (nonatomic,retain) UIView *alphaView;
+@property (nonatomic, retain) UIImageView* backgroundImageView;
+@property (nonatomic, retain) UILabel* titleName;
+@property (nonatomic, retain) UILabel* branchName;
+@property (nonatomic, retain) UIView* alphaView;
 @end

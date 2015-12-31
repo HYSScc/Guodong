@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ExerciseDetail : UIViewController
-@property (nonatomic,retain)NSString *ID;
-@property (nonatomic,retain)NSMutableArray *request;
+@property (nonatomic, retain) NSString* ID;
+@property (nonatomic, retain) NSMutableArray* request;
 @end

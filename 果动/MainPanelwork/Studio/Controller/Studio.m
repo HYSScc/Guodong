@@ -9,16 +9,13 @@
 #import "Studio.h"
 
 @implementation Studio
--(instancetype)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary
 {
-    if (self = [super init])
-    {
-        
+    if (self = [super init]) {
+
         self.place = [dictionary objectForKey:@"place"];
         self.ID = [dictionary objectForKey:@"id"];
-        
-      
-        
+
         //  NSLog(@"self.time   %@",self.time);
     }
     return self;

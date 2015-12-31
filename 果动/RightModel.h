@@ -10,9 +10,9 @@
 
 @interface RightModel : NSObject
 
-@property (nonatomic,retain) NSString *place;
-@property (nonatomic,retain) NSString *number;
-@property (nonatomic,retain) NSString *name;
-@property (nonatomic,retain) NSString *image;
--(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+@property (nonatomic, retain) NSString* place;
+@property (nonatomic, retain) NSString* number;
+@property (nonatomic, retain) NSString* name;
+@property (nonatomic, retain) NSString* image;
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

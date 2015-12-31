@@ -9,18 +9,13 @@
 #import "MingXiComment.h"
 
 @implementation MingXiComment
--(instancetype)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary
 {
-    if (self = [super init])
-    {
-        self.money = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"money"]];
-         self.code = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"code"]];
-         self.types = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"types"]];
-         self.time = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"time"]];
-        
-        
-        
-       
+    if (self = [super init]) {
+        self.money = [NSString stringWithFormat:@"%@", [dictionary objectForKey:@"money"]];
+        self.code = [NSString stringWithFormat:@"%@", [dictionary objectForKey:@"code"]];
+        self.types = [NSString stringWithFormat:@"%@", [dictionary objectForKey:@"types"]];
+        self.time = [NSString stringWithFormat:@"%@", [dictionary objectForKey:@"time"]];
     }
     return self;
 }

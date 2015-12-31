@@ -10,15 +10,15 @@
 
 @interface NewsComment : NSObject
 
-@property (nonatomic,retain) NSString *content;
-@property (nonatomic,retain) NSString *replay;
-@property (nonatomic,retain) NSString *nickname;
-@property (nonatomic,retain) NSURL *headImageStr;
-@property (nonatomic,retain) NSString *dateStr;
-@property (nonatomic,retain) NSURL *phototStr;
-@property (nonatomic,retain) NSString *type;
-@property (nonatomic,retain) NSString  *talk_id;
+@property (nonatomic, retain) NSString* content;
+@property (nonatomic, retain) NSString* replay;
+@property (nonatomic, retain) NSString* nickname;
+@property (nonatomic, retain) NSURL* headImageStr;
+@property (nonatomic, retain) NSString* dateStr;
+@property (nonatomic, retain) NSURL* phototStr;
+@property (nonatomic, retain) NSString* type;
+@property (nonatomic, retain) NSString* talk_id;
 
--(NewsComment *)initWithDictionary:(NSDictionary *)dictionary;
-+(NewsComment *)statusWithDictionary:(NSDictionary *)dictionary;
+- (NewsComment*)initWithDictionary:(NSDictionary*)dictionary;
++ (NewsComment*)statusWithDictionary:(NSDictionary*)dictionary;
 @end

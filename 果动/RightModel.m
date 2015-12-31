@@ -10,14 +10,13 @@
 #import "RightModel.h"
 
 @implementation RightModel
--(instancetype)initWithDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary
 {
     if (self = [super init]) {
         self.place = [dictionary objectForKey:@"place"];
         self.number = [dictionary objectForKey:@"number"];
         self.name = [dictionary objectForKey:@"name"];
         self.image = [[dictionary objectForKey:@"img"] objectForKey:@"imgurl"];
-        
     }
     return self;
 }

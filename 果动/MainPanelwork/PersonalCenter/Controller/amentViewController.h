@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface amentViewController : UIViewController
-@property (nonatomic,retain) NSString *baseImageStr;
+@property (nonatomic, retain) NSString* baseImageStr;
 @end
