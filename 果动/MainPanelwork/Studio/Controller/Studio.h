@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface Studio : NSObject
-@property (nonatomic,retain)NSString *place,*ID;
--(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+@property (nonatomic, retain) NSString *place, *ID;
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

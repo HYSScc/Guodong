@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface cityVCViewController : UIViewController
-@property (nonatomic,retain)NSString *city;
+@property (nonatomic, retain) NSString* city;
 @end

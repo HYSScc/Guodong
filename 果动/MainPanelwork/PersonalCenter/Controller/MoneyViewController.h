@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MoneyViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
-@property (nonatomic,retain)NSMutableArray *request;
+@interface MoneyViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, retain) NSMutableArray* request;
 @end

@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderFormController : UIViewController
-@property (nonatomic,retain)NSString *citys;
-@property (nonatomic,retain)NSString *string;
+@property (nonatomic, retain) NSString* citys;
+@property (nonatomic, retain) NSString* string;
 @end

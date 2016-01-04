@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface GZSComment : NSObject
-@property (nonatomic,retain)NSString *class_id;
-@property (nonatomic,retain)NSString *func_name;
-@property (nonatomic,retain)NSString *func_id;
-@property (nonatomic,retain)NSString *status;
-@property (nonatomic,retain)NSString *time;
-@property (nonatomic,retain)NSString *rmb;
-@property (nonatomic,retain)NSString *alert;
+@property (nonatomic, retain) NSString* class_id;
+@property (nonatomic, retain) NSString* func_name;
+@property (nonatomic, retain) NSString* func_id;
+@property (nonatomic, retain) NSString* status;
+@property (nonatomic, retain) NSString* time;
+@property (nonatomic, retain) NSString* rmb;
+@property (nonatomic, retain) NSString* alert;
 
--(instancetype)initWithDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary;
 @end

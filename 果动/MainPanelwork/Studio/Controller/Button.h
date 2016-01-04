@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface Button : UIButton
-@property (nonatomic,retain)NSString *class_id,*func_id;
-@property (nonatomic,retain)NSString *RMB;
+@property (nonatomic, retain) NSString *class_id, *func_id;
+@property (nonatomic, retain) NSString* RMB;
 @end

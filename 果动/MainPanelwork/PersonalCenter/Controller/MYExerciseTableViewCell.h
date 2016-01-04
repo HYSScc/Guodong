@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface MYExerciseTableViewCell : UITableViewCell
-@property (nonatomic,retain)NSString *coach;
-@property (nonatomic,retain)NSString *time;
-@property (nonatomic,retain)NSString *ID;
-@property (nonatomic,retain)UILabel *timeLabel;
-@property (nonatomic,retain)UILabel *coachLabel;
-@property (nonatomic,retain)UIImageView *baseImageView;
+@property (nonatomic, retain) NSString* coach;
+@property (nonatomic, retain) NSString* time;
+@property (nonatomic, retain) NSString* ID;
+@property (nonatomic, retain) UILabel* timeLabel;
+@property (nonatomic, retain) UILabel* coachLabel;
+@property (nonatomic, retain) UIImageView* baseImageView;
 @end

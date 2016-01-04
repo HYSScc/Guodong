@@ -10,6 +10,6 @@
 
 @interface BackView : UIView
 
--(instancetype)initWithbacktitle:(NSString *)backtitle viewController:(UIViewController *)viewController;
+- (instancetype)initWithbacktitle:(NSString*)backtitle viewController:(UIViewController*)viewController;
 
 @end

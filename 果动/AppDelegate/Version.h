@@ -11,5 +11,5 @@
 @interface Version : UIViewController
 + (void)registerLocalNotification:(NSInteger)alertTime;
 + (void)cancelLocalNotification;
-+(void)onCheckVersion;
++ (void)onCheckVersion;
 @end
