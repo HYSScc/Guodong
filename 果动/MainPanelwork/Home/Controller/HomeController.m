@@ -41,6 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    [self onCreate];
     if (!succ) {
         CABasicAnimation* basic1 =
             [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
@@ -51,15 +52,11 @@
         [locationView.topLocationImageView.layer addAnimation:basic1
                                                        forKey:@"basic1"];
     }
-    //通过通知中心发送通知刷新个人资料和订课数量
-    NSNotification* notification =
-        [NSNotification notificationWithName:@"refushData" object:nil userInfo:nil];
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self onCreate];
+    
 
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -172,14 +169,11 @@
             _alertImageView.frame = CGRectMake(0, 0, viewWidth, Adaptive(50));
         }
         completion:^(BOOL finished) {
-
             [NSThread sleepForTimeInterval:0.7f];
             [UIView animateWithDuration:.4
                 animations:^{
                     _alertImageView.alpha = 0;
-                }
-                completion:^(BOOL finished){
-                }];
+                } completion:^(BOOL finished){}];
         }];
 }
 
@@ -191,8 +185,7 @@
             LoginViewController* login = [LoginViewController new];
             [self.navigationController pushViewController:login animated:YES];
         }
-    }
-    else {
+    } else {
         OrderFormController* order = [OrderFormController new];
         [self.navigationController pushViewController:order animated:YES];
     }

@@ -68,8 +68,7 @@
     //成立则表示从体验店进入
     if (self.isShop) {
         requestURL = [NSString stringWithFormat:@"%@api/?method=gdcourse.gdstore_inc&id=%@", BASEURL, self.shop_id];
-    }
-    else {
+    } else {
         //从订课界面进入
         requestURL = [NSString stringWithFormat:@"%@api/?method=gdcourse.introduce&class_id=%d", BASEURL, self.class_id];
     }
@@ -91,11 +90,9 @@
                 [imageArray addObject:imageModel];
             }
             [self setTopImage];
-        }
-        else if (ResponseObject_RC == NotLogin_RC_Number) {
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
             [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
     }
@@ -150,17 +147,14 @@
             if (a == 0) {
                 classImage.frame = CGRectMake(0, CGRectGetMaxY(topView.frame) + a * viewWidth, viewWidth, viewWidth * proportion);
                 firstHeigth = classImage.bounds.size.height;
-            }
-            else {
+            } else {
                 classImage.frame = CGRectMake(0, secondHeigth, viewWidth, viewWidth * proportion);
             }
             secondHeigth = CGRectGetMaxY(classImage.frame);
-        }
-        else {
+        } else {
             if (a == 0) {
                 classImage.frame = CGRectMake(interval, interval + CGRectGetMaxY(topView.frame) + a * ((viewWidth - interval * 2) * proportion), viewWidth - interval * 2, (viewWidth - interval * 2) * proportion);
-            }
-            else {
+            } else {
                 classImage.frame = CGRectMake(interval, firstHeigth + interval, viewWidth - interval * 2, (viewWidth - interval * 2) * proportion);
             }
             firstHeigth = CGRectGetMaxY(classImage.frame);
@@ -189,8 +183,7 @@
     xinButton.frame = CGRectMake((viewWidth - Adaptive(63)) / 2, Adaptive(20), Adaptive(28), Adaptive(24));
     if (ipraised == 0) {
         [xinButton setBackgroundImage:[UIImage imageNamed:@"class_grayxin"] forState:UIControlStateNormal];
-    }
-    else {
+    } else {
         [xinButton setBackgroundImage:[UIImage imageNamed:@"class_orangexin"] forState:UIControlStateNormal];
     }
 
@@ -265,8 +258,7 @@
 {
     if (self.isShop) {
         zanUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.praise&class_id=%@&types=2", BASEURL, self.shop_id];
-    }
-    else {
+    } else {
         zanUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.praise&class_id=%d", BASEURL, self.class_id];
     }
 
@@ -277,26 +269,21 @@
                 [xinButton popOutsideWithDuration:0.5];
                 [xinButton setBackgroundImage:[UIImage imageNamed:@"class_orangexin"] forState:UIControlStateNormal];
                 [xinButton animate];
-            }
-            else {
+            } else {
                 [xinButton popInsideWithDuration:0.4];
                 [xinButton setBackgroundImage:[UIImage imageNamed:@"class_grayxin"] forState:UIControlStateNormal];
             }
             numberLabel.text = [NSString stringWithFormat:@"%@", [[responseObject objectForKey:@"data"] objectForKey:@"total"]];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    }
-        fail:^(NSError* error){
-        }];
+    }fail:^(NSError* error){}];
 }
 - (void)sureButton
 {
     if (self.isShop) {
         sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%@&types=2", BASEURL, self.shop_id];
-    }
-    else {
+    } else {
         sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%d", BASEURL, self.class_id];
     }
     [HttpTool postWithUrl:sureUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
@@ -330,13 +317,10 @@
                 appoint.userinfo_address = [[[responseObject objectForKey:@"data"] objectForKey:@"userInfo"] objectForKey:@"address"];
             }
             [self.navigationController pushViewController:appoint animated:YES];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    }
-        fail:^(NSError* error){
-        }];
+    } fail:^(NSError* error){}];
 }
 
 @end

@@ -36,14 +36,10 @@
                 [self.modelArray addObject:rightModel];
             }
             [_tableView reloadData];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-
-    }
-        fail:^(NSError* error){
-        }];
+    }fail:^(NSError* error){}];
 }
 - (void)createUI
 {

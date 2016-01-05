@@ -102,6 +102,8 @@
 		6352915A1AC9164300C495F7 /* cityVCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635291591AC9164300C495F7 /* cityVCViewController.m */; };
 		635550271AD61E8D00AB1F06 /* SETViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 635550261AD61E8D00AB1F06 /* SETViewController.m */; };
 		6358387D1B9EDE0600B94DDE /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = 6358387C1B9EDE0600B94DDE /* Version.m */; };
+		635896711C3B576400CF699E /* leftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 635896701C3B576400CF699E /* leftModel.m */; };
+		635896B31C3B63FF00CF699E /* leftCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 635896B21C3B63FF00CF699E /* leftCollectionViewCell.m */; };
 		63593FC81A8C895F00660110 /* GDComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 63593FC71A8C895F00660110 /* GDComment.m */; };
 		63593FF01A8CB21000660110 /* PersonalCenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63593FEF1A8CB21000660110 /* PersonalCenterController.m */; };
 		635AD0B71C27A08D00B8AD57 /* TopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635AD0B61C27A08D00B8AD57 /* TopView.m */; };
@@ -520,6 +522,10 @@
 		635550261AD61E8D00AB1F06 /* SETViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SETViewController.m; path = MainPanelwork/Home/Controller/SETViewController.m; sourceTree = "<group>"; };
 		6358387B1B9EDE0600B94DDE /* Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
 		6358387C1B9EDE0600B94DDE /* Version.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
+		6358966F1C3B576400CF699E /* leftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = leftModel.h; sourceTree = "<group>"; };
+		635896701C3B576400CF699E /* leftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = leftModel.m; sourceTree = "<group>"; };
+		635896B11C3B63FF00CF699E /* leftCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = leftCollectionViewCell.h; sourceTree = "<group>"; };
+		635896B21C3B63FF00CF699E /* leftCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = leftCollectionViewCell.m; sourceTree = "<group>"; };
 		63593FC21A8C886A00660110 /* PersonalCenterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonalCenterController.h; path = MainPanelwork/PersonalCenter/Controller/PersonalCenterController.h; sourceTree = "<group>"; };
 		63593FC61A8C895F00660110 /* GDComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDComment.h; path = MainPanelwork/Home/Model/GDComment.h; sourceTree = "<group>"; };
 		63593FC71A8C895F00660110 /* GDComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDComment.m; path = MainPanelwork/Home/Model/GDComment.m; sourceTree = "<group>"; };
@@ -2070,6 +2076,8 @@
 				63E5A6891BE06603000D5179 /* LocationView.m */,
 				63E5A68E1BE09222000D5179 /* LeftVBaseView.h */,
 				63E5A68F1BE09222000D5179 /* LeftVBaseView.m */,
+				635896B11C3B63FF00CF699E /* leftCollectionViewCell.h */,
+				635896B21C3B63FF00CF699E /* leftCollectionViewCell.m */,
 				63E5A6911BE0A7E2000D5179 /* RightVBaseView.h */,
 				63E5A6921BE0A7E2000D5179 /* RightVBaseView.m */,
 				63D453AB1C2A716100D6F1F9 /* RightCell.h */,
@@ -2085,6 +2093,8 @@
 				63E4C03A1BC8FDDD00E58936 /* page.m */,
 				63242B2C1C2B95AA00E9E3EE /* RightModel.h */,
 				63242B2D1C2B95AA00E9E3EE /* RightModel.m */,
+				6358966F1C3B576400CF699E /* leftModel.h */,
+				635896701C3B576400CF699E /* leftModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2435,6 +2445,7 @@
 				633735DF1BB3E634000CE06B /* Message.m in Sources */,
 				63CFB9051B60D9B10034E6E9 /* UIView+LQXkeyboard.m in Sources */,
 				634B6F151ABABC9800F97E5B /* UIScrollView+SVPullToRefresh.m in Sources */,
+				635896711C3B576400CF699E /* leftModel.m in Sources */,
 				0488CC211A86F48200E0AA5E /* ELCAlbumPickerController.m in Sources */,
 				63E691F81BE7380E00FE1D9C /* BackView.m in Sources */,
 				638677F91AE7A19000F772C7 /* TNSexyImageUploadProgress.m in Sources */,
@@ -2488,6 +2499,7 @@
 				63E5A6931BE0A7E2000D5179 /* RightVBaseView.m in Sources */,
 				0488CC331A86F48200E0AA5E /* MMProgressHUDViewController.m in Sources */,
 				0488CB2B1A86E29000E0AA5E /* AppDelegate.m in Sources */,
+				635896B31C3B63FF00CF699E /* leftCollectionViewCell.m in Sources */,
 				63E242161BD8BF0B00AE0E16 /* SDCollectionViewCell.m in Sources */,
 				0488CB781A86EE2900E0AA5E /* HomeController.m in Sources */,
 				0488CD2F1A87008200E0AA5E /* publish_ViewController.m in Sources */,
