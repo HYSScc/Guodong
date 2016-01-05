@@ -169,10 +169,9 @@
         self.coachSex.text = @"男";
         [self.coachView addSubview:self.coachSex];
 
-        self.coachClass = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(84), CGRectGetMaxY(self.coachSex.frame), viewWidth / 1.9, 26)];
+        self.coachClass = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(84), CGRectGetMaxY(self.coachSex.frame), Adaptive(198), Adaptive(27))];
         self.coachClass.numberOfLines = 0;
         self.coachClass.textColor = [UIColor whiteColor];
-        // self.coachClass.backgroundColor = [UIColor orangeColor];
         self.coachClass.font = [UIFont fontWithName:FONT size:Adaptive(13)];
         self.coachClass.text = @"健身私教、急速康复、疯狂甩脂";
         [self.coachView addSubview:self.coachClass];

@@ -76,7 +76,7 @@
         if (i == 3) {
             //   pageControl.hidden = YES;
             imageView.userInteractionEnabled = YES;
-
+           
             UIImageView* userimg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yindao_textnumber"]];
             userimg.frame = CGRectMake((viewWidth - viewWidth / 1.2) / 2, Adaptive(455.5), viewWidth / 1.2, Adaptive(40));
             userimg.userInteractionEnabled = YES;

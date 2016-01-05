@@ -56,8 +56,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-
+    NSLog(@"kuan  %f",viewWidth);
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController.navigationBar
@@ -226,7 +225,7 @@
         initWithFrame:CGRectMake(
                           (viewWidth * 3 / 4) - Adaptive(20),
                           (changeImage.bounds.size.height - Adaptive(30)) / 2,
-                          50, Adaptive(30))];
+                          Adaptive(50), Adaptive(30))];
     frameLabel.textColor = [UIColor lightGrayColor];
     frameLabel.text = @"体验店";
     frameLabel.font = [UIFont fontWithName:FONT size:Adaptive(16)];
