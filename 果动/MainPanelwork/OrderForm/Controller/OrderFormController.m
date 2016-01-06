@@ -371,11 +371,12 @@
     if (order.coach_info.count == 0) {
         //退单按钮
         
-     [cell_total.chargeback addTarget:self action:@selector(chargeback) forControlEvents:UIControlEventTouchUpInside];
+        [cell_total.chargeback addTarget:self action:@selector(chargeback:) forControlEvents:UIControlEventTouchUpInside];
+        cell_total.chargeback.tag = indexPath.row;
      [cell_total.ccView addSubview:cell_total.chargeback];
         if (ischargeback == YES) {
             cell_total.coachName.text = order.coachName;
-            order_id = order.order_id;
+           
             CGRect newframe = cell_total.ccView.frame;
             newframe.size.height = Adaptive(200);
             cell_total.ccView.frame = newframe;
@@ -395,20 +396,16 @@
         }
     } else {
         //教练名字
-
         [cell_total.ccView addSubview:cell_total.coachView];
         cell_total.coachName.text = order.coachName;
-       
         //性别
         if ([order.sex intValue] == 1) {
             cell_total.coachSex.text = @"男";
         } else {
             cell_total.coachSex.text = @"女";
         }
-
         //负责课程
         cell_total.coachClass.text = order.coachClass;
-
         //头像
         [cell_total.coachImg setImageWithURL:[NSURL URLWithString:order.headimg] placeholderImage:[UIImage imageNamed:@"教练头像"] success:^(UIImage* image, BOOL cached) {}failure:^(NSError* error){}];
     }
@@ -432,10 +429,11 @@
 -(void)backSureButton
 {
     ischargeback = NO;
-    [_tableView reloadData];
+    
     NSString *backurl = [NSString stringWithFormat:@"%@refund/?order_id=%@",BASEURL,order_id];
     [HttpTool postWithUrl:backurl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         if (ResponseObject_RC == 0) {
+            [self setupRefresh];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"退单成功，回退款项将退回到相应的支付渠道，请及时查收！我们的不足之处望您给出宝贵的建议" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"反馈", nil];
             alert.tag = 100;
             [alert show];
@@ -445,9 +443,13 @@
     } fail:^(NSError *error) {}];
 }
 //退单
--(void)chargeback
+-(void)chargeback:(UIButton*)button
 {
     ischargeback = YES;
+    OrderComment* order = [orderArray objectAtIndex:button.tag];
+    order_id = order.order_id;
+    NSLog(@"order_id %@",order_id);
+
     [_tableView reloadData];
 }
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -481,7 +483,7 @@
 {
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
+   }
 - (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 100) {
