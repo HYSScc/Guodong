@@ -107,10 +107,7 @@
     classView.backgroundColor = [UIColor clearColor];
     classView.userInteractionEnabled = YES;
     
-    UIImageView* classViewImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, classView.frame.size.width, classView.frame.size.height)];
-    [classViewImage setImage:[UIImage imageNamed:@"dingdan_classView"]];
-    classViewImage.userInteractionEnabled = YES;
-    [classView addSubview:classViewImage];
+    
     
     /***********navigationItem.titleView***********/
     
@@ -152,6 +149,11 @@
 }
 - (void)classButton:(UIButton*)button
 {
+    UIImageView* classViewImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, classView.frame.size.width, classView.frame.size.height)];
+    [classViewImage setImage:[UIImage imageNamed:@"dingdan_classView"]];
+    classViewImage.userInteractionEnabled = YES;
+    [classView addSubview:classViewImage];
+    
     NSString* hturl = [NSString stringWithFormat:@"%@api/?method=gdcourse.order_class", BASEURL];
     [HttpTool postWithUrl:hturl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         if (ResponseObject_RC == 0) {
@@ -165,13 +167,12 @@
                 [class_idArray addObject:[NSString stringWithFormat:@"%@", [dict objectForKey:@"class_id"]]];
             }
             for (int a = 0; a < data.count; a++) {
-                // 60+a*50
                 CGFloat height = (classView.bounds.size.height - Adaptive(10)) / data.count;
-                NSLog(@"height  %f", height);
+        
+                UILabel* classViewline = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(10), Adaptive(8.5) + (a + 1) * height, classView.bounds.size.width - Adaptive(20), .5)];
                 
-                UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(10), Adaptive(8.5) + (a + 1) * height, classView.bounds.size.width - Adaptive(20), .5)];
-                line.backgroundColor = [UIColor lightGrayColor];
-                [classView addSubview:line];
+                classViewline.backgroundColor = [UIColor lightGrayColor];
+                [classView addSubview:classViewline];
                 
                 UILabel* contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(15), Adaptive(10) + (height - Adaptive(30)) / 2 + a * height, Adaptive(100), Adaptive(30))];
                 contentLabel.text = nameArray[a];
@@ -192,15 +193,12 @@
                 [button addTarget:self action:@selector(changeClassButton:) forControlEvents:UIControlEventTouchUpInside];
                 [classView addSubview:button];
             }
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
-        }
-    }
-                     fail:^(NSError* error){
-                     }];
+        }}fail:^(NSError* error){}];
     
     isshang = !isshang;
+    
     if (isshang) {
         [classImageView setImage:[UIImage imageNamed:@"dingdan_xiaJT"]];
         AppDelegate* app = [UIApplication sharedApplication].delegate;
@@ -208,11 +206,10 @@
         self.view.userInteractionEnabled = NO;
         alphaView.alpha = 0.3;
         [self.view addSubview:alphaView];
-        // self.view.alpha = .2;
-    }
-    else {
+    } else {
         [classImageView setImage:[UIImage imageNamed:@"dingdan_shangJT"]];
         [classView removeFromSuperview];
+        [classView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];//移除所有子视图
         self.view.userInteractionEnabled = YES;
         alphaView.alpha = 1;
         [alphaView removeFromSuperview];
