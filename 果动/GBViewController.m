@@ -617,18 +617,14 @@
             reportActionSheet.content = gdc.content;
             reportActionSheet.talkid = gdc.talkid;
             [reportActionSheet showInView:self.view];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    }
-                     fail:^(NSError* error){
-                     }];
+    } fail:^(NSError* error){}];
 }
 - (void)actionSheet:(ReportActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
-        return;
+    if (buttonIndex == 0) return;
     report_typeid = [self.report_idArray objectAtIndex:buttonIndex - 1];
     UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
     alert.message = [NSString stringWithFormat:@"您将举报 %@ 在 %@ 发布的 %@ 为 %@，请确认", actionSheet.name, actionSheet.date, actionSheet.content, [self.reportArray objectAtIndex:buttonIndex - 1]];
@@ -649,16 +645,13 @@
     [HttpTool postWithUrl:zanurl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         
         if ([[responseObject objectForKey:@"rc"] integerValue] == 11) {
-            
             [button popInsideWithDuration:0.4];
             [button setBackgroundImage:[UIImage imageNamed:@"GD_zan"] forState:UIControlStateNormal];
-        }
-        else if ([[responseObject objectForKey:@"rc"] integerValue] == 10) {
+        } else if ([[responseObject objectForKey:@"rc"] integerValue] == 10) {
             [button popOutsideWithDuration:0.5];
             [button setBackgroundImage:[UIImage imageNamed:@"GD_yizan"] forState:UIControlStateNormal];
             [button animate];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         }
         
@@ -679,7 +672,12 @@
     } else {
         [cell.openImg setImage:[UIImage imageNamed:@"GD_xia"]];
     }
-    [self headerRereshing];
+    // 创建一个索引集合把你需要重新加载的   区号   放到   集合   中
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:index.section];
+    // 重新加载某个区   (刷新区)
+    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+
+  //  [self headerRereshing];
 }
 //表随键盘高度变化
 - (void)keyboardShow:(NSNotification*)note
@@ -699,8 +697,7 @@
                 self.view.transform = CGAffineTransformMakeTranslation(0, keyMinHeight - rootpoint.origin.y);
             }
         }];
-    }
-    else {
+    } else {
         if ([keyName isEqual:@"First"]) {
             
             [UIView animateWithDuration:[note.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue] animations:^{

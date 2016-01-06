@@ -70,21 +70,21 @@
 }
 - (void)viewDidLoad
 {
-
+    
     [super viewDidLoad];
-
+    
     isopen = -1;
     self.view.backgroundColor = BASECOLOR;
-
+    
     alphaView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
     alphaView.backgroundColor = [UIColor blackColor];
-
+    
     /***********navigationItem.titleView***********/
-
+    
     classBaseView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, Adaptive(80), Adaptive(30))];
     classBaseView.backgroundColor = [UIColor clearColor];
     self.navigationItem.titleView = classBaseView;
-
+    
     UILabel* titlelabel = [UILabel new];
     titlelabel.text = @"订单";
     titlelabel.textAlignment = 1;
@@ -92,61 +92,61 @@
     titlelabel.frame = CGRectMake(viewHeight / 66.7, 0,Adaptive(50), Adaptive(30));
     [titlelabel setTextColor:[UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1]];
     [classBaseView addSubview:titlelabel];
-
+    
     classImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titlelabel.frame), (classBaseView.frame.size.height - Adaptive(6)) / 2,Adaptive(10),Adaptive(6))];
     [classImageView setImage:[UIImage imageNamed:@"dingdan_shangJT"]];
     [classBaseView addSubview:classImageView];
-
+    
     UIButton* classButton = [UIButton buttonWithType:UIButtonTypeCustom];
     classButton.frame = CGRectMake(0, 0, Adaptive(80), Adaptive(30));
     [classButton addTarget:self action:@selector(classButton:) forControlEvents:UIControlEventTouchUpInside];
     [classBaseView addSubview:classButton];
-
+    
     //此处的数字不适配   nav高度为64不变
     classView = [[UIView alloc] initWithFrame:CGRectMake(viewWidth / 2 - Adaptive(100), 55, Adaptive(200), 210)];
     classView.backgroundColor = [UIColor clearColor];
     classView.userInteractionEnabled = YES;
-
+    
     UIImageView* classViewImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, classView.frame.size.width, classView.frame.size.height)];
     [classViewImage setImage:[UIImage imageNamed:@"dingdan_classView"]];
     classViewImage.userInteractionEnabled = YES;
     [classView addSubview:classViewImage];
-
+    
     /***********navigationItem.titleView***********/
-
+    
     //上面的线
     UIImageView* lineImage1 = [UIImageView new];
     lineImage1.image = [UIImage imageNamed:@"home__line1"];
     lineImage1.frame = CGRectMake(0, 0, viewWidth, 0.5);
     [self.view addSubview:lineImage1];
-
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 1, self.view.bounds.size.width, self.view.bounds.size.height - NavigationBar_Height - Tabbar_Height) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
-
+    
     image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"dingdan_no"]];
     image.frame = CGRectMake((viewWidth - 65) / 2, 117.5, 65, 87.5);
-
+    
     noMoneyLabelTop = [[UILabel alloc] initWithFrame:CGRectMake(0, (CGRectGetMaxY(image.frame) + Adaptive(20)), viewWidth, Adaptive(20))];
     noMoneyLabelTop.textColor = [UIColor whiteColor];
     noMoneyLabelTop.text = @"您还没有订单噢...";
     noMoneyLabelTop.textAlignment = 1;
     noMoneyLabelTop.font = [UIFont fontWithName:FONT size:Adaptive(20)];
-
+    
     noMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(noMoneyLabelTop.frame) + Adaptive(12.5), viewWidth, Adaptive(15))];
     noMoneyLabel.textColor = [UIColor colorWithRed:94 / 255.0 green:94 / 255.0 blue:94 / 255.0 alpha:1];
     noMoneyLabel.text = @"赶快召唤我们的教练吧!";
     noMoneyLabel.textAlignment = 1;
     noMoneyLabel.font = [UIFont fontWithName:FONT size:Adaptive(15)];
-
+    
     shareButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     shareButton.frame = CGRectMake((viewWidth - Adaptive(99)) / 2, CGRectGetMaxY(noMoneyLabel.frame) + Adaptive(25), Adaptive(99), Adaptive(30));
     [shareButton setBackgroundImage:[UIImage imageNamed:@"money_dingke"] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(shareButton) forControlEvents:UIControlEventTouchUpInside];
-
+    
     [self setupRefresh];
     url = [NSString stringWithFormat:@"%@api/?method=gdcourse.order", BASEURL];
 }
@@ -168,24 +168,24 @@
                 // 60+a*50
                 CGFloat height = (classView.bounds.size.height - Adaptive(10)) / data.count;
                 NSLog(@"height  %f", height);
-
+                
                 UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(10), Adaptive(8.5) + (a + 1) * height, classView.bounds.size.width - Adaptive(20), .5)];
                 line.backgroundColor = [UIColor lightGrayColor];
                 [classView addSubview:line];
-
+                
                 UILabel* contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(15), Adaptive(10) + (height - Adaptive(30)) / 2 + a * height, Adaptive(100), Adaptive(30))];
                 contentLabel.text = nameArray[a];
                 contentLabel.textColor = [UIColor grayColor];
                 contentLabel.font = [UIFont fontWithName:FONT size:Adaptive(16)];
                 [classView addSubview:contentLabel];
-
+                
                 UILabel* classNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(classView.frame.size.width - Adaptive(80), Adaptive(10) + (height - Adaptive(30)) / 2 + a * height, Adaptive(65), Adaptive(30))];
                 classNumberLabel.textColor = [UIColor lightGrayColor];
                 classNumberLabel.textAlignment = 2;
                 classNumberLabel.font = [UIFont fontWithName:FONT size:Adaptive(13)];
                 classNumberLabel.text = [NSString stringWithFormat:@"%@单", numberArray[a]];
                 [classView addSubview:classNumberLabel];
-
+                
                 UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
                 button.frame = CGRectMake(0, Adaptive(10) + a * height, classView.bounds.size.width, height);
                 button.tag = 9 * a + 9;
@@ -197,9 +197,9 @@
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
     }
-        fail:^(NSError* error){
-        }];
-
+                     fail:^(NSError* error){
+                     }];
+    
     isshang = !isshang;
     if (isshang) {
         [classImageView setImage:[UIImage imageNamed:@"dingdan_xiaJT"]];
@@ -232,7 +232,7 @@
     [classView removeFromSuperview];
     self.view.userInteractionEnabled = YES;
     [alphaView removeFromSuperview];
-
+    
     if (button.tag == 9) {
         url = [NSString stringWithFormat:@"%@api/?method=gdcourse.order", BASEURL];
         [self headerRereshing];
@@ -253,16 +253,16 @@
 }
 - (void)headerRereshing
 {
-
+    
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-
+        
         if (ResponseObject_RC == 0) {
             NSDictionary* dict = [responseObject objectForKey:@"data"];
             NSArray* order_info = [dict objectForKey:@"order_info"];
-
+            
             if (order_info.count == 0) {
                 //没有订单
-
+                
                 [orderArray removeAllObjects];
                 [_tableView addSubview:image];
                 [_tableView addSubview:noMoneyLabelTop];
@@ -270,20 +270,19 @@
                 [_tableView addSubview:shareButton];
                 //  [_tableView addSubview:image2];
                 [_tableView reloadData];
-            }
-            else { //有订单
+            } else { //有订单
                 [image removeFromSuperview];
                 [noMoneyLabelTop removeFromSuperview];
                 [noMoneyLabel removeFromSuperview];
                 [shareButton removeFromSuperview];
                 // [image2 removeFromSuperview];
-
+                
                 orderArray = [[NSMutableArray alloc] initWithCapacity:0];
                 for (NSDictionary* dict in order_info) {
                     OrderComment* order = [[OrderComment alloc] initWithDictionary:dict];
                     [orderArray addObject:order];
                 }
-
+                
                 [_tableView reloadData];
             }
             [_tableView headerEndRefreshing];
@@ -295,8 +294,8 @@
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
     }
-        fail:^(NSError* error){
-        }];
+                     fail:^(NSError* error){
+                     }];
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -306,118 +305,184 @@
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    static NSString* cellIdentifier_total = @"Cell_total";
-
-    cell_total = [tableView dequeueReusableCellWithIdentifier:cellIdentifier_total];
-    if (!cell_total) {
-        cell_total = [[TableViewCell_total alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier_total];
-        cell_total.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell_total.userInteractionEnabled = YES;
-    }
-
-    cell_total.jiantouButton.tag = indexPath.row;
-    [cell_total.jiantouButton addTarget:self action:@selector(opencontent:) forControlEvents:UIControlEventTouchUpInside];
     OrderComment* order = [orderArray objectAtIndex:indexPath.row];
-
-    //下单时间
-    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateStyle:NSDateFormatterMediumStyle];
-    [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"YYYY/MM/dd "];
-    NSDate* confromTimesp = [NSDate dateWithTimeIntervalSince1970:[order.create_time intValue]];
-    NSString* confromTimespStr = [formatter stringFromDate:confromTimesp];
-    cell_total.dateLabel.text = confromTimespStr;
-
-    //预订的课程
-    str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"预订%@＊1节", order.course]];
-
-    //状态
-    cell_total.statusLabel.text = order.status;
-    if ([order.gd_status intValue] == 3 || [order.gd_status intValue] == 4) {
-        cell_total.statusLabel.textColor = [UIColor grayColor];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(2, order.course.length)];
-    }
-    else {
-        cell_total.statusLabel.textColor = [UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1] range:NSMakeRange(2, order.course.length)];
-    }
-    //预订的课程
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 2)];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(2 + order.course.length, 3)];
-    //一个label不同颜色不同字体显示 NSMakeRange(*,*)  位置 长度
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:viewHeight / 39.235] range:NSMakeRange(0, 2)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:viewHeight / 39.235] range:NSMakeRange(2, order.course.length)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldMT" size:Adaptive(11)] range:NSMakeRange(2 + order.course.length, 3)];
-    cell_total.classLabel.attributedText = str;
-
-    //订单详情 - 学员名字
-    cell_total.name.text = order.name;
-
-    //----订课时间
-    NSDateFormatter* formatter1 = [[NSDateFormatter alloc] init];
-    [formatter1 setDateStyle:NSDateFormatterMediumStyle];
-    [formatter1 setTimeStyle:NSDateFormatterShortStyle];
-    [formatter1 setDateFormat:@"YYYY-MM-dd HH:mm"];
-    NSDate* confromTimesp1 = [NSDate dateWithTimeIntervalSince1970:[order.pre_time intValue]];
-    NSString* confromTimespStr1 = [formatter1 stringFromDate:confromTimesp1];
-    cell_total.datetime.text = confromTimespStr1;
-
-    //电话号码
-    cell_total.number.text = order.number;
-
-    //地址
-    cell_total.address.text = order.place;
-   
-    if (order.coach_info.count == 0) {
-        //退单按钮
+    if (order.coach_info.count == 0){
+        cell_total = [tableView dequeueReusableCellWithIdentifier:@"Cell_total"];
+        if (!cell_total) {
+            cell_total = [[TableViewCell_total alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell_total"];
+            cell_total.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell_total.userInteractionEnabled = YES;
+        }
         
+        cell_total.jiantouButton.tag = indexPath.row;
+        [cell_total.jiantouButton addTarget:self action:@selector(opencontent:) forControlEvents:UIControlEventTouchUpInside];
+        //下单时间
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        [formatter setDateFormat:@"YYYY/MM/dd "];
+        NSDate* confromTimesp = [NSDate dateWithTimeIntervalSince1970:[order.create_time intValue]];
+        NSString* confromTimespStr = [formatter stringFromDate:confromTimesp];
+        cell_total.dateLabel.text = confromTimespStr;
+        
+        //预订的课程
+        str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"预订%@＊1节", order.course]];
+        
+        //状态
+        cell_total.statusLabel.text = order.status;
+        if ([order.gd_status intValue] == 3 || [order.gd_status intValue] == 4) {
+            cell_total.statusLabel.textColor = [UIColor grayColor];
+            [str addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(2, order.course.length)];
+        }
+        else {
+            cell_total.statusLabel.textColor = [UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1];
+            [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1] range:NSMakeRange(2, order.course.length)];
+        }
+        //预订的课程
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 2)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(2 + order.course.length, 3)];
+        //一个label不同颜色不同字体显示 NSMakeRange(*,*)  位置 长度
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:viewHeight / 39.235] range:NSMakeRange(0, 2)];
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:viewHeight / 39.235] range:NSMakeRange(2, order.course.length)];
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldMT" size:Adaptive(11)] range:NSMakeRange(2 + order.course.length, 3)];
+        cell_total.classLabel.attributedText = str;
+        
+        //订单详情 - 学员名字
+        cell_total.name.text = order.name;
+        
+        //----订课时间
+        NSDateFormatter* formatter1 = [[NSDateFormatter alloc] init];
+        [formatter1 setDateStyle:NSDateFormatterMediumStyle];
+        [formatter1 setTimeStyle:NSDateFormatterShortStyle];
+        [formatter1 setDateFormat:@"YYYY-MM-dd HH:mm"];
+        NSDate* confromTimesp1 = [NSDate dateWithTimeIntervalSince1970:[order.pre_time intValue]];
+        NSString* confromTimespStr1 = [formatter1 stringFromDate:confromTimesp1];
+        cell_total.datetime.text = confromTimespStr1;
+        
+        //电话号码
+        cell_total.number.text = order.number;
+        
+        //地址
+        cell_total.address.text = order.place;
+        //退单按钮
         [cell_total.chargeback addTarget:self action:@selector(chargeback:) forControlEvents:UIControlEventTouchUpInside];
         cell_total.chargeback.tag = indexPath.row;
-     [cell_total.ccView addSubview:cell_total.chargeback];
+        [cell_total.ccView addSubview:cell_total.chargeback];
         if (ischargeback == YES) {
-            cell_total.coachName.text = order.coachName;
-           
+          //
+            
             CGRect newframe = cell_total.ccView.frame;
             newframe.size.height = Adaptive(200);
             cell_total.ccView.frame = newframe;
-             [cell_total.ccView addSubview:cell_total.backView];
+            [cell_total.ccView addSubview:cell_total.backView];
             [cell_total.backCancelButton addTarget:self action:@selector(backCancelButton) forControlEvents:UIControlEventTouchUpInside];
             [cell_total.backSureButton addTarget:self action:@selector(backSureButton) forControlEvents:UIControlEventTouchUpInside];
-           
+            
             [cell_total.backView addSubview:cell_total.backCancelButton];
             [cell_total.backView addSubview:cell_total.backSureButton];
             
         } else {
             [cell_total.backView removeFromSuperview];
-            cell_total.coachName.text = order.coachName;
             CGRect newframe = cell_total.ccView.frame;
             newframe.size.height = Adaptive(120);
             cell_total.ccView.frame = newframe;
         }
-    } else {
+        
+        if (isopen == indexPath.row) {
+            [cell_total.nextImageView setImage:[UIImage imageNamed:@"dingdan_cellxia"]];
+            [cell_total addSubview:cell_total.ccView];
+        } else {
+            [cell_total.nextImageView setImage:[UIImage imageNamed:@"dingdan_cellshang"]];
+            [cell_total.ccView removeFromSuperview];
+        }
+        return cell_total;
+    }
+    
+    else {
+        //教练接单
+        TableViewCell_haveCoach *haveCoach = [tableView dequeueReusableCellWithIdentifier:@"Cell_coach"];
+        if (!haveCoach) {
+            haveCoach = [[TableViewCell_haveCoach alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell_coach"];
+            haveCoach.selectionStyle = UITableViewCellSelectionStyleNone;
+            haveCoach.userInteractionEnabled = YES;
+        }
+        /**************************************/
+        haveCoach.jiantouButton.tag = indexPath.row;
+        [haveCoach.jiantouButton addTarget:self action:@selector(opencontent:) forControlEvents:UIControlEventTouchUpInside];
+        //下单时间
+        NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateStyle:NSDateFormatterMediumStyle];
+        [formatter setTimeStyle:NSDateFormatterShortStyle];
+        [formatter setDateFormat:@"YYYY/MM/dd "];
+        NSDate* confromTimesp = [NSDate dateWithTimeIntervalSince1970:[order.create_time intValue]];
+        NSString* confromTimespStr = [formatter stringFromDate:confromTimesp];
+        haveCoach.dateLabel.text = confromTimespStr;
+        
+        //预订的课程
+        str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"预订%@＊1节", order.course]];
+        
+        //状态
+        haveCoach.statusLabel.text = order.status;
+        if ([order.gd_status intValue] == 3 || [order.gd_status intValue] == 4) {
+            haveCoach.statusLabel.textColor = [UIColor grayColor];
+            [str addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(2, order.course.length)];
+        }
+        else {
+            haveCoach.statusLabel.textColor = [UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1];
+            [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1] range:NSMakeRange(2, order.course.length)];
+        }
+        //预订的课程
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 2)];
+        [str addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(2 + order.course.length, 3)];
+        //一个label不同颜色不同字体显示 NSMakeRange(*,*)  位置 长度
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:viewHeight / 39.235] range:NSMakeRange(0, 2)];
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:viewHeight / 39.235] range:NSMakeRange(2, order.course.length)];
+        [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Arial-BoldMT" size:Adaptive(11)] range:NSMakeRange(2 + order.course.length, 3)];
+        haveCoach.classLabel.attributedText = str;
+        
+        //订单详情 - 学员名字
+        haveCoach.name.text = order.name;
+        
+        //----订课时间
+        NSDateFormatter* formatter1 = [[NSDateFormatter alloc] init];
+        [formatter1 setDateStyle:NSDateFormatterMediumStyle];
+        [formatter1 setTimeStyle:NSDateFormatterShortStyle];
+        [formatter1 setDateFormat:@"YYYY-MM-dd HH:mm"];
+        NSDate* confromTimesp1 = [NSDate dateWithTimeIntervalSince1970:[order.pre_time intValue]];
+        NSString* confromTimespStr1 = [formatter1 stringFromDate:confromTimesp1];
+        haveCoach.datetime.text = confromTimespStr1;
+        
+        //电话号码
+        haveCoach.number.text = order.number;
+        
+        //地址
+        haveCoach.address.text = order.place;
+       
+        
+        if (isopen == indexPath.row) {
+            [haveCoach.nextImageView setImage:[UIImage imageNamed:@"dingdan_cellxia"]];
+            [haveCoach addSubview:haveCoach.ccView];
+        } else {
+            [haveCoach.nextImageView setImage:[UIImage imageNamed:@"dingdan_cellshang"]];
+            [haveCoach.ccView removeFromSuperview];
+        }
+        /**************************************/
         //教练名字
-        [cell_total.ccView addSubview:cell_total.coachView];
-        cell_total.coachName.text = order.coachName;
+        [haveCoach.ccView addSubview:haveCoach.coachView];
+        haveCoach.coachName.text = order.coachName;
         //性别
         if ([order.sex intValue] == 1) {
-            cell_total.coachSex.text = @"男";
+            haveCoach.coachSex.text = @"男";
         } else {
-            cell_total.coachSex.text = @"女";
+            haveCoach.coachSex.text = @"女";
         }
         //负责课程
-        cell_total.coachClass.text = order.coachClass;
+        haveCoach.coachClass.text = order.coachClass;
         //头像
-        [cell_total.coachImg setImageWithURL:[NSURL URLWithString:order.headimg] placeholderImage:[UIImage imageNamed:@"教练头像"] success:^(UIImage* image, BOOL cached) {}failure:^(NSError* error){}];
+        [haveCoach.coachImg setImageWithURL:[NSURL URLWithString:order.headimg] placeholderImage:[UIImage imageNamed:@"教练头像"] success:^(UIImage* image, BOOL cached) {}failure:^(NSError* error){}];
+        
+        return haveCoach;
     }
-    if (isopen == indexPath.row) {
-        [cell_total.nextImageView setImage:[UIImage imageNamed:@"dingdan_cellxia"]];
-        [cell_total addSubview:cell_total.ccView];
-    } else {
-        [cell_total.nextImageView setImage:[UIImage imageNamed:@"dingdan_cellshang"]];
-        [cell_total.ccView removeFromSuperview];
-    }
-
-    return cell_total;
 }
 //取消
 -(void)backCancelButton
@@ -449,13 +514,13 @@
     OrderComment* order = [orderArray objectAtIndex:button.tag];
     order_id = order.order_id;
     NSLog(@"order_id %@",order_id);
-
+    
     [_tableView reloadData];
 }
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     OrderComment* order = [orderArray objectAtIndex:indexPath.row];
-
+    
     if (isopen == indexPath.row) {
         if (order.coach_info.count == 0) {
             if (!ischargeback) {
@@ -483,7 +548,7 @@
 {
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-   }
+}
 - (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 100) {

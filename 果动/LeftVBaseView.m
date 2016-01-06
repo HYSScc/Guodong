@@ -99,9 +99,9 @@
     } else {
         scrollView = [[SDCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, Adaptive(125))];
     }
-    scrollView.backgroundColor = [UIColor clearColor];
+    scrollView.backgroundColor    = [UIColor clearColor];
     scrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-    scrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
+    scrollView.pageControlStyle   = SDCycleScrollViewPageContolStyleAnimated;
     scrollView.autoScrollTimeInterval = 5.0;
     [self addSubview:scrollView];
 }

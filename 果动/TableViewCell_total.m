@@ -76,7 +76,7 @@
         nextline.backgroundColor = [UIColor lightGrayColor];
         [self.ccView addSubview:nextline];
 
-        NSArray* tArray = @[ @"学员:", @"时间:", @"地址:", @"教练:", @"性别:", @"负责课程:" ];
+        NSArray* tArray = @[ @"学员:", @"时间:", @"地址:"];
         for (int a = 0; a < 3; a++) {
             UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(20), CGRectGetMaxY(nextline.frame) + Adaptive(10) + a * Adaptive(20), Adaptive(40), Adaptive(20))];
             label.textColor = [UIColor whiteColor];
@@ -139,56 +139,77 @@
         self.address.font = [UIFont fontWithName:FONT size:Adaptive(13)];
         self.address.text = @"北京市朝阳区和平北路胜利大街北洋都市小区";
         [self.ccView addSubview:self.address];
+        
+     
+        UILabel* lastline = [[UILabel alloc] initWithFrame:CGRectMake(0, self.ccView.bounds.size.height - 1, viewWidth, 0.5)];
+        lastline.backgroundColor = [UIColor lightGrayColor];
+        [self.ccView addSubview:lastline];
+    }
+    return self;
+}
 
+@end
+
+//教练接单
+@implementation TableViewCell_haveCoach
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)reuseIdentifier
+{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        //教练信息
+        
+        UILabel* nextline = [[UILabel alloc] initWithFrame:CGRectMake(0, Adaptive(38), viewWidth, 0.5)];
+        nextline.backgroundColor = [UIColor lightGrayColor];
+        [self.ccView addSubview:nextline];
+       
+        NSArray* tArray = @[@"教练:", @"性别:", @"负责课程:"];
+        
         self.coachView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(nextline.frame) + Adaptive(80), viewWidth, Adaptive(80))];
         self.coachView.backgroundColor = [UIColor colorWithRed:127 / 255.0 green:127 / 255.0 blue:127 / 255.0 alpha:1];
         self.coachView.userInteractionEnabled = YES;
-        //   [self.ccView addSubview:coachView];
-
+        
         UILabel* centeiline = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(20), 0, viewWidth - Adaptive(40), 0.5)];
         centeiline.backgroundColor = [UIColor lightGrayColor];
         [self.coachView addSubview:centeiline];
-
+        
         for (int a = 0; a < 3; a++) {
             UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(20), CGRectGetMaxY(centeiline.frame) + Adaptive(10) + a * Adaptive(20),Adaptive(60), Adaptive(20))];
             label.textColor = [UIColor whiteColor];
             label.font = [UIFont fontWithName:FONT size:Adaptive(13)];
-            label.text = tArray[a + 3];
+            label.text = tArray[a];
             [self.coachView addSubview:label];
         }
-
+        
         self.coachName = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(60), CGRectGetMaxY(centeiline.frame) + Adaptive(10), Adaptive(150),Adaptive(20))];
         self.coachName.textColor = [UIColor whiteColor];
         self.coachName.font = [UIFont fontWithName:FONT size:Adaptive(13)];
         self.coachName.text = @"TOM";
         [self.coachView addSubview:self.coachName];
-
+        
         self.coachSex = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(60), CGRectGetMaxY(self.coachName.frame), Adaptive(50), Adaptive(20))];
         self.coachSex.textColor = [UIColor whiteColor];
         self.coachSex.font = [UIFont fontWithName:FONT size:Adaptive(13)];
         self.coachSex.text = @"男";
         [self.coachView addSubview:self.coachSex];
-
+        
         self.coachClass = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(84), CGRectGetMaxY(self.coachSex.frame), Adaptive(198), Adaptive(27))];
         self.coachClass.numberOfLines = 0;
         self.coachClass.textColor = [UIColor whiteColor];
         self.coachClass.font = [UIFont fontWithName:FONT size:Adaptive(13)];
         self.coachClass.text = @"健身私教、急速康复、疯狂甩脂";
         [self.coachView addSubview:self.coachClass];
-
+        
         self.coachImg = [[UIImageView alloc] initWithFrame:CGRectMake(Adaptive(290), (self.coachView.bounds.size.height - Adaptive(60)) / 2, Adaptive(60), Adaptive(60))];
         self.coachImg.layer.cornerRadius = 6;
         self.coachImg.layer.masksToBounds = YES;
         self.coachImg.userInteractionEnabled = YES;
         [self.coachView addSubview:self.coachImg];
-
+        
         //添加点击手势
         UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage)];
         [self.coachImg addGestureRecognizer:tap];
 
-        UILabel* lastline = [[UILabel alloc] initWithFrame:CGRectMake(0, self.ccView.bounds.size.height - 1, viewWidth, 0.5)];
-        lastline.backgroundColor = [UIColor lightGrayColor];
-        [self.ccView addSubview:lastline];
     }
     return self;
 }
@@ -197,5 +218,5 @@
     NSLog(@"点击手势");
     [SJAvatarBrowser showImage:self.coachImg];
 }
-
 @end
+
