@@ -484,7 +484,7 @@
 -(void)backCancelButton
 {
     ischargeback = NO;
-    [_tableView reloadData];
+   [self setupRefresh];
 }
 //确定
 -(void)backSureButton
@@ -511,7 +511,7 @@
     order_id = order.order_id;
     NSLog(@"order_id %@",order_id);
     
-    [_tableView reloadData];
+   [self setupRefresh];
 }
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
