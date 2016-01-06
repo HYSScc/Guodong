@@ -41,7 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
-    [self onCreate];
+   
     if (!succ) {
         CABasicAnimation* basic1 =
             [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
@@ -52,10 +52,15 @@
         [locationView.topLocationImageView.layer addAnimation:basic1
                                                        forKey:@"basic1"];
     }
+    //通知左视图刷新数据
+    NSNotification* notification = [NSNotification notificationWithName:@"refreshLeftView" object:nil userInfo:nil];
+    //通过通知中心发送通知
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+     [self onCreate];
     NSLog(@"kuan  %f",viewWidth);
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleLightContent];

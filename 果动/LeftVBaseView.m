@@ -35,8 +35,15 @@
         [self startRequestScrollViewImage];
         [self startRequestClassNumber];
         [self createImage];
+        //接收刷新左视图的通知
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLeftView) name:@"refreshLeftView" object:nil];
     }
     return self;
+}
+-(void)refreshLeftView
+{
+    [self startRequestScrollViewImage];
+    [self startRequestClassNumber];
 }
 - (void)startRequestClassNumber
 {
