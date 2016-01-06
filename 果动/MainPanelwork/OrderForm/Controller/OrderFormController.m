@@ -286,16 +286,12 @@
                 [_tableView reloadData];
             }
             [_tableView headerEndRefreshing];
-        }
-        else if (ResponseObject_RC == NotLogin_RC_Number) {
+        } else if (ResponseObject_RC == NotLogin_RC_Number) {
             [HeadComment message:@"您还没有登录呢！" delegate:self witchCancelButtonTitle:@"暂不" otherButtonTitles:@"去登录", nil];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    }
-                     fail:^(NSError* error){
-                     }];
+    }fail:^(NSError* error){}];
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -327,14 +323,12 @@
         
         //预订的课程
         str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"预订%@＊1节", order.course]];
-        
         //状态
         cell_total.statusLabel.text = order.status;
         if ([order.gd_status intValue] == 3 || [order.gd_status intValue] == 4) {
             cell_total.statusLabel.textColor = [UIColor grayColor];
             [str addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(2, order.course.length)];
-        }
-        else {
+        } else {
             cell_total.statusLabel.textColor = [UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1];
             [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1] range:NSMakeRange(2, order.course.length)];
         }
@@ -361,15 +355,17 @@
         
         //电话号码
         cell_total.number.text = order.number;
-        
         //地址
         cell_total.address.text = order.place;
-        //退单按钮
-        [cell_total.chargeback addTarget:self action:@selector(chargeback:) forControlEvents:UIControlEventTouchUpInside];
-        cell_total.chargeback.tag = indexPath.row;
-        [cell_total.ccView addSubview:cell_total.chargeback];
+        if ([order.gd_status isEqualToString:@"1"]) {
+            //退单按钮
+            [cell_total.chargeback addTarget:self action:@selector(chargeback:) forControlEvents:UIControlEventTouchUpInside];
+            cell_total.chargeback.tag = indexPath.row;
+            [cell_total.ccView addSubview:cell_total.chargeback];
+        }
+       
+        
         if (ischargeback == YES) {
-          //
             
             CGRect newframe = cell_total.ccView.frame;
             newframe.size.height = Adaptive(200);
@@ -396,9 +392,7 @@
             [cell_total.ccView removeFromSuperview];
         }
         return cell_total;
-    }
-    
-    else {
+    } else {
         //教练接单
         TableViewCell_haveCoach *haveCoach = [tableView dequeueReusableCellWithIdentifier:@"Cell_coach"];
         if (!haveCoach) {
@@ -426,8 +420,7 @@
         if ([order.gd_status intValue] == 3 || [order.gd_status intValue] == 4) {
             haveCoach.statusLabel.textColor = [UIColor grayColor];
             [str addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(2, order.course.length)];
-        }
-        else {
+        } else {
             haveCoach.statusLabel.textColor = [UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1];
             [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:235.00 / 255 green:117.00 / 255 blue:32.00 / 255 alpha:1] range:NSMakeRange(2, order.course.length)];
         }
@@ -467,6 +460,9 @@
             [haveCoach.ccView removeFromSuperview];
         }
         /**************************************/
+        CGRect newframe = cell_total.ccView.frame;
+        newframe.size.height = Adaptive(200);
+        haveCoach.ccView.frame = newframe;
         //教练名字
         [haveCoach.ccView addSubview:haveCoach.coachView];
         haveCoach.coachName.text = order.coachName;
