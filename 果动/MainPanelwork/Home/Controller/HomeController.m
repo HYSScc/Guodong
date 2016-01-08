@@ -61,7 +61,7 @@
 {
     [super viewDidLoad];
      [self onCreate];
-    NSLog(@"kuan  %f",viewWidth);
+
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController.navigationBar
@@ -169,10 +169,8 @@
     [_alertImageView setImage:[UIImage imageNamed:imageName]];
     [UIView animateWithDuration:.4
         animations:^{
-
             _alertImageView.frame = CGRectMake(0, 0, viewWidth, Adaptive(50));
-        }
-        completion:^(BOOL finished) {
+        } completion:^(BOOL finished) {
             [NSThread sleepForTimeInterval:0.7f];
             [UIView animateWithDuration:.4
                 animations:^{
@@ -281,8 +279,7 @@
         frameLabel.textColor = [UIColor lightGrayColor];
         [rightBaseView removeFromSuperview];
         [self.view addSubview:leftBaseView];
-    }
-    else {
+    } else {
         [changeImage setImage:[UIImage imageNamed:@"shouye_leftgry"]];
         frameLabel.textColor = [UIColor colorWithRed:235.00 / 255
                                                green:117.00 / 255

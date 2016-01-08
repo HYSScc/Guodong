@@ -251,7 +251,7 @@
                 // 创建一个索引集合把你需要重新加载的   区号   放到   集合   中
                 NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:[refreshSection integerValue]];
                 // 重新加载某个区   (刷新区)
-                [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
             } else {
                  [_tableView reloadData];
             }
@@ -290,6 +290,9 @@
                     GDComment* gdc = [GDComment statusWithDictionary:dict];
                     [allstatus addObject:gdc];
                 }
+                
+               
+
                 [_tableView reloadData];
             }
             
@@ -654,9 +657,6 @@
         } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         }
-        
-        NSIndexPath* index = [_tableView indexPathForCell:(UITableViewCell*)button.superview.superview.superview];
-        refreshSection = [NSString stringWithFormat:@"%ld",(long)index.section];
         [self headerRereshing];
     } fail:^(NSError* error){}];
 }
@@ -666,18 +666,13 @@
    
     isopen[index.section] = !isopen[index.section];
     GBTableViewCell* cell = (GBTableViewCell*)[_tableView cellForRowAtIndexPath:index];
-    NSLog(@"index %ld",(long)index.section);
+   
     if (isopen[index.section]) {
         [cell.openImg setImage:[UIImage imageNamed:@"GD_shang"]];
     } else {
         [cell.openImg setImage:[UIImage imageNamed:@"GD_xia"]];
     }
-    // 创建一个索引集合把你需要重新加载的   区号   放到   集合   中
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:index.section];
-    // 重新加载某个区   (刷新区)
-    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-
-  //  [self headerRereshing];
+    [_tableView reloadData];
 }
 //表随键盘高度变化
 - (void)keyboardShow:(NSNotification*)note
@@ -850,7 +845,6 @@
         [HttpTool GET:sendurl parameters:@{ @"talkid" : [NSString stringWithFormat:@"%ld", (long)button.tag],
                                             @"info" : textcell.textfield.text }
               success:^(AFHTTPRequestOperation* operation, id responseObject) {
-                  
                         [self headerRereshing];
     } failure:^(AFHTTPRequestOperation* operation, NSError* error){}];
     } else if ([liuyanType isEqual:@"1"]) {

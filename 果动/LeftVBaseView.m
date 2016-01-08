@@ -82,7 +82,7 @@
     collectFlowLayout.minimumLineSpacing = 1;
     collectFlowLayout.minimumInteritemSpacing = 0;
     
-    collectionClassView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(scrollView.frame) + 0.5, viewWidth, viewWidth) collectionViewLayout:collectFlowLayout];
+    collectionClassView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(scrollView.frame) , viewWidth, viewWidth+2) collectionViewLayout:collectFlowLayout];
     [collectionClassView registerClass:[leftCollectionViewCell class] forCellWithReuseIdentifier:_CELL];
     collectionClassView.backgroundColor = [UIColor whiteColor];
     collectionClassView.dataSource = self;

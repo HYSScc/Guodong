@@ -457,7 +457,7 @@
             [haveCoach.ccView removeFromSuperview];
         }
         /**************************************/
-        CGRect newframe = cell_total.ccView.frame;
+        CGRect newframe = haveCoach.ccView.frame;
         newframe.size.height = Adaptive(200);
         haveCoach.ccView.frame = newframe;
         //教练名字
