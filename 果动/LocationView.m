@@ -122,14 +122,10 @@
                 NSLog(@"城市已覆盖");
                 self.isCitys = YES;
             }
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-
-    }
-        fail:^(NSError* error){
-        }];
+    }fail:^(NSError* error){}];
 }
 + (instancetype)sharedViewManager
 {

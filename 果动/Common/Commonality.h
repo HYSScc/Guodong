@@ -60,7 +60,7 @@
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue:((float)(rgbValue & 0xFF)) / 255.0 alpha:1.0]
 
 //基于iPhone6 的大小 计算比例 适配各个尺寸
-#define Adaptive(number) viewHeight / (viewHeight / number)
+#define Adaptive(number) [UIScreen mainScreen].bounds.size.height / (667.000000 / number)
 #define viewWidth [UIScreen mainScreen].bounds.size.width
 #define viewHeight [UIScreen mainScreen].bounds.size.height
 

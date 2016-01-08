@@ -148,8 +148,6 @@
     UIViewController *oldVC = self.childViewControllers[from];
     
     [oldVC.view removeFromSuperview];
-    NSLog(@"to  %ld",(long)to);
-    
     
     UIViewController *newVC = self.childViewControllers[to];
     

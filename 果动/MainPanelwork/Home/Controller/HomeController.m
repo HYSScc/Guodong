@@ -41,6 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+   
     if (!succ) {
         CABasicAnimation* basic1 =
             [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
@@ -51,15 +52,15 @@
         [locationView.topLocationImageView.layer addAnimation:basic1
                                                        forKey:@"basic1"];
     }
-    //通过通知中心发送通知刷新个人资料和订课数量
-    NSNotification* notification =
-        [NSNotification notificationWithName:@"refushData" object:nil userInfo:nil];
+    //通知左视图刷新数据
+    NSNotification* notification = [NSNotification notificationWithName:@"refreshLeftView" object:nil userInfo:nil];
+    //通过通知中心发送通知
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self onCreate];
+     [self onCreate];
 
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -168,18 +169,13 @@
     [_alertImageView setImage:[UIImage imageNamed:imageName]];
     [UIView animateWithDuration:.4
         animations:^{
-
             _alertImageView.frame = CGRectMake(0, 0, viewWidth, Adaptive(50));
-        }
-        completion:^(BOOL finished) {
-
+        } completion:^(BOOL finished) {
             [NSThread sleepForTimeInterval:0.7f];
             [UIView animateWithDuration:.4
                 animations:^{
                     _alertImageView.alpha = 0;
-                }
-                completion:^(BOOL finished){
-                }];
+                } completion:^(BOOL finished){}];
         }];
 }
 
@@ -191,8 +187,7 @@
             LoginViewController* login = [LoginViewController new];
             [self.navigationController pushViewController:login animated:YES];
         }
-    }
-    else {
+    } else {
         OrderFormController* order = [OrderFormController new];
         [self.navigationController pushViewController:order animated:YES];
     }
@@ -233,7 +228,7 @@
         initWithFrame:CGRectMake(
                           (viewWidth * 3 / 4) - Adaptive(20),
                           (changeImage.bounds.size.height - Adaptive(30)) / 2,
-                          50, Adaptive(30))];
+                          Adaptive(50), Adaptive(30))];
     frameLabel.textColor = [UIColor lightGrayColor];
     frameLabel.text = @"体验店";
     frameLabel.font = [UIFont fontWithName:FONT size:Adaptive(16)];
@@ -284,8 +279,7 @@
         frameLabel.textColor = [UIColor lightGrayColor];
         [rightBaseView removeFromSuperview];
         [self.view addSubview:leftBaseView];
-    }
-    else {
+    } else {
         [changeImage setImage:[UIImage imageNamed:@"shouye_leftgry"]];
         frameLabel.textColor = [UIColor colorWithRed:235.00 / 255
                                                green:117.00 / 255

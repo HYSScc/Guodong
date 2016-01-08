@@ -8,7 +8,7 @@
 
 #import "SDCycleScrollView.h"
 #import <UIKit/UIKit.h>
-@interface LeftVBaseView : UIView
+@interface LeftVBaseView : UIView<UICollectionViewDataSource ,UICollectionViewDelegate ,UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, retain) NSMutableArray* scrimgArray;
 @property (nonatomic, retain) NSString* isVIP;

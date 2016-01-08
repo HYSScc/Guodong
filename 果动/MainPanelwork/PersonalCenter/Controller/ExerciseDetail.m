@@ -101,7 +101,7 @@
     photolabel.text = @"照片";
     photolabel.textAlignment = 1;
     photolabel.textColor = [UIColor whiteColor];
-    photolabel.font = [UIFont fontWithName:FONT size:Adaptive(19)];
+    photolabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
     [scroll addSubview:photolabel];
 
     imgscroll = [[UIScrollView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photolabel.frame), 0, viewWidth - CGRectGetMaxX(photolabel.frame), 2592 / (1936 / ((viewWidth - Adaptive(70)) / 2)))];
