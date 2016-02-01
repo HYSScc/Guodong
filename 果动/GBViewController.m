@@ -320,8 +320,20 @@
     headImageView.userInteractionEnabled = YES;
     headImageView.layer.masksToBounds = YES;
     headImageView.tag = section * 100;
+    headImageView.image = [UIImage imageNamed:@"person_nohead"];
     headImageView.layer.cornerRadius = headImageView.bounds.size.width / 2;
-    [headImageView setImageWithURL:[NSURL URLWithString:gdcomment.headimg] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
+    
+    // 分线程处理耗时的逻辑事件
+    [GCDQueue executeInGlobalQueue:^{
+        
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:gdcomment.headimg]];
+        UIImage *headimage = [UIImage imageWithData:data];
+        
+        // 主线程更新UI
+        [GCDQueue executeInMainQueue:^{
+            headImageView.image = headimage;
+        }];
+    }];
     [headView addSubview:headImageView];
     
     //添加点击手势
@@ -383,12 +395,15 @@
             }
             
             _talkid = gdc.talkid;
-        
+            
+
+
             [picturecell.photoImageView setImageWithURL:gdc.photos[0] placeholderImage:[UIImage imageNamed:@"base_logo"] success:^(UIImage* image, BOOL cached) {
                 //添加点击手势
                 UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:gbView action:@selector(magnifyHead:)];
                 [picture.photoImageView addGestureRecognizer:tap];
             } failure:^(NSError* error){}];
+            
             
             picturecell.photocommentLabel.text = gdc.content;
             CGSize textSize = [gdc.content boundingRectWithSize:CGSizeMake(viewWidth, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{ NSFontAttributeName : [UIFont fontWithName:FONT size:Adaptive(15)] } context:nil].size;

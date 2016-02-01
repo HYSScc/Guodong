@@ -24,6 +24,8 @@
         self.photoImageView = [[UIImageView alloc] init];
         self.photoImageView.frame = CGRectMake(0, 0, viewWidth, viewWidth);
         self.photoImageView.tag = 10;
+       // self.photoImageView.alpha = 0.f;
+        self.photoImageView.image = [UIImage imageNamed:@"base_logo"];
         self.photoImageView.userInteractionEnabled = YES;
         [self addSubview:self.photoImageView];
 

@@ -35,7 +35,7 @@
         [self startRequestScrollViewImage];
         [self startRequestClassNumber];
         [self createImage];
-        //接收刷新左视图的通知
+        // 接收刷新左视图的通知
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshLeftView) name:@"refreshLeftView" object:nil];
     }
     return self;
@@ -47,7 +47,7 @@
 }
 - (void)startRequestClassNumber
 {
-    //获取课程数量
+    // 获取课程数量
     NSString* classnumberURL = [NSString stringWithFormat:@"%@api/?method=index.index", BASEURL];
     
     [HttpTool postWithUrl:classnumberURL params:nil contentType:CONTENTTYPE success:^(id responseObject) {
@@ -67,10 +67,10 @@
 }
 - (void)startRequestScrollViewImage
 {
-    //获取scrollView的图片
-    NSString* url1 = [NSString stringWithFormat:@"%@indexImg/", BASEURL];
+    // 获取scrollView的图片
+    NSString* url1                          = [NSString stringWithFormat:@"%@indexImg/", BASEURL];
     [HttpTool postWithUrl:url1 params:nil contentType:CONTENTTYPE success:^(id responseObject) {
-        self.scrimgArray = responseObject;
+        self.scrimgArray                    = responseObject;
         if (self.scrimgArray) {
             scrollView.imageURLStringsGroup = self.scrimgArray;
         }
@@ -79,14 +79,18 @@
 - (void)createLabel
 {
     UICollectionViewFlowLayout *collectFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    collectFlowLayout.minimumLineSpacing = 1;
-    collectFlowLayout.minimumInteritemSpacing = 0;
+    collectFlowLayout.minimumLineSpacing          = 1;
+    collectFlowLayout.minimumInteritemSpacing     = 0;
     
-    collectionClassView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(scrollView.frame) , viewWidth, viewWidth+2) collectionViewLayout:collectFlowLayout];
+    collectionClassView                           = [[UICollectionView alloc] initWithFrame:CGRectMake(0,
+                                                                                             CGRectGetMaxY(scrollView.frame) ,
+                                                                                             viewWidth,
+                                                                                             viewWidth+2)
+                                                             collectionViewLayout:collectFlowLayout];
     [collectionClassView registerClass:[leftCollectionViewCell class] forCellWithReuseIdentifier:_CELL];
     collectionClassView.backgroundColor = [UIColor whiteColor];
-    collectionClassView.dataSource = self;
-    collectionClassView.delegate = self;
+    collectionClassView.dataSource      = self;
+    collectionClassView.delegate        = self;
     [self addSubview:collectionClassView];
 }
 - (void)createImage
@@ -115,17 +119,30 @@
 -( UICollectionViewCell *)collectionView:( UICollectionView *)collectionView cellForItemAtIndexPath:( NSIndexPath *)indexPath
 {
     leftCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier : _CELL forIndexPath :indexPath];
-    leftModel *left = [classArray objectAtIndex:indexPath.row];
-    cell.classNameLabel.text = left.left_name;
-    cell.classNumberLabel.text = [NSString stringWithFormat:@"%@节课被预定", left.left_num];
-    if (![left.left_image isEqual:[NSNull class]]) {
-        [cell.classImageView setImageWithURL:[NSURL URLWithString:left.left_image] placeholderImage:[UIImage imageNamed:@"shouye_moren"]];
+    leftModel *left               = [classArray objectAtIndex:indexPath.row];
+    cell.classNameLabel.text      = left.left_name;
+    cell.classNumberLabel.text    = [NSString stringWithFormat:@"%@节课被预定", left.left_num];
+    if (left.left_image) {
+        
+        // 分线程处理耗时的逻辑事件
+        [GCDQueue executeInGlobalQueue:^{
+            
+            // 请求图片，会阻塞主线程（mainQueue）
+            NSData *imageData   = [NSData dataWithContentsOfURL:[NSURL URLWithString:left.left_image]];
+            UIImage *classImage = [UIImage imageWithData:imageData];
+            
+            // 主线程更新UI
+            [GCDQueue executeInMainQueue:^{
+                cell.classImageView.image = classImage;
+            }];
+        }];
+       
     }
     return cell;
 }
 #pragma mark --UICollectionViewDelegate
 
-//返回这个UICollectionViewCell是否可以被选择
+// 返回这个UICollectionViewCell是否可以被选择
 -( BOOL )collectionView:( UICollectionView *)collectionView shouldSelectItemAtIndexPath:( NSIndexPath *)indexPath
 {
     leftModel *left = [classArray objectAtIndex:indexPath.row];
@@ -137,18 +154,18 @@
     
 }
 
-//UICollectionView被选中时调用的方法
+// UICollectionView被选中时调用的方法
 -( void )collectionView:( UICollectionView *)collectionView didSelectItemAtIndexPath:( NSIndexPath *)indexPath
 {
     leftCollectionViewCell * cell = ( leftCollectionViewCell *)[collectionView cellForItemAtIndexPath :indexPath];
-     leftModel *left = [classArray objectAtIndex:indexPath.row];
+     leftModel *left              = [classArray objectAtIndex:indexPath.row];
     [UIView animateWithDuration:.3 animations:^{
-        CGRect rect = cell.frame;
+        CGRect rect    = cell.frame;
         rect.origin.x += 1.5;
         rect.origin.y += 1.5;
         cell.frame = rect;
     } completion:^(BOOL finished) {
-        CGRect rect = cell.frame;
+        CGRect rect    = cell.frame;
         rect.origin.x -= 1.5;
         rect.origin.y -= 1.5;
         cell.frame = rect;
@@ -156,7 +173,7 @@
                              HomeController* home = [HomeController sharedViewControllerManager];
                             //   home.pushClassVCBlock(left.left_name, [left.left_id intValue]);
                              if (locationView.dingwei == YES && locationView.isCitys == YES){
-                                 //城市覆盖  定位成功
+                                 // 城市覆盖  定位成功
                                  home.pushClassVCBlock(left.left_name, [left.left_id intValue]);
                              } else if (locationView.dingwei == NO) {
                                  home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
@@ -172,13 +189,13 @@
 }
 #pragma mark --UICollectionViewDelegateFlowLayout
 
-//定义每个UICollectionView 的大小
+// 定义每个UICollectionView 的大小
 - ( CGSize )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:( NSIndexPath *)indexPath
 {
     return CGSizeMake ( (viewWidth - 1)/2, (viewWidth - 1)/2);
 }
 
-//定义每个UICollectionView 的边距
+// 定义每个UICollectionView 的边距
 -( UIEdgeInsets )collectionView:( UICollectionView *)collectionView layout:( UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:( NSInteger )section
 {
     return UIEdgeInsetsMake ( 1 , 0 , 1 , 0 );

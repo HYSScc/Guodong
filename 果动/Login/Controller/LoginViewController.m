@@ -69,7 +69,6 @@
     userimg.userInteractionEnabled = YES;
     [imageView addSubview:userimg];
     //152  141  112
-    NSLog(@"ad400 %f",Adaptive(400));
     _textUserName = [[UITextField alloc] initWithFrame:CGRectMake((viewWidth - viewWidth / 1.2) / 2 + Adaptive(15), Adaptive(400), viewWidth / 1.2 - Adaptive(15), Adaptive(40))];
     _textUserName.borderStyle = UITextBorderStyleNone;
     _textUserName.placeholder = @"请输入您的手机号码";

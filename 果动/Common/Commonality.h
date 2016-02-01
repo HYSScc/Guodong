@@ -49,8 +49,9 @@
 #import "HeadComment.h"
 #import "MJRefresh.h"
 #import "SVPullToRefresh.h"
-#define CONTENTTYPE @"application/json"
+#import "Masonry.h"
 #import "HttpTool.h"
+#import "GCD.h"
 #import <QuartzCore/QuartzCore.h>
 #define BASECOLOR [UIColor colorWithRed:43 / 255.0 green:43 / 255.0 blue:43 / 255.0 alpha:1]
 
@@ -65,7 +66,7 @@
 #define viewHeight [UIScreen mainScreen].bounds.size.height
 
 #define kUrlScheme @"uniqueguodong117"
-
+#define CONTENTTYPE @"application/json"
 #define widthScale 18
 #define heightScale 30
 #define btnToLabel 10
