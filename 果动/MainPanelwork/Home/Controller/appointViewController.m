@@ -87,11 +87,10 @@
 {
     if (self.isShop) {
         messageArray = @[ @"课程", @"姓名", @"电话", @"日期", @"时间", @"人数" ];
-    }
-    else {
+    } else {
         messageArray = @[ @"姓名", @"电话", @"日期", @"时间", @"人数", @"地址" ];
     }
-    
+    //-(void)distributeSoacingVerticallyWith:(NSArray*)views{}
     alertImageView = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - Adaptive(170)) / 2, Adaptive(200) - Adaptive(43), Adaptive(170), Adaptive(43))];
     [self.view addSubview:alertImageView];
     
@@ -126,7 +125,6 @@
         
         UILabel* messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(13), (smallMessageView.bounds.size.height - Adaptive(20)) / 2, Adaptive(40), Adaptive(20))];
         messageLabel.text = messageArray[a];
-        
         messageLabel.textColor = [UIColor whiteColor];
         messageLabel.font = [UIFont fontWithName:FONT size:Adaptive(13)];
         [smallMessageView addSubview:messageLabel];
