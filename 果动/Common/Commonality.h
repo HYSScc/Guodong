@@ -50,6 +50,7 @@
 #import "MJRefresh.h"
 #import "SVPullToRefresh.h"
 #import "Masonry.h"
+#import "SHTextField.h"
 #import "HttpTool.h"
 #import "GCD.h"
 #import <QuartzCore/QuartzCore.h>
