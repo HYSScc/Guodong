@@ -6,7 +6,7 @@
 //  Copyright (c) 2014年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
+
 #import "LXActivity.h"
 #import "QCheckBox.h"
 #import "appointViewController.h"

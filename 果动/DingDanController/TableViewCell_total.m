@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
+
 #import "SJAvatarBrowser.h"
 #import "TableViewCell_total.h"
 @implementation TableViewCell_total

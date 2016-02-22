@@ -9,14 +9,13 @@
 #import "APService.h"
 #import "AppDelegate.h"
 #import "AppraiseViewController.h"
-#import "Commonality.h"
+
 #import "HomeController.h"
 #import "LoginViewController.h"
 #import "MainController.h"
 #import "RegisterViewController.h"
 #import "OrderFormController.h"
 #import "Pingpp.h"
-#import "Version.h"
 #import "WXApi.h"
 #import "WeiboSDK.h"
 #import <CoreLocation/CLLocationManagerDelegate.h>
@@ -61,28 +60,27 @@
 
     NSString* saveVersion = [[NSUserDefaults standardUserDefaults] objectForKey:key];
 
-    //    [self Location];
- self.window.rootViewController = [RegisterViewController new];
-//    if ([version isEqualToString:saveVersion]) {
-//
-//        MainController* main = [MainController new];
-//        self.window.rootViewController = main;
-//
-//        //  NewsViewController *news = [NewsViewController new];
-//        //  self.window.rootViewController = news;
-//
-//        //  AppraiseViewController *app = [AppraiseViewController new];
-//        //  self.window.rootViewController = app;
-//    }
-//    else {
-//
-//        [[NSUserDefaults standardUserDefaults] setObject:version forKey:key];
-//
-//        [[NSUserDefaults standardUserDefaults] synchronize];
-//
-//        self.window.rootViewController = [RegisterViewController new];
-//        //self.window.rootViewController = [LoginViewController new];
-//    }
+ 
+    if ([version isEqualToString:saveVersion]) {
+
+        MainController* main = [MainController new];
+        self.window.rootViewController = main;
+
+        //  NewsViewController *news = [NewsViewController new];
+        //  self.window.rootViewController = news;
+
+        //  AppraiseViewController *app = [AppraiseViewController new];
+        //  self.window.rootViewController = app;
+    }
+    else {
+
+        [[NSUserDefaults standardUserDefaults] setObject:version forKey:key];
+
+        [[NSUserDefaults standardUserDefaults] synchronize];
+
+        self.window.rootViewController = [RegisterViewController new];
+        //self.window.rootViewController = [LoginViewController new];
+    }
 
     [self.window makeKeyAndVisible];
 

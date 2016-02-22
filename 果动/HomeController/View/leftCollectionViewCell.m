@@ -5,7 +5,7 @@
 //  Created by mac on 16/1/5.
 //  Copyright © 2016年 Unique. All rights reserved.
 //
-#import "Commonality.h"
+
 #import "leftCollectionViewCell.h"
 
 @implementation leftCollectionViewCell

@@ -6,8 +6,7 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
-#import "HttpTool.h"
+
 #import "UserFeedbackController.h"
 @interface UserFeedbackController () <UITextViewDelegate> {
     UITextView* _textView;

@@ -7,7 +7,7 @@
 //
 
 #import "AsynImageView.h"
-#import "Commonality.h"
+
 #import "GDComment.h"
 #import "MCFireworksButton.h"
 #import <UIKit/UIKit.h>

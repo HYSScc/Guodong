@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
+
 #import "MingXiTableViewCell.h"
 @implementation MingXiTableViewCell
 

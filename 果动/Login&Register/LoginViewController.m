@@ -7,7 +7,6 @@
 //
 
 #import "APService.h"
-#import "Commonality.h"
 #import "HomeController.h"
 #import "HttpTool.h"
 #import "LoginViewController.h"

@@ -10,7 +10,7 @@
 #import "FXBlurView.h"
 #import "UIColor+flat.h"
 #import "FeTenDot.h"
-#import "Commonality.h"
+
 #define kMaxTenDot 10
 #define kPagingLabel 30
 

@@ -7,16 +7,14 @@
 //
 
 #import "AppDelegate.h"
-#import "Commonality.h"
 #import "HomeController.h"
-#import "HttpTool.h"
 #import "LoginViewController.h"
 #import "OrderComment.h"
-#import "OrderFormController.h"
 #import "OrderFormController.h"
 #import "TableViewCell_total.h"
 #import "UserFeedbackController.h"
 #import "MainController.h"
+
 @interface OrderFormController () <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate> {
     NSMutableArray* orderArray;
     UITableView* _tableView;

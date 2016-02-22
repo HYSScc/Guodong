@@ -7,7 +7,7 @@
 //
 
 #import "AsynImageView.h"
-#import "Commonality.h"
+
 #import "PersonalCenterController.h"
 #import "TopImageView.h"
 #import "amentViewController.h"

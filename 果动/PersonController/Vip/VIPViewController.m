@@ -6,7 +6,7 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
+
 #import "LoginViewController.h"
 #import "VIPViewController.h"
 @interface VIPViewController () <UITextFieldDelegate, UIAlertViewDelegate> {

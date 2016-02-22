@@ -6,8 +6,8 @@
 //  Copyright © 2015年 Unique. All rights reserved.
 //
 
-#import "BackView.h"
-#import "Commonality.h"
+
+
 #import "FeSpinnerTenDot.h" //加载界面
 #import "LoginViewController.h"
 #import "MCFireworksButton.h"

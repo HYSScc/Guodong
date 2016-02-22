@@ -6,8 +6,11 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
+#define KEFU @"010-65460058"
+
+
 #import "AboutViewController.h"
-#import "Commonality.h"
+
 #import "SETViewController.h"
 #import "UserFeedbackController.h"
 

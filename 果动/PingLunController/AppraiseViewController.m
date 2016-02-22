@@ -7,10 +7,9 @@
 //
 
 #import "AppraiseViewController.h"
-//#import "JWStar.h"
+
 #import "AppDelegate.h"
-#import "Commonality.h"
-#import "HttpTool.h"
+
 #import "MainController.h"
 #import "QuestionComment.h"
 #import "UIImage+JW.h"
