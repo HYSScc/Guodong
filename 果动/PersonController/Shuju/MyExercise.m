@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "Commonality.h"
+
 #import "ExerciseDetail.h"
-#import "HttpTool.h"
+
 #import "LoginViewController.h"
 #import "MYExerciseTableViewCell.h"
 #import "MainController.h"

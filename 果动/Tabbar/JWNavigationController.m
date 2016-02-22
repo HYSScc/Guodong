@@ -7,7 +7,7 @@
 //
 
 #import "JWNavigationController.h"
-#import "Commonality.h"
+
 @interface JWNavigationController ()
 
 @end

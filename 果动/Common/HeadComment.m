@@ -5,9 +5,8 @@
 //  Created by mac on 15/6/24.
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
-#define viewWidth [UIScreen mainScreen].bounds.size.width
-#define viewHeight [UIScreen mainScreen].bounds.size.height
-#import "Commonality.h"
+
+
 #import "HeadComment.h"
 
 @implementation HeadComment

@@ -6,10 +6,12 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
+
+
+
 #import "ExerciseDetail.h"
 #import "ExerciseDetailComment.h"
-#import "HttpTool.h"
+
 #import "SJAvatarBrowser.h"
 @interface ExerciseDetail () {
     UIScrollView* scroll;

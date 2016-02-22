@@ -6,8 +6,7 @@
 //  Copyright © 2015年 Unique. All rights reserved.
 //
 #import "AppDelegate.h"
-#import "Commonality.h"
-#import "HttpTool.h"
+
 #import "LeftVBaseView.h"
 #import "LocationView.h"
 #import "LoginViewController.h"
@@ -61,7 +60,7 @@
 {
     [super viewDidLoad];
      [self onCreate];
-
+ 
     [[UIApplication sharedApplication]
         setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationController.navigationBar

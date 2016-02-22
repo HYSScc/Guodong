@@ -7,7 +7,7 @@
 //
 
 #import "SHTextField.h"
-#import "Commonality.h"
+
 @implementation SHTextField
 
 - (instancetype)initWithFrame:(CGRect)frame placeholder:(NSString *)place

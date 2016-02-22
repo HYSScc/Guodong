@@ -6,7 +6,7 @@
 //  Copyright © 2015年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
+
 #import "RightCell.h"
 @implementation RightCell
 

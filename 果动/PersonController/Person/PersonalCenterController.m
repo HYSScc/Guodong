@@ -7,12 +7,12 @@
 //
 #import "AppDelegate.h"
 #import "AsynImageView.h"
-#import "Commonality.h"
+
 #import "FBShimmering.h"
 #import "FBShimmeringLayer.h"
 #import "FBShimmeringView.h"
 #import "GBViewController.h"
-#import "HttpTool.h"
+
 #import "LoginViewController.h"
 #import "MoneyViewController.h"
 #import "MyExercise.h"

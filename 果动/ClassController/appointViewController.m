@@ -5,11 +5,12 @@
 //  Created by z on 15/1/27.
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
+
+#define kUrlScheme @"uniqueguodong117"
+
 #import "AppDelegate.h"
 #import "CLComment.h"
-#import "Commonality.h"
 #import "HomeController.h"
-#import "HttpTool.h"
 #import "LXActivity.h"
 #import "MainController.h"
 #import "Message.h"

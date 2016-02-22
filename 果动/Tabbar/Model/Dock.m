@@ -6,8 +6,10 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
+
+
 #import "Dock.h"
-#import "Commonality.h"
+
 @interface DockItem : UIButton
 
 @end

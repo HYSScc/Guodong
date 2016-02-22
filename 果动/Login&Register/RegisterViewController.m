@@ -9,7 +9,7 @@
 #import "RegisterViewController.h"
 #import "TranformFadeView.h"
 #import "RegisterTextView.h"
-#import "Commonality.h"
+
 typedef enum : NSUInteger {
     TYPE_ONE,
     TYPE_TWO,

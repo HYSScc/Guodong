@@ -6,9 +6,8 @@
 //  Copyright (c) 2015年 梁先森. All rights reserved.
 //
 
-#import "Commonality.h"
+
 #import "HomeController.h"
-#import "HttpTool.h"
 
 @implementation HttpTool
 #pragma mark Http的GET请求

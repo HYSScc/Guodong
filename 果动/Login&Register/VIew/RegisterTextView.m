@@ -8,12 +8,12 @@
 
 #import "RegisterTextView.h"
 #import "YXEasing.h"
-#import "Commonality.h"
+
 #import "APService.h"
 #import "HomeController.h"
-#import "HttpTool.h"
+
 #import "MainController.h"
-#import "NSString+JW.h"
+
 
 #import "PersonalCenterController.h"
 #import "UIImage+JW.h"

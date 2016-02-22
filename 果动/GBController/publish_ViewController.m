@@ -6,12 +6,14 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
+#define TextNumber 30
+
 #import "AFNetworking.h"
-#import "Commonality.h"
+
 #import "ELCImagePickerController.h"
 #import "GBViewController.h"
-#import "HttpTool.h"
-#import "NSString+JW.h"
+
+
 #import "UIImage+JW.h"
 #import "UIKit+AFNetworking.h"
 #import "publish_ViewController.h"

@@ -7,7 +7,7 @@
 //
 
 #import "AboutViewController.h"
-#import "Commonality.h"
+
 @interface AboutViewController ()
 
 @end

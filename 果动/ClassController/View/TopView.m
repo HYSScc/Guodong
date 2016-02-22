@@ -6,7 +6,7 @@
 //  Copyright © 2015年 Unique. All rights reserved.
 //
 
-#import "Commonality.h"
+
 #import "TopView.h"
 @implementation TopView {
     NSArray* topImageArray;

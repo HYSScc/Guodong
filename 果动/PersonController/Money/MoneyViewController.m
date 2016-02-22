@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "Commonality.h"
+
 #import "HQGZViewController.h"
-#import "HttpTool.h"
+
 #import "LoginViewController.h"
 #import "MainController.h"
 #import "MingXiComment.h"
