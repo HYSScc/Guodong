@@ -37,7 +37,7 @@
 
     UIImageView* aboutImageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"about_logo.jpg"]];
     aboutImageview.frame = CGRectMake((viewWidth - Adaptive(100)) / 2, Adaptive(100), Adaptive(100), Adaptive(100));
-    aboutImageview.backgroundColor = [UIColor clearColor];
+    aboutImageview.backgroundColor = [UIColor colorWithRed:90 / 255.0 green:90 / 255.0 blue:90 / 255.0 alpha:1];
     [self.view addSubview:aboutImageview];
 
     NSDictionary* infoDic = [[NSBundle mainBundle] infoDictionary];

@@ -35,12 +35,12 @@
     [self.view addSubview:lineImage1];
 
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight - Adaptive(30)) style:UITableViewStylePlain];
-    _tableView.delegate = self;
+    _tableView.delegate   = self;
     _tableView.dataSource = self;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.rowHeight = Adaptive(70);
-    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
+    _tableView.rowHeight       = Adaptive(70);
+    _tableView.backgroundColor = BASECOLOR;
     [self.view addSubview:_tableView];
     NSString* url = [NSString stringWithFormat:@"%@citys/", BASEURL];
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
@@ -95,7 +95,7 @@
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellidentifier];
-        cell.backgroundColor = [UIColor clearColor];
+        cell.backgroundColor = BASECOLOR;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
 

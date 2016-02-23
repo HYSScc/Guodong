@@ -18,6 +18,7 @@
 #import "Pingpp.h"
 #import "WXApi.h"
 #import "WeiboSDK.h"
+#import <Bugly/CrashReporter.h>
 #import <CoreLocation/CLLocationManagerDelegate.h>
 #import <CoreLocation/CoreLocation.h>
 #import <ShareSDK/ShareSDK.h>
@@ -103,8 +104,19 @@
 #endif
     // Required
     [APService setupWithOption:launchOptions];
+    
+    /**
+     *  崩溃日志
+     */
+     [[CrashReporter sharedInstance] enableLog:YES];
+    
+     [[CrashReporter sharedInstance] installWithAppId:@"900019609"];
+    
+    
+    
     return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication*)application
 {

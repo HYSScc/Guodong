@@ -108,7 +108,7 @@
     };
     //推送无聊的消息
     self.elseblock = ^(NSString* alert) {
-        UIAlertView* vipalert = [[UIAlertView alloc] initWithTitle:@"提示"
+        UIAlertView* vipalert = [[UIAlertView alloc] initWithTitle:nil
                                                            message:alert
                                                           delegate:nil
                                                  cancelButtonTitle:nil
@@ -217,7 +217,7 @@
                           Adaptive(40), Adaptive(30))];
     classLabel.textColor = [UIColor colorWithRed:235.00 / 255
                                            green:117.00 / 255
-                                            blue:32.00 / 255
+                                            blue:32.00  / 255
                                            alpha:1];
     classLabel.text = @"课程";
     classLabel.font = [UIFont fontWithName:FONT size:Adaptive(16)];
@@ -256,7 +256,7 @@
     leftBaseView = [LeftVBaseView new];
     leftBaseView.frame = CGRectMake(0, CGRectGetMaxY(changeImage.frame), viewWidth,
             viewHeight - NavigationBar_Height - Adaptive(50) - changeImage.bounds.size.height);
-    leftBaseView.backgroundColor = [UIColor clearColor];
+    leftBaseView.backgroundColor = BASECOLOR;
     [self.view addSubview:leftBaseView];
 
     /*************右视图|地图范围****************/
@@ -264,7 +264,7 @@
         initWithFrame:CGRectMake(0, CGRectGetMaxY(changeImage.frame), viewWidth,
                           viewHeight - NavigationBar_Height - Adaptive(50) - changeImage.bounds.size.height)];
 
-    rightBaseView.backgroundColor = [UIColor clearColor];
+    rightBaseView.backgroundColor = BASECOLOR;
 }
 
 - (void)changeClass:(UIButton*)button
@@ -273,7 +273,7 @@
         [changeImage setImage:[UIImage imageNamed:@"shouye_leftblack"]];
         classLabel.textColor = [UIColor colorWithRed:235.00 / 255
                                                green:117.00 / 255
-                                                blue:32.00 / 255
+                                                blue:32.00  / 255
                                                alpha:1];
         frameLabel.textColor = [UIColor lightGrayColor];
         [rightBaseView removeFromSuperview];
@@ -282,7 +282,7 @@
         [changeImage setImage:[UIImage imageNamed:@"shouye_leftgry"]];
         frameLabel.textColor = [UIColor colorWithRed:235.00 / 255
                                                green:117.00 / 255
-                                                blue:32.00 / 255
+                                                blue:32.00  / 255
                                                alpha:1];
         classLabel.textColor = [UIColor lightGrayColor];
         [leftBaseView removeFromSuperview];

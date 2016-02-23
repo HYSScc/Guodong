@@ -321,7 +321,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = BASECOLOR;
 
         self.headImgeView = [UIImageView new];
         self.headImgeView.layer.cornerRadius = self.headImgeView.bounds.size.width / 2;
@@ -363,7 +363,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = BASECOLOR;
 
         self.headImgeView = [UIImageView new];
         self.headImgeView.layer.cornerRadius = self.headImgeView.bounds.size.width / 2;

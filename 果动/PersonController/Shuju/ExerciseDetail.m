@@ -7,12 +7,10 @@
 //
 
 
-
-
 #import "ExerciseDetail.h"
 #import "ExerciseDetailComment.h"
-
 #import "SJAvatarBrowser.h"
+
 @interface ExerciseDetail () {
     UIScrollView* scroll;
     UIImageView* leftImageView;
@@ -116,7 +114,7 @@
     for (int a = 0; a < 4; a++) {
         UIImageView* imageview = [[UIImageView alloc] initWithFrame:CGRectMake(a * ((viewWidth - Adaptive(70)) / 2 + 1), 0, ((viewWidth - Adaptive(70)) / 2), 2592 / (1936 / ((viewWidth - Adaptive(70)) / 2)))];
         imageview.tag = 100 + a;
-
+        imageview.contentMode = UIViewContentModeScaleAspectFill;
         imageview.userInteractionEnabled = YES;
         [imgscroll addSubview:imageview];
     }
@@ -356,6 +354,7 @@
     switch (gest.view.tag) {
     case 100:
         [SJAvatarBrowser showImage:(UIImageView*)[imgscroll viewWithTag:100]];
+            
         break;
     case 101:
         [SJAvatarBrowser showImage:(UIImageView*)[imgscroll viewWithTag:101]];

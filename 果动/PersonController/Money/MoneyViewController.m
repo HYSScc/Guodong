@@ -102,7 +102,7 @@
     _tableView.rowHeight = Adaptive(70);
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor clearColor];
+    _tableView.backgroundColor = BASECOLOR;
     // 设置单元格的分割样式
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 

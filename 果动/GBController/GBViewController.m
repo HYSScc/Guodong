@@ -108,10 +108,10 @@
         self.navigationItem.rightBarButtonItem = releaseButtonItem;
     }
     
-    _tableView.backgroundColor = [UIColor clearColor];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.backgroundColor = BASECOLOR;
+    _tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
     _tableView.dataSource = self;
-    _tableView.delegate = self;
+    _tableView.delegate   = self;
     [self.view addSubview:_tableView];
     
     //  给_tableView添加一个手势监测；

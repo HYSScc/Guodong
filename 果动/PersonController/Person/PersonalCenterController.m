@@ -202,7 +202,7 @@
         functionScrollView.frame = CGRectMake(0, viewHeight - Tabbar_Height - viewWidth, viewWidth, viewWidth - .5);
     }
     functionScrollView.delegate = self;
-    functionScrollView.backgroundColor = [UIColor clearColor];
+    functionScrollView.backgroundColor = BASECOLOR;
     functionScrollView.contentSize = CGSizeMake(viewWidth, viewWidth);
     [self.view addSubview:functionScrollView];
     for (int a = 0; a < 5; a++) {

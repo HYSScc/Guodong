@@ -19,6 +19,7 @@
 		0488CB931A86F22700E0AA5E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0488CB921A86F22700E0AA5E /* CoreMedia.framework */; };
 		0488CB951A86F23100E0AA5E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0488CB941A86F23100E0AA5E /* libz.dylib */; };
 		0488CB971A86F23D00E0AA5E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0488CB961A86F23D00E0AA5E /* libicucore.dylib */; };
+		632D6AB61C7C492C006CD6A4 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632D6AB51C7C492C006CD6A4 /* Bugly.framework */; };
 		633864971C755656002638C7 /* BackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 633864921C755656002638C7 /* BackView.m */; };
 		633864981C755656002638C7 /* SHTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 633864941C755656002638C7 /* SHTextField.m */; };
 		6338649C1C759950002638C7 /* shuju_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 6338649B1C759950002638C7 /* shuju_placeholder.png */; };
@@ -31,6 +32,7 @@
 		636890671AAEBF8100716408 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636890661AAEBF8100716408 /* CFNetwork.framework */; };
 		636890691AAEBF8F00716408 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636890681AAEBF8F00716408 /* SystemConfiguration.framework */; };
 		6368906B1AAEBF9E00716408 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6368906A1AAEBF9E00716408 /* libc++.dylib */; };
+		636DC6441C7C45BD00C55239 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636DC6431C7C45BD00C55239 /* JavaScriptCore.framework */; };
 		63A0C8461BAFE6A000167BB2 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A0C8451BAFE6A000167BB2 /* libsqlite3.tbd */; };
 		63B635881C74039900923A35 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B635871C74039900923A35 /* AppDelegate.m */; };
 		63B635901C74041200923A35 /* JWNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B6358C1C74041200923A35 /* JWNavigationController.m */; };
@@ -395,6 +397,7 @@
 		0488CB921A86F22700E0AA5E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0488CB941A86F23100E0AA5E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		0488CB961A86F23D00E0AA5E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		632D6AB51C7C492C006CD6A4 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bugly.framework; path = "果动/Third_Files/Bugly.framework"; sourceTree = "<group>"; };
 		633864911C755656002638C7 /* BackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackView.h; sourceTree = "<group>"; };
 		633864921C755656002638C7 /* BackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackView.m; sourceTree = "<group>"; };
 		633864931C755656002638C7 /* SHTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHTextField.h; sourceTree = "<group>"; };
@@ -410,6 +413,7 @@
 		636890661AAEBF8100716408 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		636890681AAEBF8F00716408 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6368906A1AAEBF9E00716408 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		636DC6431C7C45BD00C55239 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		63A0C8451BAFE6A000167BB2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		63B635861C74039900923A35 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		63B635871C74039900923A35 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -945,6 +949,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				636DC6441C7C45BD00C55239 /* JavaScriptCore.framework in Frameworks */,
 				63A0C8461BAFE6A000167BB2 /* libsqlite3.tbd in Frameworks */,
 				63D73B351B01A16500D16C0E /* ImageIO.framework in Frameworks */,
 				63B638E81C743D8500923A35 /* ShareSDKCoreService.framework in Frameworks */,
@@ -974,6 +979,7 @@
 				63D73B331B01A14C00D16C0E /* libz.1.2.5.dylib in Frameworks */,
 				636890691AAEBF8F00716408 /* SystemConfiguration.framework in Frameworks */,
 				63B638E61C743D8500923A35 /* MOBFoundation.framework in Frameworks */,
+				632D6AB61C7C492C006CD6A4 /* Bugly.framework in Frameworks */,
 				636890671AAEBF8100716408 /* CFNetwork.framework in Frameworks */,
 				0488CB931A86F22700E0AA5E /* CoreMedia.framework in Frameworks */,
 				63B638E31C743D8500923A35 /* WeChatConnection.framework in Frameworks */,
@@ -1079,6 +1085,8 @@
 		63B221131ABE987000168314 /* Frameworkes */ = {
 			isa = PBXGroup;
 			children = (
+				632D6AB51C7C492C006CD6A4 /* Bugly.framework */,
+				636DC6431C7C45BD00C55239 /* JavaScriptCore.framework */,
 				63B63A2C1C74479A00923A35 /* libz.tbd */,
 				63E6A4061BB4E8E000A0BB12 /* AlipaySDK.bundle */,
 				63E6A4071BB4E8E000A0BB12 /* AlipaySDK.framework */,
@@ -1254,13 +1262,13 @@
 			children = (
 				63B636E01C740CB800923A35 /* NSData+SDDataCache.h */,
 				63B636E11C740CB800923A35 /* NSData+SDDataCache.m */,
-				63B636E21C740CB800923A35 /* PageControl */,
 				63B636EB1C740CB800923A35 /* SDCollectionViewCell.h */,
 				63B636EC1C740CB800923A35 /* SDCollectionViewCell.m */,
 				63B636ED1C740CB800923A35 /* SDCycleScrollView.h */,
 				63B636EE1C740CB800923A35 /* SDCycleScrollView.m */,
 				63B636EF1C740CB800923A35 /* UIView+SDExtension.h */,
 				63B636F01C740CB800923A35 /* UIView+SDExtension.m */,
+				63B636E21C740CB800923A35 /* PageControl */,
 			);
 			path = SDCycleScrollView;
 			sourceTree = "<group>";
@@ -1717,12 +1725,12 @@
 		63B638451C743B4400923A35 /* Shuju */ = {
 			isa = PBXGroup;
 			children = (
+				63B638511C743B4400923A35 /* MyExercise.h */,
+				63B638521C743B4400923A35 /* MyExercise.m */,
 				63B638461C743B4400923A35 /* ExerciseDetail.h */,
 				63B638471C743B4400923A35 /* ExerciseDetail.m */,
 				63B638481C743B4400923A35 /* Image */,
 				63B6384C1C743B4400923A35 /* Model */,
-				63B638511C743B4400923A35 /* MyExercise.h */,
-				63B638521C743B4400923A35 /* MyExercise.m */,
 				63B638531C743B4400923A35 /* View */,
 			);
 			path = Shuju;
@@ -2938,6 +2946,7 @@
 					"$(PROJECT_DIR)/果动/PingLunController/Third_File/QCheckbox/ShareSDK",
 					"$(PROJECT_DIR)/果动/PingLunController/Third_File/QCheckbox/ShareSDK/UI",
 					"$(PROJECT_DIR)/果动/Third_Files/Ping++/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/果动/Third_Files",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/果动/AppDelegate/PrefixHeader.pch";
@@ -2959,8 +2968,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.guodong.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ca5249a8-b89a-47d9-983d-ed19603a4e4f";
-				"PROVISIONING_PROFILE[sdk=*]" = "ca5249a8-b89a-47d9-983d-ed19603a4e4f";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "";
 			};
 			name = Debug;
 		};
@@ -2981,6 +2990,7 @@
 					"$(PROJECT_DIR)/果动/PingLunController/Third_File/QCheckbox/ShareSDK",
 					"$(PROJECT_DIR)/果动/PingLunController/Third_File/QCheckbox/ShareSDK/UI",
 					"$(PROJECT_DIR)/果动/Third_Files/Ping++/lib/Channels/Alipay",
+					"$(PROJECT_DIR)/果动/Third_Files",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/果动/AppDelegate/PrefixHeader.pch";
@@ -3000,7 +3010,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.guodong.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ca5249a8-b89a-47d9-983d-ed19603a4e4f";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

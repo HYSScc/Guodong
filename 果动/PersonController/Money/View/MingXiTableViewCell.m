@@ -18,7 +18,7 @@
 
         // 把自定义的控件 变成了单元格的属性
 
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = BASECOLOR;
 
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewWidth - Adaptive(130), Adaptive(10) + 8, Adaptive(130), Adaptive(14))];
         self.titleLabel.text = @"上课次数累计三次";

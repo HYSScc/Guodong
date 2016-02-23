@@ -48,7 +48,7 @@
     _textView.layer.borderColor = [UIColor grayColor].CGColor;
     _textView.layer.borderWidth = 0.5;
     _textView.layer.cornerRadius = 5.0;
-    _textView.backgroundColor = [UIColor clearColor];
+    _textView.backgroundColor = BASECOLOR;
     [backImageview addSubview:_textView];
 
     sureButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
