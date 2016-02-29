@@ -10,17 +10,20 @@
 #import "ExerciseDetail.h"
 #import "ExerciseDetailComment.h"
 #import "SJAvatarBrowser.h"
+#import "LHClickImageView.h"
 
 @interface ExerciseDetail () {
-    UIScrollView* scroll;
-    UIImageView* leftImageView;
-    UIImageView* rightImageView;
-    UILabel* oldtime;
-    UILabel* nowtime;
-    UIScrollView* imgscroll;
-    UILabel* orangeline;
-    UIImageView* rightdian;
-    UILabel* timelabel;
+    UIScrollView *scroll;
+    UIImageView  *leftImageView;
+    UIImageView  *rightImageView;
+    UILabel      *oldtime;
+    UILabel      *nowtime;
+    UIScrollView *imgscroll;
+    UILabel      *orangeline;
+    UIImageView  *rightdian;
+    UILabel      *timelabel;
+    int          imageHeight;
+    int          imageWidth;
 }
 @end
 
@@ -96,7 +99,13 @@
     rightdian = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - Adaptive(70)) * 0.75, -Adaptive(7), Adaptive(14), Adaptive(14))];
     [rightdian setImage:[UIImage imageNamed:@"shuju_dian"]];
 
-    UILabel* photolabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Adaptive(70), 2592 / (1936 / ((viewWidth - Adaptive(70)) / 2)))];
+    
+   
+    imageHeight =  (viewWidth - Adaptive(70)) / 2;
+    imageWidth  =  (viewWidth - Adaptive(70)) / 2;
+    
+    
+    UILabel* photolabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Adaptive(70), imageHeight)];
     photolabel.backgroundColor = [UIColor orangeColor];
     photolabel.text = @"照片";
     photolabel.textAlignment = 1;
@@ -104,17 +113,18 @@
     photolabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
     [scroll addSubview:photolabel];
 
-    imgscroll = [[UIScrollView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photolabel.frame), 0, viewWidth - CGRectGetMaxX(photolabel.frame), 2592 / (1936 / ((viewWidth - Adaptive(70)) / 2)))];
-    imgscroll.contentSize = CGSizeMake(((viewWidth - Adaptive(70)) / 2) * 2 + 2, 2592 / (1936 / ((viewWidth - Adaptive(70)) / 2)));
+  
+    
+    imgscroll = [[UIScrollView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photolabel.frame), 0, viewWidth - CGRectGetMaxX(photolabel.frame), imageHeight)];
+    imgscroll.contentSize = CGSizeMake(imageWidth * 2 + 2, imageHeight);
     imgscroll.showsHorizontalScrollIndicator = NO;
     imgscroll.pagingEnabled = YES;
     imgscroll.userInteractionEnabled = YES;
     [scroll addSubview:imgscroll];
 
     for (int a = 0; a < 4; a++) {
-        UIImageView* imageview = [[UIImageView alloc] initWithFrame:CGRectMake(a * ((viewWidth - Adaptive(70)) / 2 + 1), 0, ((viewWidth - Adaptive(70)) / 2), 2592 / (1936 / ((viewWidth - Adaptive(70)) / 2)))];
+        LHClickImageView* imageview = [[LHClickImageView alloc] initWithFrame:CGRectMake(a * (imageWidth + 1), 0, imageWidth, imageHeight)];
         imageview.tag = 100 + a;
-        imageview.contentMode = UIViewContentModeScaleAspectFill;
         imageview.userInteractionEnabled = YES;
         [imgscroll addSubview:imageview];
     }
@@ -167,32 +177,25 @@
                 [orangeline addSubview:rightdian];
                 [self.view addSubview:nowtime];
                 orangeline.frame = CGRectMake(CGRectGetMaxX(timelabel.frame), Adaptive(25), (viewWidth - Adaptive(70)) * 0.75, 1);
-                imgscroll.contentSize = CGSizeMake(((viewWidth - Adaptive(70)) / 2) * 4 + 4, 2592 / (1936 / ((viewWidth - Adaptive(70)) / 2)));
+                imgscroll.contentSize = CGSizeMake(imageWidth * 4 + 4,imageHeight);
 
                 NSDictionary* last_test = [data objectForKey:@"last_test"];
                 /*********************最新的数据***************************************/
                 if (![[last_test allKeys] containsObject:@"before"]) {
 
-                    [(UIImageView*)[self.view viewWithTag:102] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
-                }
-                else {
-                    [(UIImageView*)[self.view viewWithTag:102] setImageWithURL:[NSURL URLWithString:[last_test objectForKey:@"before"]]];
-                    //添加点击手势
-                    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
-                    [(UIImageView*)[self.view viewWithTag:102] addGestureRecognizer:tap];
+                    [(LHClickImageView*)[self.view viewWithTag:102] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
+                } else {
+                    [(LHClickImageView*)[self.view viewWithTag:102] setImageWithURL:[NSURL URLWithString:[last_test objectForKey:@"before"]]];
                 }
 
                 if (![[last_test allKeys] containsObject:@"after"]) {
-                    [(UIImageView*)[self.view viewWithTag:103] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
-                }
-                else {
-                    [(UIImageView*)[self.view viewWithTag:103] setImageWithURL:[NSURL URLWithString:[last_test objectForKey:@"after"]]];
-                    //添加点击手势
-                    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
-                    [(UIImageView*)[self.view viewWithTag:103] addGestureRecognizer:tap];
+                    [(LHClickImageView*)[self.view viewWithTag:103] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
+                } else {
+                    [(LHClickImageView*)[self.view viewWithTag:103] setImageWithURL:[NSURL URLWithString:[last_test objectForKey:@"after"]]];
                 }
 
                 [(UILabel*)[self.view viewWithTag:28] setText:[[NSString stringWithFormat:@"%@", [last_test objectForKey:@"height"]] isEqualToString:@""] ? [NSString stringWithFormat:@"%@", [last_test objectForKey:@"height"]] : [NSString stringWithFormat:@"%@", [last_test objectForKey:@"height"]]];
+                
                 [(UILabel*)[self.view viewWithTag:29] setText:[[NSString stringWithFormat:@"%@", [last_test objectForKey:@"weight"]] isEqualToString:@""] ? [NSString stringWithFormat:@"%@", [last_test objectForKey:@"weight"]] : [NSString stringWithFormat:@"%@", [last_test objectForKey:@"weight"]]];
                 [(UILabel*)[self.view viewWithTag:30] setText:[[NSString stringWithFormat:@"%@", [last_test objectForKey:@"waistline"]] isEqualToString:@""] ? [NSString stringWithFormat:@"%@", [last_test objectForKey:@"waistline"]] : [NSString stringWithFormat:@"%@", [last_test objectForKey:@"waistline"]]];
                 [(UILabel*)[self.view viewWithTag:31] setText:[[NSString stringWithFormat:@"%@", [last_test objectForKey:@"hip"]] isEqualToString:@""] ? [NSString stringWithFormat:@"%@", [last_test objectForKey:@"hip"]] : [NSString stringWithFormat:@"%@", [last_test objectForKey:@"hip"]]];
@@ -232,17 +235,17 @@
 
             /*********************之前的数据***************************************/
 
-            UILabel* label2 = (UILabel*)[self.view viewWithTag:1]; //名字
+            UILabel* label2  = (UILabel*)[self.view viewWithTag:1]; //名字
             UILabel* label27 = (UILabel*)[self.view viewWithTag:2]; //身高
             UILabel* label28 = (UILabel*)[self.view viewWithTag:3]; //体重
 
-            UILabel* label3 = (UILabel*)[self.view viewWithTag:4];
-            UILabel* label4 = (UILabel*)[self.view viewWithTag:5];
-            UILabel* label5 = (UILabel*)[self.view viewWithTag:6];
-            UILabel* label6 = (UILabel*)[self.view viewWithTag:7];
-            UILabel* label7 = (UILabel*)[self.view viewWithTag:8];
-            UILabel* label8 = (UILabel*)[self.view viewWithTag:9];
-            UILabel* label9 = (UILabel*)[self.view viewWithTag:10];
+            UILabel* label3  = (UILabel*)[self.view viewWithTag:4];
+            UILabel* label4  = (UILabel*)[self.view viewWithTag:5];
+            UILabel* label5  = (UILabel*)[self.view viewWithTag:6];
+            UILabel* label6  = (UILabel*)[self.view viewWithTag:7];
+            UILabel* label7  = (UILabel*)[self.view viewWithTag:8];
+            UILabel* label8  = (UILabel*)[self.view viewWithTag:9];
+            UILabel* label9  = (UILabel*)[self.view viewWithTag:10];
             UILabel* label10 = (UILabel*)[self.view viewWithTag:11];
             UILabel* label11 = (UILabel*)[self.view viewWithTag:12];
             UILabel* label12 = (UILabel*)[self.view viewWithTag:13];
@@ -264,23 +267,16 @@
 
             if (![[test allKeys] containsObject:@"before"]) {
 
-                [(UIImageView*)[self.view viewWithTag:100] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
-            }
-            else {
-                [(UIImageView*)[self.view viewWithTag:100] setImageWithURL:[NSURL URLWithString:[test objectForKey:@"before"]]];
-                //添加点击手势
-                UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
-                [(UIImageView*)[self.view viewWithTag:100] addGestureRecognizer:tap];
+                [(LHClickImageView*)[self.view viewWithTag:100] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
+            } else {
+                [(LHClickImageView*)[self.view viewWithTag:100] setImageWithURL:[NSURL URLWithString:[test objectForKey:@"before"]]];
+              
             }
 
             if (![[test allKeys] containsObject:@"after"]) {
-                [(UIImageView*)[self.view viewWithTag:101] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
-            }
-            else {
-                [(UIImageView*)[self.view viewWithTag:101] setImageWithURL:[NSURL URLWithString:[test objectForKey:@"after"]]];
-                //添加点击手势
-                UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
-                [(UIImageView*)[self.view viewWithTag:101] addGestureRecognizer:tap];
+                [(LHClickImageView*)[self.view viewWithTag:101] setImage:[UIImage imageNamed:@"shuju_placeholder"]];
+            } else {
+                [(LHClickImageView*)[self.view viewWithTag:101] setImageWithURL:[NSURL URLWithString:[test objectForKey:@"after"]]];
             }
 
             label2.text = [NSString stringWithFormat:@"%@", [test objectForKey:@"coach"]];
@@ -347,33 +343,6 @@
     }
         fail:^(NSError* error){
         }];
-}
-- (void)magnifyImage:(UIGestureRecognizer*)gest
-{
-    NSLog(@"点击了手势 %ld", (long)gest.view.tag);
-    switch (gest.view.tag) {
-    case 100:
-        [SJAvatarBrowser showImage:(UIImageView*)[imgscroll viewWithTag:100]];
-            
-        break;
-    case 101:
-        [SJAvatarBrowser showImage:(UIImageView*)[imgscroll viewWithTag:101]];
-        break;
-    case 102:
-        [SJAvatarBrowser showImage:(UIImageView*)[imgscroll viewWithTag:102]];
-        break;
-    case 103:
-        [SJAvatarBrowser showImage:(UIImageView*)[imgscroll viewWithTag:103]];
-        break;
-
-    default:
-        break;
-    }
-}
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

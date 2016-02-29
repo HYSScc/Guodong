@@ -540,6 +540,36 @@
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+// 提交编辑
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        OrderComment* order = [orderArray objectAtIndex:indexPath.row];
+        
+        NSString *removeUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.delete_order",BASEURL];
+        NSDictionary *removeDict = @{@"order_id":order.order_id};
+        [HttpTool postWithUrl:removeUrl params:removeDict contentType:CONTENTTYPE success:^(id responseObject) {
+            if (ResponseObject_RC == 0) {
+                
+                  [orderArray removeObjectAtIndex:indexPath.row];
+                // 可以删除一行  也可以删除多行
+                  [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
+                  [_tableView reloadData];
+            } else {
+                [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
+            }
+        } fail:^(NSError *error) {}];
+    }
+}
+
+// 删除的按钮上的文字
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"Remove";
+}
+
+
 - (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 100) {

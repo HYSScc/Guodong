@@ -29,6 +29,7 @@
 		634B6F061ABA999D00F97E5B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634B6F051ABA999D00F97E5B /* CoreGraphics.framework */; };
 		634B6F081ABA99A800F97E5B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634B6F071ABA99A800F97E5B /* UIKit.framework */; };
 		634B6F0A1ABA99B100F97E5B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634B6F091ABA99B100F97E5B /* Foundation.framework */; };
+		635613851C84257E006AA97A /* LHClickImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 635613841C84257E006AA97A /* LHClickImageView.m */; };
 		636890671AAEBF8100716408 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636890661AAEBF8100716408 /* CFNetwork.framework */; };
 		636890691AAEBF8F00716408 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636890681AAEBF8F00716408 /* SystemConfiguration.framework */; };
 		6368906B1AAEBF9E00716408 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6368906A1AAEBF9E00716408 /* libc++.dylib */; };
@@ -410,6 +411,8 @@
 		634B6F051ABA999D00F97E5B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		634B6F071ABA99A800F97E5B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		634B6F091ABA99B100F97E5B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		635613831C84257E006AA97A /* LHClickImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHClickImageView.h; sourceTree = "<group>"; };
+		635613841C84257E006AA97A /* LHClickImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHClickImageView.m; sourceTree = "<group>"; };
 		636890661AAEBF8100716408 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		636890681AAEBF8F00716408 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		6368906A1AAEBF9E00716408 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -1754,6 +1757,8 @@
 				63B6384E1C743B4400923A35 /* exerciseComment.m */,
 				63B6384F1C743B4400923A35 /* ExerciseDetailComment.h */,
 				63B638501C743B4400923A35 /* ExerciseDetailComment.m */,
+				635613831C84257E006AA97A /* LHClickImageView.h */,
+				635613841C84257E006AA97A /* LHClickImageView.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2692,6 +2697,7 @@
 				63B639CB1C7440E900923A35 /* TNSexyImageUploadProgress.m in Sources */,
 				63B63A0E1C7440E900923A35 /* SDImageCache.m in Sources */,
 				63B6387E1C743B4400923A35 /* personViewModel.m in Sources */,
+				635613851C84257E006AA97A /* LHClickImageView.m in Sources */,
 				63B637FC1C7414CE00923A35 /* Button.m in Sources */,
 				63B638891C743B4400923A35 /* exerciseComment.m in Sources */,
 				63B63A021C7440E900923A35 /* MMVectorImage.m in Sources */,
@@ -2968,8 +2974,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.guodong.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=*]" = "";
+				PROVISIONING_PROFILE = "ca5249a8-b89a-47d9-983d-ed19603a4e4f";
+				"PROVISIONING_PROFILE[sdk=*]" = "ca5249a8-b89a-47d9-983d-ed19603a4e4f";
 			};
 			name = Debug;
 		};
@@ -3010,7 +3016,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.guodong.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ca5249a8-b89a-47d9-983d-ed19603a4e4f";
 			};
 			name = Release;
 		};
