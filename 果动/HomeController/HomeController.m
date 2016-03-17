@@ -16,6 +16,7 @@
 #import "cityVCViewController.h"
 #import "classViewController.h"
 #import "homeController.h"
+#import "activeViewController.h"
 @interface HomeController () <UIScrollViewDelegate, UIAlertViewDelegate> {
     LocationView* locationView;
     LeftVBaseView* leftBaseView;
@@ -140,6 +141,14 @@
         loginAlert.tag = 88;
         [loginAlert show];
     };
+    //跳转到活动页
+    self.pushActiveViewBlock = ^(NSString *number) {
+        activeViewController *active = [activeViewController new];
+        active.number = number;
+        [home.navigationController pushViewController:active animated:YES];
+    };
+    
+    
     //跳转到体验店界面
     self.pushShopVCBlock = ^(NSString* classNumber, NSString* titleString) {
         classViewController* class = [classViewController new];

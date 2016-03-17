@@ -220,3 +220,15 @@
 }
 @end
 
+@implementation TableViewCell_package
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+    }
+    return self;
+}
+@end
+

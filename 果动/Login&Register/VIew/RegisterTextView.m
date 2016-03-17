@@ -65,19 +65,19 @@
     
     
     
-    UIImageView *logoImage1 = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - Adaptive(94)) / 2, Adaptive(190), Adaptive(94), Adaptive(50))];
-    logoImage1.image        = [UIImage imageNamed:@"logo1"];
-    logoImage1.alpha        = 0;
-    [self addSubview:logoImage1];
+//    UIImageView *logoImage1 = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - Adaptive(94)) / 2, Adaptive(190), Adaptive(94), Adaptive(50))];
+//    logoImage1.image        = [UIImage imageNamed:@"logo1"];
+//    logoImage1.alpha        = 0;
+//    [self addSubview:logoImage1];
     
     
     // "JUST NOW" 跳出动画
-    CGFloat logo_two_x      = (viewWidth - Adaptive(80)) / 2;
-    CGFloat logo_two_width  = Adaptive(90);
+    CGFloat logo_two_x      = (viewWidth - Adaptive(94)) / 2;
+    CGFloat logo_two_width  = Adaptive(94);
     
     
-    UIImageView *logoImage2 = [[UIImageView alloc] initWithFrame:CGRectMake(logo_two_x, -Adaptive(10), logo_two_width, Adaptive(10))];
-    logoImage2.image        = [UIImage imageNamed:@"logo2"];
+    UIImageView *logoImage2 = [[UIImageView alloc] initWithFrame:CGRectMake(logo_two_x, -Adaptive(10), logo_two_width, Adaptive(50))];
+    logoImage2.image        = [UIImage imageNamed:@"logo1"];
     [self addSubview:logoImage2];
     
     
@@ -87,18 +87,18 @@
     keyFrameAnimation_two.duration             = 1.5;
     keyFrameAnimation_two.values               = \
     [YXEasing calculateFrameFromPoint:logoImage2.center
-                              toPoint:CGPointMake(logo_two_x + logo_two_width / 2, Adaptive(180))
+                              toPoint:CGPointMake(logo_two_x + logo_two_width / 2, Adaptive(190))
                                  func:BounceEaseOut
                            frameCount:1.5 * 30];
     // 添加动画
-    logoImage2.center = CGPointMake(logo_two_x + logo_two_width / 2, Adaptive(180));
+    logoImage2.center = CGPointMake(logo_two_x + logo_two_width / 2, Adaptive(190));
     [logoImage2.layer addAnimation:keyFrameAnimation_two forKey:nil];
     
-    // "果动" 在一秒内显示动画
-    [UIView animateWithDuration:3.f animations:^{
-        
-        logoImage1.alpha    = 1.f;
-    }];
+//    // "果动" 在一秒内显示动画
+//    [UIView animateWithDuration:3.f animations:^{
+//        
+//        logoImage1.alpha    = 1.f;
+//    }];
 
     
 }

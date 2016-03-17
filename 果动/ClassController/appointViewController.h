@@ -32,4 +32,8 @@
 @property (nonatomic, retain) NSMutableArray* price_list;
 @property (nonatomic, retain) NSString* price_number;
 @property (nonatomic, retain) NSString *shop_id;
+@property (nonatomic, retain) NSString *onePersonNumber;
+
+@property (nonatomic,retain) NSMutableArray *packageArray; // 套餐数组
+
 @end

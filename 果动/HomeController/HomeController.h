@@ -21,6 +21,7 @@
 @property (nonatomic, copy) void (^alertImageBlock)(NSString* imageName); //提示框动画
 @property (nonatomic, copy) void (^removeAnimationBlock)(BOOL isSucc); //移除所有动画
 @property (nonatomic, copy) void (^pushLoginVCBlock)(void); //跳转到登陆界面
+@property (nonatomic, copy) void (^pushActiveViewBlock)(NSString *number); //跳转到活动页
 
 @property (nonatomic, retain) UIImageView* alertImageView;
 @property (nonatomic, assign) CGFloat longitude, latitude;

@@ -23,6 +23,8 @@
 @property (nonatomic,retain)NSString *coachClass;
 @property (nonatomic,retain)NSString *name;
 @property (nonatomic,retain)NSDictionary *coach_info;
+@property (nonatomic,retain)NSString *cur;
+@property (nonatomic,retain)NSString *total;
 
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end

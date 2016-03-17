@@ -34,10 +34,21 @@
     if (self = [super initWithFrame:frame]) {
         [self setupImageView];
         [self setupTitleLabel];
+        
+        [self createButton];
+        
     }
     
     return self;
 }
+- (void)createButton {
+    _Clickbutton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    
+    _Clickbutton.frame = CGRectMake(0 , 0, self.bounds.size.width , self.bounds.size.height);
+    
+    [self addSubview:_Clickbutton];
+}
+
 
 - (void)setTitleLabelBackgroundColor:(UIColor *)titleLabelBackgroundColor
 {

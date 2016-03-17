@@ -30,7 +30,8 @@
         NSLog(@"SEX  %@",self.sex);
         self.coachClass = [[dictionary objectForKey:@"coach_info"] objectForKey:@"coachCourse"];
         self.headimg = [[dictionary objectForKey:@"coach_info"] objectForKey:@"headimg"];
-        
+        self.cur     = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"cur"]];
+        self.total     = [NSString stringWithFormat:@"%@",[dictionary objectForKey:@"total"]];
         NSLog(@"self.headimg %@",self.headimg);
         self.name = [dictionary objectForKey:@"name"];
         /*

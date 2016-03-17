@@ -21,14 +21,12 @@
         self.backgroundColor = BASECOLOR;
 
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewWidth - Adaptive(130), Adaptive(10) + 8, Adaptive(130), Adaptive(14))];
-        self.titleLabel.text = @"上课次数累计三次";
         self.titleLabel.textAlignment = 1;
         self.titleLabel.font = [UIFont fontWithName:FONT size:Adaptive(14)];
         self.titleLabel.textColor = [UIColor whiteColor];
         [self addSubview:self.titleLabel];
 
         self.timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewWidth - Adaptive(125), CGRectGetMaxY(self.titleLabel.frame), Adaptive(130), Adaptive(30))];
-        self.timeLabel.text = @"2015-05-06 12:40";
         self.timeLabel.textAlignment = 1;
         self.timeLabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
         self.timeLabel.textColor = [UIColor whiteColor];
@@ -42,8 +40,7 @@
         line.backgroundColor = [UIColor colorWithRed:85 / 255.0 green:85 / 255.0 blue:85 / 255.0 alpha:1];
         [self addSubview:line];
         //249  160 68
-        self.numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(25), Adaptive(5), Adaptive(40), Adaptive(30))];
-        self.numberLabel.text = @"80";
+        self.numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.numberImage.bounds.size.width, self.numberImage.bounds.size.height)];
         self.numberLabel.textAlignment = 1;
         self.numberLabel.font = [UIFont fontWithName:FONT size:Adaptive(20)];
         self.numberLabel.textColor = [UIColor colorWithRed:226.00 / 255 green:160.00 / 255 blue:48.00 / 255 alpha:1];

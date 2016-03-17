@@ -44,6 +44,7 @@
 {
     [self startRequestScrollViewImage];
     [self startRequestClassNumber];
+    
 }
 - (void)startRequestClassNumber
 {
@@ -74,6 +75,7 @@
         if (self.scrimgArray) {
             scrollView.imageURLStringsGroup = self.scrimgArray;
         }
+       
     } fail:^(NSError* error){}];
 }
 - (void)createLabel
@@ -104,11 +106,20 @@
         scrollView = [[SDCycleScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, Adaptive(125))];
     }
     scrollView.backgroundColor    = BASECOLOR;
+    
     scrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
     scrollView.pageControlStyle   = SDCycleScrollViewPageContolStyleAnimated;
     scrollView.autoScrollTimeInterval = 5.0;
+    scrollView.userInteractionEnabled = YES;
+   // scrollView.contentOffset = ;
     [self addSubview:scrollView];
+    
+    NSLog(@"sssssss %@",scrollView.mainView);
+    
+   
+    
 }
+
 #pragma mark --UICollectionViewDataSource
 //定义展示的UICollectionViewCell的个数
 -( NSInteger )collectionView:( UICollectionView *)collectionView numberOfItemsInSection:( NSInteger )section
@@ -171,19 +182,19 @@
         cell.frame = rect;
         [UIView animateWithDuration:.3 animations:^{} completion:^(BOOL finished) {
                              HomeController* home = [HomeController sharedViewControllerManager];
-                            //   home.pushClassVCBlock(left.left_name, [left.left_id intValue]);
-                             if (locationView.dingwei == YES && locationView.isCitys == YES){
-                                 // 城市覆盖  定位成功
-                                 home.pushClassVCBlock(left.left_name, [left.left_id intValue]);
-                             } else if (locationView.dingwei == NO) {
-                                 home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
-                                 home.alertImageView.alpha = 1;
-                                 home.alertImageBlock(@"locationing");
-                             } else {
-                                 home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
-                                 home.alertImageView.alpha = 1;
-                                 home.alertImageBlock(@"city_noCover");
-                             }
+                               home.pushClassVCBlock(left.left_name, [left.left_id intValue]);
+//                             if (locationView.dingwei == YES && locationView.isCitys == YES){
+//                                 // 城市覆盖  定位成功
+//                                 home.pushClassVCBlock(left.left_name, [left.left_id intValue]);
+//                             } else if (locationView.dingwei == NO) {
+//                                 home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
+//                                 home.alertImageView.alpha = 1;
+//                                 home.alertImageBlock(@"locationing");
+//                             } else {
+//                                 home.alertImageView.frame = CGRectMake(0, -viewHeight/13.34 , viewWidth, viewHeight/13.34);
+//                                 home.alertImageView.alpha = 1;
+//                                 home.alertImageBlock(@"city_noCover");
+//                             }
                          }];
     }];
 }

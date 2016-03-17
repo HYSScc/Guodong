@@ -24,6 +24,12 @@
 #import <ShareSDK/ShareSDK.h>
 
 #import "NewsViewController.h"
+
+
+
+
+
+
 @interface AppDelegate () <UIAlertViewDelegate, CLLocationManagerDelegate> {
     //位置管理器
     CLLocationManager* _locationManager;
@@ -63,6 +69,8 @@
 
  
     if ([version isEqualToString:saveVersion]) {
+        
+        
 
         MainController* main = [MainController new];
         self.window.rootViewController = main;

@@ -58,6 +58,7 @@
 
 - (UIView*)tableView:(UITableView*)tableView viewForFooterInSection:(NSInteger)section
 {
+    NSLog(@"asdfadsfasf");
     UIView* footView        = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, Adaptive(80))];
 
     UILabel* footLabel      = [[UILabel alloc] initWithFrame:CGRectMake(0,

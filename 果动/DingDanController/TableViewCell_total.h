@@ -33,3 +33,8 @@
 @property (nonatomic, retain) UILabel* coachClass;
 @property (nonatomic, retain) UIImageView* coachImg;
 @end
+
+
+// 套餐课程Cell
+@interface TableViewCell_package : UITableViewCell
+@end

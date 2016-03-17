@@ -24,7 +24,7 @@
 #import "UIView+SDExtension.h"
 #import "TAPageControl.h"
 #import "NSData+SDDataCache.h"
-
+#import "HomeController.h"
 
 
 NSString * const ID = @"cycleCell";
@@ -32,7 +32,6 @@ NSString * const ID = @"cycleCell";
 @interface SDCycleScrollView () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 
-@property (nonatomic, weak) UICollectionView *mainView; // 显示图片的collectionView
 @property (nonatomic, weak) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) NSMutableArray *imagesGroup;
 @property (nonatomic, weak) NSTimer *timer;
@@ -78,6 +77,8 @@ NSString * const ID = @"cycleCell";
     
     self.backgroundColor = [UIColor lightGrayColor];
     
+    
+    
 }
 
 + (instancetype)cycleScrollViewWithFrame:(CGRect)frame imagesGroup:(NSArray *)imagesGroup
@@ -108,6 +109,7 @@ NSString * const ID = @"cycleCell";
     mainView.pagingEnabled = YES;
     mainView.showsHorizontalScrollIndicator = NO;
     mainView.showsVerticalScrollIndicator = NO;
+    mainView.userInteractionEnabled = YES;
     [mainView registerClass:[SDCollectionViewCell class] forCellWithReuseIdentifier:ID];
     mainView.dataSource = self;
     mainView.delegate = self;
@@ -399,13 +401,17 @@ NSString * const ID = @"cycleCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+   
     SDCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:ID forIndexPath:indexPath];
     long itemIndex = indexPath.item % self.imagesGroup.count;
     UIImage *image = self.imagesGroup[itemIndex];
     if (image.size.width == 0 && self.placeholderImage) {
         image = self.placeholderImage;
     }
+    cell.imageView.userInteractionEnabled = YES;
     cell.imageView.image = image;
+    cell.Clickbutton.tag = indexPath.row % self.imagesGroup.count;
+    [cell.Clickbutton addTarget:self action:@selector(imageContentClick:) forControlEvents:UIControlEventTouchUpInside];
     if (_titlesGroup.count) {
         cell.title = _titlesGroup[itemIndex];
     }
@@ -420,12 +426,20 @@ NSString * const ID = @"cycleCell";
     
     return cell;
 }
-
+- (void)imageContentClick:(UIButton *)button {
+    NSLog(@"点击anniu %ld",(long)button.tag);
+    HomeController *home = [HomeController sharedViewControllerManager];
+    NSString *number = [NSString stringWithFormat:@"%ld",(long)button.tag];
+    home.pushActiveViewBlock(number);
+    
+}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+     NSLog(@"点击了cell");
     if ([self.delegate respondsToSelector:@selector(cycleScrollView:didSelectItemAtIndex:)]) {
         [self.delegate cycleScrollView:self didSelectItemAtIndex:indexPath.item % self.imagesGroup.count];
     }
+   
 }
 
 

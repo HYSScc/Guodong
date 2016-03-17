@@ -7,7 +7,7 @@
 //
 
 #define kUrlScheme @"uniqueguodong117"
-
+#import "payViewController.h"
 #import "AppDelegate.h"
 #import "CLComment.h"
 #import "HomeController.h"
@@ -91,7 +91,8 @@
     } else {
         messageArray = @[ @"姓名", @"电话", @"日期", @"时间", @"人数", @"地址" ];
     }
-    //-(void)distributeSoacingVerticallyWith:(NSArray*)views{}
+    Message* message = [self.course objectAtIndex:0];
+    self.onePersonNumber = message.rmb;
     alertImageView = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - Adaptive(170)) / 2, Adaptive(200) - Adaptive(43), Adaptive(170), Adaptive(43))];
     [self.view addSubview:alertImageView];
     
@@ -186,6 +187,12 @@
                 personNumberLabel.textAlignment = 2;
                 personNumberLabel.font = [UIFont fontWithName:FONT size:Adaptive(18)];
                 [smallMessageView addSubview:personNumberLabel];
+                
+                // 默认选中单人课
+                priceList* price = [self.price_list objectAtIndex:0];
+                personNumberLabel.text = price.price_name;
+                self.rmb = price.price_rmb;
+                self.price_number = price.price_num;
             }
         }
         else {
@@ -257,6 +264,12 @@
                 personNumberLabel.textAlignment = 2;
                 personNumberLabel.font = [UIFont fontWithName:FONT size:Adaptive(18)];
                 [smallMessageView addSubview:personNumberLabel];
+                
+                // 默认选中单人课
+                priceList* price = [self.price_list objectAtIndex:0];
+                personNumberLabel.text = price.price_name;
+                self.rmb = price.price_rmb;
+                self.price_number = price.price_num;
             }
         }
     }
@@ -455,6 +468,7 @@
     personNumberPicker.tag = 300;
     //设置初始默认值
     [personNumberPicker selectRow:0 inComponent:0 animated:NO];
+   
     [classPickView addSubview:personNumberPicker];
 }
 - (void)surePerson
@@ -506,15 +520,19 @@
 - (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (pickerView.tag == 200) {
+        NSLog(@"11");
         timeLabel.text   = [self.dateArray objectAtIndex:row];
         defaultTime      = [self.dateArray objectAtIndex:row];
     } else if (pickerView.tag == 100) {
+         NSLog(@"22");
         Message* message = [self.course objectAtIndex:row];
         classLabel.text  = message.name;
         self.func_id     = message.func_id;
         self.course_time = message.course_time;
         defaultClass     = message.name;
     } else {
+        NSLog(@"33");
+        
         priceList* price    = [self.price_list objectAtIndex:row];
         defaultPersonNumber = price.price_name;
         self.rmb            = price.price_rmb;
@@ -609,10 +627,17 @@
         [alert show];
     }
     else {
+        payViewController *pay = [payViewController new];
+        
         if (self.isShop) {
             payUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.get_order&studio_id=%@", BASEURL,self.shop_id];
+            NSLog(@"sssssssssssssssssss %@",self.shop_id);
+            pay.imageStyleNumber = 5;
+            
+            
         } else {
             payUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.get_order", BASEURL];
+            pay.imageStyleNumber   = self.class_id ;
         }
         
         [HttpTool postWithUrl:payUrl params:messageDict contentType:CONTENTTYPE success:^(id responseObject) {
@@ -620,19 +645,31 @@
                 NSDictionary* dict = [responseObject objectForKey:@"data"];
                 order_id = [dict objectForKey:@"order_id"];
                 
-                NSArray* shareButtonImageNameArray = [[NSArray alloc] init];
-                
-                shareButtonImageNameArray = @[ @"pay_weixin2", @"pay_yinlian2", @"pay_zhifubao2" ];
-                
-                LXActivity* lxActivity = [[LXActivity alloc] initWithTitle:self.rmb time:self.course_time delegate:self discont:self.discont youhuijuan:self.youhuijuan classNumber:self.price_number isFirst:self.isFirst cancelButtonTitle:@"" ShareButtonTitles:nil withShareButtonImagesName:shareButtonImageNameArray];
-                [lxActivity showInView:self.view];
-            }
-            else {
+                if ([[dict objectForKey:@"order_type"] isEqualToString:@"free"]) {
+                    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"尊敬的用户,您已经成功续课,请继续坚持" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
+                    alert.tag = 999;
+                    [alert show];
+                    
+                } else {
+                   
+                    pay.packageArray       = [NSMutableArray array];
+                                                         // 课程类型 （健身提升、瑜伽等）
+                    pay.price_one          = [NSString stringWithFormat:@"%@",self.rmb];         // 单次课价格
+                    pay.youhuijuan         = [NSString stringWithFormat:@"%@",self.youhuijuan];  // 优惠劵
+                    pay.course_time        = [NSString stringWithFormat:@"%@",self.course_time]; // 课时
+                    pay.order_id           = order_id;
+                    pay.price_number       = [NSString stringWithFormat:@"%@",self.price_number];// 上课人数
+                    pay.onePersonNumber    = self.onePersonNumber;
+                    NSLog(@"pay.order_id %@",pay.order_id);
+                    
+                    pay.packageArray       = self.packageArray;
+                    [self.navigationController pushViewController:pay animated:YES];
+
+                }
+            } else {
                 [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
             }
-        }
-                         fail:^(NSError* error){
-                         }];
+        }fail:^(NSError* error){}];
     }
 }
 
@@ -658,6 +695,7 @@
         else {
             kUrl = [NSString stringWithFormat:@"%@charge/", BASEURL];
         }
+       // NSLog(@"kul %@",ku);
         switch (imageIndex) {
             case 2: {
                 requestdict = @{
@@ -870,6 +908,9 @@
             }
             break;
         case 852:
+            [self.navigationController popToRootViewControllerAnimated:YES];
+            break;
+        case 999:
             [self.navigationController popToRootViewControllerAnimated:YES];
             break;
             

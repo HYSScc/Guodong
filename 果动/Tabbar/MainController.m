@@ -14,6 +14,8 @@
 #import "PersonalCenterController.h"
 #import "OrderFormController.h"
 #import "AppDelegate.h"
+
+
 #define kNavH 64
 
 @interface MainController ()<UINavigationControllerDelegate,DockDelegate,UIAlertViewDelegate>
@@ -105,7 +107,7 @@
     
     
    
-    
+  //  payViewController *homeVC = [[payViewController alloc] init];
     HomeController *homeVC = [HomeController sharedViewControllerManager];
     JWNavigationController *nav = [[JWNavigationController alloc] initWithRootViewController:homeVC];
     

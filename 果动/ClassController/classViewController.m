@@ -17,6 +17,9 @@
 #import "classViewController.h"
 #import "image.h"
 #import "priceList.h"
+
+
+
 #import <CoreText/CoreText.h>
 @interface classViewController () <FeSpinnerTenDotDelegate> {
     UIImageView* topimage;
@@ -215,7 +218,7 @@
     nameLabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
     [buttomImage addSubview:nameLabel];
 
-    moneyView = [[UIView alloc] initWithFrame:CGRectMake(0, viewHeight - NavigationBar_Height - Adaptive(60), viewWidth, Adaptive(60))];
+    moneyView = [[UIView alloc] initWithFrame:CGRectMake(0, viewHeight - NavigationBar_Height   - Adaptive(60), viewWidth, Adaptive(60))];
     moneyView.userInteractionEnabled = YES;
     moneyView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:moneyView];
@@ -281,16 +284,21 @@
 }
 - (void)sureButton
 {
+    //[self.navigationController pushViewController:[payViewController new] animated:YES];
+    appointViewController *appoint  = [appointViewController new];
     if (self.isShop) {
         sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%@&types=2", BASEURL, self.shop_id];
+        
     } else {
         sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%d", BASEURL, self.class_id];
+        
     }
     [HttpTool postWithUrl:sureUrl params:nil contentType:CONTENTTYPE success:^(id responseObject) {
         if (ResponseObject_RC == 0) {
-            appointViewController* appoint = [appointViewController new];
+            
+            NSDictionary          *dataDict = [responseObject objectForKey:@"data"];
             appoint.course = [NSMutableArray array];
-            for (NSDictionary* dict in [[responseObject objectForKey:@"data"] objectForKey:@"course"]) {
+            for (NSDictionary* dict in [dataDict objectForKey:@"course"]) {
                 Message* message = [[Message alloc] initWithDictionary:dict];
                 [appoint.course addObject:message];
 
@@ -299,24 +307,32 @@
                     priceList* price = [[priceList alloc] initWithDictionary:priceDict];
                     [appoint.price_list addObject:price];
                 }
+                
+                
             }
+            appoint.packageArray = [NSMutableArray array];
+            
+            appoint.packageArray = [dataDict objectForKey:@"package"];
+           appoint.class_id = self.class_id;
+            
             appoint.isShop = self.isShop;
-            appoint.dateArray = [[responseObject objectForKey:@"data"] objectForKey:@"pre_times"];
-            appoint.isFirst = [NSString stringWithFormat:@"%@", [[responseObject objectForKey:@"data"] objectForKey:@"isfirst"]];
+            appoint.dateArray = [dataDict objectForKey:@"pre_times"];
+            appoint.isFirst = [NSString stringWithFormat:@"%@", [dataDict objectForKey:@"isfirst"]];
 
-            appoint.youhuijuan = [[responseObject objectForKey:@"data"] objectForKey:@"money"];
-            appoint.alertString = [[responseObject objectForKey:@"data"] objectForKey:@"alert"];
-            appoint.class_id = self.class_id;
-            appoint.personNumber = [[[responseObject objectForKey:@"data"] objectForKey:@"courseTotal"] intValue];
+            appoint.youhuijuan = [dataDict objectForKey:@"money"];
+            appoint.alertString = [dataDict objectForKey:@"alert"];
+           
+            appoint.personNumber = [[dataDict objectForKey:@"courseTotal"] intValue];
 
-            appoint.discont = [[responseObject objectForKey:@"data"] objectForKey:@"discont"];
-            appoint.vip_cards = [NSString stringWithFormat:@"%@", [[responseObject objectForKey:@"data"] objectForKey:@"vip_cards"]];
+            appoint.discont = [dataDict objectForKey:@"discont"];
+            appoint.vip_cards = [NSString stringWithFormat:@"%@", [dataDict objectForKey:@"vip_cards"]];
             if ([appoint.isFirst intValue] == 0) {
-                appoint.userinfo_name = [[[responseObject objectForKey:@"data"] objectForKey:@"userInfo"] objectForKey:@"name"];
-                appoint.userinfo_number = [[[responseObject objectForKey:@"data"] objectForKey:@"userInfo"] objectForKey:@"phone"];
-                appoint.userinfo_address = [[[responseObject objectForKey:@"data"] objectForKey:@"userInfo"] objectForKey:@"address"];
+                appoint.userinfo_name = [[dataDict objectForKey:@"userInfo"] objectForKey:@"name"];
+                appoint.userinfo_number = [[dataDict objectForKey:@"userInfo"] objectForKey:@"phone"];
+                appoint.userinfo_address = [[dataDict objectForKey:@"userInfo"] objectForKey:@"address"];
             }
             [self.navigationController pushViewController:appoint animated:YES];
+           // [self.navigationController pushViewController:[payViewController new] animated:YES];
         } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
