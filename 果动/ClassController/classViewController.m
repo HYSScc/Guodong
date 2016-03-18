@@ -286,6 +286,7 @@
 {
     //[self.navigationController pushViewController:[payViewController new] animated:YES];
     appointViewController *appoint  = [appointViewController new];
+    appoint.packageArray = [NSMutableArray array];
     if (self.isShop) {
         sureUrl = [NSString stringWithFormat:@"%@api/?method=gdcourse.course&class_id=%@&types=2", BASEURL, self.shop_id];
         
@@ -310,10 +311,10 @@
                 
                 
             }
-            appoint.packageArray = [NSMutableArray array];
             
-            appoint.packageArray = [dataDict objectForKey:@"package"];
-           appoint.class_id = self.class_id;
+            
+        //    appoint.packageArray = [dataDict objectForKey:@"package"];
+            appoint.class_id = self.class_id;
             
             appoint.isShop = self.isShop;
             appoint.dateArray = [dataDict objectForKey:@"pre_times"];
@@ -332,7 +333,7 @@
                 appoint.userinfo_address = [[dataDict objectForKey:@"userInfo"] objectForKey:@"address"];
             }
             [self.navigationController pushViewController:appoint animated:YES];
-           // [self.navigationController pushViewController:[payViewController new] animated:YES];
+          
         } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }

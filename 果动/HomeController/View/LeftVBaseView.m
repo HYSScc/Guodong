@@ -32,6 +32,7 @@
 {
     self = [super init];
     if (self) {
+       
         [self startRequestScrollViewImage];
         [self startRequestClassNumber];
         [self createImage];
@@ -135,19 +136,9 @@
     cell.classNumberLabel.text    = [NSString stringWithFormat:@"%@节课被预定", left.left_num];
     if (left.left_image) {
         
-        // 分线程处理耗时的逻辑事件
-        [GCDQueue executeInGlobalQueue:^{
-            
-            // 请求图片，会阻塞主线程（mainQueue）
-            NSData *imageData   = [NSData dataWithContentsOfURL:[NSURL URLWithString:left.left_image]];
-            UIImage *classImage = [UIImage imageWithData:imageData];
-            
-            // 主线程更新UI
-            [GCDQueue executeInMainQueue:^{
-                cell.classImageView.image = classImage;
-            }];
-        }];
-       
+        NSData *imageData   = [NSData dataWithContentsOfURL:[NSURL URLWithString:left.left_image]];
+        UIImage *classImage = [UIImage imageWithData:imageData];
+        [cell.classImageView setImage:classImage];
     }
     return cell;
 }

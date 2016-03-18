@@ -269,8 +269,7 @@
     page++;
     if ([self.isMy intValue] == 999) {
         url = [NSString stringWithFormat:@"%@api/?method=gdb.personal_center&page=%d", BASEURL, page];
-    }
-    else {
+    } else {
         url = [NSString stringWithFormat:@"%@api/?method=gdb.index&page=%d", BASEURL, page];
     }
     [HttpTool postWithUrl:url params:nil contentType:CONTENTTYPE success:^(id responseObject) {
@@ -278,8 +277,7 @@
             NSArray* array = responseObject[@"data"][@"data_list"];
             if (array.count == 0) {
                 _tableView.footerRefreshingText = @"已经是最后一条了";
-            }
-            else {
+            } else {
                 [image2 removeFromSuperview];
                 [noMoneyLabelTop removeFromSuperview];
                 [noMoneyLabel removeFromSuperview];
@@ -289,71 +287,68 @@
                     GDComment* gdc = [GDComment statusWithDictionary:dict];
                     [allstatus addObject:gdc];
                 }
-                
-               
 
                 [_tableView reloadData];
             }
             
             [_tableView footerEndRefreshing];
-        }
-        else {
+        } else {
             [HeadComment message:[responseObject objectForKey:@"msg"] delegate:nil witchCancelButtonTitle:@"确定" otherButtonTitles:nil];
         }
-    }
-                     fail:^(NSError* error){
-                     }];
+    }fail:^(NSError* error){}];
 }
 //自定义区头
 - (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section
 {
     
-    GDComment* gdcomment = [allstatus objectAtIndex:section];
+    GDComment* gdcomment     = [allstatus objectAtIndex:section];
     
-    headView = [[UIView alloc] init];
-    headView.alpha = 0.8;
-    headView.frame = CGRectMake(0, 0, viewWidth, Adaptive(60));
+    headView                 = [[UIView alloc] init];
+    headView.alpha           = 0.8;
+    headView.frame           = CGRectMake(0, 0, viewWidth, Adaptive(60));
     headView.backgroundColor = [UIColor blackColor];
     
-    headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15, (headView.bounds.size.height - Adaptive(35)) / 2, Adaptive(35), Adaptive(35))];
+    headImageView = [[UIImageView alloc] initWithFrame:CGRectMake(15,
+                                                                  (headView.bounds.size.height - Adaptive(35)) / 2,
+                                                                  Adaptive(35),
+                                                                  Adaptive(35))];
     headImageView.userInteractionEnabled = YES;
-    headImageView.layer.masksToBounds = YES;
-    headImageView.tag = section * 100;
-    headImageView.image = [UIImage imageNamed:@"person_nohead"];
-    headImageView.layer.cornerRadius = headImageView.bounds.size.width / 2;
+    headImageView.layer.masksToBounds    = YES;
+    headImageView.tag                    = section * 100;
+    headImageView.image                  = [UIImage imageNamed:@"person_nohead"];
+    headImageView.layer.cornerRadius     = headImageView.bounds.size.width / 2;
     
-    // 分线程处理耗时的逻辑事件
-    [GCDQueue executeInGlobalQueue:^{
-        
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:gdcomment.headimg]];
-        UIImage *headimage = [UIImage imageWithData:data];
-        
-        // 主线程更新UI
-        [GCDQueue executeInMainQueue:^{
-            headImageView.image = headimage;
-        }];
-    }];
+    NSData  *data       = [NSData dataWithContentsOfURL:[NSURL URLWithString:gdcomment.headimg]];
+    UIImage *headimage  = [UIImage imageWithData:data];
+    headImageView.image = headimage;
+
     [headView addSubview:headImageView];
     
     //添加点击手势
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyHead:)];
     [headImageView addGestureRecognizer:tap];
     
-    UILabel* headLabel = [[UILabel alloc] init];
-    headLabel.text = gdcomment.nickname;
+    UILabel* headLabel  = [[UILabel alloc] init];
+    headLabel.text      = gdcomment.nickname;
     CGSize userNameSize = [headLabel.text sizeWithAttributes:@{ NSFontAttributeName : [UIFont fontWithName:FONT size:Adaptive(18)] }];
-    headLabel.frame = CGRectMake(CGRectGetMaxX(headImageView.frame) + Adaptive(5), (headView.bounds.size.height - userNameSize.height) / 2, userNameSize.width, userNameSize.height);
+    headLabel.frame     = CGRectMake(CGRectGetMaxX(headImageView.frame) + Adaptive(5),
+                                     (headView.bounds.size.height - userNameSize.height) / 2,
+                                     userNameSize.width,
+                                     userNameSize.height);
     headLabel.textAlignment = 1;
-    headLabel.font = [UIFont fontWithName:FONT size:Adaptive(16)];
-    headLabel.textColor = [UIColor orangeColor];
+    headLabel.font          = [UIFont fontWithName:FONT size:Adaptive(16)];
+    headLabel.textColor     = [UIColor orangeColor];
     [headView addSubview:headLabel];
     
     UILabel* dateLabel = [[UILabel alloc] init];
-    dateLabel.text = gdcomment.hour;
-    dateLabel.frame = CGRectMake(viewWidth - Adaptive(110) - Adaptive(13), (headView.bounds.size.height - Adaptive(17)) / 2, Adaptive(110), Adaptive(17));
+    dateLabel.text     = gdcomment.hour;
+    dateLabel.frame    = CGRectMake(viewWidth - Adaptive(110) - Adaptive(13),
+                                    (headView.bounds.size.height - Adaptive(17)) / 2,
+                                    Adaptive(110),
+                                    Adaptive(17));
     dateLabel.textAlignment = 2;
-    dateLabel.font = [UIFont fontWithName:FONT size:Adaptive(11)];
-    dateLabel.textColor = [UIColor lightGrayColor];
+    dateLabel.font          = [UIFont fontWithName:FONT size:Adaptive(11)];
+    dateLabel.textColor     = [UIColor lightGrayColor];
     [headView addSubview:dateLabel];
     
     return headView;

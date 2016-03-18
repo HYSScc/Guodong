@@ -13,5 +13,6 @@
 @property (nonatomic,retain) NSString *func_id;
 @property (nonatomic,retain) NSString *rmb;
 @property (nonatomic,retain) NSString *course_time;
+@property (nonatomic,retain) NSMutableArray *packageArray;
 -(instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end

@@ -71,6 +71,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
+   // self.packageArray = [NSMutableArray array];
     self.navigationItem.titleView = [HeadComment titleLabeltext:@"订单信息"];
     BackView* backView = [[BackView alloc] initWithbacktitle:@"返回" viewController:self];
     UIBarButtonItem* backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
@@ -92,6 +93,8 @@
         messageArray = @[ @"姓名", @"电话", @"日期", @"时间", @"人数", @"地址" ];
     }
     Message* message = [self.course objectAtIndex:0];
+    self.packageArray = message.packageArray;
+    
     self.onePersonNumber = message.rmb;
     alertImageView = [[UIImageView alloc] initWithFrame:CGRectMake((viewWidth - Adaptive(170)) / 2, Adaptive(200) - Adaptive(43), Adaptive(170), Adaptive(43))];
     [self.view addSubview:alertImageView];
@@ -207,6 +210,9 @@
                 classLabel.textAlignment = 2;
                 classLabel.font = [UIFont fontWithName:FONT size:Adaptive(17)];
                 [smallMessageView addSubview:classLabel];
+                
+               
+                
             }
             
             if (a == 1 || a == 2 || a == 6) {
@@ -305,6 +311,8 @@
         [sureClassButton setTitle:@"完成" forState:UIControlStateNormal];
         sureClassButton.titleLabel.font = [UIFont fontWithName:FONT size:Adaptive(16)];
         [classPickView addSubview:sureClassButton];
+        
+       
         
         classPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(sureClassButton.frame), viewWidth, Adaptive(216))];
         classPicker.delegate = self;
@@ -520,18 +528,31 @@
 - (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (pickerView.tag == 200) {
-        NSLog(@"11");
+       
+        /**
+         *  时间选择
+         */
+        
         timeLabel.text   = [self.dateArray objectAtIndex:row];
         defaultTime      = [self.dateArray objectAtIndex:row];
     } else if (pickerView.tag == 100) {
-         NSLog(@"22");
-        Message* message = [self.course objectAtIndex:row];
-        classLabel.text  = message.name;
-        self.func_id     = message.func_id;
-        self.course_time = message.course_time;
-        defaultClass     = message.name;
+        
+        /**
+         *  课程选择
+         */
+        
+        Message* message  = [self.course objectAtIndex:row];
+        self.packageArray = message.packageArray;
+        NSLog(@"self.packageArray %@",self.packageArray);
+        classLabel.text   = message.name;
+        self.func_id      = message.func_id;
+        self.course_time  = message.course_time;
+        defaultClass      = message.name;
     } else {
-        NSLog(@"33");
+        
+        /**
+         *  人数选择
+         */
         
         priceList* price    = [self.price_list objectAtIndex:row];
         defaultPersonNumber = price.price_name;
@@ -660,9 +681,11 @@
                     pay.order_id           = order_id;
                     pay.price_number       = [NSString stringWithFormat:@"%@",self.price_number];// 上课人数
                     pay.onePersonNumber    = self.onePersonNumber;
-                    NSLog(@"pay.order_id %@",pay.order_id);
+                   
                     
                     pay.packageArray       = self.packageArray;
+                     NSLog(@"pay.packageArray %@",pay.packageArray);
+                    
                     [self.navigationController pushViewController:pay animated:YES];
 
                 }

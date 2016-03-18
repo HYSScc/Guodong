@@ -18,6 +18,8 @@
         self.func_id = [dictionary objectForKey:@"func_id"];
         self.rmb = [dictionary objectForKey:@"rmb"];
         self.course_time = [dictionary objectForKey:@"course_time"];
+        self.packageArray = [dictionary objectForKey:@"package"];
+        NSLog(@"解析self.packageArray %@",self.packageArray);
     }
     return self;
 }
