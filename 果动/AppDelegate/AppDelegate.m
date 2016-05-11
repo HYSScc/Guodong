@@ -49,7 +49,6 @@
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined) {
         [_locationManager requestWhenInUseAuthorization];
     }
-
     [ShareSDK registerApp:@"55654a1c4ac0"];
     //当使用新浪微博客户端分享的时候需要按照下面的方法来初始化新浪的平台
 

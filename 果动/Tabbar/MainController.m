@@ -105,9 +105,6 @@
 
 - (void)addAllSubViews {
     
-    
-   
-  //  payViewController *homeVC = [[payViewController alloc] init];
     HomeController *homeVC = [HomeController sharedViewControllerManager];
     JWNavigationController *nav = [[JWNavigationController alloc] initWithRootViewController:homeVC];
     

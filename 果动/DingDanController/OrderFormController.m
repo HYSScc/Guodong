@@ -174,29 +174,38 @@
             
             
             for (int a = 0; a < data.count; a++) {
-                CGFloat height = (classView.bounds.size.height - Adaptive(10)) / data.count;
-        
-                UILabel* classViewline = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(10), Adaptive(8.5) + (a + 1) * height, classView.bounds.size.width - Adaptive(20), .5)];
+                CGFloat height         = (classView.bounds.size.height - Adaptive(10)) / data.count;
+                UILabel* classViewline = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(10),
+                                                                                   Adaptive(8.5) + (a + 1) * height,
+                                                                                   classView.bounds.size.width - Adaptive(20),
+                                                                                   .5)];
                 
                 classViewline.backgroundColor = [UIColor lightGrayColor];
                 [classView addSubview:classViewline];
                 
-                UILabel* contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(15), Adaptive(10) + (height - Adaptive(30)) / 2 + a * height, Adaptive(100), Adaptive(30))];
-                contentLabel.text = nameArray[a];
+                UILabel* contentLabel  = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(15),
+                                                                                   Adaptive(10) + (height - Adaptive(30)) / 2 + a * height,
+                                                                                   Adaptive(100),
+                                                                                   Adaptive(30))];
+                contentLabel.text      = nameArray[a];
                 contentLabel.textColor = [UIColor grayColor];
-                contentLabel.font = [UIFont fontWithName:FONT size:Adaptive(16)];
+                contentLabel.font      = [UIFont fontWithName:FONT size:Adaptive(16)];
                 [classView addSubview:contentLabel];
                 
-                UILabel* classNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(classView.frame.size.width - Adaptive(80), Adaptive(10) + (height - Adaptive(30)) / 2 + a * height, Adaptive(65), Adaptive(30))];
-                classNumberLabel.textColor = [UIColor lightGrayColor];
+                UILabel* classNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(classView.frame.size.width - Adaptive(80),
+                                                                                      Adaptive(10) + (height - Adaptive(30)) / 2 + a * height,
+                                                                                      Adaptive(65),
+                                                                                      Adaptive(30))];
+                classNumberLabel.textColor     = [UIColor lightGrayColor];
                 classNumberLabel.textAlignment = 2;
-                classNumberLabel.font = [UIFont fontWithName:FONT size:Adaptive(13)];
-                classNumberLabel.text = [NSString stringWithFormat:@"%@单", numberArray[a]];
+                classNumberLabel.font          = [UIFont fontWithName:FONT size:Adaptive(13)];
+                classNumberLabel.text          = [NSString stringWithFormat:@"%@单", numberArray[a]];
                 [classView addSubview:classNumberLabel];
                 
                 SHButton* button = [SHButton buttonWithType:UIButtonTypeSystem];
                 button.frame     = CGRectMake(0, Adaptive(10) + a * height, classView.bounds.size.width, height);
                 button.tag       = 9 * a + 9;
+                button.class_id  = class_idArray[a];
                 button.types     = typesArray[a];
                 [button addTarget:self action:@selector(changeClassButton:) forControlEvents:UIControlEventTouchUpInside];
                 [classView addSubview:button];
@@ -246,7 +255,7 @@
             [self headerRereshing];
         }
         else {
-            url = [NSString stringWithFormat:@"%@api/?method=gdcourse.order&class_id=%ld", BASEURL, button.tag / 9 - 1];
+            url = [NSString stringWithFormat:@"%@api/?method=gdcourse.order&class_id=%@", BASEURL, button.class_id];
             [self headerRereshing];
         }
     } else {

@@ -11,4 +11,5 @@
 @interface SHButton : UIButton
 
 @property (nonatomic,retain) NSString *types;
+@property (nonatomic,retain) NSString *class_id;
 @end

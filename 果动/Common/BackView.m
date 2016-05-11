@@ -28,7 +28,6 @@
 {
     UIImageView* backArrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, Adaptive(1.75), Adaptive(9.75), Adaptive(16.5))];
     backArrowImageView.image = [UIImage imageNamed:@"every_back"];
-    //  backArrowImageView.backgroundColor = [UIColor greenColor];
     [self addSubview:backArrowImageView];
 
     UIButton* backButton = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -18,11 +18,11 @@
     [super viewDidLoad];
     
     UINavigationBar  *nacbar = [UINavigationBar appearance];
-  //  nacbar.backgroundColor = BASECOLOR;
+    nacbar.backgroundColor = [UIColor blackColor];
+    
     [nacbar setBackgroundImage:[UIImage imageNamed:@"nav"] forBarMetrics:UIBarMetricsDefault];
     
-    [nacbar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-      self.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationBar.tintColor = [UIColor whiteColor];
     
 }
 @end

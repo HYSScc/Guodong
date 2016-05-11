@@ -10,5 +10,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JWNavigationController : UINavigationController
-@property (nonatomic,retain) NSString *address;
+
 @end
