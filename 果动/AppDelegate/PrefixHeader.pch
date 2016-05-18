@@ -15,14 +15,15 @@
 #endif /* PrefixHeader_pch */
 
 #ifdef __OBJC__
-#define BASEURL @"http://www.guodongwl.com:8065/"              // 网络请求URL  外网
-//#define BASEURL @"http://192.168.1.90:8080/"                 // 内网
+//#define BASEURL @"http://www.guodongwl.com:8065/"              // 网络请求URL  外网
+#define BASEURL @"http://192.168.1.90:8080/"                 // 内网
 //#define BASEURL @"http://192.168.1.5/"                       // 公司服务器
 
 
 #define ResponseObject_RC [[responseObject objectForKey:@"rc"] intValue] // 请求返回的rc值
 #define CONTENTTYPE       @"application/json"                            // 请求接收类型
-#define FONT              @"HiraKakuProN-W3"                             // 默认字体
+#define FONT @"Arial"
+#define FONT_BOLD @"Arial-BoldMT"                           // 默认字体
 
 /**
  *    TableView刷新
@@ -49,6 +50,7 @@
 #define Tabbar_Height                 49
 #define NotLogin_RC_Number            24
 
+#define LastHeight viewHeight - NavigationBar_Height - Tabbar_Height
 #define viewWidth  [UIScreen mainScreen].bounds.size.width     // 屏幕宽度
 #define viewHeight [UIScreen mainScreen].bounds.size.height    // 屏幕高度
 
@@ -59,6 +61,12 @@
 #define BASECOLOR [UIColor colorWithRed:  43 / 255.0  \
 green:43 / 255.0  \
 blue: 43 / 255.0  \
+alpha:1]
+
+
+#define ORANGECOLOR [UIColor colorWithRed:  255 / 255.0  \
+green:125 / 255.0  \
+blue: 40 / 255.0  \
 alpha:1]
 
 
@@ -90,16 +98,7 @@ alpha:1]
 /**
  *   默认导入的库
  */
-#import "SHButton.h"                                          // 自定义UIButton类
-#import "SHTextField.h"                                       // 自定义textField类
-#import "HttpTool.h"                                          // 网络请求类
-#import "HeadComment.h"                                       // 封装的方法类
-#import "NSString+JW.h"                                       // 字符串相关
-#import "BackView.h"                                          // 自定义返回箭头View
-#import "MJRefresh.h"                                         // 刷新类
-#import "GCD.h"                                               // 分线程
-
-
-
-
+#import "HttpTool.h"    // 自定义请求类
+#import "BackView.h"    // 自定义返回类
+#import "UIImageView+WebCache.h"
 #endif

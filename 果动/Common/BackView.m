@@ -2,9 +2,10 @@
 //  BackView.m
 //  果动
 //
-//  Created by mac on 15/11/2.
-//  Copyright © 2015年 Unique. All rights reserved.
+//  Created by mac on 16/5/17.
+//  Copyright © 2016年 Unique. All rights reserved.
 //
+
 
 #import "BackView.h"
 
@@ -29,23 +30,35 @@
     UIImageView* backArrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, Adaptive(1.75), Adaptive(9.75), Adaptive(16.5))];
     backArrowImageView.image = [UIImage imageNamed:@"every_back"];
     [self addSubview:backArrowImageView];
-
+    
     UIButton* backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     backButton.backgroundColor = [UIColor clearColor];
     backButton.frame = CGRectMake(-Adaptive(5), 0, viewHeight / 9.5286, Adaptive(20));
     [backButton addTarget:self action:@selector(backButton) forControlEvents:UIControlEventTouchUpInside];
-
+    
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(backArrowImageView.frame) + 3, 0, viewHeight / 9.5286, Adaptive(20))];
     titleLabel.text = title;
     titleLabel.textAlignment = 0;
-    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textColor = BASECOLOR;
     titleLabel.font = [UIFont fontWithName:FONT size:viewHeight / 39.2353];
     [self addSubview:titleLabel];
-
+    
     [self addSubview:backButton];
 }
 - (void)backButton
 {
     [backVC.navigationController popViewControllerAnimated:YES];
 }
+
++ (UILabel*)titleLabeltext:(NSString*)text
+{
+    UILabel* titlelabel = [UILabel new];
+    titlelabel.text = text;
+    titlelabel.font = [UIFont fontWithName:FONT size:viewHeight / 37.056];
+    titlelabel.frame = CGRectMake(0, 0, viewHeight / 6.67, viewHeight / 22.233);
+    [titlelabel setTextColor:BASECOLOR];
+    titlelabel.textAlignment = NSTextAlignmentCenter;
+    return titlelabel;
+}
+
 @end
