@@ -61,6 +61,7 @@
     [finderNav.navigationBar setBarTintColor:ORANGECOLOR];
     
     UINavigationController *personNav  = [[UINavigationController alloc] initWithRootViewController:personVC];
+    //[personNav.navigationBar setBarTintColor:[UIColor clearColor]];
     
     tabbar.viewControllers = @[classNav,finderNav,personNav];
      app.window.rootViewController = tabbar;
