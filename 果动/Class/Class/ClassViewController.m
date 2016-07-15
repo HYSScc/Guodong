@@ -7,11 +7,11 @@
 //
 
 #define  resultCoachNumber  6 // 教练个数
-
+#import "RefushView.h"
 #import "ClassViewController.h"
 #import "FinderViewController.h"
 #import "CityViewController.h"
-
+#import "activeViewController.h"
 #import "LocationView.h"      // 定位视图
 #import "SDCycleScrollView.h" // 第三方ScrollView
 
@@ -19,7 +19,10 @@
 #import "ShopView.h"          // 体验店
 
 #import "HomeModel.h"
-
+#import "AppDelegate.h"
+#import "IntroduceViewController.h" // 课程介绍
+#import "SetShareViewController.h"
+#import "RechargeViewController.h"
 @interface ClassViewController ()<UIScrollViewDelegate>
 {
     HomeModel         *homeModel;
@@ -33,7 +36,8 @@
     UIImageView       *chooseImageView;
     UILabel           *chooseClassLabel;
     UILabel           *chooseShopLabel;
-    
+    RefushView        *refush;
+    UIView            *alphaView;
     ClassView         *classView;
     ShopView          *shopView;
     
@@ -60,30 +64,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // 设置CGRectZero从导航栏下开始计算
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
     
     self.view.backgroundColor = BASECOLOR;
-    coachScrollHeight         = viewWidth / resultCoachNumber;
     
-    // 创建BannerScrollView
-    [self createBannerScrollView];
+  //  NSLog(@"user_id %@",[HttpTool getUser_id]);
     
-    // 创建选择视图
-    [self createChooseView];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    UIView *navigationView = [UIView new];
+    navigationView.frame   = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
+    navigationView.backgroundColor = ORANGECOLOR;
+    [self.view addSubview:navigationView];
     
-    
-    
-    // 请求数据
-    [self startRequest];
-    
-    /**
-     *  设置Navgation 的titleView
-     */
-    UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake(0,
-                                                                0,
+    UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake((viewWidth - Adaptive(51.6)) / 2,
+                                                                Adaptive(20) + Adaptive((44 - 27)) / 2,
                                                                 Adaptive(51.6),
                                                                 Adaptive(27))];
     UIImageView* titleImage =[[UIImageView alloc]initWithFrame:CGRectMake(0,
@@ -94,18 +88,23 @@
     
     
     [titleView addSubview:titleImage];
-    self.navigationItem.titleView = titleView;
+    [navigationView addSubview:titleView];
     
     /***********定位视图****************/
     
     locationView       = [LocationView sharedViewManager];
-    locationView.frame = CGRectMake(0,
-                                    Adaptive(27),
+    locationView.frame = CGRectMake(Adaptive(13),
+                                    Adaptive(20) + Adaptive((44 - 20)) / 2,
                                     Adaptive(80),
                                     Adaptive(20));
+    [navigationView addSubview:locationView];
+    /***************客服****************************/
     
-    UIBarButtonItem* cityButtonItem       = [[UIBarButtonItem alloc] initWithCustomView:locationView];
-    self.navigationItem.leftBarButtonItem = cityButtonItem;
+    UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    photoButton.frame     = CGRectMake(viewWidth - Adaptive((13 + 19)),  Adaptive(20) + Adaptive((44 - 19)) / 2, Adaptive(19), Adaptive(19));
+    [photoButton setBackgroundImage:[UIImage imageNamed:@"shouye_photo"] forState:UIControlStateNormal];
+    [photoButton addTarget:self action:@selector(telePhoneClick:) forControlEvents:UIControlEventTouchUpInside];
+    [navigationView addSubview:photoButton];
     
     /**************Block函数************************/
     
@@ -114,33 +113,164 @@
     //跳转到cityViewController
     self.pushCityViewController = ^(NSString* cityName) {
         
+        class.hidesBottomBarWhenPushed = YES;
         CityViewController *cityVC = [CityViewController new];
         cityVC.cityName            = cityName;
         [class.navigationController pushViewController:cityVC animated:YES];
+        class.hidesBottomBarWhenPushed = NO;
     };
-    /**********************************************/
+    
+    
+    //跳转到活动页
+    self.pushActiveView = ^(NSString *number) {
+        
+        
+        switch ([number intValue]) {
+            case 0:
+            {
+                class.hidesBottomBarWhenPushed = YES;
+                RechargeViewController *rechargeVC = [RechargeViewController new];
+                [class.navigationController pushViewController:rechargeVC animated:YES];
+                class.hidesBottomBarWhenPushed = NO;
+            }
+                break;
+            case 1:
+            {
+                class.hidesBottomBarWhenPushed          = YES;
+                activeViewController *active = [activeViewController new];
+                active.number = number;
+                [class.navigationController pushViewController:active animated:YES];
+                class.hidesBottomBarWhenPushed          = NO;
+            }
+                break;
+            case 2:
+            {
+                class.hidesBottomBarWhenPushed = YES;
+                SetShareViewController *setShareView = [SetShareViewController new];
+                [class.navigationController pushViewController:setShareView animated:YES];
+                class.hidesBottomBarWhenPushed = NO;
+            }
+                break;
+                
+            default:
+                break;
+        }
+    };
+    
+
+    /********************** 检查版本更新 ****************************/
+    refush = [[RefushView alloc] initWithFrame:CGRectMake((viewWidth  - Adaptive(295)) / 2,
+                                                          -Adaptive(410),
+                                                          Adaptive(295),
+                                                          Adaptive(410))];
+    [refush.cancelButton addTarget:self action:@selector(cancelButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self onCheckVersion];
+    
+    coachScrollHeight = viewWidth / resultCoachNumber;
+    
+    // 创建BannerScrollView
+    [self createBannerScrollView];
+    
+    
+    // 请求数据
+    [self startRequest];
+    
 }
+
+- (void)telePhoneClick:(UIButton *)button {
+    NSMutableString* str = [[NSMutableString alloc] initWithFormat:@"tel:%@",KEFU];
+    UIWebView* callWebview = [[UIWebView alloc] init];
+    
+    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+    
+    [self.view addSubview:callWebview];
+}
+
+- (void)cancelButtonClick:(UIButton *)button {
+    refush.frame = CGRectMake((viewWidth  - Adaptive(295)) / 2,
+                              -Adaptive(410),
+                              Adaptive(295),
+                              Adaptive(410));
+    [refush removeFromSuperview];
+    [alphaView removeFromSuperview];
+}
+-(void)onCheckVersion
+{
+    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+   
+    NSString *appVersion = [infoDic objectForKey:@"CFBundleVersion"];
+    
+    NSString *url = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%d",APPID];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:url]];
+    [request setHTTPMethod:@"POST"];
+    NSHTTPURLResponse *urlResponse = nil;
+    NSError *error = nil;
+    NSData *recervedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+    NSString *results = [[NSString alloc] initWithBytes:[recervedData bytes] length:[recervedData length] encoding:NSUTF8StringEncoding];
+    NSData *data = [results dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    NSArray *infoArray = [dict objectForKey:@"results"];
+    if ([infoArray count]) {
+        NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
+        NSString *lastVersion = [releaseInfo objectForKey:@"version"];
+       
+        
+        if (![lastVersion isEqualToString:appVersion]) {
+           
+            
+            AppDelegate *app = [UIApplication sharedApplication].delegate;
+            alphaView = [UIView new];
+            alphaView.frame = CGRectMake(0,
+                                         0,
+                                         viewWidth,
+                                         viewHeight);
+            alphaView.backgroundColor = BASECOLOR;
+            alphaView.alpha = .6;
+            
+            
+            
+            
+            [UIView animateWithDuration:.5 animations:^{
+                [app.window addSubview:alphaView];
+                CGRect Frame   = refush.frame;
+                Frame.origin.y = (viewHeight - Adaptive(410)) / 2 ;
+                refush.frame   = Frame;
+                [app.window addSubview:refush];
+                
+            }];
+            
+        }
+    }
+}
+
 
 #pragma mark - 请求数据
 - (void)startRequest {
     NSString *url = [NSString stringWithFormat:@"%@/api/?method=index.index",BASEURL];
-    [HttpTool postWithUrl:url params:nil success:^(id responseObject) {
+    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
+        
+    } success:^(id responseObject) {
         
         homeModel = [[HomeModel alloc] initWithDictionary:responseObject];
         
         bannerScroll.imageURLStringsGroup = homeModel.bannerArray;
-        // 创建CoachScrollView
-        [self createCoachHeaderScrollView];
+        // 创建选择视图
+        [self createChooseView];
         // 创建课程和体验店视图
         [self createClassViewAndShopView];
+        
+        
     }];
+        
 }
 
 #pragma mark - 创建BannerScrollView
 - (void)createBannerScrollView {
     
     bannerScroll = [[SDCycleScrollView alloc] initWithFrame:CGRectMake(0,
-                                                                       0,
+                                                                       NavigationBar_Height,
                                                                        viewWidth,
                                                                        Adaptive(125))];
     bannerScroll.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
@@ -149,67 +279,12 @@
     bannerScroll.userInteractionEnabled = YES;
     [self.view addSubview:bannerScroll];
 }
-#pragma mark - 创建CoachHeaderScrollView
-- (void)createCoachHeaderScrollView {
-    
-    
-    
-    coachHeaderScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
-                                                                       CGRectGetMaxY(bannerScroll.frame),
-                                                                       viewWidth,
-                                                                       coachScrollHeight)];
-    coachHeaderScroll.bounces       = YES;  //是否允许弹性滑动
-    coachHeaderScroll.delegate      = self;    //代理
-    coachHeaderScroll.contentSize   = CGSizeMake(viewWidth, coachScrollHeight);
-    coachHeaderScroll.userInteractionEnabled = YES;  //交互性
-    [self.view addSubview:coachHeaderScroll];
-    
-    NSInteger arrayCount = resultCoachNumber;
-    
-    if ([homeModel.coach_imgArray count] > 6) {
-        
-        arrayCount                    = [homeModel.coach_imgArray count];
-        coachHeaderScroll.contentSize = CGSizeMake(coachScrollHeight * arrayCount,
-                                                   coachScrollHeight);
-        
-        // 使用NSTimer实现定时触发滚动控件滚动的动作。
-        timeCount  = 0;
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(scrollTimer) userInfo:nil repeats:YES];
-    }
-    for (int i = 0; i < arrayCount; i ++) {
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.frame        = CGRectMake(coachScrollHeight * i,
-                                            0,
-                                            coachScrollHeight - 1,
-                                            coachScrollHeight);
-        imageView.backgroundColor = [UIColor whiteColor];
-        
-        if (i < [homeModel.coach_imgArray count]) {
-            [imageView sd_setImageWithURL:[NSURL URLWithString:homeModel.coach_imgArray[i]]];
-        }
-        
-        [coachHeaderScroll addSubview:imageView];
-    }
-}
-//定时滚动
--(void)scrollTimer{
-    timeCount ++;
-    if (timeCount == [homeModel.coach_imgArray count]) {
-        timeCount = 0;
-    }
-    
-    [coachHeaderScroll scrollRectToVisible:CGRectMake(timeCount * coachScrollHeight,
-                                                      0,
-                                                      coachScrollHeight,
-                                                      coachScrollHeight)
-                                  animated:YES];
-}
 
 #pragma mark - 创建选择视图
 - (void)createChooseView {
     chooseImageView = [[UIImageView alloc]
                        initWithFrame:CGRectMake(0,
-                                                CGRectGetMaxY(bannerScroll.frame) +coachScrollHeight+ Adaptive(5),
+                                                CGRectGetMaxY(bannerScroll.frame) + Adaptive(5),
                                                 viewWidth,
                                                 Adaptive(30))];
     [chooseImageView setImage:[UIImage imageNamed:@"shouye_classImage"]];
@@ -257,33 +332,33 @@
     if (button.tag == 11) {
         [chooseImageView setImage:[UIImage imageNamed:@"shouye_classImage"]];
         
-         [shopView removeFromSuperview];
-         [self.view addSubview:classView];
+        [shopView removeFromSuperview];
+        [self.view addSubview:classView];
     } else {
         [chooseImageView setImage:[UIImage imageNamed:@"shouye_shopImage"]];
         
-         [classView removeFromSuperview];
-         [self.view addSubview:shopView];
+        [classView removeFromSuperview];
+        [self.view addSubview:shopView];
     }
 }
 
 #pragma mark - 创建课程和体验店视图
 - (void)createClassViewAndShopView {
     
-     CGFloat LeftHeight = LastHeight - CGRectGetMaxY(chooseImageView.frame) - Adaptive(5);
+    CGFloat LeftHeight = viewHeight - Tabbar_Height - CGRectGetMaxY(chooseImageView.frame) - Adaptive(5);
     
     /*************左视图|课程****************/
     classView = [[ClassView alloc] initWithFrame:CGRectMake(0,
                                                             CGRectGetMaxY(chooseImageView.frame) + Adaptive(5),
                                                             viewWidth,
-                                                            LeftHeight)];
+                                                            LeftHeight) viewController:self];
     classView.home = homeModel;
     [self.view addSubview:classView];
     /*************右视图|体验店****************/
     shopView = [[ShopView alloc] initWithFrame:CGRectMake(0,
-                                                            CGRectGetMaxY(chooseImageView.frame) + Adaptive(5),
-                                                            viewWidth,
-                                                            LeftHeight)];
+                                                          CGRectGetMaxY(chooseImageView.frame) + Adaptive(5),
+                                                          viewWidth,
+                                                          LeftHeight)];
 }
 
 #pragma mark - 移除定位动画
@@ -304,4 +379,18 @@
     
     return viewController;
 }
+
+- (void)pushClassIntroduceView:(NSString *)class className:(NSString *)name classOrShip:(NSString *)type{
+    
+    
+    self.hidesBottomBarWhenPushed          = YES;
+    IntroduceViewController *introduce     = [IntroduceViewController new];
+    introduce.class_id    = class;
+    introduce.className   = name;
+    introduce.classOrShip = type;
+    introduce.cityAllowed = _cityAllowed;
+    [self.navigationController pushViewController:introduce animated:YES];
+    self.hidesBottomBarWhenPushed          = NO;
+}
+
 @end

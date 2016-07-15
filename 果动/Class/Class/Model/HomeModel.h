@@ -14,5 +14,5 @@
 @property (nonatomic,retain) NSMutableArray *bannerArray;
 @property (nonatomic,retain) NSMutableArray *coach_imgArray;
 @property (nonatomic,retain) NSMutableArray *classArray;
-
+@property (nonatomic,retain) NSString       *rechargeImg;
 @end

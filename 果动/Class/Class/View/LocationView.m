@@ -30,12 +30,12 @@
     
     class = [ClassViewController sharedViewControllerManager];
     
-    self.topLocationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-Adaptive(8), 0, Adaptive(18), Adaptive(18))];
+    self.topLocationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-Adaptive(8),Adaptive(5), Adaptive(12), Adaptive(12))];
     self.topLocationImageView.image = [UIImage imageNamed:@"shouye_dingwei1"];
     [self addSubview:self.topLocationImageView];
     
     
-    UIImageView* buttomLocationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-Adaptive(7.5), CGRectGetMaxY(self.topLocationImageView.frame) - Adaptive(3), Adaptive(18), Adaptive(8))];
+    UIImageView* buttomLocationImageView = [[UIImageView alloc] initWithFrame:CGRectMake(-Adaptive(7.5), CGRectGetMaxY(self.topLocationImageView.frame) - Adaptive(3), Adaptive(12), Adaptive(5.3334))];
     buttomLocationImageView.image = [UIImage imageNamed:@"shouye_dingwei2"];
     [self addSubview:buttomLocationImageView];
     
@@ -43,12 +43,12 @@
     cityName                         = @"定位中";
     self.locationLabel               = [UILabel new];
     self.locationLabel.frame         = CGRectMake(CGRectGetMaxX(buttomLocationImageView.frame) + Adaptive(3),
-                                                  CGRectGetMinY(_topLocationImageView.frame) + Adaptive(3),
+                                                  Adaptive(6),
                                                   Adaptive(90),
-                                                  Adaptive(20));
+                                                  Adaptive(15));
     
     self.locationLabel.font          = [UIFont fontWithName:FONT size:Adaptive(14)];
-    self.locationLabel.textColor     = [UIColor blackColor];
+    self.locationLabel.textColor     = BASECOLOR;
     self.locationLabel.text          = cityName;
     [self addSubview:self.locationLabel];
     
@@ -92,13 +92,21 @@
     NSDictionary *locationDict = @{ @"lnt" : [NSString stringWithFormat:@"%f", location.coordinate.longitude],@"lat" : [NSString stringWithFormat:@"%f", location.coordinate.latitude]};
     
     
-    [HttpTool postWithUrl:urlString params:locationDict success:^(id responseObject) {
+    [HttpTool postWithUrl:urlString params:locationDict body:nil progress:^(NSProgress * progress) {
+        
+    } success:^(id responseObject) {
         
       NSString *city = [[responseObject objectForKey:@"city"] objectForKey:@"name"];
         if (city) {
             cityName = city;
             self.locationLabel.text = cityName;
             
+           NSString *cityNumber = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]];
+        //  NSString *cityNumber = @"111";
+            if ([[responseObject objectForKey:@"allowd"] containsObject:cityNumber]) {
+                
+                class.cityAllowed = YES;
+            }
             [class removeLocationAnimation];
         }
     }];

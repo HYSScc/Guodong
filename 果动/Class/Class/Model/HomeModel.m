@@ -19,6 +19,9 @@
         self.coach_imgArray = [dict objectForKey:@"coach_img"] ? [dict objectForKey:@"coach_img"] :
         NULL;
         
+        
+        _rechargeImg = [[dict objectForKey:@"charge_info"] objectForKey:@"img"];
+        
         if ([dict objectForKey:@"course"]) {
             
             self.classArray = [NSMutableArray array];
@@ -27,7 +30,6 @@
                 ClassModel *classModel = [[ClassModel alloc] initWithDictionary:diction];
                 [self.classArray addObject:classModel];
             }
-            NSLog(@"解析 %@",self.classArray);
         }
         
         

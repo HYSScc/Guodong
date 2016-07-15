@@ -9,7 +9,7 @@
 #import "ShopView.h"
 #import "ShopModel.h"
 #import "ShopTableViewCell.h"
-
+#import "ClassViewController.h"
 @interface ShopView ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -33,7 +33,9 @@
 - (void)startRequest {
     
     NSString* url = [NSString stringWithFormat:@"%@api/?method=gdcourse.gdstore", BASEURL];
-    [HttpTool postWithUrl:url params:nil success:^(id responseObject) {
+    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
+        
+    } success:^(id responseObject) {
         modelArray = [NSMutableArray array];
         for (NSDictionary* dict in [responseObject objectForKey:@"data"]) {
             ShopModel* rightModel = [[ShopModel alloc] initWithDictionary:dict];
@@ -109,11 +111,11 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    // ShopModel* rightModel = [self.modelArray objectAtIndex:indexPath.row];
-    // HomeController* home = [HomeController sharedViewControllerManager];
-    // NSString* titleString = @"体验店";
+    //跳转到体验店介绍界面
+    ClassViewController *class = [ClassViewController sharedViewControllerManager];
+    ShopModel *shopModel = modelArray[indexPath.row];
     
-    //home.pushShopVCBlock(rightModel.number, titleString); //跳转到体验店界面
+    [class pushClassIntroduceView:shopModel.number className:shopModel.name classOrShip:@"shop"];
 }
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {

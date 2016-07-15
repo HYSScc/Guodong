@@ -21,6 +21,7 @@
                                                                            0,
                                                                            viewWidth,
                                                                            Adaptive(120))];
+        self.baseImageView.backgroundColor = BASEGRYCOLOR;
         [self addSubview:self.baseImageView];
         
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(13),
@@ -66,7 +67,7 @@
         
         // 把自定义的控件 变成了单元格的属性
         self.backgroundColor = BASECOLOR;
-        self.moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, viewWidth, Adaptive(60))];
+        self.moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, viewWidth, Adaptive(20))];
         self.moreLabel.textAlignment = 1;
         self.moreLabel.textColor     = [UIColor grayColor];
         self.moreLabel.font          = [UIFont fontWithName:FONT size:Adaptive(10)];

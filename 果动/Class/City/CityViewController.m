@@ -20,12 +20,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor     = BASECOLOR;
-    self.navigationItem.titleView = [BackView titleLabeltext:@"当前城市"];
-    
-    BackView* backView        = [[BackView alloc] initWithbacktitle:@"首页" viewController:self];
-    UIBarButtonItem* backItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
-    
-    self.navigationItem.leftBarButtonItem = backItem;
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"当前城市" viewController:self];
+    [self.view addSubview:navigation];
     
     [self createUI];
 
@@ -33,7 +31,7 @@
 
 - (void)createUI {
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, LastHeight) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NavigationBar_Height, viewWidth, LastHeight) style:UITableViewStylePlain];
     _tableView.delegate   = self;
     _tableView.dataSource = self;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -44,7 +42,9 @@
     
     
      NSString* url = [NSString stringWithFormat:@"%@citys/", BASEURL];
-    [HttpTool postWithUrl:url params:nil success:^(id responseObject) {
+    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
+        
+    } success:^(id responseObject) {
         
          citys = [responseObject objectForKey:@"all_citys"];
         [_tableView reloadData];

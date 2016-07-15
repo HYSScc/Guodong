@@ -15,26 +15,18 @@
 #endif /* PrefixHeader_pch */
 
 #ifdef __OBJC__
-//#define BASEURL @"http://www.guodongwl.com:8065/"              // 网络请求URL  外网
-#define BASEURL @"http://192.168.1.90:8080/"                 // 内网
+#define BASEURL @"http://www.guodongwl.com:8065/"              // 网络请求URL  外网
+//#define BASEURL @"http://192.168.1.90:8080/"                 // 内网
 //#define BASEURL @"http://192.168.1.5/"                       // 公司服务器
 
 
 #define ResponseObject_RC [[responseObject objectForKey:@"rc"] intValue] // 请求返回的rc值
 #define CONTENTTYPE       @"application/json"                            // 请求接收类型
-#define FONT @"Arial"
-#define FONT_BOLD @"Arial-BoldMT"                           // 默认字体
-
-/**
- *    TableView刷新
- */
-#define HEADERPULLTOREFRESH     @"下拉可以刷新了"
-#define HEADERRELEASETOREFRESH  @"松开马上刷新了"
-#define HEADERREFRESHING        @"刷新中...."
-#define FOOTERPULLTOREFRESH     @"上拉可以加载更多数据了"
-#define FOOTERRELEASETOREFRESH  @"松开马上加载更多数据了"
-#define FOOTERREFRESHING        @"加载中...."
-
+#define FONT              @"Arial"
+#define FONT_BOLD         @"Arial-BoldMT"                                // 默认字体
+#define KEFU              @"010-65460058"
+#define SHANGYEHEZUO      @"13700049117"
+#define MEITIHEZUO        @"bin-315@163.com"
 /**
  *  项目下载链接
  */
@@ -48,7 +40,9 @@
 #define APPID                         998425416                // 项目APPID
 #define NavigationBar_Height          64
 #define Tabbar_Height                 49
-#define NotLogin_RC_Number            24
+
+#define JpushAppKey  @"1504222818b05a9482a436bf"
+
 
 #define LastHeight viewHeight - NavigationBar_Height - Tabbar_Height
 #define viewWidth  [UIScreen mainScreen].bounds.size.width     // 屏幕宽度
@@ -61,6 +55,11 @@
 #define BASECOLOR [UIColor colorWithRed:  43 / 255.0  \
 green:43 / 255.0  \
 blue: 43 / 255.0  \
+alpha:1]
+
+#define BASEGRYCOLOR [UIColor colorWithRed:  55 / 255.0  \
+green:55 / 255.0  \
+blue: 55 / 255.0  \
 alpha:1]
 
 
@@ -98,7 +97,13 @@ alpha:1]
 /**
  *   默认导入的库
  */
-#import "HttpTool.h"    // 自定义请求类
-#import "BackView.h"    // 自定义返回类
+#import "HttpTool.h"             // 自定义请求类
+#import "NavigationView.h"       // 自定义NavigationView
+#import "JPUSHService.h"         // JPush头文件类
 #import "UIImageView+WebCache.h"
+#import <AdSupport/AdSupport.h>
+#import "NSString+JW.h"          // 字符串功能类
+#import "TextFieldView.h"        // 键盘弹出输入框
+#import "MJRefresh.h"            // 刷新类
+#import "UITabBar+badge.h"
 #endif

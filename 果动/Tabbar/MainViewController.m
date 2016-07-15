@@ -13,6 +13,8 @@
 #import "PersonViewController.h"
 
 
+
+
 @interface MainViewController ()
 
 @end
@@ -21,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     // 创建Window
     AppDelegate *app = [UIApplication sharedApplication].delegate;
   
@@ -39,12 +41,12 @@
     classVC.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbarOrange_1"];
     
     
-    FinderViewController *finderVC    = [FinderViewController new];
+    FinderViewController *finderVC    = [FinderViewController sharedViewControllerManager];
     finderVC.tabBarItem.title         = @"发现";
     finderVC.tabBarItem.image         = [UIImage imageNamed:@"tabbarGry_2"];
     finderVC.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbarOrange_2"];
     
-    PersonViewController *personVC    = [PersonViewController new];
+    PersonViewController *personVC    = [PersonViewController sharedViewControllerManager];
     personVC.tabBarItem.title         = @"个人";
     personVC.tabBarItem.image         = [UIImage imageNamed:@"tabbarGry_3"];
     personVC.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbarOrange_3"];
@@ -52,22 +54,23 @@
     
     
     UINavigationController *classNav  = [[UINavigationController alloc] initWithRootViewController:classVC];
-   
-    NSLog(@"导航栏高度 %f",classNav.navigationBar.bounds.size.height);
-    [classNav.navigationBar setBarTintColor:ORANGECOLOR];
+   // [classNav.navigationBar setBarTintColor:ORANGECOLOR];
     
     
     UINavigationController *finderNav  = [[UINavigationController alloc] initWithRootViewController:finderVC];
-    [finderNav.navigationBar setBarTintColor:ORANGECOLOR];
+  //  [finderNav.navigationBar setBarTintColor:ORANGECOLOR];
     
     UINavigationController *personNav  = [[UINavigationController alloc] initWithRootViewController:personVC];
-    //[personNav.navigationBar setBarTintColor:[UIColor clearColor]];
+   
     
     tabbar.viewControllers = @[classNav,finderNav,personNav];
      app.window.rootViewController = tabbar;
     [app.window makeKeyAndVisible];
+    
+    
+    
+    
 }
-
 
 
 

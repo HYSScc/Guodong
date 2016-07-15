@@ -24,7 +24,7 @@
 #import "UIView+SDExtension.h"
 #import "TAPageControl.h"
 #import "NSData+SDDataCache.h"
-//#import "HomeController.h"
+#import "ClassViewController.h"
 
 
 NSString * const ID = @"cycleCell";
@@ -430,9 +430,11 @@ NSString * const ID = @"cycleCell";
 }
 - (void)imageContentClick:(UIButton *)button {
     NSLog(@"点击anniu %ld",(long)button.tag);
-   // HomeController *home = [HomeController sharedViewControllerManager];
-  //  NSString *number = [NSString stringWithFormat:@"%ld",(long)button.tag];
-   // home.pushActiveViewBlock(number);
+    ClassViewController *class = [ClassViewController sharedViewControllerManager];
+     NSString *number = [NSString stringWithFormat:@"%ld",(long)button.tag];
+    
+    
+    class.pushActiveView(number);
     
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

@@ -14,18 +14,20 @@
     self = [super init];
     if (self) {
         
-        self.class_id   = [dict objectForKey:@"class_id"] ?
+        self.class_id   = ![[dict objectForKey:@"class_id"] isKindOfClass:[NSNull class]] ?
         [dict objectForKey:@"class_id"] : NULL;
         
-        self.class_name = [dict objectForKey:@"name"] ?
+        self.class_name = ![[dict objectForKey:@"name"] isKindOfClass:[NSNull class]] ?
         [dict objectForKey:@"name"]: NULL;
         
-        self.class_number = [dict objectForKey:@"num"] ?
+        self.class_number = ![[dict objectForKey:@"num"] isKindOfClass:[NSNull class]] ?
         [dict objectForKey:@"num"] : NULL;
         
-        self.class_imageUrl = [dict objectForKey:@"imgUrl"] ?
-        [dict objectForKey:@"imgUrl"] :
-        NULL;
+        
+       
+        
+        self.class_imageUrl = ![[dict objectForKey:@"imgUrl"] isKindOfClass:[NSNull class]]?
+        [dict objectForKey:@"imgUrl"] : @"";
         
         
         
