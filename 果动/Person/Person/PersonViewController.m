@@ -24,9 +24,6 @@
 {
     [super viewWillAppear:YES];
     
-    
-    
-    
     if ([HttpTool judgeWhetherUserLogin]) {
         NSString *url = [NSString stringWithFormat:@"%@api/?method=user.get_userinfo",BASEURL];
         [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
@@ -58,14 +55,13 @@
                                @"nickName":@"果动"
                                };
         
-        
         [bannerImageView sd_setImageWithURL:[NSURL URLWithString:@""]];
         NSNotification *notification = [NSNotification notificationWithName:@"Top" object:nil userInfo:dict];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
     self.tabBarController.tabBar.hidden = NO;
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-
+    
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -77,7 +73,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = BASECOLOR;
-    [self.tabBarController.tabBar showBadgeOnItemIndex:2];
+   
     /********************/
     
     __block PersonViewController *person = self;
@@ -132,7 +128,7 @@
         
         
         UIImage *titleImage = [UIImage imageNamed:imageArray[a]];
-       
+        
         CustomView *custom  = [[CustomView alloc] initWithFrame:Frame titleImage:titleImage title:stringArray[a] buttontag:10 + a viewController:self];
         [self.view addSubview:custom];
     }

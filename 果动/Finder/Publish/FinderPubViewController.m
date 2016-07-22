@@ -19,10 +19,14 @@
     UIButton   *addButton;
     UILabel    *line;
     NSInteger  imageNumber;
+    NSInteger  clickNumber;
     BOOL       isFirstFrame;
     NSMutableArray *photoArray;
     UIProgressView* progressView;
     UILabel    *progressLabel;
+    UIButton   *removeButton;
+    
+    UIView   *addView;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,8 +41,8 @@
     navigationView.frame   = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
     navigationView.backgroundColor = ORANGECOLOR;
     [self.view addSubview:navigationView];
-
-     CGFloat navigationHight = navigationView.frame.size.height - Adaptive(20);
+    
+    CGFloat navigationHight = navigationView.frame.size.height - Adaptive(20);
     
     UILabel * titleLabel = [UILabel new];
     titleLabel.frame     = CGRectMake(Adaptive(100),
@@ -108,25 +112,35 @@
     progressLabel.font      = [UIFont fontWithName:FONT size:Adaptive(10)];
     [self.view addSubview:progressLabel];
     
+    
+    addView = [UIView new];
+    addView.frame = CGRectMake(0,
+                               CGRectGetMaxY(progressView.frame) + Adaptive(16),
+                               viewWidth,
+                               viewHeight - Tabbar_Height - CGRectGetMaxY(progressView.frame) + Adaptive(16));
+    [self.view addSubview:addView];
+    
+    
     addButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     addButton.frame     = CGRectMake(Adaptive(13),
-                                     CGRectGetMaxY(progressView.frame) + Adaptive(16),
+                                     0,
                                      Adaptive(80),
                                      Adaptive(80));
     [addButton addTarget:self action:@selector(addButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [addButton setBackgroundImage:[UIImage imageNamed:@"find_addImage"] forState:UIControlStateNormal];
-    [self.view addSubview:addButton];
-    
+    [addView addSubview:addButton];
     
 }
 
 - (void)addButtonClick:(UIButton *)button {
-    
+    [_textView resignFirstResponder];
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册选取",@"照相", nil];
     [actionSheet showInView:self.view];
     
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    
     
     if (buttonIndex == 2) return;
     
@@ -158,22 +172,40 @@
     
     [photoArray addObject:photoDict];
     
+    
+    if ([_className isEqualToString:@"发布动态"]) {
+        if (![_textView.text isEqualToString:ResultString] && photoArray.count != 0) {
+            
+            [saveButton setTintColor:UIColorFromRGB(0x2b2b2b)];
+            saveButton.userInteractionEnabled = YES;
+            
+        } else {
+            [saveButton setTintColor:UIColorFromRGB(0x7f7f7f)];
+            saveButton.userInteractionEnabled = NO;
+            
+        }
+    }
+    
+   
+    
     [self setImageViewFrameWith:info[UIImagePickerControllerEditedImage]];
     
 }
 #pragma mark - 布置图片显示位置
 - (void)setImageViewFrameWith:(UIImage *)image  {
     
-    imageNumber++;
-    
     UIImageView *imageView = [UIImageView new];
     imageView.frame        = addButton.frame;
     imageView.image        = image;
-    [self.view addSubview:imageView];
+    imageView.tag          = photoArray.count + 100;
+    imageView.userInteractionEnabled = YES;
+    [addView addSubview:imageView];
+    UITapGestureRecognizer *tapLeftDouble  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
+    [imageView addGestureRecognizer:tapLeftDouble];
     
-    if (imageNumber < 9) {
+    if (photoArray.count < 10) {
         CGRect buttonframe = addButton.frame;
-        if (imageNumber %4 == 0 && isFirstFrame == NO) {
+        if (photoArray.count %4 == 0 && isFirstFrame == NO) {
             
             buttonframe.origin.x =  Adaptive(13);
             buttonframe.origin.y = CGRectGetMaxY(imageView.frame) + Adaptive(10);
@@ -185,6 +217,80 @@
         addButton.frame    = buttonframe;
     }
     
+}
+#pragma mark - 移除图片 重新布局位置
+- (void)removeImageViewFrame{
+    
+    if (_textView.text.length != 0 && photoArray.count != 0) {
+        
+        [saveButton setTintColor:UIColorFromRGB(0x2b2b2b)];
+        saveButton.userInteractionEnabled = YES;
+        
+    } else {
+        [saveButton setTintColor:UIColorFromRGB(0x7f7f7f)];
+        saveButton.userInteractionEnabled = NO;
+        
+    }
+    
+    [self.view addSubview:addView];
+    
+    if (photoArray.count > 0) {
+        for (int a = 0; a < photoArray.count ; a++) {
+            
+            
+            UIImageView *imageView = [UIImageView new];
+            imageView.frame = CGRectMake(Adaptive(13) + (a % 4) * Adaptive(90),
+                                         (a / 4) * Adaptive(90),
+                                         Adaptive(80),
+                                         Adaptive(80));
+            imageView.tag   = a + 101;
+            imageView.image = [UIImage imageWithData:[photoArray[a] objectForKey:@"image"]];
+            imageView.userInteractionEnabled = YES;
+            [addView addSubview:imageView];
+            
+            
+            addButton.frame = CGRectMake(Adaptive(13) + ((a + 1) % 4) * Adaptive(90),
+                                         ((a + 1) / 4) * Adaptive(90),
+                                         Adaptive(80),
+                                         Adaptive(80));
+            [addView addSubview:addButton];
+            
+            UITapGestureRecognizer *tapLeftDouble  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
+            [imageView addGestureRecognizer:tapLeftDouble];
+        }
+    } else {
+        addButton.frame = CGRectMake(Adaptive(13),
+                                     0,
+                                     Adaptive(80),
+                                     Adaptive(80));
+        [addView addSubview:addButton];
+    }
+}
+
+-(void)magnifyImage:(UIGestureRecognizer *)gesture
+{
+    removeButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    removeButton.frame = CGRectMake(gesture.view.bounds.size.width - Adaptive(18),
+                                    -3,
+                                    Adaptive(18),
+                                    Adaptive(18));
+    [removeButton setBackgroundImage:[UIImage imageNamed:@"app_remove"] forState:UIControlStateNormal];
+    [removeButton addTarget:self action:@selector(removeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [gesture.view addSubview:removeButton];
+}
+
+- (void)removeButtonClick:(UIButton *)button {
+    
+    [photoArray removeObjectAtIndex:button.superview.tag - 101];
+    [addView removeFromSuperview];
+    addView = [UIView new];
+    addView.frame = CGRectMake(0,
+                               CGRectGetMaxY(progressView.frame) + Adaptive(16),
+                               viewWidth,
+                               viewHeight - Tabbar_Height - CGRectGetMaxY(progressView.frame) + Adaptive(16));
+    [self.view addSubview:addView];
+    
+    [self removeImageViewFrame];
 }
 
 - (void)cancelButtonClick:(UIButton *)button {
@@ -200,7 +306,7 @@
         dict = @{@"content" : _textView.text};
     }
     
-    if ([_className isEqualToString:@"动态"]) {
+    if ([_className isEqualToString:@"发布动态"]) {
         url  = [NSString stringWithFormat:@"%@api/?method=gdb.send_talk",BASEURL];
         dict = @{@"content" : _textView.text,
                  @"type" : @"1"
@@ -217,7 +323,7 @@
         });
         
     } success:^(id responseObject) {
-       [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
     
 }
@@ -237,16 +343,32 @@
     NSMutableString * changedString = [[NSMutableString alloc]initWithString:textView.text];
     [changedString replaceCharactersInRange:range withString:text];
     
-    if (changedString.length!=0) {
-        
-        [saveButton setTintColor:UIColorFromRGB(0x2b2b2b)];
-        saveButton.userInteractionEnabled = YES;
-        
+    if (![_className isEqualToString:@"答疑"]) {
+        if (changedString.length!= 0 && photoArray.count != 0) {
+            
+            [saveButton setTintColor:UIColorFromRGB(0x2b2b2b)];
+            saveButton.userInteractionEnabled = YES;
+            
+        } else {
+            [saveButton setTintColor:UIColorFromRGB(0x7f7f7f)];
+            saveButton.userInteractionEnabled = NO;
+            
+        }
     } else {
-        [saveButton setTintColor:UIColorFromRGB(0x7f7f7f)];
-        saveButton.userInteractionEnabled = NO;
-        
+        if (changedString.length!= 0) {
+            
+            [saveButton setTintColor:UIColorFromRGB(0x2b2b2b)];
+            saveButton.userInteractionEnabled = YES;
+            
+        } else {
+            [saveButton setTintColor:UIColorFromRGB(0x7f7f7f)];
+            saveButton.userInteractionEnabled = NO;
+            
+        }
     }
+    
+    
+  
     return YES;
 }
 - (void)textViewDidEndEditing:(UITextView *)textView {
@@ -267,6 +389,7 @@
 }
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
+    [removeButton removeFromSuperview];
 }
 
 @end

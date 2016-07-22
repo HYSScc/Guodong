@@ -20,7 +20,8 @@
 @property (nonatomic,retain) NSString *praises;
 @property (nonatomic,retain) NSString *comments;
 @property (nonatomic,retain) NSString *ipraises;
-
+@property (nonatomic,assign) CGFloat  height;
+@property (nonatomic,assign) CGFloat  widht;
 @property (nonatomic,retain) NSString *talk_id;
 
 @end

@@ -12,6 +12,6 @@
 
 @property (nonatomic,copy) void (^changeView)(int number);
 
-
+@property (nonatomic,retain) NSString *className;
 @property (nonatomic,retain) NSString *user_id;
 @end

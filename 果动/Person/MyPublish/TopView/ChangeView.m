@@ -9,9 +9,9 @@
 #import "ChangeView.h"
 #import "My_NewsView.h"
 #import "My_PhotoView.h"
-#import "QuestionView.h"
 
 
+#import "QuestionViewController.h"
 @implementation ChangeView
 {
     UIImageView    *triangleImageView;
@@ -33,11 +33,17 @@
         viewController = controller;
         [self createUI];
         
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refushAllUI) name:@"refushAllUI" object:nil];
+        
         if ([HttpTool judgeWhetherUserLogin]) {
             [self startRequest];
         }
     }
     return self;
+}
+
+- (void)refushAllUI {
+    [self startRequest];
 }
 
 - (void)startRequest {
@@ -185,10 +191,6 @@
                                          Adaptive(13));
     [self addSubview:triangleImageView];
     
-    viewArray = [NSMutableArray array];
-    [viewArray addObject:@"My_NewsView"];
-    [viewArray addObject:@"My_PhotoView"];
-    [viewArray addObject:@"My_QuestionView"];
 }
 
 - (void)buttonClick:(UIButton *)button {
@@ -207,30 +209,34 @@
             case 1:
             {
                 My_NewsView *news = [[My_NewsView alloc] initWithFrame:CGRectMake(0,
-                                                                                  CGRectGetMaxY(self.frame) + Adaptive(10),
+                                                                                  CGRectGetMaxY(self.frame),
                                                                                   viewWidth,
-                                                                                  viewHeight - NavigationBar_Height - Adaptive(160)) user_id:user_id viewController:viewController];
+                                                                                  viewHeight - NavigationBar_Height - Adaptive(150)) user_id:user_id viewController:viewController];
                 [self.superview addSubview:news];
             }
                 break;
             case 2:
             {
                 My_PhotoView *photo = [[My_PhotoView alloc] initWithFrame:CGRectMake(0,
-                                                                                     CGRectGetMaxY(self.frame) + Adaptive(10),
+                                                                                     CGRectGetMaxY(self.frame) ,
                                                                                      viewWidth,
-                                                                                     viewHeight - NavigationBar_Height - Adaptive(160)) user_id:user_id];
+                                                                                     viewHeight - NavigationBar_Height - Adaptive(150)) user_id:user_id];
                 [self.superview addSubview:photo];
             }
                 break;
             case 3:
             {
-                QuestionView *question = [[QuestionView alloc] initWithFrame:CGRectMake(0,
-                                                                                        CGRectGetMaxY(self.frame) + Adaptive(10),
-                                                                                        viewWidth,
-                                                                                        viewHeight - NavigationBar_Height - Adaptive(130))];
+                QuestionViewController *question = [QuestionViewController new];
+                
+                question.view.frame = CGRectMake(0,
+                                                 CGRectGetMaxY(self.frame) ,
+                                                 viewWidth,
+                                                 viewHeight - CGRectGetMaxY(self.frame));
                 question.type    = @"myQuestion";
                 question.user_id = user_id;
-                [self.superview addSubview:question];
+                [self.superview addSubview:question.view];
+                [viewController addChildViewController:question];
+                
             }
                 break;
                 

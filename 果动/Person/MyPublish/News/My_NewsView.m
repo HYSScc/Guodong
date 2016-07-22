@@ -10,7 +10,7 @@
 #import "My_NewsView.h"
 #import "My_NewsTableViewCell.h"
 #import "MyNewsModel.h"
-@interface My_NewsView ()<UITableViewDelegate,UITableViewDataSource>
+@interface My_NewsView ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 
 @end
 
@@ -34,11 +34,18 @@
         viewController = controller;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"myNews" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refushAllUI) name:@"refushAllUI" object:nil];
+        
         [self createUI];
         // 2.集成刷新控件
         [self setupRefresh];
     }
     return self;
+}
+- (void)refushAllUI {
+    [self createUI];
+    // 2.集成刷新控件
+    [self headerRereshing];
 }
 
 - (void)tongzhi:(NSNotification *)notification {
@@ -68,7 +75,7 @@
     } success:^(id responseObject) {
         
         [dataArray removeAllObjects];
-        
+        page = 1;
         if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
             [noDataView removeFromSuperview];
             for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
@@ -159,9 +166,9 @@
 }
 
 - (void)publishButtonClick:(UIButton *)button {
-     viewController.hidesBottomBarWhenPushed          = YES;
+    viewController.hidesBottomBarWhenPushed          = YES;
     FinderPubViewController *publish = [FinderPubViewController new];
-    publish.className = @"动态";
+    publish.className = @"发布动态";
     [viewController.navigationController pushViewController:publish animated:YES];
 }
 
@@ -196,8 +203,6 @@
     viewController.hidesBottomBarWhenPushed          = YES;
     detailsView.talk_id = newsModel.talk_id;
     [viewController.navigationController pushViewController:detailsView animated:YES];
-    // 跳转之后显示tabbar back回来时tabbar正常显示
-    viewController.hidesBottomBarWhenPushed          = NO;
     
 }
 

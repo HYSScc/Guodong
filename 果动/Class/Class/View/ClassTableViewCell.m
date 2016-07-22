@@ -17,11 +17,17 @@
         
         // 把自定义的控件 变成了单元格的属性
         self.backgroundColor = BASECOLOR;
+        
+        UILabel *gryLabel = [UILabel new];
+        gryLabel.frame    = CGRectMake(0, 0, viewWidth, Adaptive(5));
+        gryLabel.backgroundColor = BASECOLOR;
+        [self addSubview:gryLabel];
+        
+        
         self.baseImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,
-                                                                           0,
+                                                                           CGRectGetMaxY(gryLabel.frame),
                                                                            viewWidth,
                                                                            Adaptive(120))];
-        self.baseImageView.backgroundColor = BASEGRYCOLOR;
         [self addSubview:self.baseImageView];
         
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(13),

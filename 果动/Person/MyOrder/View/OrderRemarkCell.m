@@ -20,10 +20,7 @@
         self.backgroundColor = BASEGRYCOLOR;
         
         _removeButton       = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _removeButton.frame = CGRectMake(viewWidth - Adaptive(146),
-                                        Adaptive(10),
-                                        Adaptive(60),
-                                        Adaptive(20));
+       
         [_removeButton.layer setBorderWidth:.5];
         //设置按钮的边界颜色
         CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
@@ -72,17 +69,42 @@
     // 待付款  无教练栏  加载删除栏
     if ([dataModel.course_status intValue] == 6) {
         _commentButton.frame = CGRectMake(0,0,0,0);
+        _removeButton.frame = CGRectMake(viewWidth - Adaptive(146),
+                                         Adaptive(10),
+                                         Adaptive(60),
+                                         Adaptive(20));
         _payButton.frame = CGRectMake(CGRectGetMaxX(_removeButton.frame) + Adaptive(13),
                                       Adaptive(10),
                                       Adaptive(60),
                                       Adaptive(20));
-    } else {
-        _payButton.frame = CGRectMake(0,0,0,0);
-        _commentButton.frame = CGRectMake(CGRectGetMaxX(_removeButton.frame) + Adaptive(13),
-                                          Adaptive(10),
-                                          Adaptive(60),
-                                          Adaptive(20));
-    }
+       
+    } else if ([dataModel.course_status intValue] == 7) {
+        
+        
+            // 待评价
+            
+            _payButton.frame = CGRectMake(0,0,0,0);
+            _removeButton.frame = CGRectMake(viewWidth - Adaptive(146),
+                                             Adaptive(10),
+                                             Adaptive(60),
+                                             Adaptive(20));
+            _commentButton.frame = CGRectMake(CGRectGetMaxX(_removeButton.frame) + Adaptive(13),
+                                              Adaptive(10),
+                                              Adaptive(60),
+                                              Adaptive(20));
+            
+            
+        } else {
+            // 已评价
+            _payButton.frame = CGRectMake(0,0,0,0);
+            _commentButton.frame = CGRectMake(0,0,0,0);
+            _removeButton.frame = CGRectMake(viewWidth - Adaptive(73),
+                                             Adaptive(10),
+                                             Adaptive(60),
+                                             Adaptive(20));
+        }
+        
+
     
     
     CGRect Frame      = self.frame;

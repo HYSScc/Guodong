@@ -153,14 +153,10 @@
                    if ([result isEqualToString:@"success"]) {
                        // 支付成功
                        NSLog(@"成功");
+                       NSNotification *notification = [NSNotification notificationWithName:@"pushMainView" object:nil userInfo:nil];
                        
-                       UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:nil otherButtonTitles: nil];
-                       [alert show];
-                       [NSTimer scheduledTimerWithTimeInterval:1.5f
-                                                        target:self
-                                                      selector:@selector(timerFireMethod:)
-                                                      userInfo:alert
-                                                       repeats:YES];
+                       //通过通知中心发送通知
+                       [[NSNotificationCenter defaultCenter] postNotification:notification];
                        
                    } else {
                        // 支付失败或取消
@@ -169,18 +165,6 @@
                }];
         
     }];
-    
-}
-// 提示框消失
-- (void)timerFireMethod:(NSTimer*)theTimer
-{
-    UIAlertView *promptAlert = (UIAlertView*)[theTimer userInfo];
-    [promptAlert dismissWithClickedButtonIndex:0 animated:YES];
-    
-    NSNotification *notification = [NSNotification notificationWithName:@"removeAlphaView" object:nil userInfo:nil];
-    
-    //通过通知中心发送通知
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
     
 }
 - (void)tongzhi:(NSNotification *)notification {

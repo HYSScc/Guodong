@@ -21,7 +21,7 @@
         _content  = [dict objectForKey:@"content"] ? [dict objectForKey:@"content"] : NULL;
         _photoArray = [dict objectForKey:@"photos"] ? [dict objectForKey:@"photos"] : NULL;
         _timeString =  [dict objectForKey:@"time"] ?  [NSString stringWithFormat:@"%@",[dict objectForKey:@"time"]]: NULL;
-        
+        _talk_id = [NSString stringWithFormat:@"%@",[dict objectForKey:@"talkid"]];
         _user_id = [dict objectForKey:@"uid"];
         
         _commentdict = [dict objectForKey:@"comments"];

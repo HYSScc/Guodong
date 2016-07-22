@@ -5,7 +5,7 @@
 //  Created by mac on 16/5/23.
 //  Copyright © 2016年 Unique. All rights reserved.
 //
-
+#import "NewsDetailsViewController.h"
 #import "DetailsContentView.h"
 #import "ContentDetails.h"
 #import "NewsFunctionView.h"
@@ -25,6 +25,7 @@
     UIView      *alphaView;
     ShareView   *share;
     NSString    *user_id;
+    NSString    *whoPublish;
     UIViewController *viewController;
     UIImageView     *shareImageView;
     
@@ -91,6 +92,7 @@
 - (void)setDetails:(ContentDetails *)details {
     
     user_id = details.user_id;
+    whoPublish = details.nickName;
     
     [_headerImageView sd_setImageWithURL:[NSURL URLWithString:details.headImgString] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
     _nameLabel.text = details.nickName;
@@ -150,10 +152,14 @@
     
 }
 - (void)moreButtonClick:(UIButton *)button {
-    NSNotification *notification =[NSNotification notificationWithName:@"removeNews" object:nil userInfo:nil];
+//    NSNotification *notification =[NSNotification notificationWithName:@"removeNews" object:nil userInfo:nil];
+//    
+//    //通过通知中心发送通知
+//    [[NSNotificationCenter defaultCenter] postNotification:notification];
     
-    //通过通知中心发送通知
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    NewsDetailsViewController *news = [NewsDetailsViewController sharedViewControllerManager];
+    [news removeNewssss:talk_idString user_id:user_id];
+    
 }
 - (void)commentButtonClick:(UIButton *)button {
     NSNotification *notification =[NSNotification notificationWithName:@"clickCommentButton" object:nil userInfo:nil];
@@ -171,7 +177,7 @@
     NSString *title = [NSString stringWithFormat:@"%@的健身动态 - 果动",_nameLabel.text];
     
     
-    share = [[ShareView alloc] initWithFrame:CGRectMake(0, viewHeight, viewWidth, Adaptive(256)) title:title imageName:shareImageView.image url:url viewController:viewController];
+    share = [[ShareView alloc] initWithFrame:CGRectMake(0, viewHeight, viewWidth, Adaptive(256)) title:title imageName:shareImageView.image url:url id:talk_idString shareType:@"gdb" viewController:viewController];
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     
     alphaView = [UIView new];
@@ -215,6 +221,7 @@
    NSLog(@"user_id %@",user_id);
     PublishViewController *publish = [PublishViewController new];
     publish.user_id = user_id;
+    publish.className = whoPublish;
     [viewController.navigationController pushViewController:publish animated:YES];
 }
 @end

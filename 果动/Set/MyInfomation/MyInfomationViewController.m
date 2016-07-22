@@ -157,7 +157,7 @@
         if (a == 0) {
             
             
-            backgroundView.frame           = CGRectMake(Adaptive(34.5),
+            backgroundView.frame  = CGRectMake(Adaptive(34.5),
                                                         Adaptive(10) + NavigationBar_Height,
                                                         viewWidth - Adaptive(47.5),
                                                         Adaptive(43));
@@ -288,14 +288,21 @@
 
 #pragma mark - 各个功能触发按钮
 - (void)buttonClick:(UIButton *)button {
+    
+    UIButton *birthdayButton = (UIButton *)[self.view viewWithTag:4];
+    birthdayButton.userInteractionEnabled = YES;
+    [birthdayView removeFromSuperview];
+    
     switch (button.tag) {
         case 1:
         {
+            
             [self addHeadChooseView];
         }
             break;
         case 3:
         {
+            
             [self addSexChooseView];
         }
             break;
@@ -311,6 +318,7 @@
 }
 // 添加头像选择器
 - (void)addHeadChooseView {
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册获取",@"拍照", nil];
     actionSheet.tag = 100;
     [actionSheet showInView:self.view];
@@ -319,6 +327,7 @@
 
 // 添加性别选择器
 - (void)addSexChooseView {
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"男",@"女", nil];
     actionSheet.tag = 200;
     [actionSheet showInView:self.view];
@@ -482,7 +491,8 @@
 }
 
 - (void)cancelButtonClick:(UIButton *)button {
-    
+    [self.view endEditing:YES];
+    [address endEditing:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)saveButtonClick:(UIButton *)button {
@@ -521,6 +531,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
+    [birthdayView removeFromSuperview];
     UIButton *headButton     = (UIButton *)[self.view viewWithTag:1];
     UIButton *sexButton      = (UIButton *)[self.view viewWithTag:3];
     UIButton *birthdayButton = (UIButton *)[self.view viewWithTag:4];

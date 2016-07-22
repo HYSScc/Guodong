@@ -242,11 +242,9 @@
         NewsDetailsViewController *detailsView = [NewsDetailsViewController new];
         
         // 跳转的时候隐藏tabbar
-        self.hidesBottomBarWhenPushed          = YES;
+        self.hidesBottomBarWhenPushed = YES;
         detailsView.talk_id = newsModel.idString;
         [self.navigationController pushViewController:detailsView animated:YES];
-        // 跳转之后显示tabbar back回来时tabbar正常显示
-        self.hidesBottomBarWhenPushed          = NO;
         
     } else {
         isOpen[indexPath.row] = !isOpen[indexPath.row];

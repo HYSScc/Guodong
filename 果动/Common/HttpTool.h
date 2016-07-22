@@ -5,7 +5,7 @@
 //  Created by mac on 16/5/17.
 //  Copyright © 2016年 Unique. All rights reserved.
 //
-#import <AFNetworking/AFNetworking.h>
+
 
 typedef void (^ProgressBlock)(NSProgress *progress);
 typedef void (^SuccessBlock)(id responseObject);

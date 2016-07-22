@@ -13,8 +13,10 @@
 #import "WebViewController.h"
 #import "ContentDetails.h"
 
-#import "NewsView.h"
 
+#import "NewViewController.h"
+#import "QuestionViewController.h"
+#import "PictureViewController.h"
 @interface FinderViewController ()<UIScrollViewDelegate>
 
 @property (nonatomic,retain) NSMutableArray *viewArray;
@@ -82,24 +84,24 @@
      
 }
 
-
 // 添加item 标题Scroller
 - (void)setUpScrollView {
     
-    _scrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0,0, viewWidth, Adaptive(64))];
+    _scrollView =[[UIScrollView alloc]initWithFrame:CGRectMake(0,0, viewWidth, NavigationBar_Height)];
     _scrollView.backgroundColor = ORANGECOLOR;
     //设置滑动范围
-    _scrollView.contentSize     = CGSizeMake(viewWidth, Adaptive(64));
+    _scrollView.contentSize     = CGSizeMake(viewWidth, NavigationBar_Height);
     _scrollView.showsVerticalScrollIndicator = NO;
+   
     [self.view addSubview:_scrollView];
     
     // 添加点击按钮
     for (int i = 0; i < [_titleArray count]; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame     = CGRectMake(viewWidth / _titleArray.count * i,
-                                      Adaptive(25),
+                                      25,
                                       viewWidth/[_titleArray count],
-                                      Adaptive(39));
+                                      39);
         [button setTitle:_titleArray[i] forState:UIControlStateNormal];
         
         //设定按钮文字颜色
@@ -114,7 +116,7 @@
         //设置点击事件
         [button addTarget:self action:@selector(titleClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        button.tag =i+1;
+        button.tag = i+1;
         //文字大小
         button.titleLabel.font = [UIFont fontWithName:FONT size:Adaptive(14)];
         [_scrollView addSubview:button];
@@ -122,7 +124,7 @@
     
     _scrollView.bounces = NO;
     //设置提示条目
-    moveImageView = [[UIImageView alloc] initWithFrame:CGRectMake(viewWidth / 2 - Adaptive(6), Adaptive(56), Adaptive(12), Adaptive(8))];
+    moveImageView = [[UIImageView alloc] initWithFrame:CGRectMake(viewWidth / 2 - Adaptive(6),56, 12, 8)];
     moveImageView.image = [UIImage imageNamed:@"find_movetrain"];
     [_scrollView addSubview:moveImageView];
     
@@ -131,9 +133,9 @@
 // 添加内容容器
 -(void)addtableScroll{
     //添加滑动视图
-    _tableScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_scrollView.frame) + Adaptive(10), viewWidth, viewHeight-CGRectGetMaxY(_scrollView.frame) - Tabbar_Height - Adaptive(10))];
+    _tableScroll = [[UIScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(_scrollView.frame), viewWidth, LastHeight )];
     
-    _tableScroll.contentSize = CGSizeMake(viewWidth*[_titleArray count],viewHeight-CGRectGetMaxY(_scrollView.frame) - Tabbar_Height - Adaptive(10));
+    _tableScroll.contentSize = CGSizeMake(viewWidth*[_titleArray count],LastHeight);
     
     //设置整页滑动
     _tableScroll.pagingEnabled = YES;
@@ -146,10 +148,12 @@
 }
 //添加内容
 -(void)addContentView{
-    Class someClass = NSClassFromString(_viewArray[1]);
-    UIView * contentView = [[someClass alloc] init];
-    [contentView setFrame:CGRectMake(viewWidth, 0, viewWidth,_tableScroll.frame.size.height)];
-    [_tableScroll addSubview:contentView];
+    
+    NewViewController *newsVC = [NewViewController new];
+    newsVC.view.frame = CGRectMake(viewWidth, 0, viewWidth,_tableScroll.frame.size.height);
+    [self addChildViewController:newsVC];
+    [_tableScroll addSubview:newsVC.view];
+    
 }
 
 - (void)titleClick:(UIButton *)button {
@@ -163,13 +167,17 @@
     /**
      *  根据button.tag值添加不同的视图
      */
-    Class someClass     = NSClassFromString(_viewArray[button.tag - 1]);
-    UIView *contentView = [[someClass alloc] initWithFrame:CGRectMake((button.tag - 1) * viewWidth, 0, viewWidth,_tableScroll.frame.size.height)];
-    [_tableScroll addSubview:contentView];
+   
     
     switch (button.tag) {
         case 1:
         {
+            
+            PictureViewController *newsVC = [PictureViewController new];
+            newsVC.view.frame = CGRectMake((button.tag - 1) * viewWidth, 0, viewWidth,_tableScroll.frame.size.height);
+            [self addChildViewController:newsVC];
+            [_tableScroll addSubview:newsVC.view];
+           
             [button1 setTitleColor:UIColorFromRGB(0x2b2b2b) forState:UIControlStateNormal];
             [button2 setTitleColor:UIColorFromRGB(0x3f3f3f) forState:UIControlStateNormal];
             [button3 setTitleColor:UIColorFromRGB(0x3f3f3f) forState:UIControlStateNormal];
@@ -182,11 +190,25 @@
             [button2 setTitleColor:UIColorFromRGB(0x2b2b2b) forState:UIControlStateNormal];
             [button3 setTitleColor:UIColorFromRGB(0x3f3f3f) forState:UIControlStateNormal];
             
+            NewViewController *newsVC = [NewViewController new];
+            newsVC.view.frame = CGRectMake((button.tag - 1) * viewWidth, 0, viewWidth,_tableScroll.frame.size.height);
+            [self addChildViewController:newsVC];
+            [_tableScroll addSubview:newsVC.view];
+            
+            
         }
             
             break;
         case 3:
         {
+            
+            
+            QuestionViewController *quesVC = [QuestionViewController new];
+            quesVC.view.frame = CGRectMake((button.tag - 1) * viewWidth, 0, viewWidth,_tableScroll.bounds.size.height);
+            [_tableScroll addSubview:quesVC.view];
+            [self addChildViewController:quesVC];
+            
+           
             [button1 setTitleColor:UIColorFromRGB(0x3f3f3f) forState:UIControlStateNormal];
             [button2 setTitleColor:UIColorFromRGB(0x3f3f3f) forState:UIControlStateNormal];
             [button3 setTitleColor:UIColorFromRGB(0x2b2b2b) forState:UIControlStateNormal];
@@ -207,9 +229,9 @@
         NSInteger OriginX = button.frame.origin.x + button.bounds.size.width / 2 - Adaptive(7.5);
         
         moveImageView.frame = CGRectMake(OriginX,
-                                          Adaptive(56),
-                                         Adaptive(12),
-                                         Adaptive(8));
+                                          56,
+                                         12,
+                                         8);
         // 移动主视图
         _tableScroll.contentOffset=CGPointMake((button.tag-1)*viewWidth, 0);
         
@@ -229,23 +251,15 @@
     // 跳转之后显示tabbar back回来时tabbar正常显示
     self.hidesBottomBarWhenPushed          = NO;
     
-    
-    
-    
-    
 }
 
-- (void)pushPublishViewWithName:(NSString *)name {
-    
-    FinderPubViewController *publish = [FinderPubViewController new];
-    publish.className = name;
-    [self.navigationController pushViewController:publish animated:YES];
-}
-- (void)pushWebViewWithName:(NSString *)content_id {
+
+- (void)pushWebViewWithName:(NSString *)content_id title:(NSString *)title {
     // 跳转的时候隐藏tabbar
     self.hidesBottomBarWhenPushed          = YES;
     WebViewController *webView = [WebViewController new];
     webView.content_id = content_id;
+    webView.sharetitle = title;
     [self.navigationController pushViewController:webView animated:YES];
     // 跳转之后显示tabbar back回来时tabbar正常显示
     self.hidesBottomBarWhenPushed          = NO;

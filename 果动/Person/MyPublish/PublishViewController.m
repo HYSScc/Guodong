@@ -25,7 +25,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
     
-    NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"我的发布" viewController:self];
+    NavigationView *navigation = [[NavigationView alloc] initWithtitle:_className viewController:self];
     [self.view addSubview:navigation];
     
     [self createTopView];
@@ -39,7 +39,7 @@
     
     
     if ([HttpTool judgeWhetherUserLogin]) {
-        My_NewsView *contentView = [[My_NewsView alloc] initWithFrame:CGRectMake(0,CGRectGetMaxY(topView.frame) + Adaptive(10), viewWidth,viewHeight - NavigationBar_Height - Adaptive(160)) user_id:_user_id viewController:self];
+        My_NewsView *contentView = [[My_NewsView alloc] initWithFrame:CGRectMake(0,CGRectGetMaxY(topView.frame), viewWidth,viewHeight - NavigationBar_Height - Adaptive(150)) user_id:_user_id viewController:self];
         [self.view addSubview:contentView];
 
     } else {

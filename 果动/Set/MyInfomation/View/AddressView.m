@@ -143,7 +143,7 @@
     [self addSubview:blackLabel];
     
     UILabel *baseLabel = [UILabel new];
-    baseLabel.frame    = CGRectMake(0,
+    baseLabel.frame    = CGRectMake(-.5,
                                     CGRectGetMaxY(blackLabel.frame),
                                     viewWidth - Adaptive(26),
                                     9);
@@ -163,10 +163,11 @@
     NSArray *array = @[@"身高",@"体重",@"BMI"];
     for (int a = 0; a < array.count; a++) {
         UILabel *label  = [UILabel new];
-        label.frame     = CGRectMake(0, CGRectGetMaxY(blackbottomLabel.frame) + a*40, Adaptive(50), Adaptive(40));
+        label.frame     = CGRectMake(0, CGRectGetMaxY(blackbottomLabel.frame) + Adaptive(11) + a*(40), Adaptive(50), Adaptive(20));
         label.textColor = [UIColor whiteColor];
         label.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
         label.text      = array[a];
+        
         label.textAlignment = 1;
         [self addSubview:label];
     }
@@ -176,7 +177,7 @@
     _heightTextField.font  = [UIFont fontWithName:FONT size:Adaptive(12)];
     _heightTextField.tag   = 1;
     _heightTextField.delegate     = self;
-    _heightTextField.placeholder  = @"单位(mm)";
+    _heightTextField.placeholder  = @"mm";
     _heightTextField.keyboardType = UIKeyboardTypeNumberPad;
     [_heightTextField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _heightTextField.textColor = [UIColor grayColor];
@@ -190,7 +191,7 @@
     _weightTextField.font  = [UIFont fontWithName:FONT size:Adaptive(12)];
     _weightTextField.tag   = 2;
     _weightTextField.delegate     = self;
-    _weightTextField.placeholder  = @"单位(kg)";
+    _weightTextField.placeholder  = @"kg";
     _weightTextField.keyboardType = UIKeyboardTypeNumberPad;
     [_weightTextField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _weightTextField.textColor = [UIColor grayColor];

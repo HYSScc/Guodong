@@ -13,4 +13,6 @@
 
 @property (nonatomic,retain) NSString       *talk_id;
 
++ (instancetype)sharedViewControllerManager;
+- (void)removeNewssss:(NSString *)talk_id user_id:(NSString *)user_id;
 @end

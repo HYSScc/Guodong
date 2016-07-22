@@ -94,7 +94,11 @@
     }
    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAlphaView:) name:@"removeAlphaView" object:nil];
-    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushMainView) name:@"pushMainView" object:nil];
+}
+
+- (void)pushMainView {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -153,12 +157,12 @@
             [_tableView reloadData];
             
             RechargeModel *recharge = dataArray[0];
-            NSString *priceString = [NSString stringWithFormat:@"合计：%@元",recharge.price];
+            NSString *priceString = [NSString stringWithFormat:@"合计：%@ 元",recharge.price];
             
             attributedString = [[NSMutableAttributedString alloc] initWithString:priceString];
             [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(0,3)];
-            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:17] range:NSMakeRange(3,recharge.price.length)];
-            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(3+recharge.price.length,1)];
+            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:24] range:NSMakeRange(3,recharge.price.length)];
+            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(3+recharge.price.length + 1,1)];
             
             
             priceNumber = recharge.price;
@@ -319,7 +323,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     RechargeModel *recharge = dataArray[indexPath.row];
     index = indexPath.row;
-    NSString *priceString = [NSString stringWithFormat:@"合计：%@元",recharge.price];
+    NSString *priceString = [NSString stringWithFormat:@"合计：%@ 元",recharge.price];
     
     priceNumber = recharge.price;
     price_id    = recharge.type_id;
@@ -329,8 +333,8 @@
     
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:priceString];
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(0,3)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:17] range:NSMakeRange(3,recharge.price.length)];
-    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(3+recharge.price.length,1)];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:24] range:NSMakeRange(3,recharge.price.length)];
+    [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(3+recharge.price.length + 1,1)];
     totalPrice.attributedText = str;
     
     [_tableView reloadData];

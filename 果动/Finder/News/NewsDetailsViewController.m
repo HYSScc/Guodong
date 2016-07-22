@@ -22,6 +22,7 @@
     NSString       *comment_id;
     NSString       *reply_id;
     DetailsLikeView *likeView;
+    NSString       *talk;
     DetailsCommentView *commentView;
     DetailsContentView *contentView;
     NSString       *uid;
@@ -48,7 +49,7 @@
     
     
     _scrollView       = [UIScrollView new];
-    _scrollView.frame = CGRectMake(0, CGRectGetMaxY(navigation.frame), viewWidth, viewHeight - NavigationBar_Height - Adaptive(42));
+    _scrollView.frame = CGRectMake(0, CGRectGetMaxY(navigation.frame), viewWidth, viewHeight - NavigationBar_Height - Adaptive(47));
     _scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     _scrollView.backgroundColor = BASECOLOR;
     [self.view addSubview:_scrollView];
@@ -70,14 +71,18 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickCommentButton) name:@"clickCommentButton" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeComment:) name:@"removeComment" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeNews) name:@"removeNews" object:nil];
+    
     
 }
 
-- (void)removeNews {
+- (void)removeNewssss:(NSString *)talk_id user_id:(NSString *)user_id{
     
-    if ([[HttpTool getUser_id] isEqualToString:uid]) {
-         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"举报",@"删除", nil];
+   
+    talk = talk_id;
+    NSLog(@"uid %@",uid);
+    
+    if ([[HttpTool getUser_id] isEqualToString:user_id]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"举报",@"删除", nil];
         actionSheet.tag = 998;
         [actionSheet showInView:self.view];
         
@@ -86,8 +91,8 @@
         actionSheet.tag = 999;
         [actionSheet showInView:self.view];
     }
-    
 }
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag == 998) {
@@ -97,7 +102,7 @@
             actionSheet.tag = 1000;
             [actionSheet showInView:self.view];
         } else if (buttonIndex == 1) {
-            NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.deletetalk&talkid=%@",BASEURL,_talk_id];
+            NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.deletetalk&talkid=%@",BASEURL,talk];
             [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress *progress) {
                 
             } success:^(id responseObject) {
@@ -111,7 +116,9 @@
             }];
         
        
-       }
+        } else {
+            return;
+        }
     } else if (actionSheet.tag == 999)  {
         
         if (buttonIndex == 0) {
@@ -119,6 +126,8 @@
             actionSheet.tag = 1000;
             [actionSheet showInView:self.view];
 
+        } else {
+            return;
         }
         
         
@@ -126,7 +135,9 @@
         NSString *typeid;
         if (buttonIndex <  2) {
             typeid = [NSString stringWithFormat:@"%ld",buttonIndex + 1];
-            NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.report&typeid=%@&talkid=%@",BASEURL,typeid,_talk_id];
+            
+            
+            NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.report&typeid=%@&talkid=%@",BASEURL,typeid,talk];
             [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress *progress) {
                 
             } success:^(id responseObject) {
@@ -167,9 +178,9 @@
     CGSize scrollViewSize   = _scrollView.contentSize;
     
     if (CGRectGetMaxY(likeView.frame) + Adaptive(10) + height > viewHeight) {
-        scrollViewSize.height = CGRectGetMaxY(likeView.frame) + Adaptive(10) + height ;
+        scrollViewSize.height = CGRectGetMaxY(likeView.frame) + Adaptive(11) + height ;
     } else {
-        scrollViewSize.height = viewHeight + Adaptive(5);
+        scrollViewSize.height = viewHeight + Adaptive(6);
     }
     // 通过各部分View 重设的height 设置contentSize
     _scrollView.contentSize = scrollViewSize;
@@ -190,6 +201,8 @@
 }
 
 - (void)refushNewsDetails:(NSNotification *)notification {
+    
+    
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.talk&talkid=%@",BASEURL,_talk_id];
     [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
         
@@ -222,7 +235,7 @@
 }
 - (void)createUIWithDetails {
     
-    
+   
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.talk&talkid=%@",BASEURL,_talk_id];
     
     [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
@@ -275,13 +288,9 @@
 //表随键盘高度变化
 -(void)keyboardShow:(NSNotification *)note
 {
-    
-    
     CGRect keyBoardRect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     CGFloat deltaY = keyBoardRect.size.height;
     textFieldView.frame = CGRectMake(0, viewHeight  - deltaY - Adaptive(42), viewWidth, Adaptive(42));
-    
-    
     
 }
 -(void)keyboardHide:(NSNotification *)note
@@ -304,7 +313,6 @@
         
         [alert show];
     }
-    
 }
 
 - (void)newsPublishButtonClick:(UIButton *)button {
@@ -341,11 +349,7 @@
             [textFieldView.textField resignFirstResponder];
             
             [self createUIWithDetails];
-            distinguishType        = @"result";
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            
-            [alert show];
+            distinguishType    = @"result";
             
         }];
     } else {
@@ -362,4 +366,17 @@
     }
     
 }
+
++ (instancetype)sharedViewControllerManager {
+    static dispatch_once_t onceToken;
+    static NewsDetailsViewController* viewController;
+    
+    dispatch_once(&onceToken, ^{
+        viewController = [[NewsDetailsViewController alloc] init];
+    });
+    
+    return viewController;
+}
+
+
 @end

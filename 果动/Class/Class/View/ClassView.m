@@ -67,15 +67,18 @@
             cell = [[UITableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier:celllastidentifier];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        
+        UILabel *line = [UILabel new];
+        line.frame    = CGRectMake(0, 0, viewWidth, Adaptive(5));
+        line.backgroundColor = BASECOLOR;
+        [cell addSubview:line];
+        
         UIImageView *contentImageView = [UIImageView new];
-        contentImageView.frame        = CGRectMake(0, 0, viewWidth, Adaptive(120));
+        contentImageView.frame        = CGRectMake(0, CGRectGetMaxY(line.frame), viewWidth, Adaptive(120));
         [contentImageView sd_setImageWithURL:[NSURL URLWithString:_home.rechargeImg]];
         [cell addSubview:contentImageView];
         
-        UILabel *line = [UILabel new];
-        line.frame    = CGRectMake(0, CGRectGetMaxY(contentImageView.frame), viewWidth, Adaptive(5));
-        line.backgroundColor = BASECOLOR;
-        [cell addSubview:line];
+       
         return cell;
         
       

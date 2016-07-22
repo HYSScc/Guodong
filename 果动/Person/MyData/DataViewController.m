@@ -99,14 +99,14 @@
     titleScrollView.bounces = NO;
     [self.view addSubview:titleScrollView];
     
-    UILabel *topLine = [UILabel new];
-    topLine.frame    = CGRectMake(0, 0, Adaptive(70), .5);
-    topLine.alpha = .8;
-    topLine.backgroundColor = [UIColor whiteColor];
-    [titleScrollView addSubview:topLine];
+//    UILabel *topLine = [UILabel new];
+//    topLine.frame    = CGRectMake(0, 0, Adaptive(70), .5);
+//    topLine.alpha = .8;
+//    topLine.backgroundColor = [UIColor whiteColor];
+//    [titleScrollView addSubview:topLine];
     
     
-    UILabel * timelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topLine.frame), Adaptive(70), Adaptive(40))];
+    UILabel * timelabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Adaptive(70), Adaptive(40))];
     timelabel.backgroundColor = ORANGECOLOR;
     timelabel.text = @"时间";
     timelabel.textAlignment = 1;
@@ -235,11 +235,11 @@
     dataScrollView.delegate        = self;
     [self.view addSubview:dataScrollView];
     
-    UILabel *topDataLine = [UILabel new];
-    topDataLine.frame    = CGRectMake(0, 0, viewWidth - Adaptive(70), .5);
-    topDataLine.backgroundColor = [UIColor whiteColor];
-    topDataLine.alpha = .8;
-    [dataScrollView addSubview:topDataLine];
+//    UILabel *topDataLine = [UILabel new];
+//    topDataLine.frame    = CGRectMake(0, 0, viewWidth - Adaptive(70), .5);
+//    topDataLine.backgroundColor = [UIColor whiteColor];
+//    topDataLine.alpha = .8;
+//    [dataScrollView addSubview:topDataLine];
     
     
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
@@ -247,7 +247,7 @@
     
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];//设置横向
     
-    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(topDataLine.frame), viewWidth - Adaptive(70), viewHeight*2) collectionViewLayout:flowLayout];
+    _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, viewWidth - Adaptive(70), viewHeight*2) collectionViewLayout:flowLayout];
     //  _collectionView.bounces = NO;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;

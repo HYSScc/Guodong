@@ -10,7 +10,7 @@
 
 @class MyNewsModel;
 
-@interface My_NewsTableViewCell : UITableViewCell
+@interface My_NewsTableViewCell : UITableViewCell <UIActionSheetDelegate>
 
 @property (nonatomic,retain) MyNewsModel *newsModel;
 

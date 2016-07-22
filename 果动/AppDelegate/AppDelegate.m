@@ -228,6 +228,12 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
         
         PushView *push = [[PushView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight) image:[userInfo objectForKey:@"img"] imageWidth:width height:height title:title];
         [self .window addSubview:push];
+    } else if ([[userInfo objectForKey:@"type"] isEqualToString:@"else"]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        
+        [alert show];
+    } else {
+        
     }
     
 }

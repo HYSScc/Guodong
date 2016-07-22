@@ -5,6 +5,8 @@
 //  Created by mac on 16/5/27.
 //  Copyright © 2016年 Unique. All rights reserved.
 //
+
+#import "MoneyIntroduceController.h"
 #import "SetShareViewController.h"
 #import "LoginViewController.h"
 #import "MoneyViewController.h"
@@ -17,6 +19,9 @@
     NSMutableArray *moneyArray;
     int page;
     UIView *noDataView;
+    
+    UILabel *timeOverLabel;
+    
 }
 @end
 
@@ -74,7 +79,7 @@
     [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
         
     } success:^(id responseObject) {
-        
+        page = 1;
         [moneyArray removeAllObjects];
         if ([[[responseObject objectForKey:@"data"] objectForKey:@"cons"] count] != 0) {
             [noDataView removeFromSuperview];
@@ -83,6 +88,17 @@
                 [moneyArray addObject:moneyModel];
             }
         }
+        NSString *number = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"data"] objectForKey:@"expire"]];
+        
+        if ([number intValue] != 0) {
+            NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"有 %@ 张优惠券即将过期",number]];
+            [str addAttribute:NSForegroundColorAttributeName value:ORANGECOLOR range:NSMakeRange(2,number.length)];
+            timeOverLabel.attributedText = str;
+        }
+        
+      
+        
+        
         [_tableView reloadData];
         // 结束刷新状态
         [_tableView headerEndRefreshing];
@@ -142,10 +158,48 @@
     [self.view addSubview:exchangeButton];
     
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_textField.frame) + Adaptive(10), viewWidth, viewHeight - NavigationBar_Height - Adaptive((39 + 28))) style:UITableViewStylePlain];
+    timeOverLabel = [UILabel new];
+    timeOverLabel.frame = CGRectMake(Adaptive(13),
+                                     CGRectGetMaxY(_textField.frame) + Adaptive(13),
+                                     viewWidth / 2,
+                                     Adaptive(13));
+    timeOverLabel.textColor = [UIColor grayColor];
+    timeOverLabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
+    [self.view addSubview:timeOverLabel];
+    
+    UILabel *introduceLabel = [UILabel new];
+    introduceLabel.frame    = CGRectMake(viewWidth - Adaptive(73),
+                                         CGRectGetMaxY(_textField.frame) + Adaptive(13),
+                                         Adaptive(60),
+                                         Adaptive(13));
+    introduceLabel.text = @"优惠券说明";
+    introduceLabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
+    introduceLabel.textColor = [UIColor grayColor];
+    [self.view addSubview:introduceLabel];
+    
+    
+    UIImageView *questionImageView = [UIImageView new];
+    questionImageView.frame        = CGRectMake(CGRectGetMinX(introduceLabel.frame) - Adaptive(14),
+                                                CGRectGetMaxY(_textField.frame) + Adaptive(14),
+                                                Adaptive(11),
+                                                Adaptive(11));
+    questionImageView.image = [UIImage imageNamed:@"person_question"];
+    [self.view addSubview:questionImageView];
+    
+    
+    UIButton *introduceButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    introduceButton.frame = CGRectMake(CGRectGetMinX(introduceLabel.frame),
+                                       CGRectGetMaxY(_textField.frame) + Adaptive(5),
+                                       viewWidth - CGRectGetMinX(introduceLabel.frame) - Adaptive(13),
+                                       Adaptive(29));
+    [introduceButton addTarget:self action:@selector(introduceButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:introduceButton];
+    
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(timeOverLabel.frame) + Adaptive(13), viewWidth, viewHeight - CGRectGetMaxY(timeOverLabel.frame) - Adaptive(13)) style:UITableViewStylePlain];
     _tableView.delegate   = self;
     _tableView.dataSource = self;
-    _tableView.rowHeight  = Adaptive(105);
+    _tableView.rowHeight  = Adaptive(110);
     _tableView.backgroundColor = BASECOLOR;
     _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     _tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
@@ -187,6 +241,16 @@
     [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:strRange];
     [publishButton setAttributedTitle:str forState:UIControlStateNormal];
 }
+
+// 跳转到优惠券说明
+- (void)introduceButtonClick:(UIButton *)button {
+    
+    self.hidesBottomBarWhenPushed = YES;
+    MoneyIntroduceController *introduce = [MoneyIntroduceController new];
+    [self.navigationController pushViewController:introduce animated:YES];
+    
+}
+
 
 - (void)publishButtonClick:(UIButton *)button {
     self.hidesBottomBarWhenPushed = YES;

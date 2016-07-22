@@ -15,7 +15,8 @@
     UIImageView *headImageView;
     UILabel     *line;
     UILabel     *isCoachLabel;
-    
+    UILabel *title_Name;
+    UILabel *title_sex;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -27,7 +28,7 @@
         
         self.backgroundColor = BASEGRYCOLOR;
         
-        UILabel *title_Name = [UILabel new];
+       title_Name = [UILabel new];
         title_Name.frame    = CGRectMake(Adaptive(13),
                                          Adaptive(13),
                                          Adaptive(60),
@@ -35,7 +36,7 @@
         title_Name.text      = @"教练:";
         title_Name.textColor = [UIColor whiteColor];
         title_Name.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
-        [self addSubview:title_Name];
+        
         
         coachName       = [UILabel new];
         coachName.frame = CGRectMake(CGRectGetMaxX(title_Name.frame),
@@ -44,9 +45,9 @@
                                      Adaptive(20));
         coachName.textColor = [UIColor whiteColor];
         coachName.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
-        [self addSubview:coachName];
         
-        UILabel *title_sex = [UILabel new];
+        
+        title_sex = [UILabel new];
         title_sex.frame    = CGRectMake(CGRectGetMaxX(coachName.frame),
                                         Adaptive(13),
                                         Adaptive(40),
@@ -54,7 +55,7 @@
         title_sex.text      = @"性别:";
         title_sex.textColor = [UIColor whiteColor];
         title_sex.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
-        [self addSubview:title_sex];
+        
         
         coachSex       = [UILabel new];
         coachSex.frame = CGRectMake(CGRectGetMaxX(title_sex.frame),
@@ -63,7 +64,7 @@
                                     Adaptive(20));
         coachSex.textColor = [UIColor whiteColor];
         coachSex.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
-        [self addSubview:coachSex];
+        
         
         
         headImageView       = [UIImageView new];
@@ -73,7 +74,7 @@
                                          Adaptive(47));
         headImageView.layer.cornerRadius  = headImageView.bounds.size.width / 2;
         headImageView.layer.masksToBounds = YES;
-        [self addSubview:headImageView];
+        
         
         line = [UILabel new];
         line.backgroundColor = BASECOLOR;
@@ -86,13 +87,26 @@
 - (void)setDataModel:(OrderDataModel *)dataModel {
     
     
-    
-    coachName.text = dataModel.coachName;
-    coachSex.text  = dataModel.coachSex;
-    
-    
-    [headImageView sd_setImageWithURL:[NSURL URLWithString:dataModel.coachHeadImgUrl] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
-    
+    if (dataModel.coach_info.count != 0) {
+        [self addSubview:title_Name];
+        [self addSubview:title_sex];
+        [self addSubview:coachName];
+        [self addSubview:coachSex];
+        [self addSubview:headImageView];
+        
+        coachName.text = dataModel.coachName;
+        coachSex.text  = dataModel.coachSex;
+        
+        
+        [headImageView sd_setImageWithURL:[NSURL URLWithString:dataModel.coachHeadImgUrl] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
+        
+    } else {
+        [title_Name removeFromSuperview];
+        [title_sex removeFromSuperview];
+        [coachName removeFromSuperview];
+        [coachSex removeFromSuperview];
+        [headImageView removeFromSuperview];
+    }
     line.frame = CGRectMake(0,
                             CGRectGetMaxY(headImageView.frame) + Adaptive(10),
                             viewWidth,

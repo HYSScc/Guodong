@@ -12,9 +12,7 @@
 
 + (instancetype)sharedViewControllerManager;
 
-- (void)pushPublishViewWithName:(NSString *)name;
-
-- (void)pushWebViewWithName:(NSString *)content_id;
+- (void)pushWebViewWithName:(NSString *)content_id title:(NSString *)title;
 
 - (void)pushNewsDetailsViewWithindex:(NSInteger )index;
 

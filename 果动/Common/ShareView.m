@@ -16,9 +16,12 @@
     NSString *titleString;
     UIImage  *shareImage;
     NSString *urlString;
+    NSString *idString;
+    NSString *typeString;
     UIViewController *viewController;
+    
 }
-- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title imageName:(UIImage *)image url:(NSString *)url viewController:(UIViewController *)controller
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title imageName:(UIImage *)image url:(NSString *)url id:(NSString *)id_string shareType:(NSString *)share viewController:(UIViewController *)controller
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -27,6 +30,8 @@
         titleString          = title;
         shareImage           = image;
         urlString            = url;
+        idString             = id_string;
+        typeString           = share;
         viewController       = controller;
         self.backgroundColor = BASECOLOR;
         
@@ -50,6 +55,7 @@
                                                 Adaptive(20) + (a/3) * (OriginY + Adaptive(60)),
                                                 Adaptive(50),
                                                 Adaptive(50));
+            
             imageView.image        = [UIImage imageNamed:imageArray[a]];
             [buttonView addSubview:imageView];
             
@@ -125,10 +131,18 @@
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:titleString image:shareImage location:nil urlResource:urlResource presentedController:viewController completion:^(UMSocialResponseEntity *shareResponse){
                 
                 
-                
                 if (shareResponse.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"朋友圈分享成功！%@",shareResponse);
-                   
+                     NSLog(@"微信好友分享成功！%@",shareResponse);
+                    NSString *url = [NSString stringWithFormat:@"%@api/?method=user.callback",BASEURL];
+                    NSDictionary *dict = @{@"platform":@"wx",
+                                           @"id":idString,
+                                           @"types":typeString
+                                           };
+                    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+                        
+                    } success:^(id responseObject) {
+                        
+                    }];
                 }
             }];
             
@@ -143,7 +157,17 @@
             
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:titleString image:shareImage location:nil urlResource:urlResource presentedController:viewController completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"微信好友分享成功！%@",response);
+                    NSLog(@"朋友圈分享成功！%@",response);
+                    NSString *url = [NSString stringWithFormat:@"%@api/?method=user.callback",BASEURL];
+                    NSDictionary *dict = @{@"platform":@"wx",
+                                           @"id":idString,
+                                           @"types":typeString
+                                           };
+                    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+                        
+                    } success:^(id responseObject) {
+                        
+                    }];
                 }
             }];
         }
@@ -154,6 +178,16 @@
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSms] content:[NSString stringWithFormat:@"%@%@",titleString,urlString] image:nil location:nil urlResource:nil presentedController:viewController completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {
                     NSLog(@"短信分享成功！%@",response);
+                    NSString *url = [NSString stringWithFormat:@"%@api/?method=user.callback",BASEURL];
+                    NSDictionary *dict = @{@"platform":@"sms",
+                                           @"id":idString,
+                                           @"types":typeString
+                                           };
+                    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+                        
+                    } success:^(id responseObject) {
+                        
+                    }];
                 }
                 
             }];
@@ -165,6 +199,16 @@
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:[NSString stringWithFormat:@"%@%@",titleString,urlString] image:shareImage location:nil urlResource:nil presentedController:viewController completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {
                     NSLog(@"微博分享成功！%@",response);
+                    NSString *url = [NSString stringWithFormat:@"%@api/?method=user.callback",BASEURL];
+                    NSDictionary *dict = @{@"platform":@"wb",
+                                           @"id":idString,
+                                           @"types":typeString
+                                           };
+                    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+                        
+                    } success:^(id responseObject) {
+                        
+                    }];
                 }
             }];
             
@@ -179,6 +223,16 @@
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:titleString image:shareImage location:nil urlResource:nil presentedController:viewController completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {
                     NSLog(@"QQ好友分享成功！%@",response);
+                    NSString *url = [NSString stringWithFormat:@"%@api/?method=user.callback",BASEURL];
+                    NSDictionary *dict = @{@"platform":@"qq",
+                                           @"id":idString,
+                                           @"types":typeString
+                                           };
+                    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+                        
+                    } success:^(id responseObject) {
+                        
+                    }];
                 }
             }];
             
@@ -192,6 +246,16 @@
             [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:titleString image:shareImage location:nil urlResource:nil presentedController:viewController completion:^(UMSocialResponseEntity *response){
                 if (response.responseCode == UMSResponseCodeSuccess) {
                     NSLog(@"QQ空间分享成功！%@",response);
+                    NSString *url = [NSString stringWithFormat:@"%@api/?method=user.callback",BASEURL];
+                    NSDictionary *dict = @{@"platform":@"qq",
+                                           @"id":idString,
+                                           @"types":typeString
+                                           };
+                    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+                        
+                    } success:^(id responseObject) {
+                        
+                    }];
                 }
             }];
             

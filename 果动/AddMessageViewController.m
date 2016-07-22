@@ -38,6 +38,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
+    changeTime  = YES;
     // 隐藏navigationBar
     self.navigationController.navigationBarHidden = YES;
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:_className viewController:self];
@@ -85,7 +86,7 @@
         
     } success:^(id responseObject) {
         messageModel = [[addMessageModel alloc] initWithDictionary:[responseObject objectForKey:@"data"]];
-        NSLog(@"messageModel %@",messageModel);
+       
         nowClassNumber = messageModel.package_balance;
         [self createUI];
     }];
@@ -114,8 +115,8 @@
     sureButton.backgroundColor = ORANGECOLOR;
     sureButton.titleLabel.font = [UIFont fontWithName:FONT_BOLD size:Adaptive(15)];
     [sureButton addTarget:self action:@selector(sureButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [sureButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [sureButton setTitle:@"下单" forState:UIControlStateNormal];
+    [sureButton setTitleColor:BASECOLOR forState:UIControlStateNormal];
+    [sureButton setTitle:@"下 单" forState:UIControlStateNormal];
     [self.view addSubview:sureButton];
     
     
@@ -157,25 +158,34 @@
         
         // 设置更多地址的按钮
         if (a == 0) {
-            
-            if (![_isChange isEqualToString:@"change"]) {
-                addMessageView.messageLabel.text = messageModel.user_address;
+            if ([_classOrShip isEqualToString:@"shop"]) {
+                
+                addMessageView.textField.userInteractionEnabled = NO;
+                addMessageView.messageLabel.text = @"建国路华贸公寓5号楼607";
+                
+            } else {
+                if (![_isChange isEqualToString:@"change"]) {
+                    addMessageView.messageLabel.text = messageModel.user_address;
+                }
+                
+                CGSize textSize = [addMessageView.messageLabel.text sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:Adaptive(15)]}];
+                
+                if (textSize.width > addMessageView.messageLabel.bounds.size.width) {
+                    addMessageView.messageLabel.textAlignment = 0;
+                }
+                
+                UIButton *changeAddressButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                changeAddressButton.frame     = CGRectMake(viewWidth - Adaptive(18),
+                                                           Adaptive(17),
+                                                           Adaptive(16),
+                                                           Adaptive(16));
+                [changeAddressButton setBackgroundImage:[UIImage imageNamed:@"class_moreAddress"] forState:UIControlStateNormal];
+                [changeAddressButton addTarget:self action:@selector(changeAddressButton:) forControlEvents:UIControlEventTouchUpInside];
+                [addMessageView addSubview:changeAddressButton];
             }
             
-            CGSize textSize = [addMessageView.messageLabel.text sizeWithAttributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:Adaptive(15)]}];
             
-            if (textSize.width > addMessageView.messageLabel.bounds.size.width) {
-                addMessageView.messageLabel.textAlignment = 0;
-            }
-            
-            UIButton *changeAddressButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            changeAddressButton.frame     = CGRectMake(viewWidth - Adaptive(18),
-                                                       Adaptive(17),
-                                                       Adaptive(16),
-                                                       Adaptive(16));
-            [changeAddressButton setBackgroundImage:[UIImage imageNamed:@"class_moreAddress"] forState:UIControlStateNormal];
-            [changeAddressButton addTarget:self action:@selector(changeAddressButton:) forControlEvents:UIControlEventTouchUpInside];
-            [addMessageView addSubview:changeAddressButton];
+          
         }
         // 获取用户姓名
         if (a == 4) {
@@ -248,12 +258,32 @@
         case 2:
         {
             // 时间
-            
-            
-            
-            
-            
-            pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"picker" pickerArray:messageModel.timeArray];
+           
+            if (!changeTime) {
+               // NSLog(@"不需要更改时间");
+                pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"picker" pickerArray:messageModel.timeArray];
+            } else {
+             //   NSLog(@"更改时间");
+                NSDateFormatter*df = [[NSDateFormatter alloc]init];//格式化
+                [df setDateFormat:@"HH:mm"];
+                
+                // 当前时间往后两小时
+                NSDate *date = [[NSDate alloc] initWithTimeInterval:7200 sinceDate:[NSDate date]];;
+                
+                NSString* dateString = [df stringFromDate:date];
+                
+                NSMutableArray *changeTimeArray = [NSMutableArray array];
+                
+                for (NSString *string in messageModel.timeArray)
+                {
+                    NSString *arrayString = [string substringToIndex:5];
+                    if ([arrayString intValue] > [dateString intValue])
+                    {
+                        [changeTimeArray addObject:string];
+                    }
+                }
+                 pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"picker" pickerArray:changeTimeArray];
+            }
         }
             break;
         case 6:
@@ -284,9 +314,6 @@
         
     }
     
-    NSLog(@"button.tag %ld",(long)button.tag);
-        
-    
     
     if (button.tag == 300) {
         
@@ -295,18 +322,11 @@
         [df setDateFormat:@"yyyy年MM月dd日"];
         
         NSString* dateString = [df stringFromDate:[NSDate date]];
-        NSLog(@"s1 %@",dateString);
         
-        NSLog(@"text %@",addMessageView.messageLabel.text);
-        
-        if (addMessageView.messageLabel.text.length == 0 || [dateString isEqualToString:addMessageView.messageLabel.text]) {
-            NSLog(@"更改时间");
-            changeTime = YES;
+        if (![dateString isEqualToString:addMessageView.messageLabel.text]) {
+            changeTime = NO;
         }
     }
-    
-    
-    
     
     [pickerView removeFromSuperview];
 }
@@ -475,9 +495,6 @@
                                                userInfo:alert
                                                 repeats:YES];
             }
-            
-            
-            
         }];
     }
 }

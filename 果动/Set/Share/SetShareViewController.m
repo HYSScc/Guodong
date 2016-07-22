@@ -5,6 +5,7 @@
 //  Created by mac on 16/7/8.
 //  Copyright © 2016年 Unique. All rights reserved.
 //
+#import "LoginViewController.h"
 #import "UMSocialData.h"
 #import "UMSocialSnsService.h"
 #import "UMSocialSnsPlatformManager.h"
@@ -77,6 +78,8 @@
 }
 
 - (void)startRequest {
+    
+    
     NSString *url = [NSString stringWithFormat:@"%@api/?method=user.share_url",BASEURL];
     [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress *progress) {
         
@@ -85,10 +88,16 @@
         contentString = [[responseObject objectForKey:@"data"] objectForKey:@"info"];
         titleString = [[responseObject objectForKey:@"data"] objectForKey:@"title"];
         shareImage  = [UIImage imageNamed:@"App"];
+        
+        
     }];
 }
--(void)didFinishGetUMSocialDataResponse:(UMSocialResponseEntity *)response {
-    NSLog(@"代理方法");
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+    }
 }
 - (void)shareButtonClick:(UIButton *)button {
     
@@ -105,106 +114,87 @@
      
      */
     
-    switch (button.tag) {
-        case 1:
-        {
-            
-            [UMSocialData defaultData].extConfig.wechatSessionData.title = titleString;
-            
-            UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeWeb url:
-                                                shareUrl];
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:contentString image:shareImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *shareResponse){
-                /*
-                 UMSResponseCodeSuccess            = 200,        //成功
-                 UMSREsponseCodeTokenInvalid       = 400,        //授权用户token错误
-                 UMSResponseCodeBaned              = 505,        //用户被封禁
-                 UMSResponseCodeFaild              = 510,        //发送失败（由于内容不符合要求或者其他原因）
-                 UMSResponseCodeArgumentsError     = 522,        //参数错误,提供的参数不符合要求
-                 UMSResponseCodeEmptyContent       = 5007,       //发送内容为空
-                 UMSResponseCodeShareRepeated      = 5016,       //分享内容重复
-                 UMSResponseCodeGetNoUidFromOauth  = 5020,       //授权之后没有得到用户uid
-                 UMSResponseCodeAccessTokenExpired = 5027,       //token过期
-                 UMSResponseCodeNetworkError       = 5050,       //网络错误
-                 UMSResponseCodeGetProfileFailed   = 5051,       //获取账户失败
-                 UMSResponseCodeCancel             = 5052,        //用户取消授权
-                 UMSResponseCodeNotLogin           = 5053,       //用户没有登录
-                 UMSResponseCodeNoApiAuthority     = 100031      //QQ空间应用没有在QQ互联平台上申请上传图片到相册的权限
-                 */
+    if ([HttpTool judgeWhetherUserLogin]) {
+        switch (button.tag) {
+            case 1:
+            {
+                [UMSocialData defaultData].extConfig.wechatSessionData.title = titleString;
                 
-                if (shareResponse.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"朋友圈分享成功！%@",shareResponse);
-                }
-            }];
-            
-            
-        }
-            break;
-        case 2:
-        {
-            [UMSocialData defaultData].extConfig.wechatTimelineData.title = titleString;
-            UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeWeb url:
-                                                shareUrl];
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:contentString image:shareImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
-                if (response.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"微信好友分享成功！%@",response);
-                }
-            }];
-        }
-            break;
-        case 3:
-        {
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSms] content:[NSString stringWithFormat:@"%@%@",contentString,shareUrl] image:nil location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                if (response.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"短信分享成功！%@",response);
-                }
+                UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeWeb url:
+                                                    shareUrl];
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatSession] content:contentString image:shareImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *shareResponse){
+                    
+                    
+                    if (shareResponse.responseCode == UMSResponseCodeSuccess) {
+                        NSLog(@"朋友圈分享成功！%@",shareResponse);
+                    }
+                }];
+            }
+                break;
+            case 2:
+            {
+                [UMSocialData defaultData].extConfig.wechatTimelineData.title = titleString;
+                UMSocialUrlResource *urlResource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeWeb url:
+                                                    shareUrl];
                 
-            }];
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToWechatTimeline] content:contentString image:shareImage location:nil urlResource:urlResource presentedController:self completion:^(UMSocialResponseEntity *response){
+                    if (response.responseCode == UMSResponseCodeSuccess) {
+                        NSLog(@"微信好友分享成功！%@",response);
+                    }
+                }];
+            }
+                break;
+            case 3:
+            {
+                
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSms] content:[NSString stringWithFormat:@"%@%@",contentString,shareUrl] image:nil location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                    if (response.responseCode == UMSResponseCodeSuccess) {
+                        NSLog(@"短信分享成功！%@",response);
+                    }
+                }];
+            }
+                break;
+            case 4:
+            {
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:[NSString stringWithFormat:@"%@%@",contentString,shareUrl] image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                    if (response.responseCode == UMSResponseCodeSuccess) {
+                        NSLog(@"微博分享成功！%@",response);
+                    }
+                }];
+            }
+                break;
+            case 5:
+            {
+                [UMSocialData defaultData].extConfig.qqData.url = shareUrl;
+                [UMSocialData defaultData].extConfig.qqData.title = titleString;
+                
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:contentString image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                    if (response.responseCode == UMSResponseCodeSuccess) {
+                        NSLog(@"QQ好友分享成功！%@",response);
+                    }
+                }];
+            }
+                break;
+            case 6:
+            {
+                
+                [UMSocialData defaultData].extConfig.qzoneData.url = shareUrl;
+                [UMSocialData defaultData].extConfig.qzoneData.title = titleString;
+                [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:contentString image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
+                    if (response.responseCode == UMSResponseCodeSuccess) {
+                        NSLog(@"QQ空间分享成功！%@",response);
+                    }
+                }];
+            }
+                break;
+                
+            default:
+                break;
         }
-            break;
-        case 4:
-        {
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToSina] content:[NSString stringWithFormat:@"%@%@",contentString,shareUrl] image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                if (response.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"微博分享成功！%@",response);
-                }
-            }];
-            
-        }
-            break;
-        case 5:
-        {
-            
-            [UMSocialData defaultData].extConfig.qqData.url = shareUrl;
-            [UMSocialData defaultData].extConfig.qqData.title = titleString;
-            
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQQ] content:contentString image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                if (response.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"QQ好友分享成功！%@",response);
-                }
-            }];
-            
-        }
-            break;
-        case 6:
-        {
-            
-            [UMSocialData defaultData].extConfig.qzoneData.url = shareUrl;
-             [UMSocialData defaultData].extConfig.qzoneData.title = titleString;
-            [[UMSocialDataService defaultDataService]  postSNSWithTypes:@[UMShareToQzone] content:contentString image:shareImage location:nil urlResource:nil presentedController:self completion:^(UMSocialResponseEntity *response){
-                if (response.responseCode == UMSResponseCodeSuccess) {
-                    NSLog(@"QQ空间分享成功！%@",response);
-                }
-            }];
-            
-        }
-            break;
-            
-            
-        default:
-            break;
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还没有登录，请先登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录",nil];
+        
+        [alert show];
     }
 }
 

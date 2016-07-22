@@ -27,6 +27,8 @@
 @property (nonatomic,retain) NSString       *comment_time;
 @property (nonatomic,retain) NSMutableArray *replyArray;
 
+@property (nonatomic,retain) NSString *talk_id;
+
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 @end

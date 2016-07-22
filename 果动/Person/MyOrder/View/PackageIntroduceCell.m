@@ -89,7 +89,7 @@
         rewardAmount.textColor = [UIColor whiteColor];
         rewardAmount.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
         rewardAmount.textAlignment = 2;
-        rewardAmount.text      = @"￥0.00";
+     //   rewardAmount.text      = @"￥0.00";
         [self addSubview:rewardAmount];
         
         UILabel *lineTwo = [UILabel new];

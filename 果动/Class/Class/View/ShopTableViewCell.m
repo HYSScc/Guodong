@@ -15,10 +15,10 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = BASECOLOR;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         // 把自定义的控件 变成了单元格的属性
-        self.backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, Adaptive(10), viewWidth, Adaptive(130))];
+        self.backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, Adaptive(5), viewWidth, Adaptive(130))];
         [self addSubview:self.backgroundImageView];
         
         self.alphaView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.backgroundImageView.frame) - Adaptive(42), viewWidth, Adaptive(42))];

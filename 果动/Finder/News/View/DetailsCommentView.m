@@ -77,7 +77,7 @@
                                                                 Adaptive(14))];
     label.textColor = [UIColor whiteColor];
     label.font      = [UIFont fontWithName:FONT size:Adaptive(14)];
-    label.text      = [NSString stringWithFormat:@"全部评论 %@",_details.commentNumber];
+    label.text      = [NSString stringWithFormat:@"评论 %@",_details.commentNumber];
     [headView addSubview:label];
     
     UILabel *line = [UILabel new];
@@ -225,7 +225,7 @@
         
         if ([[HttpTool getUser_id] isEqualToString:replyModel.user_id]) {
             // 回复 删除
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复回复",@"删除回复", nil];
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"删除", nil];
             actionSheet.tag = 996;
             [actionSheet showInView:self];
         } else {
@@ -243,7 +243,7 @@
         CommentDict  = @{@"comment_id":commentModel.comment_id,@"distinguish":@"comment",@"nickName":commentModel.nickName};
         if ([[HttpTool getUser_id] isEqualToString:commentModel.user_id]) {
             // 回复 删除
-            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复评论",@"删除评论", nil];
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"回复",@"删除", nil];
             actionSheet.tag = 998;
             [actionSheet showInView:self];
         } else {

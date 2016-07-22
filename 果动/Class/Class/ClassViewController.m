@@ -94,14 +94,15 @@
     
     locationView       = [LocationView sharedViewManager];
     locationView.frame = CGRectMake(Adaptive(13),
-                                    Adaptive(20) + Adaptive((44 - 20)) / 2,
+                                    Adaptive(20) + Adaptive((44 - 27)) / 2,
                                     Adaptive(80),
                                     Adaptive(20));
+   
     [navigationView addSubview:locationView];
     /***************客服****************************/
     
     UIButton *photoButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    photoButton.frame     = CGRectMake(viewWidth - Adaptive((13 + 19)),  Adaptive(20) + Adaptive((44 - 19)) / 2, Adaptive(19), Adaptive(19));
+    photoButton.frame     = CGRectMake(viewWidth - Adaptive((13 + 19)),  Adaptive(20) + Adaptive((44 - 27)) / 2, Adaptive(19), Adaptive(19));
     [photoButton setBackgroundImage:[UIImage imageNamed:@"shouye_photo"] forState:UIControlStateNormal];
     [photoButton addTarget:self action:@selector(telePhoneClick:) forControlEvents:UIControlEventTouchUpInside];
     [navigationView addSubview:photoButton];
@@ -345,18 +346,18 @@
 #pragma mark - 创建课程和体验店视图
 - (void)createClassViewAndShopView {
     
-    CGFloat LeftHeight = viewHeight - Tabbar_Height - CGRectGetMaxY(chooseImageView.frame) - Adaptive(5);
+    CGFloat LeftHeight = viewHeight - Tabbar_Height - CGRectGetMaxY(chooseImageView.frame) ;
     
     /*************左视图|课程****************/
     classView = [[ClassView alloc] initWithFrame:CGRectMake(0,
-                                                            CGRectGetMaxY(chooseImageView.frame) + Adaptive(5),
+                                                            CGRectGetMaxY(chooseImageView.frame),
                                                             viewWidth,
                                                             LeftHeight) viewController:self];
     classView.home = homeModel;
     [self.view addSubview:classView];
     /*************右视图|体验店****************/
     shopView = [[ShopView alloc] initWithFrame:CGRectMake(0,
-                                                          CGRectGetMaxY(chooseImageView.frame) + Adaptive(5),
+                                                          CGRectGetMaxY(chooseImageView.frame),
                                                           viewWidth,
                                                           LeftHeight)];
 }

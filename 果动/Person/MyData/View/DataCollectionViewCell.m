@@ -86,10 +86,10 @@
         
         
         UIImageView *ringImageView = [UIImageView new];
-        ringImageView.frame        = CGRectMake((selfWidth - Adaptive(20)) / 2,
-                                                CGRectGetMaxY(dateLabel.frame) + Adaptive(2),
-                                                Adaptive(20),
-                                                Adaptive(20));
+        ringImageView.frame        = CGRectMake((selfWidth - Adaptive(13)) / 2,
+                                                CGRectGetMaxY(dateLabel.frame) + Adaptive(5.5),
+                                                Adaptive(13),
+                                                Adaptive(13));
         ringImageView.image = [UIImage imageNamed:@"person_data_ring"];
         [self addSubview:ringImageView];
         

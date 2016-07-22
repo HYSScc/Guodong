@@ -97,6 +97,8 @@ alpha:1]
 /**
  *   默认导入的库
  */
+#import "AFNetworking.h"
+//#import <AFNetworking/AFNetworking.h>
 #import "HttpTool.h"             // 自定义请求类
 #import "NavigationView.h"       // 自定义NavigationView
 #import "JPUSHService.h"         // JPush头文件类

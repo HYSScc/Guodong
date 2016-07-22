@@ -101,7 +101,7 @@
     } success:^(id responseObject) {
         
         [dataArray removeAllObjects];
-        
+        page = 1;
         if ([[responseObject objectForKey:@"data"] count] != 0) {
             _tableView.bounces = YES;
             [noDataView removeFromSuperview];

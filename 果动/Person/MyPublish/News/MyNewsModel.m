@@ -19,7 +19,10 @@
         _nickName   = [dict objectForKey:@"nickname"];
         _date       = [dict objectForKey:@"friendtime"];
         _content    = [dict objectForKey:@"content"];
-        _photoUrl   = [dict objectForKey:@"photos"][0];
+        _photoUrl   = [[dict objectForKey:@"img"][0] objectForKey:@"url"];
+        
+        _height     = [[[dict objectForKey:@"img"][0] objectForKey:@"height"] intValue];
+        _widht      = [[[dict objectForKey:@"img"][0] objectForKey:@"width"] intValue];
         _ipraises   = [ NSString stringWithFormat:@"%@",[dict objectForKey:@"ipraises"]];
         _praises    = [NSString stringWithFormat:@"%@",[dict objectForKey:@"praises"]];
         _comments   = [NSString stringWithFormat:@"%@",[dict objectForKey:@"comments"]];

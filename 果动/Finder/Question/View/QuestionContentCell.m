@@ -50,10 +50,14 @@
         
         imageArray = [NSMutableArray array];
         
+        UILabel *gryLabel = [UILabel new];
+        gryLabel.frame    = CGRectMake(0, 0, viewWidth, Adaptive(10));
+        gryLabel.backgroundColor = BASECOLOR;
+        [self addSubview:gryLabel];
         
         
         headImageView       = [UIImageView new];
-        headImageView.frame = CGRectMake(Adaptive(13), Adaptive(10), Adaptive(37), Adaptive(37));
+        headImageView.frame = CGRectMake(Adaptive(13),CGRectGetMaxY(gryLabel.frame) + Adaptive(10), Adaptive(37), Adaptive(37));
         headImageView.layer.cornerRadius  = headImageView.bounds.size.width / 2;
         headImageView.layer.masksToBounds = YES;
         headImageView.userInteractionEnabled = YES;
@@ -88,9 +92,9 @@
         contentLabel.numberOfLines = 0;
         [self addSubview:contentLabel];
         
-        line                 = [UILabel new];
-        line.backgroundColor = BASECOLOR;
-        [self addSubview:line];
+//        line                 = [UILabel new];
+//        line.backgroundColor = BASECOLOR;
+//        [self addSubview:line];
         
         
         
@@ -112,8 +116,7 @@
         myScrollView.pagingEnabled = YES;
         myScrollView.delegate = self;
 
-        
-
+  
         
     }
     return self;
@@ -142,6 +145,7 @@
        
         ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){i*myScrollView.bounds.size.width,0,myScrollView.bounds.size}];
         [tmpImgScrollView setContentWithFrame:convertRect];
+         NSLog(@"tmpView.img %@",tmpView.image);
         [tmpImgScrollView setImage:tmpView.image];
         [myScrollView addSubview:tmpImgScrollView];
         tmpImgScrollView.i_delegate = self;
@@ -171,7 +175,7 @@
     
     TapImageView *tmpView = sender;
     currentIndex = tmpView.tag - 10;
-   // NSLog(@"tmpView %@",tmpView);
+    NSLog(@"tmpView %@  image %@ tag %ld",tmpView,tmpView.image,tmpView.tag );
     
     
     //转换后的rect
@@ -188,6 +192,9 @@
     
     ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){contentOffset,myScrollView.bounds.size}];
     [tmpImgScrollView setContentWithFrame:convertRect];
+    
+   
+    
     [tmpImgScrollView setImage:tmpView.image];
     [myScrollView addSubview:tmpImgScrollView];
     tmpImgScrollView.i_delegate = self;
@@ -215,7 +222,6 @@
 {
     CGFloat pageWidth = scrollView.frame.size.width;
     currentIndex = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    NSLog(@"currentIndex %ld",(long)currentIndex);
 }
 
 
@@ -261,35 +267,48 @@
     CGFloat imageViewMaxY = 0;
     
 
-    if (contentModel.photoArray.count > 0) {
-        [contentImageView removeFromSuperview];
-       for (int a = 0; a < contentModel.photoArray.count; a++) {
-          
-            contentImageView = [TapImageView new];
-            contentImageView.frame = CGRectMake(Adaptive(13) + (a%3)*(imageWidth + Adaptive(5)),
-                                                CGRectGetMaxY(contentLabel.frame) +Adaptive(5)+(a/3)*(imageWidth + Adaptive(5)),
-                                                imageWidth,
-                                                imageWidth);
-            contentImageView.tap_delegate = self;
-            contentImageView.tag = 10 + a;
-            [contentImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.photoArray[a]]];
-            [self addSubview:contentImageView];
+   // if (contentModel.photoArray.count > 0) {
+        
+        
+    for (int a = 0; a < 9; a++) {
+        
+        TapImageView * imageView = [TapImageView new];
+        imageView.frame = CGRectMake(Adaptive(13) + (a%3)*(imageWidth + Adaptive(5)),
+                                     CGRectGetMaxY(contentLabel.frame) +Adaptive(5)+(a/3)*(imageWidth + Adaptive(5)),
+                                     imageWidth,
+                                     imageWidth);
+        imageView.tap_delegate = self;
+        imageView.tag = 10 + a;
+       
+        [self addSubview:imageView];
+    }
+    
+        for (int a = 0; a < 9; a++) {
+            TapImageView *tapImageView = (TapImageView*)[self viewWithTag:10 + a];
+           
+            if (a < contentModel.photoArray.count) {
+                
+               
+                tapImageView.hidden = NO;
+                
+                [tapImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.photoArray[a]]];
+                
+            } else {
+                tapImageView.hidden = YES;
+            }
         }
+        
         
         if (contentModel.photoArray.count % 3 == 0) {
             imageViewMaxY  = (imageWidth + Adaptive(5)) *((contentModel.photoArray.count/3));
         } else {
             imageViewMaxY  = (imageWidth + Adaptive(5)) *((contentModel.photoArray.count/3) + 1);
         }
-    }
-    
-    line.frame = CGRectMake(0,
-                            CGRectGetMaxY(contentLabel.frame) + Adaptive(5) +imageViewMaxY,
-                            viewWidth,
-                            .5);
+//    }
     
     
-    CellFrame.size.height  = CGRectGetMaxY(line.frame);
+  
+    CellFrame.size.height =  CGRectGetMaxY(contentLabel.frame) + Adaptive(10) +imageViewMaxY;
     self.frame            = CellFrame;
 }
 

@@ -170,6 +170,7 @@
         {   viewController.hidesBottomBarWhenPushed          = YES;
             PublishViewController *publish = [PublishViewController new];
             publish.user_id = user_id;
+            publish.className = @"我的发布";
             [viewController.navigationController pushViewController:publish animated:YES];
             viewController.hidesBottomBarWhenPushed          = NO;
         }

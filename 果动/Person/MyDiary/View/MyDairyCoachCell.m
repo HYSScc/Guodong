@@ -105,13 +105,13 @@
 }
 - (void)shareButtonClick:(UIButton *)button {
     
-    NSString *url = [NSString stringWithFormat:@"%@usershare/?types=gdb&id=%@",BASEURL,data_id];
+    NSString *url = [NSString stringWithFormat:@"%@usershare/?types=diary&id=%@",BASEURL,data_id];
     
    
     
      NSString *title = [NSString stringWithFormat:@"%@的健身日记 - 果动",_nickName];
     
-    share = [[ShareView alloc] initWithFrame:CGRectMake(0, viewHeight, viewWidth, Adaptive(256)) title:title imageName:shareImageView.image url:url viewController:nil];
+    share = [[ShareView alloc] initWithFrame:CGRectMake(0, viewHeight, viewWidth, Adaptive(256)) title:title imageName:shareImageView.image url:url id:data_id shareType:@"diary" viewController:nil];
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     
     alphaView = [UIView new];
@@ -214,7 +214,7 @@
         verticalLine.frame = CGRectMake(Adaptive(18.5),
                                         0,
                                         1,
-                                        CGRectGetMaxY(coach_content.frame) + Adaptive(26));
+                                        CGRectGetMaxY(coach_content.frame) + Adaptive(31));
         
     } else {
         NSDictionary *photoDict = dairy.photoArray[0];
@@ -226,7 +226,7 @@
                                         CGRectGetMaxY(coach_content.frame));
     }
     
-    Frame.size.height =  CGRectGetMaxY(verticalLine.frame) - Adaptive(5);
+    Frame.size.height =  CGRectGetMaxY(verticalLine.frame) ;
     self.frame = Frame;
 }
 

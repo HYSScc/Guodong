@@ -134,10 +134,15 @@
     
     NSDictionary *dict     = dataArray[indexPath.row];
     
+    UILabel *lineLabel = [UILabel new];
+    lineLabel.frame    = CGRectMake(0, 0, viewWidth, Adaptive(10));
+    lineLabel.backgroundColor = BASECOLOR;
+    [self addSubview:lineLabel];
+    
     contentImageView    = [TapImageView new];
     contentImageView.backgroundColor = BASEGRYCOLOR;
     contentImageView.tag = 10 + indexPath.row;
-    contentImageView.frame           = CGRectMake(0, 0,cell.frame.size.width , cell.frame.size.height);
+    contentImageView.frame           = CGRectMake(0, CGRectGetMaxY(lineLabel.frame),cell.frame.size.width , cell.frame.size.height);
     [contentImageView sd_setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"img"]]];
     contentImageView.tap_delegate = self;
     [cell.contentView addSubview:contentImageView];

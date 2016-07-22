@@ -13,6 +13,6 @@
 
 @interface ShareView : UIView 
 
-- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title imageName:(UIImage *)image url:(NSString *)url viewController:(UIViewController *)controller;
+- (instancetype)initWithFrame:(CGRect)frame title:(NSString *)title imageName:(UIImage *)image url:(NSString *)url id:(NSString *)id_string shareType:(NSString *)share viewController:(UIViewController *)controller;
 
 @end

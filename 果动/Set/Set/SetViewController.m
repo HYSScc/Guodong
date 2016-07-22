@@ -73,7 +73,7 @@
     for (int a = 0; a < 6; a++) {
         UIView *baseView = [UIView new];
         baseView.frame   = CGRectMake(0,
-                                     NavigationBar_Height + Adaptive(10) + a*46,
+                                     NavigationBar_Height + Adaptive(10) + a*Adaptive(46),
                                       viewWidth,
                                       Adaptive(45));
         

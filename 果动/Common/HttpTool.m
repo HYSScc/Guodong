@@ -52,16 +52,33 @@
         if (success) {
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
-            if ([[dic allKeys] containsObject:@"common"] ) {
-                
-                PersonViewController *personVC    = [PersonViewController sharedViewControllerManager];
-                if ([[[dic objectForKey:@"common"] objectForKey:@"has_message"] intValue] != 0)
-                {
-                    [personVC.tabBarController.tabBar showBadgeOnItemIndex:2];
-                } else {
-                    [personVC.tabBarController.tabBar hideBadgeOnItemIndex:2];
+            
+            if ([[dic objectForKey:@"rc"] intValue] == 0) {
+                if ([[dic allKeys] containsObject:@"common"] ) {
+                    
+                    PersonViewController *personVC    = [PersonViewController sharedViewControllerManager];
+                    if ([[[dic objectForKey:@"common"] objectForKey:@"has_message"] intValue] != 0)
+                    {
+                        [personVC.tabBarController.tabBar showBadgeOnItemIndex:2];
+                        
+                        UIUserNotificationSettings *settings = [UIUserNotificationSettings
+                                                                settingsForTypes:UIUserNotificationTypeBadge categories:nil];
+                        
+                        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+                        
+                    [UIApplication sharedApplication].applicationIconBadgeNumber = [[[dic objectForKey:@"common"] objectForKey:@"has_message"] intValue];
+                        
+                    } else {
+                        [personVC.tabBarController.tabBar hideBadgeOnItemIndex:2];
+                        UIUserNotificationSettings *settings = [UIUserNotificationSettings
+                                                                settingsForTypes:UIUserNotificationTypeBadge categories:nil];
+                        
+                        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+                        
+                        [UIApplication sharedApplication].applicationIconBadgeNumber = [[[dic objectForKey:@"common"] objectForKey:@"has_message"] intValue];
+                    }
+                    personVC.haveNews = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"common"] objectForKey:@"has_message"]];
                 }
-                personVC.haveNews = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"common"] objectForKey:@"has_message"]];
             }
             
             NSLog(@"rc存在  %@ %@", urlStr, dic);
@@ -83,7 +100,7 @@
         
         // 请求失败
         NSLog(@"%@", [error localizedDescription]);
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"数据错误，正在排查中...." delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"服务器开小差了...." delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         
         [alert show];
     }];
@@ -122,7 +139,7 @@
         
         // 请求失败
         NSLog(@"%@", [error localizedDescription]);
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"数据错误，正在排查中...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"服务器开小差了...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         
         [alert show];
     }];
@@ -133,7 +150,7 @@
     NSHTTPCookieStorage* sharedHTTPCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray* cookies = [sharedHTTPCookieStorage cookiesForURL:[NSURL URLWithString:BASEURL]];
    
-   // NSLog(@"cookies %@",cookies);
+    NSLog(@"cookies %@",cookies);
     if ([cookies count] > 1) {
         return YES;
     } else{

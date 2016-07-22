@@ -74,7 +74,7 @@
 
 - (void)setMoneyModel:(MoneyModel *)moneyModel {
     
-    _moneyLabel.frame = CGRectMake(Adaptive(43),
+    _moneyLabel.frame = CGRectMake(Adaptive(40),
                                    Adaptive(38),
                                    Adaptive(60),
                                    Adaptive(27));

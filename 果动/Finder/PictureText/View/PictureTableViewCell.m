@@ -17,13 +17,15 @@
         
         // 把自定义的控件 变成了单元格的属性
         
-        self.backgroundColor = [UIColor colorWithRed:55/255.0
-                                               green:55/255.0
-                                                blue:55/255.0
-                                               alpha:1];
+        self.backgroundColor = BASEGRYCOLOR;
+        
+        UILabel *line = [UILabel new];
+        line.backgroundColor = BASECOLOR;
+        line.frame    = CGRectMake(0,0,viewWidth, Adaptive(10));
+        [self addSubview:line];
         
         self.titleImageView       = [UIImageView new];
-        self.titleImageView.frame = CGRectMake(Adaptive(13), Adaptive(13), viewWidth -Adaptive(26), Adaptive(150));
+        self.titleImageView.frame = CGRectMake(Adaptive(13),CGRectGetMaxY(line.frame) + Adaptive(13), viewWidth -Adaptive(26), Adaptive(150));
         [self addSubview:self.titleImageView];
         
         self.titleLabel       = [UILabel new];
@@ -44,11 +46,7 @@
         self.contentLabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
         [self addSubview:self.contentLabel];
         
-        UILabel *line = [UILabel new];
-        line.backgroundColor = BASECOLOR;
-        line.frame    = CGRectMake(0, CGRectGetMaxY(self.contentLabel.frame) + Adaptive(15),
-                                   viewWidth, Adaptive(10));
-        [self addSubview:line];
+       
         
         
     }

@@ -31,6 +31,10 @@
     UIView         *noDataView;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    [self headerRereshing];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,6 +89,7 @@
         
     } success:^(id responseObject) {
         [orderArray removeAllObjects];
+        page = 1;
          NSDictionary *data = [responseObject objectForKey:@"data"];
         if ([[data objectForKey:@"order_info"] count] != 0)
         {
@@ -134,13 +139,14 @@
         for (int a = 0; a < titleArray.count; a++) {
             UIButton  *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
             button.frame      = CGRectMake(viewWidth / titleArray.count * a,
-                                           Adaptive(13) + NavigationBar_Height,
+                                            NavigationBar_Height,
                                            viewWidth / [titleArray count],
-                                           Adaptive(20));
+                                           Adaptive(36));
             button.tag        = a + 1;
             [button addTarget:self action:@selector(changeTypeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button setTitle:titleArray[a] forState:UIControlStateNormal];
+            [button setBackgroundColor:BASEGRYCOLOR];
             button.titleLabel.font = [UIFont fontWithName:FONT size:Adaptive(12)];
             
             if (a == 0) {
@@ -152,7 +158,7 @@
         
         moveView       = [UIView new];
         moveView.frame = CGRectMake((viewWidth / [titleArray count] - Adaptive(25)) / 2,
-                                    Adaptive(35) + NavigationBar_Height,
+                                    Adaptive(34) + NavigationBar_Height,
                                     Adaptive(25),
                                     Adaptive(2));
         moveView.backgroundColor = ORANGECOLOR;
@@ -224,7 +230,7 @@
             return 3;
         } else if ([dataModel.course_status intValue] == 1) {
             // 等待教练接单
-            return 3;
+            return 2;
         } else {
             // 其他的类型
             return 4;
@@ -269,6 +275,8 @@
             return cell;
         } else if (indexPath.row == 1) {
             
+           
+            
             static NSString *cellidentifier = @"userCell";
             
             OrderUserCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];
@@ -302,7 +310,7 @@
             } else {
                 
                 // 进行中 无删除栏  加载教练栏
-                
+               
                 static NSString *cellidentifier = @"coachCell";
                 
                 OrderCoachCell *cell = [tableView dequeueReusableCellWithIdentifier:cellidentifier];

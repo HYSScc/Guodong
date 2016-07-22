@@ -80,8 +80,9 @@
     
     
     if (_cityAllowed == YES) {
-        [shopButton setTitle:@"预约" forState:UIControlStateNormal];
-        shopButton.titleLabel.font = [UIFont fontWithName: FONT size:Adaptive(15)];
+        [shopButton setTitle:@"预 约" forState:UIControlStateNormal];
+        [shopButton setTitleColor:BASECOLOR forState:UIControlStateNormal];
+        shopButton.titleLabel.font = [UIFont fontWithName: FONT_BOLD size:Adaptive(15)];
         shopButton.backgroundColor = ORANGECOLOR;
         shopButton.userInteractionEnabled = YES;
         
@@ -129,7 +130,7 @@
                                           Adaptive(34));
         [sureButton setBackgroundColor:ORANGECOLOR];
         [sureButton setTitleColor:BASECOLOR forState:UIControlStateNormal];
-        [sureButton setTitle:@"预约" forState:UIControlStateNormal];
+        [sureButton setTitle:@"预 约" forState:UIControlStateNormal];
         sureButton.titleLabel.font = [UIFont fontWithName: FONT_BOLD size:Adaptive(15)];
         [sureButton addTarget:self action:@selector(sureButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [sureView addSubview:sureButton];
@@ -146,8 +147,6 @@
         notAllowedLabel.text = @"当前所在城市暂未覆盖";
         [sureView addSubview:notAllowedLabel];
     }
-    
-    
 }
 
 - (void)createUI {
@@ -298,9 +297,6 @@
         } else {
             _scrollView.contentSize = CGSizeMake(viewWidth, CGRectGetMaxY(_tableView.frame) + footView.bounds.size.height);
         }
-        
-        
-        
     } else {
         
         _scrollView.contentSize = CGSizeMake(viewWidth, CGRectGetMaxY(moreIntroduceView.frame) + Adaptive(5));
