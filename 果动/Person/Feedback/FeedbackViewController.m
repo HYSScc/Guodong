@@ -17,14 +17,17 @@
 @end
 
 @implementation FeedbackViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
-    
-    
+       
     UIView *navigationView = [UIView new];
     navigationView.frame   = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
     navigationView.backgroundColor = ORANGECOLOR;

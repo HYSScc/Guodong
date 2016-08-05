@@ -18,12 +18,21 @@
     UILabel    *line;
     UIButton   *saveButton;
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
     
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
+    
+    NSLog(@"order_id %@",_order_id);
     
     
     UIView *navigationView = [UIView new];
@@ -123,7 +132,6 @@
     if ([textView.text isEqualToString:@"说点什么..."]) {
         textView.text = @"";
     }
-    
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text

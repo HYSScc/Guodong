@@ -29,18 +29,22 @@
     int             page;
     int             refushType;
     UIView         *noDataView;
+    UIView         *buttonSuperView;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     [self headerRereshing];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
+   
     
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"我的订单" viewController:self];
     [self.view addSubview:navigation];
@@ -167,7 +171,7 @@
 
     }
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Adaptive(35) + NavigationBar_Height + Adaptive(2), viewWidth, viewHeight - CGRectGetMaxY(moveView.frame )+ Adaptive(5)) style:UITableViewStyleGrouped];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Adaptive(34.5) + NavigationBar_Height + Adaptive(2), viewWidth, viewHeight - CGRectGetMaxY(moveView.frame )+ Adaptive(5)) style:UITableViewStyleGrouped];
     _tableView.delegate        = self;
     _tableView.dataSource      = self;
     _tableView.backgroundColor = BASECOLOR;
@@ -335,6 +339,7 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.dataModel = dataModel;
+            
             [cell.removeButton addTarget:self action:@selector(removeButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             [cell.commentButton addTarget:self action:@selector(goCommentButtonClick:) forControlEvents:UIControlEventTouchUpInside];
             return cell;
@@ -479,9 +484,10 @@
     [self setupRefresh];
 }
 
-
 #pragma mark - 删除订单、去评价、去支付按钮点击事件
 - (void)removeButtonClick:(UIButton *)button {
+    
+    buttonSuperView = button.superview;
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"确认删除此订单吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确认", nil];
     
@@ -498,9 +504,11 @@
     } else {
         if (buttonIndex == 1) {
            
-            OrderRemarkCell *cell     = (OrderRemarkCell *)alertView.superview.superview;
+            OrderRemarkCell *cell     = (OrderRemarkCell *)buttonSuperView;
+            
             NSIndexPath *indexPath    = [_tableView indexPathForCell:cell];
             OrderDataModel *dataModel = orderArray[indexPath.section];
+            
             NSString *url = [NSString stringWithFormat:@"%@api/?method=gdcourse.delete_order&order_id=%@",BASEURL,dataModel.order_id];
             [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
                 
@@ -512,7 +520,7 @@
 }
 - (void)goPayButtonClick:(UIButton *)button {
     
-    NSLog(@"去支付");
+   
     OrderRemarkCell *cell     = (OrderRemarkCell *)button.superview;
     NSIndexPath *indexPath    = [_tableView indexPathForCell:cell];
     OrderDataModel *dataModel = orderArray[indexPath.section];
@@ -549,12 +557,12 @@
 }
 - (void)goCommentButtonClick:(UIButton *)button {
     
-    NSLog(@"去评价");
+    
     
     OrderRemarkCell *cell     = (OrderRemarkCell *)button.superview;
     NSIndexPath *indexPath    = [_tableView indexPathForCell:cell];
     OrderDataModel *dataModel = orderArray[indexPath.section];
-    
+    NSLog(@"去评价 %@",dataModel.order_id);
     self.hidesBottomBarWhenPushed = YES;
     OrderCommentViewController *comment = [OrderCommentViewController new];
     comment.order_id = dataModel.order_id;

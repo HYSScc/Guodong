@@ -99,7 +99,7 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         // 请求失败
-        NSLog(@"%@", [error localizedDescription]);
+        NSLog(@"error%@", [error localizedDescription]);
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"服务器开小差了...." delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         
         [alert show];
@@ -138,7 +138,7 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         // 请求失败
-        NSLog(@"%@", [error localizedDescription]);
+        NSLog(@"请求失败%@", [error localizedDescription]);
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"服务器开小差了...." delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         
         [alert show];
@@ -150,13 +150,19 @@
     NSHTTPCookieStorage* sharedHTTPCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray* cookies = [sharedHTTPCookieStorage cookiesForURL:[NSURL URLWithString:BASEURL]];
    
-    NSLog(@"cookies %@",cookies);
-    if ([cookies count] > 1) {
-        return YES;
-    } else{
-        return NO;
+   
+    
+    
+    BOOL yesOrNo = NO;
+    
+    
+    for (NSHTTPCookie *cookie in cookies) {
+        if ([cookie.name isEqualToString:@"sessionid"]) {
+            yesOrNo = YES;
+        }
     }
     
+    return yesOrNo;
     
 }
 
@@ -164,9 +170,28 @@
     NSHTTPCookieStorage* sharedHTTPCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSArray* cookies = [sharedHTTPCookieStorage cookiesForURL:[NSURL URLWithString:BASEURL]];
    
-    NSHTTPCookie *cookie = [cookies lastObject];
     
-    return cookie.value;
+    NSString *value = @"";
+    
+    for (NSHTTPCookie *cookie in cookies) {
+        
+        if ([cookie.name isEqualToString:@"uid"]) {
+            value = cookie.value;
+        }
+    }
+   
+    return value;
+}
+
+// 设置行间距
++ (NSMutableAttributedString *)setLinespacingWith:(NSString *)content space:(int)space {
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:content];
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setLineSpacing:space];
+    [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [content length])];
+    
+   return  attributedString;
+
 }
 
 @end

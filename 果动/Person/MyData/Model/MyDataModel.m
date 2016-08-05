@@ -15,6 +15,8 @@
     self = [super init];
     if (self) {
         
+        _data_id = [NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]];
+        
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         [formatter setDateStyle:NSDateFormatterMediumStyle];
         [formatter setTimeStyle:NSDateFormatterShortStyle];

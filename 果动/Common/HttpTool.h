@@ -29,5 +29,6 @@ typedef void (^FailBlock)(NSError* error);
 
 + (NSString *)getUser_id ;
 
-
+// 设置行间距
++ (NSMutableAttributedString *)setLinespacingWith:(NSString *)content space:(int)space;
 @end

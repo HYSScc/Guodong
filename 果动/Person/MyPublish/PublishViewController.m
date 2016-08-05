@@ -20,6 +20,10 @@
     [super viewWillAppear: YES];
     // 隐藏navigationBar
     self.navigationController.navigationBarHidden = YES;
+    
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+    [self createTopView];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +32,7 @@
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:_className viewController:self];
     [self.view addSubview:navigation];
     
-    [self createTopView];
+    
 }
 
 - (void)createTopView {

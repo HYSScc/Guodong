@@ -25,8 +25,8 @@
 #define FONT              @"Arial"
 #define FONT_BOLD         @"Arial-BoldMT"                                // 默认字体
 #define KEFU              @"010-65460058"
-#define SHANGYEHEZUO      @"13700049117"
-#define MEITIHEZUO        @"bin-315@163.com"
+#define SHANGYEHEZUO      @"010-65460058"
+#define MEITIHEZUO        @"admin@guodong117.com"
 /**
  *  项目下载链接
  */
@@ -79,8 +79,6 @@ alpha:1]
                           alpha:1.0]
 
 
-
-
 /**
  *  基于iPhone6 的大小 计算比例 适配各个尺寸
  */
@@ -97,8 +95,9 @@ alpha:1]
 /**
  *   默认导入的库
  */
+#import "QiniuSDK.h"             // 七牛
 #import "AFNetworking.h"
-//#import <AFNetworking/AFNetworking.h>
+#import "UMMobClick/MobClick.h"
 #import "HttpTool.h"             // 自定义请求类
 #import "NavigationView.h"       // 自定义NavigationView
 #import "JPUSHService.h"         // JPush头文件类

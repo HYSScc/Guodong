@@ -8,7 +8,7 @@
 
 #import "ImgScrollerView.h"
 
-@interface ImgScrollView()<UIScrollViewDelegate>
+@interface ImgScrollView()<UIScrollViewDelegate,UIActionSheetDelegate>
 {
     UIImageView *imgView;
     
@@ -20,6 +20,11 @@
     
     //缩放前大小
     CGRect initRect;
+    
+    
+    // 保存到本地的图片
+    UIImage *saveImage;
+    
 }
 
 @end
@@ -48,8 +53,59 @@
         imgView.contentMode = UIViewContentModeScaleAspectFill;
         [self addSubview:imgView];
         
+        
+        UILongPressGestureRecognizer *Long = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(LongGrsture:)];
+        [self addGestureRecognizer:Long];
+
+        
     }
     return self;
+}
+
+- (void)LongGrsture:(UIGestureRecognizer *)gesture {
+    
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"保存到本地", nil];
+        
+        [actionSheet showInView:gesture.view];
+        
+    }
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0: {
+             UIImageWriteToSavedPhotosAlbum(imgView.image, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+        }
+            break;
+        case 1:
+           
+            break;
+        default:
+            break;
+    }
+}
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+   
+    UIAlertView *promptAlert = [[UIAlertView alloc] initWithTitle:@"提示:" message:@"添加到相册成功!" delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+    
+    [NSTimer scheduledTimerWithTimeInterval:1.0f
+                                     target:self
+                                   selector:@selector(timerFireMethod:)
+                                   userInfo:promptAlert
+                                    repeats:NO];
+    
+    [promptAlert show];
+    
+}
+- (void)timerFireMethod:(NSTimer*)theTimer
+{
+    UIAlertView *promptAlert = (UIAlertView*)[theTimer userInfo];
+    [promptAlert dismissWithClickedButtonIndex:0 animated:NO];
+    
+    promptAlert =NULL;
 }
 
 - (void) setContentWithFrame:(CGRect) rect

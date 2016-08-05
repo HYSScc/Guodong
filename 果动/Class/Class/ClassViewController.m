@@ -17,7 +17,7 @@
 
 #import "ClassView.h"         // 课程视图
 #import "ShopView.h"          // 体验店
-
+#import "activeModel.h"
 #import "HomeModel.h"
 #import "AppDelegate.h"
 #import "IntroduceViewController.h" // 课程介绍
@@ -41,6 +41,7 @@
     ClassView         *classView;
     ShopView          *shopView;
     
+    
 }
 @end
 
@@ -49,6 +50,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
+    
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = NO;
     
     if (!isLocationSucceed) {
         CABasicAnimation* basic1 =
@@ -67,10 +73,8 @@
     
     self.view.backgroundColor = BASECOLOR;
     
-  //  NSLog(@"user_id %@",[HttpTool getUser_id]);
+   
     
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
     UIView *navigationView = [UIView new];
     navigationView.frame   = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
     navigationView.backgroundColor = ORANGECOLOR;
@@ -97,7 +101,7 @@
                                     Adaptive(20) + Adaptive((44 - 27)) / 2,
                                     Adaptive(80),
                                     Adaptive(20));
-   
+    
     [navigationView addSubview:locationView];
     /***************客服****************************/
     
@@ -109,14 +113,16 @@
     
     /**************Block函数************************/
     
-    __block ClassViewController *class = self;
+    __weak ClassViewController *class = self;
+    
     
     //跳转到cityViewController
-    self.pushCityViewController = ^(NSString* cityName) {
+    self.pushCityViewController = ^(NSString* cityName,NSString *isSet) {
         
         class.hidesBottomBarWhenPushed = YES;
         CityViewController *cityVC = [CityViewController new];
         cityVC.cityName            = cityName;
+        cityVC.isSet               = isSet;
         [class.navigationController pushViewController:cityVC animated:YES];
         class.hidesBottomBarWhenPushed = NO;
     };
@@ -125,40 +131,51 @@
     //跳转到活动页
     self.pushActiveView = ^(NSString *number) {
         
+//        class.hidesBottomBarWhenPushed          = YES;
+//        activeViewController *active = [activeViewController new];
+//        active.number = number;
+//        active.activeArray = class.activeArray;
+//        [class.navigationController pushViewController:active animated:YES];
+//        class.hidesBottomBarWhenPushed          = NO;
         
-        switch ([number intValue]) {
-            case 0:
-            {
+        
+        activeModel *active = class.activeArray[[number intValue]];
+        
+        if (active.type == 1) {
+            // 1 == iOS界面   2 == 网端
+         
+            if ([active.name isEqualToString:@"index1"]) {
+                
                 class.hidesBottomBarWhenPushed = YES;
                 RechargeViewController *rechargeVC = [RechargeViewController new];
                 [class.navigationController pushViewController:rechargeVC animated:YES];
                 class.hidesBottomBarWhenPushed = NO;
-            }
-                break;
-            case 1:
-            {
-                class.hidesBottomBarWhenPushed          = YES;
-                activeViewController *active = [activeViewController new];
-                active.number = number;
-                [class.navigationController pushViewController:active animated:YES];
-                class.hidesBottomBarWhenPushed          = NO;
-            }
-                break;
-            case 2:
-            {
+                
+            } else if ([active.name isEqualToString:@"index3"]) {
+                
                 class.hidesBottomBarWhenPushed = YES;
                 SetShareViewController *setShareView = [SetShareViewController new];
                 [class.navigationController pushViewController:setShareView animated:YES];
                 class.hidesBottomBarWhenPushed = NO;
-            }
-                break;
                 
-            default:
-                break;
+            } else {
+                class.hidesBottomBarWhenPushed          = YES;
+                activeViewController *activeVC = [activeViewController new];
+                activeVC.name = active.name;
+                [class.navigationController pushViewController:activeVC animated:YES];
+                class.hidesBottomBarWhenPushed          = NO;
+            }
+            
+            
+        } else {
+            class.hidesBottomBarWhenPushed          = YES;
+            activeViewController *activeVC = [activeViewController new];
+            activeVC.url = active.url;
+            [class.navigationController pushViewController:activeVC animated:YES];
+            class.hidesBottomBarWhenPushed          = NO;
         }
     };
     
-
     /********************** 检查版本更新 ****************************/
     refush = [[RefushView alloc] initWithFrame:CGRectMake((viewWidth  - Adaptive(295)) / 2,
                                                           -Adaptive(410),
@@ -175,6 +192,28 @@
     
     // 请求数据
     [self startRequest];
+    
+}
+#pragma mark - 请求数据
+- (void)startRequest {
+    NSString *url = [NSString stringWithFormat:@"%@/api/?method=index.index",BASEURL];
+    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
+        
+    } success:^(id responseObject) {
+        
+        homeModel = [[HomeModel alloc] initWithDictionary:responseObject];
+        
+        bannerScroll.imageURLStringsGroup = homeModel.bannerArray;
+        
+        _activeArray = homeModel.activeArray;
+        
+        // 创建选择视图
+        [self createChooseView];
+        // 创建课程和体验店视图
+        [self createClassViewAndShopView];
+        
+        
+    }];
     
 }
 
@@ -198,28 +237,20 @@
 -(void)onCheckVersion
 {
     NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-   
+    
     NSString *appVersion = [infoDic objectForKey:@"CFBundleVersion"];
     
-    NSString *url = [NSString stringWithFormat:@"http://itunes.apple.com/lookup?id=%d",APPID];
+    NSString *url = [NSString stringWithFormat:@"%@api/?method=index.version",BASEURL];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:url]];
-    [request setHTTPMethod:@"POST"];
-    NSHTTPURLResponse *urlResponse = nil;
-    NSError *error = nil;
-    NSData *recervedData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
-    NSString *results = [[NSString alloc] initWithBytes:[recervedData bytes] length:[recervedData length] encoding:NSUTF8StringEncoding];
-    NSData *data = [results dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-    NSArray *infoArray = [dict objectForKey:@"results"];
-    if ([infoArray count]) {
-        NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
-        NSString *lastVersion = [releaseInfo objectForKey:@"version"];
-       
+    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress *progress) {
         
-        if (![lastVersion isEqualToString:appVersion]) {
-           
+    } success:^(id responseObject) {
+        
+        
+        NSString *version = [[responseObject objectForKey:@"data"] objectForKey:@"version"];
+        
+        if ([appVersion intValue] < [version intValue]) {
+            
             
             AppDelegate *app = [UIApplication sharedApplication].delegate;
             alphaView = [UIView new];
@@ -231,8 +262,6 @@
             alphaView.alpha = .6;
             
             
-            
-            
             [UIView animateWithDuration:.5 animations:^{
                 [app.window addSubview:alphaView];
                 CGRect Frame   = refush.frame;
@@ -241,31 +270,11 @@
                 [app.window addSubview:refush];
                 
             }];
-            
         }
-    }
-}
-
-
-#pragma mark - 请求数据
-- (void)startRequest {
-    NSString *url = [NSString stringWithFormat:@"%@/api/?method=index.index",BASEURL];
-    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
-        
-    } success:^(id responseObject) {
-        
-        homeModel = [[HomeModel alloc] initWithDictionary:responseObject];
-        
-        bannerScroll.imageURLStringsGroup = homeModel.bannerArray;
-        // 创建选择视图
-        [self createChooseView];
-        // 创建课程和体验店视图
-        [self createClassViewAndShopView];
-        
-        
     }];
-        
 }
+
+
 
 #pragma mark - 创建BannerScrollView
 - (void)createBannerScrollView {
@@ -383,15 +392,13 @@
 
 - (void)pushClassIntroduceView:(NSString *)class className:(NSString *)name classOrShip:(NSString *)type{
     
-    
-    self.hidesBottomBarWhenPushed          = YES;
     IntroduceViewController *introduce     = [IntroduceViewController new];
     introduce.class_id    = class;
     introduce.className   = name;
     introduce.classOrShip = type;
     introduce.cityAllowed = _cityAllowed;
     [self.navigationController pushViewController:introduce animated:YES];
-    self.hidesBottomBarWhenPushed          = NO;
+   
 }
 
 @end

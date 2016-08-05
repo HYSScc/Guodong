@@ -28,13 +28,20 @@
     
     UIView   *addView;
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
     isFirstFrame = YES;                    // 确认是第一次位置
     photoArray   = [NSMutableArray array]; // 初始化照片数组
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
     
     
     UIView *navigationView = [UIView new];
@@ -172,6 +179,7 @@
     
     [photoArray addObject:photoDict];
     
+   // [photoArray addObject:photoData];
     
     if ([_className isEqualToString:@"发布动态"]) {
         if (![_textView.text isEqualToString:ResultString] && photoArray.count != 0) {
@@ -185,8 +193,6 @@
             
         }
     }
-    
-   
     
     [self setImageViewFrameWith:info[UIImagePickerControllerEditedImage]];
     
@@ -297,6 +303,26 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)saveButtonClick:(UIButton *)button {
+    
+//    NSString *tokenUrl = [NSString stringWithFormat:@"%@api/?method=storage.get_token",BASEURL];
+//    [HttpTool postWithUrl:tokenUrl params:nil body:nil progress:^(NSProgress *progress) {
+//        
+//    } success:^(id responseObject) {
+//        NSLog(@"token %@",[[responseObject objectForKey:@"data"] objectForKey:@"token"]);
+//        NSString *token = [[responseObject objectForKey:@"data"] objectForKey:@"token"];
+//        QNUploadManager *upManager = [[QNUploadManager alloc] init];
+//      //  NSData *data = [@"Hello, World!" dataUsingEncoding : NSUTF8StringEncoding];
+//        
+//         NSData *data = photoArray[0];
+//        
+//        
+//        [upManager putData:data key:nil token:token
+//                  complete: ^(QNResponseInfo *info, NSString *key, NSDictionary *resp) {
+//                      NSLog(@"%@", info);
+//                      NSLog(@"%@", resp);
+//                  } option:nil];
+//    }];
+    
     
     NSString     *url;
     NSDictionary *dict;

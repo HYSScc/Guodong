@@ -23,6 +23,8 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(Tappend:)];
         [self addGestureRecognizer:tap];
         
+               
+        
         self.clipsToBounds = YES;
         self.contentMode   = UIViewContentModeScaleAspectFill;
         self.userInteractionEnabled = YES;
@@ -37,6 +39,8 @@
         [self.tap_delegate tappendWithObject:self];
     }
 }
+
+
 
 
 @end

@@ -410,7 +410,6 @@ NSString * const ID = @"cycleCell";
     }
     cell.imageView.userInteractionEnabled = YES;
 
- //  cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     cell.imageView.image = image;
     cell.Clickbutton.tag = indexPath.row % self.imagesGroup.count;
     [cell.Clickbutton addTarget:self action:@selector(imageContentClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -443,9 +442,7 @@ NSString * const ID = @"cycleCell";
     if ([self.delegate respondsToSelector:@selector(cycleScrollView:didSelectItemAtIndex:)]) {
         [self.delegate cycleScrollView:self didSelectItemAtIndex:indexPath.item % self.imagesGroup.count];
     }
-   
 }
-
 
 #pragma mark - UIScrollViewDelegate
 

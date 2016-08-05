@@ -28,7 +28,7 @@
 {
     UILabel     *verticalLine;
     UIImageView *photoImageView;
-    UILabel     *photoLine;
+      UILabel     *photoLine;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -60,7 +60,7 @@
         [scrollPanel addSubview:myScrollView];
         myScrollView.pagingEnabled = YES;
         myScrollView.delegate = self;
-
+        
     }
     return self;
 }
@@ -71,45 +71,49 @@
     CGFloat allWidth   = viewWidth - Adaptive(65.5);
     CGFloat imageWidth = (allWidth - Adaptive(20)) / 3;
     
-    [photoLine removeFromSuperview];
     
     imageArray = (NSMutableArray *)dairy.photoArray;
     CGSize contentSize = myScrollView.contentSize;
     contentSize.height = viewHeight;
     contentSize.width  = viewWidth *dairy.photoArray.count;
     myScrollView.contentSize = contentSize;
-
     
     
-    if (dairy.photoArray.count % 3 == 0) {
-        for (int a = 1; a < 5 * ((dairy.photoArray.count / 3)); a++) {
-            
-            photoLine = [UILabel new];
-            photoLine.frame    = CGRectMake(Adaptive(31),
-                                            a * (imageWidth / 4 + Adaptive(1)),
-                                            viewWidth - Adaptive(65.5),
-                                            .5);
-            photoLine.tag      = a + 2;
-            photoLine.backgroundColor = BASEGRYCOLOR;
-            [self addSubview:photoLine];
-            
+        if (dairy.photoArray.count % 3 == 0) {
+    
+            for (int a = 1; a < 5 * ((dairy.photoArray.count / 3)); a++) {
+    
+                photoLine = [UILabel new];
+                photoLine.frame    = CGRectMake(Adaptive(31),
+                                                a * (imageWidth / 4 + Adaptive(1)),
+                                                viewWidth - Adaptive(65.5),
+                                                .5);
+                photoLine.tag      = a + 2;
+                photoLine.backgroundColor = ORANGECOLOR;
+                [self addSubview:photoLine];
+    
+            }
+        } else {
+    
+            for (int a = 1; a < 5 * ((dairy.photoArray.count / 3) + 1); a++) {
+    
+                photoLine = [UILabel new];
+                photoLine.frame    = CGRectMake(Adaptive(31),
+                                                a * (imageWidth / 4 + Adaptive(1)),
+                                                viewWidth - Adaptive(65.5),
+                                                .5);
+                photoLine.tag      = a + 2;
+                photoLine.backgroundColor = ORANGECOLOR;
+                [self addSubview:photoLine];
+    
+            }
         }
-    } else {
-        for (int a = 1; a < 5 * ((dairy.photoArray.count / 3) + 1); a++) {
-            
-            photoLine = [UILabel new];
-            photoLine.frame    = CGRectMake(Adaptive(31),
-                                            a * (imageWidth / 4 + Adaptive(1)),
-                                            viewWidth - Adaptive(65.5),
-                                            .5);
-            photoLine.tag      = a + 2;
-            photoLine.backgroundColor = BASEGRYCOLOR;
-            [self addSubview:photoLine];
-            
-        }
-    }
     
-   
+    
+    
+    
+    
+    
     
     for (int a = 0; a < 9; a++) {
         
@@ -118,36 +122,40 @@
                                      Adaptive(5) + (imageWidth + Adaptive(6)) * (a / 3),
                                      imageWidth,
                                      imageWidth);
+        //   imageView.backgroundColor = BASEGRYCOLOR;
         imageView.tap_delegate = self;
         imageView.tag = 100 + a;
         [self addSubview:imageView];
     }
-
+    
     
     for (int a = 0; a < 9; a++) {
         TapImageView *tapImageView = (TapImageView*)[self viewWithTag:100 + a];
         if (a < dairy.photoArray.count) {
+            
+            
             tapImageView.hidden = NO;
-             NSDictionary *imageDict = dairy.photoArray[a];
-            [tapImageView sd_setImageWithURL:[NSURL URLWithString:[imageDict objectForKey:@"img"]]];
+            NSDictionary *imageDict = dairy.photoArray[a];
+            [tapImageView sd_setImageWithURL:[NSURL URLWithString:[imageDict objectForKey:@"img"]] placeholderImage:[UIImage imageNamed:@"person_dairy_gry"]];
+            // [tapImageView sd_setImageWithURL:[NSURL URLWithString:[imageDict objectForKey:@"img"]] placeholderImage:nil options:SDWebImageProgressiveDownload];
         } else {
             tapImageView.hidden = YES;
         }
     }
-
     
-    UILabel *line;
-    if (dairy.photoArray.count % 3 == 0) {
-       line = (UILabel *)[self viewWithTag:5 * ((dairy.photoArray.count / 3))];
-    } else {
-       line = (UILabel *)[self viewWithTag:5 * ((dairy.photoArray.count / 3) + 1)];
-    }
+    
+    //    UILabel *line;
+    //    if (dairy.photoArray.count % 3 == 0) {
+    //       line = (UILabel *)[self viewWithTag:5 * ((dairy.photoArray.count / 3))];
+    //    } else {
+    //       line = (UILabel *)[self viewWithTag:5 * ((dairy.photoArray.count / 3) + 1)];
+    //    }
     
     
     
     UILabel *moreLine = [UILabel new];
     moreLine.frame    = CGRectMake(Adaptive(31),
-                                   CGRectGetMaxY(line.frame) + Adaptive(23.5) + (imageWidth / 4),
+                                   CGRectGetMaxY(photoLine.frame)  + (imageWidth / 4),
                                    viewWidth - Adaptive(65.5),
                                    .5);
     moreLine.backgroundColor = BASEGRYCOLOR;
@@ -163,7 +171,7 @@
         [self addSubview:_addUserButton];
         
     }
-   
+    
     
     
     CGRect Frame       = self.frame;

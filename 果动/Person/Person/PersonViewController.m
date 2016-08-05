@@ -149,10 +149,10 @@
 }
 -(void)magnifyImage:(UIGestureRecognizer *)gesture
 {
-    self.hidesBottomBarWhenPushed = YES;
+   
     RechargeViewController *rechargeVC = [RechargeViewController new];
     [self.navigationController pushViewController:rechargeVC animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
+   
 }
 #pragma mark - 单例
 + (instancetype)sharedViewControllerManager

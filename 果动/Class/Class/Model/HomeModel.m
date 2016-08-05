@@ -7,6 +7,7 @@
 //
 
 #import "HomeModel.h"
+#import "activeModel.h"
 #import "ClassModel.h"
 @implementation HomeModel
 
@@ -14,8 +15,31 @@
 {
     self = [super init];
     if (self) {
-        self.bannerArray    = [dict objectForKey:@"banner"] ? [dict objectForKey:@"banner"] :
-        NULL;
+        
+        self.bannerArray = [NSMutableArray array];
+        self.activeArray = [NSMutableArray array];
+        
+        if ([[dict allKeys] containsObject:@"carousel"]) {
+            NSMutableArray *carouselArray = [dict objectForKey:@"carousel"];
+            
+            for (NSDictionary *dict in carouselArray) {
+                
+                
+                activeModel  *active = [[activeModel alloc] initWithDictionary:dict];
+                [self.activeArray addObject:active];
+                
+                
+                [self.bannerArray addObject:[dict objectForKey:@"img"]];
+               // [self.activeArray addObject:[dict objectForKey:@"url"]];
+            }
+        }
+        
+       
+      //  self.bannerArray = [dict objectForKey:@"banner"];
+        
+        
+        
+       
         self.coach_imgArray = [dict objectForKey:@"coach_img"] ? [dict objectForKey:@"coach_img"] :
         NULL;
         

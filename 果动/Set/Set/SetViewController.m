@@ -34,14 +34,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     
-    // 判断是否登录
-//    NSHTTPCookieStorage* sharedHTTPCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-//    NSArray* cookies = [sharedHTTPCookieStorage cookiesForURL:[NSURL URLWithString:BASEURL]];
-//    NSEnumerator* enumerator = [cookies objectEnumerator];
-//    NSHTTPCookie* cookie;
-//    while (cookie = [enumerator nextObject]) {
-//        isLogin = YES;
-//    }
+
     if ([HttpTool judgeWhetherUserLogin]) {
         [_headImageView sd_setImageWithURL:[NSURL URLWithString:_imageString] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
         loginButton.backgroundColor = [UIColor colorWithRed:55/255.0 green:55/255.0 blue:55/255.0 alpha:1];
@@ -145,7 +138,7 @@
     
     loginButton       = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     loginButton.frame = CGRectMake(0,
-                                  NavigationBar_Height + Adaptive(20) + 6*46,
+                                  NavigationBar_Height + Adaptive(20) + 6*Adaptive(46),
                                    viewWidth,
                                    Adaptive(45));
     

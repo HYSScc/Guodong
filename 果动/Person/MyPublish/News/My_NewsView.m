@@ -149,19 +149,31 @@
     titleLabel.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
     [noDataView addSubview:titleLabel];
     
-    UIButton *publishButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    publishButton.frame     = CGRectMake((viewWidth - Adaptive(80)) / 2, CGRectGetMaxY(titleLabel.frame) + Adaptive(10), Adaptive(80), Adaptive(15));
-    publishButton.titleLabel.font = [UIFont fontWithName:FONT size:Adaptive(13)];
-    [publishButton setTitle:@"发布一条心情" forState:UIControlStateNormal];
-    [publishButton setTitleColor:ORANGECOLOR forState:UIControlStateNormal];
-    [publishButton addTarget:self action:@selector(publishButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [noDataView addSubview:publishButton];
+    UILabel *publishLabel = [UILabel new];
+    publishLabel.frame    =  CGRectMake((viewWidth - Adaptive(80)) / 2,
+                                        CGRectGetMaxY(titleLabel.frame) + Adaptive(10),
+                                        Adaptive(80),
+                                        Adaptive(15));
+    publishLabel.text = @"发布一条心情";
+    publishLabel.textColor = ORANGECOLOR;
+    publishLabel.textAlignment = 1;
+    publishLabel.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
+    [noDataView addSubview:publishLabel];
+    
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"发布一条心情"];
     NSRange strRange = {0,[str length]};
     [str addAttribute:NSForegroundColorAttributeName value:ORANGECOLOR range:strRange];
     [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:strRange];
-    [publishButton setAttributedTitle:str forState:UIControlStateNormal];
+    [publishLabel setAttributedText:str];
     
+    
+    UIButton *publishButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    publishButton.frame     = CGRectMake((viewWidth - Adaptive(80)) / 2,
+                                         Adaptive(90),
+                                         Adaptive(80),
+                                         Adaptive(90));
+    [publishButton addTarget:self action:@selector(publishButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [noDataView addSubview:publishButton];
     
 }
 

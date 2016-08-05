@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SHImageView : UIImageView
+@interface SHImageView : UIImageView 
 
 @property (nonatomic,assign) int  self_id;
+
+
 
 @end

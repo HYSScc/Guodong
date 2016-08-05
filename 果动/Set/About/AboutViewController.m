@@ -37,9 +37,19 @@
     [self.view addSubview:logoImageView];
     
     
+    UIImageView *introduceImageView = [UIImageView new];
+    introduceImageView.frame        = CGRectMake((viewWidth - Adaptive(130.9)) / 2,
+                                                 CGRectGetMaxY(logoImageView.frame) + Adaptive(25),
+                                                 Adaptive(130.9),
+                                                 Adaptive(17.05));
+    introduceImageView.image = [UIImage imageNamed:@"about_introduce"];
+    
+    [self.view addSubview:introduceImageView];
+    
+    
     UIImageView *versionImageView = [UIImageView new];
     versionImageView.frame        = CGRectMake((viewWidth - Adaptive(36)) / 2,
-                                               CGRectGetMaxY(logoImageView.frame) + Adaptive(40),
+                                               CGRectGetMaxY(introduceImageView.frame) + Adaptive(50),
                                                Adaptive(36),
                                                Adaptive(14));
     versionImageView.image        = [UIImage imageNamed:@"about_version"];
@@ -69,14 +79,7 @@
     versionImageView.frame = imageFrame;
     
     
-    UIImageView *introduceImageView = [UIImageView new];
-    introduceImageView.frame        = CGRectMake((viewWidth - Adaptive(130.9)) / 2,
-                                                 CGRectGetMaxY(versionImageView.frame) + Adaptive(40),
-                                                 Adaptive(130.9),
-                                                 Adaptive(17.05));
-    introduceImageView.image = [UIImage imageNamed:@"about_introduce"];
-    
-    [self.view addSubview:introduceImageView];
+   
     
     
     NSArray *stringArray = @[@"商业合作",@"媒体合作"];
@@ -106,9 +109,9 @@
     
     
     UIButton *emailButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    emailButton.frame     = CGRectMake((viewWidth - Adaptive(150)) / 2,
+    emailButton.frame     = CGRectMake((viewWidth - Adaptive(180)) / 2,
                                        LastHeight - Adaptive((160 - 20 - 70)) + Adaptive(5),
-                                       Adaptive(150),
+                                       Adaptive(180),
                                        Adaptive(20));
     [emailButton setTitleColor:ORANGECOLOR forState:UIControlStateNormal];
     [emailButton setTitle:MEITIHEZUO forState:UIControlStateNormal];
@@ -119,9 +122,9 @@
     
     
     UILabel *emailLabel = [UILabel new];
-    emailLabel.frame    = CGRectMake((viewWidth - Adaptive(130)) / 2,
+    emailLabel.frame    = CGRectMake((viewWidth - Adaptive(160)) / 2,
                                      CGRectGetMaxY(emailButton.frame) + Adaptive(2),
-                                     Adaptive(130),
+                                     Adaptive(160),
                                      .5);
     emailLabel.backgroundColor = ORANGECOLOR;
     [self.view addSubview:emailLabel];
@@ -139,7 +142,6 @@
 
 - (void)emailButtonClick:(UIButton *)button {
     
-    NSLog(@"发送邮件");
     
     NSMutableString *mailUrl = [[NSMutableString alloc] init];
     NSArray *toRecipients = @[MEITIHEZUO];

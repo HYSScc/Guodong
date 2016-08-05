@@ -35,7 +35,13 @@
     [super viewWillDisappear:YES];
     [navigation removeFromSuperview];
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -43,8 +49,7 @@
     
     AppDelegate *app = [UIApplication sharedApplication].delegate;
     
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
+  
     navigation = [[NavigationView alloc] initWithtitle:@"登录" viewController:self];
     [app.window addSubview:navigation];
     [self createUI];

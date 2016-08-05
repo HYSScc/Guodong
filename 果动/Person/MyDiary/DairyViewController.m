@@ -26,12 +26,19 @@
     int page;
      UIView         *noDataView;
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
     
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
+   
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"健身日记" viewController:self];
     [self.view addSubview:navigation];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -311,13 +318,13 @@
     
     CGRect textFrame   = textFieldView.frame;
     
-    textFrame.origin.y = viewHeight - NavigationBar_Height - deltaY - Adaptive(42);
+    textFrame.origin.y = viewHeight  - deltaY - Adaptive(42);
     textFieldView.frame     = textFrame;
     
 }
 -(void)keyboardHide:(NSNotification *)note
 {
-    textFieldView.frame = CGRectMake(0, viewHeight  - NavigationBar_Height, viewWidth, Adaptive(42));
+    textFieldView.frame = CGRectMake(0, viewHeight  , viewWidth, Adaptive(42));
     [textFieldView.textField resignFirstResponder];
     [textFieldView removeFromSuperview];
 }

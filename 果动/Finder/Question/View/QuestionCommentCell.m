@@ -46,7 +46,7 @@
         
         nickNameLabel       = [UILabel new];
         nickNameLabel.frame = CGRectMake(CGRectGetMaxX(headImageView.frame) + Adaptive(5),
-                                         CGRectGetMinY(headImageView.frame) + Adaptive(5),
+                                         Adaptive(16),
                                          Adaptive(100),
                                          Adaptive(16));
         nickNameLabel.textColor = [UIColor whiteColor];
@@ -54,15 +54,6 @@
         [self addSubview:nickNameLabel];
         
         
-        
-        timeLabel       = [UILabel new];
-        timeLabel.frame = CGRectMake(CGRectGetMaxX(headImageView.frame) + Adaptive(5),
-                                     CGRectGetMaxY(nickNameLabel.frame),
-                                     Adaptive(100),
-                                     Adaptive(16));
-        timeLabel.textColor = [UIColor grayColor];
-        timeLabel.font      = [UIFont fontWithName:FONT size:Adaptive(8)];
-        [self addSubview:timeLabel];
         
         
         contentLabel           = [UILabel new];
@@ -84,7 +75,7 @@
     
     [headImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.comment_headimgString]];
     nickNameLabel.text = contentModel.comment_nickName;
-    timeLabel.text     = contentModel.comment_time;
+   
     
 
     
@@ -94,8 +85,12 @@
                                     CGRectGetMaxY(headImageView.frame) + Adaptive(5),
                                     viewWidth-Adaptive(13) - CGRectGetMaxX(headImageView.frame) - Adaptive(5),
                                     contentSize.height);
-    contentLabel.text  = contentModel.comment_content;
     
+    
+    // 调整行间距
+    contentLabel.attributedText = [HttpTool setLinespacingWith:contentModel.comment_content space:4];
+    
+    [contentLabel sizeToFit];
     line.frame = CGRectMake(0,
                             CGRectGetMaxY(contentLabel.frame) + Adaptive(10),
                             viewWidth,

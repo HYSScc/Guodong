@@ -72,29 +72,29 @@
         [self addSubview:pay_amount];
         
         
-        reward       = [UILabel new];
-        reward.frame = CGRectMake(Adaptive(13),
-                                  CGRectGetMaxY(packageContent.frame) + Adaptive(10),
-                                  viewWidth / 2,
-                                  Adaptive(15));
-        reward.textColor = [UIColor whiteColor];
-        reward.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
-        [self addSubview:reward];
-        
-        UILabel *rewardAmount = [UILabel new];
-        rewardAmount.frame    = CGRectMake(viewWidth - Adaptive(113),
-                                        CGRectGetMaxY(pay_amount.frame) + Adaptive(10),
-                                        Adaptive(100),
-                                        Adaptive(15));
-        rewardAmount.textColor = [UIColor whiteColor];
-        rewardAmount.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
-        rewardAmount.textAlignment = 2;
-     //   rewardAmount.text      = @"￥0.00";
-        [self addSubview:rewardAmount];
+//        reward       = [UILabel new];
+//        reward.frame = CGRectMake(Adaptive(13),
+//                                  CGRectGetMaxY(packageContent.frame) + Adaptive(10),
+//                                  viewWidth / 2,
+//                                  Adaptive(15));
+//        reward.textColor = [UIColor whiteColor];
+//        reward.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
+//        [self addSubview:reward];
+//        
+//        UILabel *rewardAmount = [UILabel new];
+//        rewardAmount.frame    = CGRectMake(viewWidth - Adaptive(113),
+//                                        CGRectGetMaxY(pay_amount.frame) + Adaptive(10),
+//                                        Adaptive(100),
+//                                        Adaptive(15));
+//        rewardAmount.textColor = [UIColor whiteColor];
+//        rewardAmount.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
+//        rewardAmount.textAlignment = 2;
+//     //   rewardAmount.text      = @"￥0.00";
+//        [self addSubview:rewardAmount];
         
         UILabel *lineTwo = [UILabel new];
         lineTwo.frame    = CGRectMake(0,
-                                      CGRectGetMaxY(reward.frame) + Adaptive(10),
+                                      CGRectGetMaxY(packageContent.frame) + Adaptive(10),
                                       viewWidth,
                                       .5);
         lineTwo.backgroundColor = BASECOLOR;
@@ -120,7 +120,7 @@
     payStatus.text      = dataModel.pay_status;
     packageContent.text = dataModel.package_content;
     pay_amount.text     = [NSString stringWithFormat:@"￥%@",dataModel.pay_amount];
-    reward.text         = dataModel.reward;
+ //   reward.text         = dataModel.reward;
     totalAmount.text    = [NSString stringWithFormat:@"合计: ￥%@",dataModel.pay_amount];
     
     CGRect Frame      = self.frame;

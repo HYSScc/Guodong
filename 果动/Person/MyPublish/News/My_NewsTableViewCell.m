@@ -24,6 +24,7 @@
     UIView      *alphaView;
     ShareView   *share;
     NSString    *nickName;
+     UILabel     *_longLine;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -84,8 +85,12 @@
         contentImageView.image = [UIImage imageNamed:@"news_result"];
         [self addSubview:contentImageView];
         
-        
-     
+       
+        _longLine                 = [UILabel new];
+        _longLine.backgroundColor = [UIColor colorWithRed:38/255.0 green:38/255.0 blue:38/255.0 alpha:1];
+        [self addSubview:_longLine];
+
+       
         
     }
     return self;
@@ -109,12 +114,33 @@
     
     
     [contentImageView sd_setImageWithURL:[NSURL URLWithString:newsModel.photoUrl]];
-    functionView = [[NewsFunctionView alloc] initWithFrame:CGRectMake(0,CGRectGetMaxY(contentImageView.frame) + Adaptive(5),viewWidth,Adaptive(40))];
+    
+    
+    
+    _longLine.frame = CGRectMake(Adaptive(13),
+                                 CGRectGetMaxY(contentImageView.frame) + Adaptive(10),
+                                 viewWidth - Adaptive(26),
+                                 Adaptive(0.5));
+    
+    
+    
+    [functionView removeFromSuperview];
+    
+    functionView = [[NewsFunctionView alloc] initWithFrame:CGRectMake(0,
+                                                                      CGRectGetMaxY(_longLine.frame) + Adaptive(5),
+                                                                      viewWidth,
+                                                                      Adaptive(40))];
    
     [functionView.shareButton addTarget:self action:@selector(shareButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [functionView.moreButton  addTarget:self action:@selector(moreButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    
     functionView.newsModel = newsModel;
+    
     [self addSubview:functionView];
+    
+
+   
+    
     
     
     
@@ -148,7 +174,7 @@
                                                  target:self
                                                selector:@selector(refushAllUI:)
                                                userInfo:alert
-                                                repeats:YES];
+                                                repeats:NO];
             }];
         }
     }  else {
@@ -165,7 +191,7 @@
                                                  target:self
                                                selector:@selector(timerFireMethod:)
                                                userInfo:alert
-                                                repeats:YES];
+                                                repeats:NO];
             }];
         }
     }

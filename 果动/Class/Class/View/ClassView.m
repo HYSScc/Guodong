@@ -107,7 +107,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        NSLog(@"index   index  %ld",indexPath.row - 1);
+       // NSLog(@"index   index  %d",indexPath.row - 1);
                 ClassModel *classModel = self.home.classArray[indexPath.row - 1];
         
                 [cell.baseImageView sd_setImageWithURL:[NSURL URLWithString:classModel.class_imageUrl]];

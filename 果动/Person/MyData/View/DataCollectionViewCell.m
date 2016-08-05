@@ -20,7 +20,7 @@
 {
     CGFloat     selfHeight;
     CGFloat     selfWidth;
-    
+    TextFieldView  *textView;
     UILabel     *dateLabel;
     AppDelegate * app;
     
@@ -28,6 +28,11 @@
     NSInteger     currentIndex;
     UIView       *markView;
     UIView       *scrollPanel;
+    UIButton     *jtxlButton;
+    NSString     *data_id;
+     UIView            *alphaView;
+    CGFloat offset;
+    CGFloat textHeight;
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -40,6 +45,38 @@
         selfHeight = self.frame.size.height;
         selfWidth  = self.frame.size.width;
         
+//        
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
+//        
+//        
+//        
+//        alphaView = [UIView new];
+//        alphaView.frame = CGRectMake(0,
+//                                     0,
+//                                     viewWidth,
+//                                     viewHeight);
+//        alphaView.backgroundColor = BASECOLOR;
+//        
+//        alphaView.alpha = .6;
+//        UITapGestureRecognizer *tapLeftDouble  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
+//        [alphaView addGestureRecognizer:tapLeftDouble];
+//       
+//        
+//        
+//        textView = [[TextFieldView alloc] initWithFrame:CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42))];
+//        [textView.publishButton setTitle:@"确认" forState:UIControlStateNormal];
+//        textView.textField.placeholder  = @"输入您的静态心率";
+//        textView.textField.keyboardType = UIKeyboardTypePhonePad;
+//        [textView.publishButton addTarget:self action:@selector(CommentButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//        textView.backgroundColor = [UIColor colorWithRed:201/255.0
+//                                                   green:205/255.0
+//                                                    blue:211/255.0
+//                                                   alpha:1];
+//        textView.textField.backgroundColor = [UIColor colorWithRed:187/255.0
+//                                                             green:194/255.0
+//                                                              blue:201/255.0
+//                                                             alpha:1];
         
         app = [UIApplication sharedApplication].delegate;
         
@@ -55,6 +92,7 @@
         [scrollPanel addSubview:markView];
         
         myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
+        myScrollView.delegate = self;
         [scrollPanel addSubview:myScrollView];
         myScrollView.pagingEnabled = YES;
         myScrollView.delegate = self;
@@ -146,13 +184,69 @@
             
             [self addSubview:line];
             
-           
+//            if (a == 23) {
+//                // 创建静态心率按钮
+//                jtxlButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//                jtxlButton.frame     = CGRectMake(0,
+//                                                  CGRectGetMaxY(photoLine.frame) + Adaptive(40.5)*a,
+//                                                  selfWidth,
+//                                                  Adaptive(40));
+//               // jtxlButton.backgroundColor = ORANGECOLOR;
+//                [jtxlButton addTarget:self action:@selector(jtxlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//                [self addSubview:jtxlButton];
+//            }
             
         }
     }
     return self;
 }
 
+////表随键盘高度变化
+//-(void)keyboardShow:(NSNotification *)note
+//{
+//    CGRect keyBoardRect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    CGFloat deltaY = keyBoardRect.size.height;
+//    
+//    textView.frame = CGRectMake(0, viewHeight - deltaY - Adaptive(42), viewWidth, Adaptive(42));
+//    
+//}
+//-(void)keyboardHide:(NSNotification *)note
+//{
+//    [self removeKey];
+//}
+//-(void)magnifyImage:(UIGestureRecognizer *)gesture
+//{
+//    [self removeKey];
+//}
+//- (void)jtxlButtonClick:(UIButton *)button {
+//    
+//   [app.window addSubview:alphaView];
+//    [textView.textField becomeFirstResponder];
+//    [app.window addSubview:textView];
+//}
+//
+//- (void)CommentButtonClick:(UIButton *)button {
+//    
+//    NSString *url = [NSString stringWithFormat:@"%@api/?method=body.modifydata&key=static_heart_rate",BASEURL];
+//    NSDictionary *dict = @{@"value":textView.textField.text,
+//                           @"id":data_id};
+//    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+//        
+//    } success:^(id responseObject) {
+//        [self removeKey];
+//        [(UILabel *)[self viewWithTag:124] setText:dataModel.static_heart_rate];
+//        [(UILabel *)[self viewWithTag:126] setText:dataModel.target_heart_rate];
+//    }];
+//    
+//}
+//
+//- (void)removeKey {
+//    [alphaView removeFromSuperview];
+//    [textView.textField resignFirstResponder];
+//    textView.frame = CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42));
+//    [textView removeFromSuperview];
+//    
+//}
 
 #pragma mark -
 #pragma mark - custom method
@@ -251,12 +345,16 @@
 {
     CGFloat pageWidth = scrollView.frame.size.width;
     currentIndex = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
-    NSLog(@"currentIndex %ld",(long)currentIndex);
 }
 
 
 
 - (void)setDataModel:(MyDataModel *)dataModel {
+    
+  //  data_id = dataModel.data_id;
+    
+   
+    
     dateLabel.text = dataModel.time;
     [_leftImageView sd_setImageWithURL:[NSURL URLWithString:dataModel.leftImageUrl] ];
     [_rightImageView sd_setImageWithURL:[NSURL URLWithString:dataModel.rightImageUrl] ];

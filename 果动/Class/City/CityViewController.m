@@ -12,21 +12,36 @@
 {
      UITableView *_tableView;
      NSArray     *citys;
+    UILabel* textLabel;
 }
 @end
 
 @implementation CityViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor     = BASECOLOR;
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
+   
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"当前城市" viewController:self];
     [self.view addSubview:navigation];
     
     [self createUI];
 
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"again" object:nil];
+    
+}
+
+- (void)tongzhi:(NSNotification *)notification {
+    textLabel.text = [notification.userInfo objectForKey:@"name"];
 }
 
 - (void)createUI {
@@ -67,12 +82,23 @@
     line.backgroundColor = [UIColor colorWithRed:85 / 255.0 green:85 / 255.0 blue:85 / 255.0 alpha:1];
     [headView addSubview:line];
     
-    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(30), Adaptive(38), Adaptive(150), Adaptive(18))];
+    textLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(30), Adaptive(38), Adaptive(150), Adaptive(18))];
     textLabel.font = [UIFont fontWithName:FONT size:Adaptive(18)];
     textLabel.textAlignment = 0;
     textLabel.textColor = [UIColor colorWithRed:255 / 255.0 green:125 / 255.0 blue:40 / 255.0 alpha:1];
     textLabel.text = self.cityName;
+    [textLabel sizeToFit];
     [headView addSubview:textLabel]; //102
+    
+    
+    
+    UIButton *setButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    setButton.frame     = CGRectMake(0, 0, headView.bounds.size.width, headView.bounds.size.height);
+    [setButton addTarget:self action:@selector(setButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    setButton.userInteractionEnabled = [_isSet isEqualToString:@"set"] ? YES : NO;
+    [headView addSubview:setButton];
+    
+    
     
     UILabel* currentLabel = [[UILabel alloc] initWithFrame:CGRectMake(viewWidth - Adaptive(100), Adaptive(38), Adaptive(70), Adaptive(15))];
     currentLabel.textAlignment = 1;
@@ -82,6 +108,21 @@
     [headView addSubview:currentLabel];
     return headView;
 }
+
+- (void)setButtonClick:(UIButton *)button {
+  
+    NSURL * url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    
+    if([[UIApplication sharedApplication] canOpenURL:url]) {
+        
+        NSURL*url =[NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
+        
+    }
+    
+  }
+
+
 //设置单元格的内容
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -97,12 +138,12 @@
     UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(20), Adaptive(70) - .5, viewWidth - Adaptive(40), .5)];
     line.backgroundColor = [UIColor colorWithRed:85 / 255.0 green:85 / 255.0 blue:85 / 255.0 alpha:1];
     [cell addSubview:line];
-    UILabel* textLabel = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(30), Adaptive(38), Adaptive(150),Adaptive(15))];
-    textLabel.font = [UIFont fontWithName:FONT size:Adaptive(15)];
-    textLabel.textAlignment = 0;
-    textLabel.textColor = [UIColor colorWithRed:187 / 255.0 green:187 / 255.0 blue:187 / 255.0 alpha:1];
-    textLabel.text = citys[indexPath.row];
-    [cell addSubview:textLabel];
+    UILabel* textLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(30), Adaptive(38), Adaptive(150),Adaptive(15))];
+    textLabel1.font = [UIFont fontWithName:FONT size:Adaptive(15)];
+    textLabel1.textAlignment = 0;
+    textLabel1.textColor = [UIColor colorWithRed:187 / 255.0 green:187 / 255.0 blue:187 / 255.0 alpha:1];
+    textLabel1.text = citys[indexPath.row];
+    [cell addSubview:textLabel1];
     
     return cell;
 }

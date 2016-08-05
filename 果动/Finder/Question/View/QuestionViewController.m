@@ -103,8 +103,9 @@
                                                  initWithDictionary:dict];
                 [contentArray addObject:contentModel];
             }
-            [_tableView reloadData];
+           
         }
+         [_tableView reloadData];
         // 结束刷新状态
         [_tableView headerEndRefreshing];
     }];
@@ -289,8 +290,11 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     /**
-     *  判断哪一行能点击  第一行不能点  教练评论行 通过值判断  行数大于二 通过值判断
+     *
+     *  不追问  点击直接删除
      */
+    
+    
     QuestionContent *content = contentArray[indexPath.section];
     
     NSLog(@"user_id %@  talkid %@",content.user_id,content.talk_id);
@@ -299,36 +303,37 @@
         
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"删除", nil];
         [actionSheet showInView:self.view];
+        
     }
-    
-    
-    if (indexPath.row > 2) {
-        
-        QuestionReply   *reply   = content.replyArray[indexPath.row - 2];
-        
-        if ([reply.isClick isEqualToString:@"1"]) {
-            [textView.textField becomeFirstResponder];
-            [self.view addSubview:textView];
-            NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-            
-            // 让table滚动到对应的indexPath位置
-            [_tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-            comment_id = content.comment_id;
-            reply_id   = reply.reply_id;
-            types      = @"2";  // 回复的是回复
-        }
-    }
-    if ([content.isClick isEqualToString:@"1"] && indexPath.row == 1) {
-        [textView.textField becomeFirstResponder];
-        [self.view addSubview:textView];
-        
-        NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
-        // 让table滚动到对应的indexPath位置
-        [_tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        
-        comment_id = content.comment_id;
-        types      = @"1";// 回复的是评论
-    }
+//    
+//    
+//    if (indexPath.row > 2) {
+//        
+//        QuestionReply   *reply   = content.replyArray[indexPath.row - 2];
+//        
+//        if ([reply.isClick isEqualToString:@"1"]) {
+//            [textView.textField becomeFirstResponder];
+//            [self.view addSubview:textView];
+//            NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+//            
+//            // 让table滚动到对应的indexPath位置
+//            [_tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//            comment_id = content.comment_id;
+//            reply_id   = reply.reply_id;
+//            types      = @"2";  // 回复的是回复
+//        }
+//    }
+//    if ([content.isClick isEqualToString:@"1"] && indexPath.row == 1) {
+//        [textView.textField becomeFirstResponder];
+//        [self.view addSubview:textView];
+//        
+//        NSIndexPath *selectIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section];
+//        // 让table滚动到对应的indexPath位置
+//        [_tableView scrollToRowAtIndexPath:selectIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        
+//        comment_id = content.comment_id;
+//        types      = @"1";// 回复的是评论
+//    }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -341,11 +346,15 @@
                 
             } success:^(id responseObject) {
                 [self headerRereshing];
+                
+                NSNotification *notification =[NSNotification notificationWithName:@"refushAllUI" object:nil userInfo:nil];
+                //通过通知中心发送通知
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
             }];
         }
             break;
         case 1:
-            NSLog(@"1111");
+    
             break;
        
             
@@ -354,36 +363,36 @@
     }
 }
 
-#pragma mark - 回复按钮点击事件
-- (void)CommentButtonClick:(UIButton *)button {
-    
-    [textView.textField resignFirstResponder];
-    
-    if ([types isEqualToString:@"1"]) {
-        dataDict = @{@"comment_id":comment_id,
-                     @"types":types,
-                     @"content":textView.textField.text,
-                     };
-    } else {
-        dataDict = @{@"comment_id":comment_id,
-                     @"types":types,
-                     @"content":textView.textField.text,
-                     @"rid":reply_id
-                     };
-    }
-    
-    NSString *url = [NSString stringWithFormat:@"%@api/?method=questions.replay",BASEURL];
-    
-    
-    [HttpTool postWithUrl:url params:dataDict body:nil progress:^(NSProgress * progress) {
-        
-    } success:^(id responseObject) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        
-        [alert show];
-    }];
-    
-}
+//#pragma mark - 回复按钮点击事件
+//- (void)CommentButtonClick:(UIButton *)button {
+//    
+//    [textView.textField resignFirstResponder];
+//    
+//    if ([types isEqualToString:@"1"]) {
+//        dataDict = @{@"comment_id":comment_id,
+//                     @"types":types,
+//                     @"content":textView.textField.text,
+//                     };
+//    } else {
+//        dataDict = @{@"comment_id":comment_id,
+//                     @"types":types,
+//                     @"content":textView.textField.text,
+//                     @"rid":reply_id
+//                     };
+//    }
+//    
+//    NSString *url = [NSString stringWithFormat:@"%@api/?method=questions.replay",BASEURL];
+//    
+//    
+//    [HttpTool postWithUrl:url params:dataDict body:nil progress:^(NSProgress * progress) {
+//        
+//    } success:^(id responseObject) {
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[responseObject objectForKey:@"msg"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        
+//        [alert show];
+//    }];
+//    
+//}
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (alertView.tag == 999) {
@@ -399,6 +408,11 @@
             //重新请求数据
             textView.textField.text = @"";
             [self headerRereshing];
+            
+            
+            
+            
+            
         }
     }
 }

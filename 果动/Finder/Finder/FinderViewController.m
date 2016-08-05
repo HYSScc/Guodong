@@ -70,9 +70,8 @@
 }
 
 - (void)pushLoginView {
-    self.hidesBottomBarWhenPushed = YES;
+   
     [self.navigationController pushViewController:[LoginViewController new] animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
 }
 
 // 答疑点击头像push到我的发布
@@ -244,25 +243,21 @@
     
     NSString *talk_id  = [NSString stringWithFormat:@"%ld",(long)index];
     
-    // 跳转的时候隐藏tabbar
-    self.hidesBottomBarWhenPushed          = YES;
+   
     detailsView.talk_id = talk_id;
     [self.navigationController pushViewController:detailsView animated:YES];
-    // 跳转之后显示tabbar back回来时tabbar正常显示
-    self.hidesBottomBarWhenPushed          = NO;
+    
     
 }
 
 
 - (void)pushWebViewWithName:(NSString *)content_id title:(NSString *)title {
-    // 跳转的时候隐藏tabbar
-    self.hidesBottomBarWhenPushed          = YES;
+   
     WebViewController *webView = [WebViewController new];
     webView.content_id = content_id;
     webView.sharetitle = title;
     [self.navigationController pushViewController:webView animated:YES];
-    // 跳转之后显示tabbar back回来时tabbar正常显示
-    self.hidesBottomBarWhenPushed          = NO;
+   
 }
 
 #pragma mark - 单例

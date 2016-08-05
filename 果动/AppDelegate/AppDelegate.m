@@ -6,20 +6,23 @@
 //  Copyright (c) 2015年 Unique. All rights reserved.
 //
 
-
+#import "YZSDK.h"
 #import "AppDelegate.h"
 #import "MainViewController.h"     // 设置tabbar
 #import "RegisterViewController.h" // 注册
+#import "LocationView.h"
 #import "Pingpp.h"
 #import <CoreLocation/CLLocationManagerDelegate.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import <Bugly/Bugly.h>
 #import "PushView.h"
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialSinaSSOHandler.h"
 #import "UMSocialQQHandler.h"
+
+
 static BOOL isProduction = FALSE;
 
 @interface AppDelegate ()<CLLocationManagerDelegate> {
@@ -34,8 +37,7 @@ static BOOL isProduction = FALSE;
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     
-    
-    
+     
     /**
      *  判断是否第一次登录
      */
@@ -88,6 +90,40 @@ static BOOL isProduction = FALSE;
     [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"1965248745" secret:@"ae17ab80d250a7e9fe68ee34eace94a8" RedirectURL:@"http://www.baidu.com"];
     [UMSocialQQHandler setQQWithAppId:@"1105528146" appKey:@"43P0R3RyDEloUyFh" url:@"http://www.baidu.com"];
     
+    /********************** Umeng统计 ****************************/
+    
+    UMConfigInstance.appKey = @"577093fb67e58ecad30005f7";
+    UMConfigInstance.channelId = @"App Store";
+    [MobClick startWithConfigure:UMConfigInstance];
+    
+    /********************** Bugly反馈 ****************************/
+     [Bugly startWithAppId:@"900019609"];
+    
+    
+    
+  
+    NSString *url = [NSString stringWithFormat:@"%@api/?method=user.get_userinfo",BASEURL];
+    
+    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress *progress) {
+        
+    } success:^(id responseObject) {
+        NSLog(@"[HttpTool getUser_id] %@",[HttpTool getUser_id]);
+        [Bugly setUserIdentifier:[HttpTool getUser_id]];
+        
+    
+    }];
+    
+    /************************** 有赞 *****************************/
+    
+ //   [YZSDK setOpenDebugLog:YES];
+    //设置AppID和AppSecret
+  //  [YZSDK setOpenInterfaceAppID:@"testAppID" appSecret:@"testAppSecret"];
+    //设置UA
+  //  NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+  //  NSString *appVersion  = [infoDic objectForKey:@"CFBundleVersion"];
+    
+  //  [YZSDK userAgentInit:@"345275c2393675eaea1469500711265" version:appVersion];
+    
     
     return YES;
 }
@@ -125,16 +161,7 @@ static BOOL isProduction = FALSE;
     //    badge = badge >= 0 ? badge : 0;
     //    [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
 }
-- (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    //    self.isZanbu = YES;
-    //    if (buttonIndex == 1) {
-    //        // 在不需要再推送时，可以取消推送
-    //        [Version cancelLocalNotification];
-    //        NSURL *url = [NSURL URLWithString:XiaZaiConnent];
-    //        [[UIApplication sharedApplication] openURL:url];
-    //    }
-}
+
 
 - (void)applicationDidEnterBackground:(UIApplication*)application
 {
@@ -147,7 +174,13 @@ static BOOL isProduction = FALSE;
 
 - (void)applicationWillEnterForeground:(UIApplication*)application
 {
+    LocationView *location = [LocationView sharedViewManager];
     
+    if ([location.isSet isEqualToString:@"set"]) {
+        NSNotification *notification =[NSNotification notificationWithName:@"startLocation" object:nil userInfo:nil];
+        //通过通知中心发送通知
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application

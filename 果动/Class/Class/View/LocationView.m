@@ -13,6 +13,8 @@
 {
     ClassViewController *class;
     NSString            *cityName;
+    NSString            *again;
+    
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -21,10 +23,16 @@
         
         [self createUI];
         [self createLocation]; // 开始定位
-        
+         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"startLocation" object:nil];
     }
     return self;
 }
+
+- (void)tongzhi:(NSNotification *)notification {
+    again = @"again";
+    [self createLocation];
+}
+
 - (void)createUI
 {
     
@@ -61,23 +69,32 @@
 
 - (void)createLocation
 {
-    //定位管理器
-    if (!_locationManager) {
-        _locationManager = [[CLLocationManager alloc] init];
-    }
-    if (!_geoCoder) {
-        //创建并初始化编码器
-        _geoCoder = [[CLGeocoder alloc] init];
-    }
-    //设置代理
-    _locationManager.delegate = self;
-    //设置定位精度
-    _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    //定位频率,每隔多少米定位一次
-    //多少米定位一次
-    _locationManager.distanceFilter = 10.0;
-    //启动跟踪定位
-    [_locationManager startUpdatingLocation];
+ 
+    if ([CLLocationManager locationServicesEnabled] &&
+        ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways
+         || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse)) {
+            //定位功能可用，开始定位
+            
+            
+            _locationManager = [[CLLocationManager alloc] init];
+            
+            //创建并初始化编码器
+            _geoCoder = [[CLGeocoder alloc] init];
+            
+            //设置代理
+            _locationManager.delegate = self;
+          
+            //启动跟踪定位
+            [_locationManager startUpdatingLocation];
+            
+        } else {
+            NSLog(@"未开启定位");
+            [class removeLocationAnimation];
+            self.locationLabel.text = @"未开启定位";
+            cityName = @"未开启定位，点击设置";
+            _isSet    = @"set";
+        }
+    
     
 }
 #pragma mark - CoreLocation
@@ -88,37 +105,53 @@
     [_locationManager stopUpdatingLocation];
     CLLocation* location = [locations firstObject]; //取出第一个位置
     
-    NSString *urlString  = [NSString stringWithFormat:@"%@geocoding/", BASEURL];
     NSDictionary *locationDict = @{ @"lnt" : [NSString stringWithFormat:@"%f", location.coordinate.longitude],@"lat" : [NSString stringWithFormat:@"%f", location.coordinate.latitude]};
     
+    if ([locationDict count] != 0) {
+        [self requestCityAllowedDataWith:locationDict];
+    }
+}
+
+- (void)requestCityAllowedDataWith:(NSDictionary *)dict {
     
-    [HttpTool postWithUrl:urlString params:locationDict body:nil progress:^(NSProgress * progress) {
+    NSString *urlString  = [NSString stringWithFormat:@"%@geocoding/", BASEURL];
+    
+    [HttpTool postWithUrl:urlString params:dict body:nil progress:^(NSProgress * progress) {
         
     } success:^(id responseObject) {
         
-      NSString *city = [[responseObject objectForKey:@"city"] objectForKey:@"name"];
+        NSString *city = [[responseObject objectForKey:@"city"] objectForKey:@"name"];
         if (city) {
             cityName = city;
             self.locationLabel.text = cityName;
+            _isSet    = @"";
+            NSString *cityNumber = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]];
             
-           NSString *cityNumber = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]];
-        //  NSString *cityNumber = @"111";
             if ([[responseObject objectForKey:@"allowd"] containsObject:cityNumber]) {
                 
                 class.cityAllowed = YES;
             }
             [class removeLocationAnimation];
+            
+            
+            if ([again isEqualToString:@"again"]) {
+                
+                NSNotification *notification =[NSNotification notificationWithName:@"again" object:nil userInfo:@{@"name":cityName}];
+                
+                //通过通知中心发送通知
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                
+            }
+            
         }
     }];
-    
+
 }
-
-
 
 #pragma mark - 按钮点击事件
 - (void)cityView:(UIButton *)button {
     
-    class.pushCityViewController(cityName);
+    class.pushCityViewController(cityName,_isSet);
 }
 
 + (instancetype)sharedViewManager

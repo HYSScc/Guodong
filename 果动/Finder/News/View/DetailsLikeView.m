@@ -70,7 +70,7 @@
    
     likeArray = [NSMutableArray array];
     likeArray = details.likeHeadImgArray;
-    if ([details.likeNumber intValue] != 0) {
+    if ([details.likeNumber intValue] > 7 ) {
         [self addSubview:likemoreImageView];
         [self addSubview:moreButton];
     }
@@ -83,13 +83,16 @@
     }
     for (int a = 0; a < arrayNumber; a++) {
         SHImageView *imageView = [SHImageView new];
-        imageView.frame        = CGRectMake(CGRectGetMaxX(likeLabel.frame) + a*Adaptive(35), Adaptive(5), Adaptive(30), Adaptive(30));
+        imageView.frame        = CGRectMake(CGRectGetMaxX(likeLabel.frame) + a*Adaptive(35),
+                                            Adaptive(5),
+                                            Adaptive(30),
+                                            Adaptive(30));
         imageView.layer.cornerRadius  = imageView.bounds.size.width / 2;
         imageView.layer.masksToBounds = YES;
-        imageView.backgroundColor = BASECOLOR;
-        NSDictionary *priseDict = details.likeHeadImgArray[a];
-        imageView.tag = [[priseDict objectForKey:@"uid"] integerValue];
-        NSURL *priseURL         = [NSURL URLWithString:[priseDict objectForKey:@"headimg"]];
+        imageView.backgroundColor     = BASECOLOR;
+        NSDictionary *priseDict       = details.likeHeadImgArray[a];
+        imageView.tag   = [[priseDict objectForKey:@"uid"] integerValue];
+        NSURL *priseURL = [NSURL URLWithString:[priseDict objectForKey:@"headimg"]];
         
         [imageView sd_setImageWithURL:priseURL placeholderImage:[UIImage imageNamed:@"person_nohead"]];
         [self addSubview:imageView];

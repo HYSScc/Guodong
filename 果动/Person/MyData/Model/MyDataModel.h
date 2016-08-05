@@ -12,6 +12,7 @@
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 @property (nonatomic,retain) NSString *time;
+@property (nonatomic,retain) NSString *data_id;
 @property (nonatomic,retain) NSString *leftImageUrl;
 @property (nonatomic,retain) NSString *rightImageUrl;
 

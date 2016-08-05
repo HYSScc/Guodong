@@ -19,13 +19,19 @@
     ShareView *share;
     UIView *alphaView;
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = BASECOLOR;
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
-    
+       
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"图文详情" viewController:self];
     [self.view addSubview:navigation];
     

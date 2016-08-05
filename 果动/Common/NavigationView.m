@@ -18,9 +18,9 @@
     
     self = [super init];
     if (self) {
-        self.frame              = CGRectMake(0, 0, viewWidth, Adaptive(64));
+        self.frame              = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
         self.backgroundColor    = ORANGECOLOR;
-        CGFloat navigationHight = self.frame.size.height - Adaptive(20);
+        CGFloat navigationHight = 44;
         
         viewController = controller;
         
@@ -30,7 +30,7 @@
         
         UIButton* backButton = [UIButton buttonWithType:UIButtonTypeCustom];
         backButton.backgroundColor = [UIColor clearColor];
-        backButton.frame = CGRectMake(-Adaptive(5), Adaptive(20), viewHeight / 9.5286, Adaptive(44));
+        backButton.frame = CGRectMake(-Adaptive(5), Adaptive(20), viewHeight / 9.5286, 44);
         [backButton addTarget:self action:@selector(backButton) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:backButton];
         

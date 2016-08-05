@@ -8,6 +8,15 @@
 
 #import "SHImageView.h"
 
+@interface SHImageView ()
+
+@end
+
 @implementation SHImageView
+
+
+
+
+
 
 @end

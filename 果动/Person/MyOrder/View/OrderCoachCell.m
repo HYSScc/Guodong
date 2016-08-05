@@ -30,9 +30,9 @@
         
        title_Name = [UILabel new];
         title_Name.frame    = CGRectMake(Adaptive(13),
-                                         Adaptive(13),
-                                         Adaptive(60),
-                                         Adaptive(20));
+                                         Adaptive(10),
+                                         Adaptive(40),
+                                         Adaptive(15));
         title_Name.text      = @"教练:";
         title_Name.textColor = [UIColor whiteColor];
         title_Name.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
@@ -40,18 +40,18 @@
         
         coachName       = [UILabel new];
         coachName.frame = CGRectMake(CGRectGetMaxX(title_Name.frame),
-                                     Adaptive(13),
+                                     Adaptive(10),
                                      Adaptive(100),
-                                     Adaptive(20));
+                                     Adaptive(15));
         coachName.textColor = [UIColor whiteColor];
         coachName.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
         
         
         title_sex = [UILabel new];
         title_sex.frame    = CGRectMake(CGRectGetMaxX(coachName.frame),
-                                        Adaptive(13),
+                                        Adaptive(10),
                                         Adaptive(40),
-                                        Adaptive(20));
+                                        Adaptive(15));
         title_sex.text      = @"性别:";
         title_sex.textColor = [UIColor whiteColor];
         title_sex.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
@@ -59,9 +59,9 @@
         
         coachSex       = [UILabel new];
         coachSex.frame = CGRectMake(CGRectGetMaxX(title_sex.frame),
-                                    Adaptive(13),
+                                    Adaptive(10),
                                     Adaptive(100),
-                                    Adaptive(20));
+                                    Adaptive(15));
         coachSex.textColor = [UIColor whiteColor];
         coachSex.font      = [UIFont fontWithName:FONT size:Adaptive(13)];
         

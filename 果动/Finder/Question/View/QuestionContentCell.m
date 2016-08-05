@@ -92,9 +92,9 @@
         contentLabel.numberOfLines = 0;
         [self addSubview:contentLabel];
         
-//        line                 = [UILabel new];
-//        line.backgroundColor = BASECOLOR;
-//        [self addSubview:line];
+        line                 = [UILabel new];
+        line.backgroundColor = BASECOLOR;
+        [self addSubview:line];
         
         
         
@@ -145,7 +145,7 @@
        
         ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){i*myScrollView.bounds.size.width,0,myScrollView.bounds.size}];
         [tmpImgScrollView setContentWithFrame:convertRect];
-         NSLog(@"tmpView.img %@",tmpView.image);
+         NSLog(@".......... %@",tmpView.image);
         [tmpImgScrollView setImage:tmpView.image];
         [myScrollView addSubview:tmpImgScrollView];
         tmpImgScrollView.i_delegate = self;
@@ -173,9 +173,11 @@
     [self bringSubviewToFront:scrollPanel];
     scrollPanel.alpha = 1.0;
     
-    TapImageView *tmpView = sender;
+    TapImageView *tmp = sender;
+    TapImageView *tmpView = (TapImageView *)[self viewWithTag:tmp.tag];
+   
     currentIndex = tmpView.tag - 10;
-    NSLog(@"tmpView %@  image %@ tag %ld",tmpView,tmpView.image,tmpView.tag );
+   
     
     
     //转换后的rect
@@ -253,13 +255,19 @@
     nickNameLabel.text = contentModel.nickName;
     timeLabel.text     = contentModel.timeString;
     
-    CGSize contentTextSize = [contentModel.content boundingRectWithSize:CGSizeMake(viewWidth-20, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:Adaptive(13)]} context:nil].size;
+    CGSize contentTextSize = [contentModel.content boundingRectWithSize:CGSizeMake(viewWidth - Adaptive(26), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:Adaptive(13)]} context:nil].size;
+    
     
     contentLabel.frame = CGRectMake(Adaptive(13),
                                     CGRectGetMaxY(headImageView.frame) +Adaptive(5),
                                     viewWidth - Adaptive(26),
                                     contentTextSize.height);
-    contentLabel.text  = contentModel.content;
+    
+    
+    // 调整行间距
+    contentLabel.attributedText = [HttpTool setLinespacingWith:contentModel.content space:4];
+    
+   // contentLabel.text  = contentModel.content;
     
     
     CGFloat imageWidth    = (viewWidth - Adaptive(36)) / 3;
@@ -273,6 +281,8 @@
     for (int a = 0; a < 9; a++) {
         
         TapImageView * imageView = [TapImageView new];
+        
+        
         imageView.frame = CGRectMake(Adaptive(13) + (a%3)*(imageWidth + Adaptive(5)),
                                      CGRectGetMaxY(contentLabel.frame) +Adaptive(5)+(a/3)*(imageWidth + Adaptive(5)),
                                      imageWidth,
@@ -292,6 +302,7 @@
                 tapImageView.hidden = NO;
                 
                 [tapImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.photoArray[a]]];
+                NSLog(@"tapImageView.image %@",tapImageView.image);
                 
             } else {
                 tapImageView.hidden = YES;
@@ -306,9 +317,9 @@
         }
 //    }
     
-    
+    line.frame = CGRectMake(0, CGRectGetMaxY(contentLabel.frame) + Adaptive(10) + imageViewMaxY, viewWidth, .5);
   
-    CellFrame.size.height =  CGRectGetMaxY(contentLabel.frame) + Adaptive(10) +imageViewMaxY;
+    CellFrame.size.height =  CGRectGetMaxY(line.frame);
     self.frame            = CellFrame;
 }
 

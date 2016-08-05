@@ -11,5 +11,6 @@
 @interface CityViewController : UIViewController
 
 @property (nonatomic,retain) NSString *cityName;
+@property (nonatomic,retain) NSString *isSet;
 
 @end

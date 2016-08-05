@@ -17,9 +17,9 @@
 
 @property (nonatomic, retain) UIImageView       *topLocationImageView;
 @property (nonatomic, retain) UIButton          *locationButton;
-@property (nonatomic, retain) UILabel     *locationLabel;
+@property (nonatomic, retain) UILabel           *locationLabel;
 @property (strong, nonatomic) CLLocationManager *locationManager; // 位置管理器
 @property (strong, nonatomic) CLGeocoder        *geoCoder;        // 地理编码器
 
-
+@property (nonatomic,retain) NSString            *isSet;
 @end

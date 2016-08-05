@@ -296,13 +296,11 @@
     switch (button.tag) {
         case 1:
         {
-            
             [self addHeadChooseView];
         }
             break;
         case 3:
         {
-            
             [self addSexChooseView];
         }
             break;

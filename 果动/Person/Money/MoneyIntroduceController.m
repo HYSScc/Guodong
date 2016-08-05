@@ -17,11 +17,19 @@
 
 @implementation MoneyIntroduceController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // 隐藏navigationBar
     self.view.backgroundColor = BASEGRYCOLOR;
-    self.navigationController.navigationBarHidden = YES;
+   
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"优惠券说明" viewController:self];
     [self.view addSubview:navigation];
 

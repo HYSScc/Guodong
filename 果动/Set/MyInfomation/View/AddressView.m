@@ -28,6 +28,7 @@
     TextFieldView  *SHtextView;
     UIView         *alphaView;
     AppDelegate    *app;
+    NSInteger      buttonNumber;
 }
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -163,7 +164,7 @@
     NSArray *array = @[@"身高",@"体重",@"BMI"];
     for (int a = 0; a < array.count; a++) {
         UILabel *label  = [UILabel new];
-        label.frame     = CGRectMake(0, CGRectGetMaxY(blackbottomLabel.frame) + Adaptive(11) + a*(40), Adaptive(50), Adaptive(20));
+        label.frame     = CGRectMake(0, CGRectGetMaxY(blackbottomLabel.frame) + Adaptive(11) + a*(Adaptive(40)), Adaptive(50), Adaptive(20));
         label.textColor = [UIColor whiteColor];
         label.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
         label.text      = array[a];
@@ -255,16 +256,35 @@
     
 }
 - (void)resultButtonClick:(UIButton *)button {
-    InformationAddress *address = _addressArray[(button.tag /10) - 1];
+    
+   
+     InformationAddress *lastaddress = _addressArray[0];
+    lastaddress.isDefault = NO;
+
+     InformationAddress *address = _addressArray[(button.tag /10) - 1];
+    address.isDefault = YES;
+    
+
+    [_tableView reloadData];
+    
+    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:.3f];
+    
+    buttonNumber = (button.tag /10) - 1;
+    
+}
+
+- (void)delayMethod {
+    InformationAddress *address = _addressArray[buttonNumber];
     NSString *url = [NSString stringWithFormat:@"%@api/?method=address.default&address_id=%d",BASEURL,address.address_id];
     [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress *progress) {
         
     } success:^(id responseObject) {
         
         [self startRequest];
-        
     }];
+
 }
+
 
 - (void)editButtonClick:(UIButton *)button {
 

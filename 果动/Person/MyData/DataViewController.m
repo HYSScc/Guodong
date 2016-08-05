@@ -31,14 +31,18 @@
     int   tagNumber;
     float   contentOffset_Y;
     float   contentOffset_X;
+    UIButton *jtxlButton;
 }
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    // 隐藏navigationBar
+    self.navigationController.navigationBarHidden = YES;
+    // 隐藏tabbar
+    self.tabBarController.tabBar.hidden           = YES;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
-    
-    // 隐藏navigationBar
-    self.navigationController.navigationBarHidden = YES;
     
     
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:@"我的数据" viewController:self];
@@ -59,6 +63,8 @@
     }
 
 }
+
+
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
@@ -74,7 +80,7 @@
     } success:^(id responseObject) {
         
         dataArray = [NSMutableArray array];
-       
+        _page = 1;
         for (NSDictionary *dict in [responseObject objectForKey:@"data"]) {
             MyDataModel *dataModel = [[MyDataModel alloc] initWithDictionary:dict];
             [dataArray addObject:dataModel];
@@ -164,54 +170,70 @@
                                                                   0.5)];
         line.backgroundColor = [UIColor whiteColor];
         line.alpha           = .8;
-        
         [titleScrollView addSubview:line];
         
-        
         if (a == 20) {
+           
             UILabel *remarkLabel = [UILabel new];
-            remarkLabel.frame    = CGRectMake(0, Adaptive(25), Adaptive(70), Adaptive(15));
+            remarkLabel.frame    = CGRectMake(0,
+                                              CGRectGetMaxY(photoline.frame) + Adaptive(40.5)*a + Adaptive(25),
+                                              Adaptive(70),
+                                              Adaptive(15));
             remarkLabel.textColor = [UIColor whiteColor];
-            remarkLabel.text      = @"(标准:12%-18%)";
             remarkLabel.textAlignment = 1;
             remarkLabel.font      = [UIFont fontWithName:FONT size:Adaptive(9)];
-            [label addSubview:remarkLabel];
+             remarkLabel.text     = @"(标准:12%-18%)";
+            [titleScrollView addSubview:remarkLabel];
         }
         if (a == 21) {
+            
             UILabel *remarkLabel = [UILabel new];
-            remarkLabel.frame    = CGRectMake(0, Adaptive(25), Adaptive(70), Adaptive(15));
+            remarkLabel.frame    = CGRectMake(0,
+                                              CGRectGetMaxY(photoline.frame) + Adaptive(40.5)*a + Adaptive(25),
+                                              Adaptive(70),
+                                              Adaptive(15));
             remarkLabel.textColor = [UIColor whiteColor];
-            remarkLabel.text      = @"(标准:<0.9)";
             remarkLabel.textAlignment = 1;
             remarkLabel.font      = [UIFont fontWithName:FONT size:Adaptive(9)];
-            [label addSubview:remarkLabel];
+            remarkLabel.text      = @"(标准:<0.9)";
+            [titleScrollView addSubview:remarkLabel];
         }
         if (a == 22) {
             UILabel *remarkLabel = [UILabel new];
-            remarkLabel.frame    = CGRectMake(0, Adaptive(25), Adaptive(70), Adaptive(15));
+            remarkLabel.frame    = CGRectMake(0,
+                                              CGRectGetMaxY(photoline.frame) + Adaptive(40.5)*a + Adaptive(25),
+                                              Adaptive(70),
+                                              Adaptive(15));
             remarkLabel.textColor = [UIColor whiteColor];
-            remarkLabel.text      = @"(标准:18.5-22.9)";
             remarkLabel.textAlignment = 1;
             remarkLabel.font      = [UIFont fontWithName:FONT size:Adaptive(9)];
-            [label addSubview:remarkLabel];
+            remarkLabel.text      = @"(标准:18.5-22.9)";
+            [titleScrollView addSubview:remarkLabel];
         }
         if (a == 23) {
             UILabel *remarkLabel = [UILabel new];
-            remarkLabel.frame    = CGRectMake(0, Adaptive(25), Adaptive(70), Adaptive(15));
+            remarkLabel.frame    = CGRectMake(0,
+                                              CGRectGetMaxY(photoline.frame) + Adaptive(40.5)*a + Adaptive(25),
+                                              Adaptive(70),
+                                              Adaptive(15));
             remarkLabel.textColor = [UIColor whiteColor];
-            remarkLabel.text      = @"(标准:60-70)";
             remarkLabel.textAlignment = 1;
             remarkLabel.font      = [UIFont fontWithName:FONT size:Adaptive(9)];
-            [label addSubview:remarkLabel];
+            remarkLabel.text      =  @"(标准:60-70)";
+            [titleScrollView addSubview:remarkLabel];
+            
         }
         if (a == 24) {
             UILabel *remarkLabel = [UILabel new];
-            remarkLabel.frame    = CGRectMake(0, Adaptive(25), Adaptive(70), Adaptive(15));
+            remarkLabel.frame    = CGRectMake(0,
+                                              CGRectGetMaxY(photoline.frame) + Adaptive(40.5)*a + Adaptive(25),
+                                              Adaptive(70),
+                                              Adaptive(15));
             remarkLabel.textColor = [UIColor whiteColor];
-            remarkLabel.text      = @"(标准:80-120)";
             remarkLabel.textAlignment = 1;
             remarkLabel.font      = [UIFont fontWithName:FONT size:Adaptive(9)];
-            [label addSubview:remarkLabel];
+            remarkLabel.text      = @"(标准:80-120)";
+            [titleScrollView addSubview:remarkLabel];
         }
     }
     UILabel *lastLabel = (UILabel *)[self.view viewWithTag:titleArray.count + 1];
@@ -231,7 +253,7 @@
     dataScrollView.showsHorizontalScrollIndicator = NO; // 水平方向的
     dataScrollView.showsVerticalScrollIndicator   = NO; // 竖直方向的
     dataScrollView.contentSize     = CGSizeMake(0, CGRectGetMaxY(lastLabel.frame));
-    dataScrollView.backgroundColor = BASECOLOR;
+    dataScrollView.backgroundColor = ORANGECOLOR;
     dataScrollView.delegate        = self;
     [self.view addSubview:dataScrollView];
     
@@ -249,6 +271,7 @@
     
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, viewWidth - Adaptive(70), viewHeight*2) collectionViewLayout:flowLayout];
     //  _collectionView.bounces = NO;
+    _collectionView.pagingEnabled = YES;
     _collectionView.delegate = self;
     _collectionView.dataSource = self;
     _collectionView.backgroundColor = BASECOLOR;
@@ -257,6 +280,10 @@
     
     
 }
+
+
+
+
 
 #pragma mark -- UICollectionViewDataSource
 //定义展示UICollectionViewCell的个数
@@ -298,37 +325,22 @@
 {
     return UIEdgeInsetsMake(0,0, 0, 0);
 }
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     // 只要偏移量有改变  就会调用
-
      CGPoint point = scrollView.contentOffset;
     
-//    
-//   
-//    
-//    
-//    titleScrollView.contentOffset = CGPointMake(0, contentOffset_Y);
-//    dataScrollView.contentOffset  = CGPointMake(contentOffset_X, contentOffset_Y);
-//    
-//    
-//    contentOffset_Y = point.y + contentOffset_Y;
-//    contentOffset_X = point.x;
-//    
-////    if (point.y < 0) {
-////        titleScrollView.contentOffset = CGPointMake(0, contentOffset_Y + point.y);
-////        dataScrollView.contentOffset  = CGPointMake(0, contentOffset_Y + point.y);
-////    } else {
-////        titleScrollView.contentOffset = CGPointMake(0, point.y);
-////        dataScrollView.contentOffset  = CGPointMake(0, point.y);
-////    }
-////    
-////   
-//    NSLog(@"pointX %f  pointY %f contentOffset_X %f contentOffset_Y %f",point.x,point.y,contentOffset_X,contentOffset_Y);
-   
-    titleScrollView.contentOffset = CGPointMake(0, point.y);
-    dataScrollView.contentOffset  = CGPointMake(0, point.y);
-   
+    if (point.y == 0) {
+        // 横向滑动
+        titleScrollView.contentOffset = CGPointMake(0, contentOffset_Y);
+        dataScrollView.contentOffset  = CGPointMake(0, contentOffset_Y);
+    } else {
+        // 纵向滑动
+        contentOffset_Y = point.y;
+        titleScrollView.contentOffset = CGPointMake(0, point.y);
+        dataScrollView.contentOffset  = CGPointMake(0, point.y);
+    }
     
     
     CGFloat collectWidth = (viewWidth - Adaptive(70)) * 2;

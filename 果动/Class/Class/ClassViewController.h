@@ -15,10 +15,12 @@
 
 - (void)pushClassIntroduceView:(NSString *)class className:(NSString *)name classOrShip:(NSString *)type;
 
-@property (nonatomic,copy) void (^pushCityViewController)(NSString* cityName);
+@property (nonatomic,copy) void (^pushCityViewController)(NSString* cityName,NSString *isSet);
 
 @property (nonatomic,copy) void(^pushActiveView)(NSString *number);
 
 @property (nonatomic,assign) BOOL cityAllowed;
+
+@property (nonatomic,retain) NSMutableArray    *activeArray;
 
 @end
