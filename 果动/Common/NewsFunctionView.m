@@ -194,8 +194,6 @@
         //通过通知中心发送通知
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
-    
-   
 }
 
 @end

@@ -312,7 +312,7 @@
                     }
                     
                     if (changeTimeArray.count != 0) {
-                       
+                      //  [changeTimeArray removeAllObjects];
                         pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"picker" pickerArray:changeTimeArray];
                     } else {
                         // 时间过晚  提醒订第二天课程

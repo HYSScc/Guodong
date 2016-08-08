@@ -27,20 +27,11 @@
 		630766E11D080C810019A624 /* NewsDetailsReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 630766E01D080C810019A624 /* NewsDetailsReplyCell.m */; };
 		630AFC751D17D6A40005FC98 /* MyDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 630AFC741D17D6A40005FC98 /* MyDataModel.m */; };
 		630AFC781D17F4A80005FC98 /* DataCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 630AFC771D17F4A80005FC98 /* DataCollectionViewCell.m */; };
-		630BADCE1D4EE26500E3A25D /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630BADCD1D4EE26500E3A25D /* Bugly.framework */; };
 		631294881D3CD4A30023A115 /* MoneyIntroduceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 631294871D3CD4A30023A115 /* MoneyIntroduceController.m */; };
 		6312948B1D3CD7500023A115 /* MoneyIntroduceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6312948A1D3CD7500023A115 /* MoneyIntroduceCell.m */; };
 		6312948E1D3CD8EF0023A115 /* MoneyIntroduceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6312948D1D3CD8EF0023A115 /* MoneyIntroduceModel.m */; };
 		631555971D2F6E64005DA8C7 /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6315555F1D2F6E64005DA8C7 /* UMSocialLocalizable.strings */; };
 		631555981D2F6E64005DA8C7 /* libUMSocial_Sdk_5.2.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6315556D1D2F6E64005DA8C7 /* libUMSocial_Sdk_5.2.1.a */; };
-		631555991D2F6E64005DA8C7 /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6315556F1D2F6E64005DA8C7 /* UMSCommentDetailController.xib */; };
-		6315559A1D2F6E64005DA8C7 /* UMSCommentInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631555701D2F6E64005DA8C7 /* UMSCommentInputController.xib */; };
-		6315559B1D2F6E64005DA8C7 /* UMSCommentInputControlleriPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631555711D2F6E64005DA8C7 /* UMSCommentInputControlleriPad.xib */; };
-		6315559C1D2F6E64005DA8C7 /* UMShareEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631555721D2F6E64005DA8C7 /* UMShareEditViewController.xib */; };
-		6315559D1D2F6E64005DA8C7 /* UMShareEditViewControlleriPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631555731D2F6E64005DA8C7 /* UMShareEditViewControlleriPad.xib */; };
-		6315559E1D2F6E64005DA8C7 /* UMSLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631555741D2F6E64005DA8C7 /* UMSLoginViewController.xib */; };
-		6315559F1D2F6E64005DA8C7 /* UMSnsAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631555751D2F6E64005DA8C7 /* UMSnsAccountViewController.xib */; };
-		631555A01D2F6E64005DA8C7 /* UMSShareListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631555761D2F6E64005DA8C7 /* UMSShareListController.xib */; };
 		631555A11D2F6E64005DA8C7 /* UMSocialSDKResourcesNew.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 631555771D2F6E64005DA8C7 /* UMSocialSDKResourcesNew.bundle */; };
 		631555A21D2F6E64005DA8C7 /* libSocialSinaSSO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6315557B1D2F6E64005DA8C7 /* libSocialSinaSSO.a */; };
 		631555A31D2F6E64005DA8C7 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6315557C1D2F6E64005DA8C7 /* libWeiboSDK.a */; };
@@ -97,7 +88,6 @@
 		63411E4B1D1A86A6007E1505 /* My_NewsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63411E401D1A86A6007E1505 /* My_NewsView.m */; };
 		63411E4C1D1A86A6007E1505 /* My_PhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63411E431D1A86A6007E1505 /* My_PhotoView.m */; };
 		63411E4E1D1A86A6007E1505 /* ChangeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 63411E491D1A86A6007E1505 /* ChangeView.m */; };
-		6345BB6F1D52E04600CFC760 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630BADCF1D4EE2AA00E3A25D /* UMMobClick.framework */; };
 		6346F52F1CF7DACA00C366EB /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346F5291CF7DACA00C366EB /* PersonViewController.m */; };
 		6346F5301CF7DACA00C366EB /* CustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346F52C1CF7DACA00C366EB /* CustomView.m */; };
 		6346F5311CF7DACA00C366EB /* TopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346F52E1CF7DACA00C366EB /* TopView.m */; };
@@ -119,6 +109,8 @@
 		634938681D124E64003F5AA2 /* libpingppcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634938491D124E64003F5AA2 /* libpingppcore.a */; };
 		6349386A1D124E64003F5AA2 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6349384D1D124E64003F5AA2 /* Pingpp.bundle */; };
 		6349386D1D12558C003F5AA2 /* InformationAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 6349386C1D12558C003F5AA2 /* InformationAddress.m */; };
+		635672E71D5838CD0062D8AE /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630BADCF1D4EE2AA00E3A25D /* UMMobClick.framework */; };
+		635672EA1D5839160062D8AE /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635672E91D5839160062D8AE /* Bugly.framework */; };
 		6358DEAC1CFD208000D9EDD4 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 6358DEA61CFD208000D9EDD4 /* easing.c */; };
 		6358DEAD1CFD208000D9EDD4 /* TranformFadeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6358DEA91CFD208000D9EDD4 /* TranformFadeView.m */; };
 		6358DEAE1CFD208000D9EDD4 /* YXEasing.m in Sources */ = {isa = PBXBuildFile; fileRef = 6358DEAB1CFD208000D9EDD4 /* YXEasing.m */; };
@@ -319,7 +311,6 @@
 		630AFC741D17D6A40005FC98 /* MyDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDataModel.m; sourceTree = "<group>"; };
 		630AFC761D17F4A80005FC98 /* DataCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCollectionViewCell.h; sourceTree = "<group>"; };
 		630AFC771D17F4A80005FC98 /* DataCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCollectionViewCell.m; sourceTree = "<group>"; };
-		630BADCD1D4EE26500E3A25D /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		630BADCF1D4EE2AA00E3A25D /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		631294861D3CD4A30023A115 /* MoneyIntroduceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoneyIntroduceController.h; sourceTree = "<group>"; };
 		631294871D3CD4A30023A115 /* MoneyIntroduceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyIntroduceController.m; sourceTree = "<group>"; };
@@ -340,14 +331,6 @@
 		6315556B1D2F6E64005DA8C7 /* UMSocialSnsPlatformManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSnsPlatformManager.h; sourceTree = "<group>"; };
 		6315556C1D2F6E64005DA8C7 /* UMSocialSnsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSnsService.h; sourceTree = "<group>"; };
 		6315556D1D2F6E64005DA8C7 /* libUMSocial_Sdk_5.2.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocial_Sdk_5.2.1.a; sourceTree = "<group>"; };
-		6315556F1D2F6E64005DA8C7 /* UMSCommentDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSCommentDetailController.xib; sourceTree = "<group>"; };
-		631555701D2F6E64005DA8C7 /* UMSCommentInputController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSCommentInputController.xib; sourceTree = "<group>"; };
-		631555711D2F6E64005DA8C7 /* UMSCommentInputControlleriPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSCommentInputControlleriPad.xib; sourceTree = "<group>"; };
-		631555721D2F6E64005DA8C7 /* UMShareEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMShareEditViewController.xib; sourceTree = "<group>"; };
-		631555731D2F6E64005DA8C7 /* UMShareEditViewControlleriPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMShareEditViewControlleriPad.xib; sourceTree = "<group>"; };
-		631555741D2F6E64005DA8C7 /* UMSLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSLoginViewController.xib; sourceTree = "<group>"; };
-		631555751D2F6E64005DA8C7 /* UMSnsAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSnsAccountViewController.xib; sourceTree = "<group>"; };
-		631555761D2F6E64005DA8C7 /* UMSShareListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSShareListController.xib; sourceTree = "<group>"; };
 		631555771D2F6E64005DA8C7 /* UMSocialSDKResourcesNew.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResourcesNew.bundle; sourceTree = "<group>"; };
 		631555781D2F6E64005DA8C7 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/UMSocialLocalizable.strings"; sourceTree = "<group>"; };
 		6315557B1D2F6E64005DA8C7 /* libSocialSinaSSO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSinaSSO.a; sourceTree = "<group>"; };
@@ -505,6 +488,7 @@
 		6349384E1D124E64003F5AA2 /* Pingpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pingpp.h; sourceTree = "<group>"; };
 		6349386B1D12558C003F5AA2 /* InformationAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationAddress.h; sourceTree = "<group>"; };
 		6349386C1D12558C003F5AA2 /* InformationAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationAddress.m; sourceTree = "<group>"; };
+		635672E91D5839160062D8AE /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		6358DEA61CFD208000D9EDD4 /* easing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = easing.c; sourceTree = "<group>"; };
 		6358DEA71CFD208000D9EDD4 /* easing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easing.h; sourceTree = "<group>"; };
 		6358DEA81CFD208000D9EDD4 /* TranformFadeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranformFadeView.h; sourceTree = "<group>"; };
@@ -802,13 +786,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6345BB6F1D52E04600CFC760 /* UMMobClick.framework in Frameworks */,
+				635672EA1D5839160062D8AE /* Bugly.framework in Frameworks */,
+				635672E71D5838CD0062D8AE /* UMMobClick.framework in Frameworks */,
 				639DB03B1D49AC7100D6D367 /* libresolv.tbd in Frameworks */,
 				63CC74A71D34E6F700C9C295 /* MessageUI.framework in Frameworks */,
 				63ACADE21D20CFD3002BDF4D /* libiconv.tbd in Frameworks */,
 				63ACAD7F1D20BA28002BDF4D /* libsqlite3.tbd in Frameworks */,
 				63ACAD7D1D20BA0D002BDF4D /* ImageIO.framework in Frameworks */,
-				630BADCE1D4EE26500E3A25D /* Bugly.framework in Frameworks */,
 				63ACAD7B1D20B9EB002BDF4D /* JavaScriptCore.framework in Frameworks */,
 				63ACAD791D20B9C8002BDF4D /* libicucore.tbd in Frameworks */,
 				631871311D1157AC003FB278 /* libstdc++.tbd in Frameworks */,
@@ -1225,14 +1209,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		630BADCC1D4EE25E00E3A25D /* Bugly */ = {
-			isa = PBXGroup;
-			children = (
-				630BADCD1D4EE26500E3A25D /* Bugly.framework */,
-			);
-			path = Bugly;
-			sourceTree = "<group>";
-		};
 		6315555D1D2F6E64005DA8C7 /* Umeng */ = {
 			isa = PBXGroup;
 			children = (
@@ -1248,7 +1224,6 @@
 				6315555F1D2F6E64005DA8C7 /* UMSocialLocalizable.strings */,
 				631555611D2F6E64005DA8C7 /* Header */,
 				6315556D1D2F6E64005DA8C7 /* libUMSocial_Sdk_5.2.1.a */,
-				6315556E1D2F6E64005DA8C7 /* SocialSDKXib */,
 				631555771D2F6E64005DA8C7 /* UMSocialSDKResourcesNew.bundle */,
 			);
 			path = UMSocial_Sdk_5.2.1;
@@ -1270,21 +1245,6 @@
 				6315556C1D2F6E64005DA8C7 /* UMSocialSnsService.h */,
 			);
 			path = Header;
-			sourceTree = "<group>";
-		};
-		6315556E1D2F6E64005DA8C7 /* SocialSDKXib */ = {
-			isa = PBXGroup;
-			children = (
-				6315556F1D2F6E64005DA8C7 /* UMSCommentDetailController.xib */,
-				631555701D2F6E64005DA8C7 /* UMSCommentInputController.xib */,
-				631555711D2F6E64005DA8C7 /* UMSCommentInputControlleriPad.xib */,
-				631555721D2F6E64005DA8C7 /* UMShareEditViewController.xib */,
-				631555731D2F6E64005DA8C7 /* UMShareEditViewControlleriPad.xib */,
-				631555741D2F6E64005DA8C7 /* UMSLoginViewController.xib */,
-				631555751D2F6E64005DA8C7 /* UMSnsAccountViewController.xib */,
-				631555761D2F6E64005DA8C7 /* UMSShareListController.xib */,
-			);
-			path = SocialSDKXib;
 			sourceTree = "<group>";
 		};
 		631555791D2F6E64005DA8C7 /* UMSocial_Sdk_Extra_Frameworks */ = {
@@ -1673,6 +1633,14 @@
 			path = WebView;
 			sourceTree = "<group>";
 		};
+		635672E81D5839160062D8AE /* Bugly */ = {
+			isa = PBXGroup;
+			children = (
+				635672E91D5839160062D8AE /* Bugly.framework */,
+			);
+			path = Bugly;
+			sourceTree = "<group>";
+		};
 		6358DEA11CFD1FD700D9EDD4 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1760,8 +1728,8 @@
 		636D4C221CFC30AA00890520 /* Third_files */ = {
 			isa = PBXGroup;
 			children = (
+				635672E81D5839160062D8AE /* Bugly */,
 				6325C0A41D5086FC006DD4DF /* YouzaniOSSDK */,
-				630BADCC1D4EE25E00E3A25D /* Bugly */,
 				63CFA4AB1D4AE61B009E286B /* Ument_ Sta */,
 				639DAFBB1D49AB9100D6D367 /* QiNiu */,
 				63197F341D406DAD000760CF /* AFNetworking */,
@@ -2182,6 +2150,7 @@
 				0488CB1E1A86E29000E0AA5E /* Sources */,
 				0488CB1F1A86E29000E0AA5E /* Frameworks */,
 				0488CB201A86E29000E0AA5E /* Resources */,
+				635672E41D5832280062D8AE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2266,21 +2235,13 @@
 				6305EFD11CF2B58800FE35E4 /* news_result.png in Resources */,
 				0488CB311A86E29000E0AA5E /* Main.storyboard in Resources */,
 				631555AA1D2F6E65005DA8C7 /* README.txt in Resources */,
-				631555991D2F6E64005DA8C7 /* UMSCommentDetailController.xib in Resources */,
-				6315559F1D2F6E64005DA8C7 /* UMSnsAccountViewController.xib in Resources */,
 				6325C0B41D5086FC006DD4DF /* read_me.txt in Resources */,
-				6315559E1D2F6E64005DA8C7 /* UMSLoginViewController.xib in Resources */,
-				6315559A1D2F6E64005DA8C7 /* UMSCommentInputController.xib in Resources */,
 				631555A41D2F6E64005DA8C7 /* WeiboSDK.bundle in Resources */,
-				6315559B1D2F6E64005DA8C7 /* UMSCommentInputControlleriPad.xib in Resources */,
-				631555A01D2F6E64005DA8C7 /* UMSShareListController.xib in Resources */,
 				631555A11D2F6E64005DA8C7 /* UMSocialSDKResourcesNew.bundle in Resources */,
 				63B658EA1D0D3CEB00AFC31F /* MJRefresh.bundle in Resources */,
 				0488CB331A86E29000E0AA5E /* Images.xcassets in Resources */,
 				631555A71D2F6E65005DA8C7 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				633BC61F1D29FD7800C17576 /* Default.png in Resources */,
-				6315559D1D2F6E64005DA8C7 /* UMShareEditViewControlleriPad.xib in Resources */,
-				6315559C1D2F6E64005DA8C7 /* UMShareEditViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2292,6 +2253,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		635672E41D5832280062D8AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n# Copyright 2014-2016 Bugly, Tencent. All rights reserved.\n#\n# V1.2.1\n#\n# 2016.03.02\n#\n#\n################################################################################\n# # 注意: 请配置下面的信息\n################################################################################\nBUGLY_APP_ID=\"900019609\"\nBUGLY_APP_KEY=\"Efw9JT1BBZMIOgrt\"\nBUNDLE_IDENTIFIER=\"com.guodong.user\"\n################################################################################\n# # 自定义配置\n################################################################################\n# # Debug模式编译是否上传，1＝上传 0＝不上传，默认不上传\nUPLOAD_DEBUG_SYMBOLS=0\n#\n# # 模拟器编译是否上传，1=上传 0=不上传，默认不上传\nUPLOAD_SIMULATOR_SYMBOLS=1\n#\n# #只有Archive操作时上传, 1=支持Archive上传 0=所有Release模式编译都上传\n# UPLOAD_ARCHIVE_ONLY=0\n#\n# # 脚本默认配置的版本格式为CFBundleShortVersionString(CFBundleVersion),  如果你修改默认的版本格式, 请设置此变量, 如果不想修改, 请忽略此设置\n# CUSTOMIZED_APP_VERSION=\"\"\n#\n#\n#\n# This script will extract symbols from the .dSYM and generate .symbol file(Bugly supported) and upload to server.\n# You could visit http://bugly.qq.com to get more details about Bugly.(Optional: buylyweb.et.wsd.com)\n#\n# Usage:\n#   * The instructions assume you have copyed this script into your project int Xcode.\n#   * Copy the \"buglySymbolIOS.jar\" file into the \"~/bin\" folder.\n#   * Open the project editor, select your build target.\n#   * Click \"Build Phases\" at the top of the project editor.\n#   * Click \"+\" button in the top left corner and select \"New Run Script Phase\".\n#   * Click \"Run Script\".\n#   * Paste the following script into the dark text box. You will have to uncomment the lines (remove the #) of course.\n#\n# --- SCRIPT BEGINS ON NEXT LINE, COPY AND EDIT FROM THERE ---\n#\n#\n#\n# --- END OF SCRIPT ---\n\n\n################################################################################\n# 注意: 如果你不知道此脚本的执行流程和用法，请不要随便修改！\n################################################################################\n\n# 退出执行并打印提示信息\nexitWithMessage() {\n    echo \"--------------------------------\"\n    echo -e \"${1}\"\n    echo \"--------------------------------\"\n    echo \"No upload and exit.\"\n    echo \"----------------------------------------------------------------\"\n    exit ${2}\n}\n\necho \"----------------------------------------------------------------\"\necho \"Copyright 2014-2015 Bugly @Tencent. All rights reserved.\"\n\necho \"This script will extract symbols from the .dSYM file and generate .symbol file(Bugly supported) and upload to server.\"\necho \"You could visit http://bugly.qq.com to get more details about Bugly.\"\necho \"----------------------------------------------------------------\"\n\necho \"Uploading dSYM to Bugly.\"\necho \"\"\n\n# Bugly服务域名\nDSYM_UPLOAD_DOMAIN=\"bugly.qq.com\"\n\n# 读取Info.plist文件中的版本信息\necho \"Info.Plist : ${INFOPLIST_FILE}\"\n\nBUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' \"${INFOPLIST_FILE}\")\nBUNDLE_SHORT_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' \"${INFOPLIST_FILE}\")\n\n# 组装Bugly默认识别的版本信息(格式为CFBundleShortVersionString(CFBundleVersion), 例如: 1.0(1))\nif [ ! \"${CUSTOMIZED_APP_VERSION}\" ]; then\nBUGLY_APP_VERSION=\"${BUNDLE_SHORT_VERSION}(${BUNDLE_VERSION})\"\nelse\nBUGLY_APP_VERSION=\"${CUSTOMIZED_APP_VERSION}\"\nfi\n\n# Bugly符号提取工具路径, 请确保buglySymboliOS.jar的路径是正确的\nBUGLY_SYMBOL_JAR_PATH=\"${SRCROOT}/dsymtool/buglySymboliOS.jar\"\nif [ ! -f \"${BUGLY_SYMBOL_JAR_PATH}\" ]; then\nBUGLY_SYMBOL_JAR_PATH=\"$HOME/bin/buglySymboliOS.jar\"\nfi\n\necho \"--------------------------------\"\necho \"Step 1: Prepare application information.\"\necho \"--------------------------------\"\n\necho \"Product Name: ${PRODUCT_NAME}\"\necho \"Bundle Identifier: ${BUNDLE_IDENTIFIER}\"\necho \"Version: ${BUNDLE_SHORT_VERSION}\"\necho \"Build: ${BUNDLE_VERSION}\"\n\necho \"Bugly App ID: ${BUGLY_APP_ID}\"\necho \"Bugly App key: ${BUGLY_APP_KEY}\"\necho \"Bugly App Version: ${BUGLY_APP_VERSION}\"\n\necho \"--------------------------------\"\necho \"Step 2: Check the arguments ...\"\n\n##检查模拟器编译是否允许上传符号\nif [ \"$EFFECTIVE_PLATFORM_NAME\" == \"-iphonesimulator\" ]; then\nif [ $UPLOAD_SIMULATOR_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for simulator and skipping to upload. \\nYou can modify 'UPLOAD_SIMULATOR_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否是Release模式编译\nif [ \"${CONFIGURATION=}\" == \"Debug\" ]; then\nif [ $UPLOAD_DEBUG_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for debug mode and skipping to upload. \\nYou can modify 'UPLOAD_DEBUG_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否Archive操作\nif [ $UPLOAD_ARCHIVE_ONLY -eq 1 ]; then\nif [[ \"$TARGET_BUILD_DIR\" == *\"/Archive\"* ]]; then\necho \"Archive the package\"\nelse\nexitWithMessage \"Warning: Build for NOT Archive mode and skipping to upload. \\nYou can modify 'UPLOAD_ARCHIVE_ONLY' to 0 in the script.\" 0\nfi\nfi\n\n# 检查必须参数是否设置\nif [ ! \"${BUGLY_APP_ID}\" ]; then\nexitWithMessage \"Error: Bugly App ID not defined. Please set 'BUGLY_APP_ID' \" 0\nfi\nif [[ \"${BUGLY_APP_ID}\" == *\"App ID\"* ]]; then\nexitWithMessage \"Error: Bugly App ID not defined.\" 0\nfi\n\nif [ ! \"${BUGLY_APP_KEY}\" ]; then\nexitWithMessage \"Error: Bugly APP Key not defined.\" 0\nfi\n\nif [ ! \"${BUNDLE_IDENTIFIER}\" ]; then\nexitWithMessage \"Error: Bundle Identifier not defined.\" 0\nfi\n\nfunction uploadDSYM {\n    DSYM_SRC=\"$1\"\n    echo \".dSYM file: ${DSYM_SRC}\"\n    if [ ! -d \"$DSYM_SRC\" ]; then\n    exitWithMessage \"dSYM source not found: ${DSYM_SRC}\" 0\n    fi\n    DSYM_FILE_NAME=${DSYM_SRC##*/}\n        DSYM_SYMBOL_OUT_ZIP_NAME=\"${DSYM_FILE_NAME}.bSymbol.zip\"\n        # 替换空格\n        DSYM_SYMBOL_OUT_ZIP_NAME=\"${DSYM_SYMBOL_OUT_ZIP_NAME// /_}\"\n        \n        # 声明符号表临时目录和备份目录\n        DSYM_ZIP_OUT_DIR=${BUILD_DIR}/BuglySymbolsTemp\n        DSYM_SYMBOL_BACKUP_DIR=${BUILD_DIR}/BuglySymbolsBackup\n        \n        if [ ! -e \"${DSYM_ZIP_OUT_DIR}\" ]; then\n        mkdir ${DSYM_ZIP_OUT_DIR}\n        fi\n        \n        if [ ! -e \"${DSYM_SYMBOL_BACKUP_DIR}\" ]; then\n        mkdir ${DSYM_SYMBOL_BACKUP_DIR}\n        fi\n        \n        # 备份并清理\n        find ${DSYM_ZIP_OUT_DIR} -name \"*.bSymbol.zip\" -print0 | xargs -0 -I {} mv {} ${DSYM_SYMBOL_BACKUP_DIR}\n        /bin/rm -rf \"${DSYM_ZIP_OUT_DIR}/*.bSymbol.zip\"\n        \n        DSYM_ZIP_FPATH=\"${DSYM_ZIP_OUT_DIR}/${DSYM_SYMBOL_OUT_ZIP_NAME}\"\n        \n        # 提取符号信息\n        echo \"--------------------------------\"\n        echo \"Step 3: Extract symbol info from .dSYM file. to ${DSYM_ZIP_FPATH}\"\n        \n        if [ ! -f \"$BUGLY_SYMBOL_JAR_PATH\" ]; then\n        exitWithMessage \"Error: Jar file '${BUGLY_SYMBOL_JAR_PATH}' was not found. \\nPlease copy the jar file into ~/bin folder.\" 1\n        fi\n        \n        echo \"--------------------------------\"\n        (/usr/bin/java -jar \"${BUGLY_SYMBOL_JAR_PATH}\" -i \"${DSYM_SRC}\" -o \"${DSYM_ZIP_FPATH}\" ) || exitWithMessage \"Error: Failed to extract symbols.\" 1\n        echo \"--------------------------------\"\n        \n        if [ ! -e \"${DSYM_ZIP_FPATH}\" ]; then\n        DSYM_SYMBOL_OUT_ZIP_NAME=$(ls ${DSYM_ZIP_OUT_DIR} | grep \".bSymbol.zip\")\n        DSYM_ZIP_FPATH=\"${DSYM_ZIP_OUT_DIR}/${DSYM_SYMBOL_OUT_ZIP_NAME}\"\n        DSYM_SYMBOL_OUT_ZIP_NAME=${DSYM_SYMBOL_OUT_ZIP_NAME//&/_}\n            fi\n            \n            if [ ! -e \"${DSYM_ZIP_FPATH}\" ] ; then\n            exitWithMessage \"no symbol file zip archive generated: ${DSYM_ZIP_FPATH}\" 0\n            fi\n            \n            echo \"Step 4: Upload the symbols of dSYM.\"\n            echo \"--------------------------------\"\n            echo \"zip : ${DSYM_SYMBOL_OUT_ZIP_NAME}\"\n            echo \"dir : ${DSYM_ZIP_FPATH}\"\n            \n            echo \"dSYM upload domain: ${DSYM_UPLOAD_DOMAIN}\"\n            DSYM_UPLOAD_URL=\"http://${DSYM_UPLOAD_DOMAIN}/upload/dsym?app=${BUGLY_APP_ID}&pid=2&ver=${BUGLY_APP_VERSION}&n=${DSYM_SYMBOL_OUT_ZIP_NAME}&key=${BUGLY_APP_KEY}&bid=${BUNDLE_IDENTIFIER}\"\n            echo \"dSYM upload url: ${DSYM_UPLOAD_URL}\"\n            \n            # Upload dSYM to Bugly\n            echo \"curl --header \"Content-Type:application/zip\" --data-binary \"@${DSYM_ZIP_FPATH}\" \"${DSYM_UPLOAD_URL}\" --verbose\"\n            \n            echo \"--------------------------------\"\n            STATUS=$(/usr/bin/curl --header \"Content-Type:application/zip\" --data-binary \"@${DSYM_ZIP_FPATH}\" \"${DSYM_UPLOAD_URL}\" --verbose)\n            echo \"--------------------------------\"\n            \n            UPLOAD_RESULT=\"FAILTURE\"\n            echo \"Bugly server response: ${STATUS}\"\n            if [ ! \"${STATUS}\" ]; then\n            echo \"Error: Failed to upload the zip archive file.\"\n            elif [[ \"${STATUS}\" == *\":true\"* ]]; then\n            echo \"Success to upload the dSYM for the app [${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION}]\"\n            UPLOAD_RESULT=\"SUCCESS\"\n            else\n            echo \"Error: Failed to upload the zip archive file to Bugly.\"\n            fi\n            \n            #Remove temp dSYM archive\n            echo \"Remove temporary zip archive: ${DSYM_ZIP_FPATH}\"\n            #/bin/rm -f \"${DSYM_ZIP_FPATH}\"\n            \n            if [ \"$?\" -ne 0 ]; then\n            exitWithMessage \"Error: Failed to remove temporary zip archive.\" 0\n            fi\n            \n            echo \"--------------------------------\"\n            echo \"${UPLOAD_RESULT} - dSYM upload complete.\"\n            \n            if [[ \"${UPLOAD_RESULT}\" == \"FAILTURE\" ]]; then\n            echo \"--------------------------------\"\n            echo \"Failed to upload the dSYM\"\n            echo \"Please check the script and try it again.\"\n            fi\n            \n            echo \"----------------------------------------------------------------\"\n        }\n        \n        # .dSYM文件信息\n        \n        DSYM_FOLDER=\"${DWARF_DSYM_FOLDER_PATH}\"\n        IFS=$'\\n'\n        \n        echo \"Scaning dSYM FOLDER: ${DSYM_FOLDER} ...\"\n        RET=\"F\"\n        \n        for dsymFile in $(find \"$DSYM_FOLDER\" -name '*.dSYM'); do\n        RET=\"T\"\n        echo \"Found dSYM file: $dsymFile\"\n        uploadDSYM $dsymFile\n        done\n        \n        if [ $RET = \"F\" ]; then\n        exitWithMessage \"No .dSYM found in ${DSYM_FOLDER}\" 0\n        fi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0488CB1E1A86E29000E0AA5E /* Sources */ = {
@@ -2653,6 +2630,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2662,40 +2640,8 @@
 					"$(PROJECT_DIR)/果动/Third_files/ShareSDK/Support/Required",
 					"$(PROJECT_DIR)/果动/Third_files/Umeng/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
 					Sta,
 					"$(PROJECT_DIR)/果动/Third_files/Bugly",
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
 				);
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2705,7 +2651,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/果动/Third_Files/JPush/lib",
 					"$(PROJECT_DIR)/果动/Third_files",
 					"$(PROJECT_DIR)/果动/Third_files/Ping++/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/果动/Third_files/Ping++/lib/Channels/ApplePay",
@@ -2751,6 +2696,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2760,40 +2706,8 @@
 					"$(PROJECT_DIR)/果动/Third_files/ShareSDK/Support/Required",
 					"$(PROJECT_DIR)/果动/Third_files/Umeng/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Statistics,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
 					Sta,
 					"$(PROJECT_DIR)/果动/Third_files/Bugly",
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
-					"$(PROJECT_DIR)/果动/Third_files/Ument_",
-					Sta,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/果动/AppDelegate/PrefixHeader.pch";
@@ -2802,7 +2716,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/果动/Third_Files/JPush/lib",
 					"$(PROJECT_DIR)/果动/Third_files",
 					"$(PROJECT_DIR)/果动/Third_files/Ping++/lib/Channels/Alipay",
 					"$(PROJECT_DIR)/果动/Third_files/Ping++/lib/Channels/ApplePay",
@@ -2821,14 +2734,10 @@
 					"$(PROJECT_DIR)/果动/Third_files/Ping++/lib/Dependencies/WebView",
 					"$(PROJECT_DIR)/果动/Third_files/Ping++/lib",
 					"$(PROJECT_DIR)/果动/Third_files/Ping++/lib/One",
-					"$(PROJECT_DIR)/果动/Third_files/ShareSDK/Support/PlatformSDK/SinaWeiboSDK",
-					"$(PROJECT_DIR)/果动/Third_files/ShareSDK/Support/PlatformSDK/WeChatSDK",
 					"$(PROJECT_DIR)/果动/Third_files/Umeng/UMSocial_Sdk_5.2.1",
 					"$(PROJECT_DIR)/果动/Third_files/Umeng/UMSocial_Sdk_Extra_Frameworks/SinaSSO",
 					"$(PROJECT_DIR)/果动/Third_files/Umeng/UMSocial_Sdk_Extra_Frameworks/Wechat",
 					"$(PROJECT_DIR)/果动/Third_files/Umeng/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
-					"$(PROJECT_DIR)/果动/Third_files/YouzaniOSDemo/YouzaniOSDemo/YouzaniOSDemo/YouzaniOSDemo/YouzanSDK",
-					"$(PROJECT_DIR)/果动/Third_files/YouzaniOSDemo/YouzaniOSSDK",
 					"$(PROJECT_DIR)/果动/Third_files/YouzaniOSSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
