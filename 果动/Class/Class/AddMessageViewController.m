@@ -341,12 +341,6 @@
         [self.view addSubview:pickerView];
 
     }];
-    
-    
-   
-    
-    
-    
    
 }
 
@@ -504,8 +498,10 @@
     
     
     // 封装时间戳
-    NSString* timeString = [timeView.messageLabel.text substringToIndex:2];
-    NSString* string = [NSString stringWithFormat:@"%@ %@:00:00", dateView.messageLabel.text, timeString];
+    NSString* timeString = [timeView.messageLabel.text substringToIndex:5];
+    
+    NSString* string = [NSString stringWithFormat:@"%@ %@:00", dateView.messageLabel.text, timeString];
+    
     
     NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy年MM月dd日HH:mm:ss"];

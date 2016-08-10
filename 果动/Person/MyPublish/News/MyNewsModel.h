@@ -23,5 +23,6 @@
 @property (nonatomic,assign) CGFloat  height;
 @property (nonatomic,assign) CGFloat  widht;
 @property (nonatomic,retain) NSString *talk_id;
+@property (nonatomic,retain) NSString *user_id;
 
 @end

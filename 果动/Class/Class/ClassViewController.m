@@ -196,7 +196,7 @@
 }
 #pragma mark - 请求数据
 - (void)startRequest {
-    NSString *url = [NSString stringWithFormat:@"%@/api/?method=index.index",BASEURL];
+    NSString *url = [NSString stringWithFormat:@"%@api/?method=index.index",BASEURL];
     [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
         
     } success:^(id responseObject) {

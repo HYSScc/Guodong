@@ -99,6 +99,7 @@
 		6346F5491CF7DED200C366EB /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346F5481CF7DED200C366EB /* FeedbackViewController.m */; };
 		6346F54C1CF80F8000C366EB /* MoneyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346F54B1CF80F8000C366EB /* MoneyTableViewCell.m */; };
 		6346F5501CF812BA00C366EB /* MoneyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6346F54F1CF812BA00C366EB /* MoneyModel.m */; };
+		634922C91D5AB2AE0031BA3D /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634922C81D5AB2AE0031BA3D /* UMMobClick.framework */; };
 		6349384F1D124E64003F5AA2 /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6349380C1D124E63003F5AA2 /* AlipaySDK.bundle */; };
 		634938501D124E64003F5AA2 /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6349380D1D124E63003F5AA2 /* AlipaySDK.framework */; };
 		634938511D124E64003F5AA2 /* libpingpp+alipay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6349380E1D124E63003F5AA2 /* libpingpp+alipay.a */; };
@@ -109,7 +110,6 @@
 		634938681D124E64003F5AA2 /* libpingppcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 634938491D124E64003F5AA2 /* libpingppcore.a */; };
 		6349386A1D124E64003F5AA2 /* Pingpp.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6349384D1D124E64003F5AA2 /* Pingpp.bundle */; };
 		6349386D1D12558C003F5AA2 /* InformationAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 6349386C1D12558C003F5AA2 /* InformationAddress.m */; };
-		635672E71D5838CD0062D8AE /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 630BADCF1D4EE2AA00E3A25D /* UMMobClick.framework */; };
 		635672EA1D5839160062D8AE /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635672E91D5839160062D8AE /* Bugly.framework */; };
 		6358DEAC1CFD208000D9EDD4 /* easing.c in Sources */ = {isa = PBXBuildFile; fileRef = 6358DEA61CFD208000D9EDD4 /* easing.c */; };
 		6358DEAD1CFD208000D9EDD4 /* TranformFadeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6358DEA91CFD208000D9EDD4 /* TranformFadeView.m */; };
@@ -311,7 +311,6 @@
 		630AFC741D17D6A40005FC98 /* MyDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDataModel.m; sourceTree = "<group>"; };
 		630AFC761D17F4A80005FC98 /* DataCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCollectionViewCell.h; sourceTree = "<group>"; };
 		630AFC771D17F4A80005FC98 /* DataCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCollectionViewCell.m; sourceTree = "<group>"; };
-		630BADCF1D4EE2AA00E3A25D /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		631294861D3CD4A30023A115 /* MoneyIntroduceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoneyIntroduceController.h; sourceTree = "<group>"; };
 		631294871D3CD4A30023A115 /* MoneyIntroduceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyIntroduceController.m; sourceTree = "<group>"; };
 		631294891D3CD7500023A115 /* MoneyIntroduceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoneyIntroduceCell.h; sourceTree = "<group>"; };
@@ -475,6 +474,7 @@
 		6346F54B1CF80F8000C366EB /* MoneyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyTableViewCell.m; sourceTree = "<group>"; };
 		6346F54E1CF812BA00C366EB /* MoneyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoneyModel.h; sourceTree = "<group>"; };
 		6346F54F1CF812BA00C366EB /* MoneyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoneyModel.m; sourceTree = "<group>"; };
+		634922C81D5AB2AE0031BA3D /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		6349380C1D124E63003F5AA2 /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 		6349380D1D124E63003F5AA2 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
 		6349380E1D124E63003F5AA2 /* libpingpp+alipay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpingpp+alipay.a"; sourceTree = "<group>"; };
@@ -787,7 +787,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				635672EA1D5839160062D8AE /* Bugly.framework in Frameworks */,
-				635672E71D5838CD0062D8AE /* UMMobClick.framework in Frameworks */,
 				639DB03B1D49AC7100D6D367 /* libresolv.tbd in Frameworks */,
 				63CC74A71D34E6F700C9C295 /* MessageUI.framework in Frameworks */,
 				63ACADE21D20CFD3002BDF4D /* libiconv.tbd in Frameworks */,
@@ -796,6 +795,7 @@
 				63ACAD7B1D20B9EB002BDF4D /* JavaScriptCore.framework in Frameworks */,
 				63ACAD791D20B9C8002BDF4D /* libicucore.tbd in Frameworks */,
 				631871311D1157AC003FB278 /* libstdc++.tbd in Frameworks */,
+				634922C91D5AB2AE0031BA3D /* UMMobClick.framework in Frameworks */,
 				631555A81D2F6E65005DA8C7 /* libSocialWechat.a in Frameworks */,
 				634938511D124E64003F5AA2 /* libpingpp+alipay.a in Frameworks */,
 				634938641D124E64003F5AA2 /* libPaymentControl.a in Frameworks */,
@@ -1212,6 +1212,7 @@
 		6315555D1D2F6E64005DA8C7 /* Umeng */ = {
 			isa = PBXGroup;
 			children = (
+				634922C81D5AB2AE0031BA3D /* UMMobClick.framework */,
 				6315555E1D2F6E64005DA8C7 /* UMSocial_Sdk_5.2.1 */,
 				631555791D2F6E64005DA8C7 /* UMSocial_Sdk_Extra_Frameworks */,
 			);
@@ -1730,7 +1731,6 @@
 			children = (
 				635672E81D5839160062D8AE /* Bugly */,
 				6325C0A41D5086FC006DD4DF /* YouzaniOSSDK */,
-				63CFA4AB1D4AE61B009E286B /* Ument_ Sta */,
 				639DAFBB1D49AB9100D6D367 /* QiNiu */,
 				63197F341D406DAD000760CF /* AFNetworking */,
 				6315555D1D2F6E64005DA8C7 /* Umeng */,
@@ -2054,14 +2054,6 @@
 				63CD1D341D05284C00DFAC67 /* QuestionContent.m */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		63CFA4AB1D4AE61B009E286B /* Ument_ Sta */ = {
-			isa = PBXGroup;
-			children = (
-				630BADCF1D4EE2AA00E3A25D /* UMMobClick.framework */,
-			);
-			path = "Ument_ Sta";
 			sourceTree = "<group>";
 		};
 		63DE7D721D124AA300427AB2 /* SDWebImage */ = {
@@ -2642,6 +2634,11 @@
 					"$(PROJECT_DIR)/果动/Third_files/Ument_",
 					Sta,
 					"$(PROJECT_DIR)/果动/Third_files/Bugly",
+					"$(PROJECT_DIR)/果动/Third_files/Ument_",
+					Sta,
+					"$(PROJECT_DIR)/果动/Third_files/Ument_",
+					Sta,
+					"$(PROJECT_DIR)/果动/Third_files/Umeng",
 				);
 				"FRAMEWORK_SEARCH_PATHS[arch=*]" = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2708,6 +2705,11 @@
 					"$(PROJECT_DIR)/果动/Third_files/Ument_",
 					Sta,
 					"$(PROJECT_DIR)/果动/Third_files/Bugly",
+					"$(PROJECT_DIR)/果动/Third_files/Ument_",
+					Sta,
+					"$(PROJECT_DIR)/果动/Third_files/Ument_",
+					Sta,
+					"$(PROJECT_DIR)/果动/Third_files/Umeng",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/果动/AppDelegate/PrefixHeader.pch";

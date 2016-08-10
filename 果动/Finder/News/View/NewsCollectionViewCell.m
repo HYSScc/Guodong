@@ -22,7 +22,9 @@
 
 - (void)createUI {
     
-    self.backgroundColor = BASECOLOR;
+     self.backgroundColor = BASECOLOR;
+    
+   
     
     UILabel *gryLabel = [UILabel new];
     gryLabel.frame    = CGRectMake(0, 0, self.bounds.size.width, Adaptive(10));
@@ -32,7 +34,7 @@
     
     _headerImage       = [UIImageView new];
     _headerImage.image = [UIImage imageNamed:@"person_nohead"];
-    _headerImage.frame = CGRectMake(Adaptive(3),CGRectGetMaxY(gryLabel.frame) + Adaptive(3), Adaptive(30), Adaptive(30));
+    _headerImage.frame = CGRectMake(Adaptive(0),CGRectGetMaxY(gryLabel.frame) + Adaptive(3), Adaptive(30), Adaptive(30));
     _headerImage.layer.cornerRadius  = _headerImage.bounds.size.width / 2;
     _headerImage.layer.masksToBounds = YES;
    
@@ -40,7 +42,7 @@
     
     _nameLabel       = [UILabel new];
     _nameLabel.frame = CGRectMake(CGRectGetMaxX(_headerImage.frame) + Adaptive(10),
-                                  Adaptive(5),
+                                  Adaptive(15),
                                   Adaptive(150),
                                   Adaptive(30));
     _nameLabel.textColor = [UIColor whiteColor];
@@ -50,7 +52,7 @@
     
     _contentImage       = [UIImageView new];
     _contentImage.image = [UIImage imageNamed:@"news_result"];
-    
+//    _contentImage.backgroundColor = base;
     _contentImage.contentMode = UIViewContentModeScaleAspectFit;
     _contentImage.frame = CGRectMake(0,
                                      CGRectGetMaxY(_headerImage.frame) + Adaptive(5),

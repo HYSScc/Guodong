@@ -13,6 +13,7 @@
 #import "CommentTableViewCell.h"
 #import "NewsDetailsReplyCell.h"
 
+
 @interface DetailsCommentView ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
 
 @end
@@ -24,6 +25,7 @@
     NSMutableArray *commentArray;
     UIViewController *viewController;
     NSDictionary   *CommentDict;
+    NSNotification *changeNotification;
     
 }
 - (instancetype)initWithFrame:(CGRect)frame ContentDetails:(ContentDetails *)details viewController:(UIViewController *)controller
@@ -37,6 +39,7 @@
         
         viewController = controller;
         _details       = details;
+        
         [self createUI];
         [self startRequest];
         
@@ -55,6 +58,9 @@
 
 
 - (void)startRequest {
+  
+    
+    
     
     commentArray = [NSMutableArray array];
     for (NSDictionary *commentDict in _details.commentsArray) {
@@ -65,7 +71,7 @@
     
 }
 - (void)createUI {
-    
+   
     
     UIView *headView = [UIView new];
     headView.frame   = CGRectMake(0, 0, viewWidth, Adaptive(40));
@@ -95,18 +101,16 @@
     _tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     _tableView.tableHeaderView = headView;
     _tableView.bounces = NO;
+    _tableView.scrollEnabled = NO;
     _tableView.separatorStyle  = UITableViewCellSeparatorStyleNone;
     [self addSubview:_tableView];
-    
-    
-    
-    
     
     
     
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     // 重设tableView高度
     // /2 是因为8.0之后机制 heightForRowAtIndexPath 会重复2次
     CGRect tableFrame      = _tableView.frame;
@@ -118,13 +122,14 @@
     selfFrame.size.height = tableHeight /2  + Adaptive(40);
     self.frame            = selfFrame;
     
-    
+   
     /********发通知改变scrollView高度********/
     
     NSDictionary *dict = @{@"height":[NSString stringWithFormat:@"%f",tableHeight /2  + Adaptive(40)]};
-    NSNotification *notification =[NSNotification notificationWithName:@"changeHeight" object:nil userInfo:dict];
+     NSLog(@"重设高度 %@",dict);
+    changeNotification =[NSNotification notificationWithName:@"changeHeight" object:nil userInfo:dict];
     //通过通知中心发送通知
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
+    [[NSNotificationCenter defaultCenter] postNotification:changeNotification];
     
     return commentArray.count;
 }

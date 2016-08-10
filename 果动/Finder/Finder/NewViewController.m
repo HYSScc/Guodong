@@ -29,7 +29,25 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
-    [self addHeader];
+    
+    
+    
+    
+    NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.index",BASEURL];
+    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
+        
+    } success:^(id responseObject) {
+        
+        [_contentArray removeAllObjects];
+        _page = 2;
+        if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
+            for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
+                ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
+                [self.contentArray addObject:content];
+            }
+            [self.collection reloadData];
+        }
+    }];
 }
 
 - (void)viewDidLoad {
@@ -166,20 +184,23 @@
     for (id subView in cell.contentView.subviews) {
         [subView removeFromSuperview];
     }
-    NSInteger remainder   = indexPath.row%colletionCell;
-    NSInteger currentRow  = indexPath.row/colletionCell;
+    NSInteger remainder   = indexPath.row % colletionCell;
+    NSInteger currentRow  = indexPath.row / colletionCell;
     CGFloat currentHeight = [cellHeightArray[indexPath.row] floatValue];
     
-    CGFloat positonX  = (viewWidth / colletionCell - 8) * remainder + 5 * (remainder + 1);
-    CGFloat positionY = (currentRow + 1) * 5;
+    CGFloat positonX  = (viewWidth / colletionCell - Adaptive(20)) * remainder + Adaptive(13) * (remainder + 1);
+    CGFloat positionY = (currentRow + 1) * Adaptive(5);
     for (NSInteger i = 0; i < currentRow; i++) {
         NSInteger position = remainder + i * colletionCell;
         positionY += [cellHeightArray[position] floatValue];
     }
     cell.frame = CGRectMake(positonX,
                             positionY,
-                            viewWidth / colletionCell - 8,
+                            viewWidth / colletionCell - Adaptive(20),
                             currentHeight) ;//重新定义cell位置、宽高
+    
+    
+    
     
     ContentModel *contentModel = _contentArray[indexPath.row];
     cell.talk_id               = contentModel.tail_id;
@@ -256,7 +277,7 @@
 {
     CGFloat height = Adaptive(260);
     [cellHeightArray addObject:[NSString stringWithFormat:@"%f",height]];
-    return  CGSizeMake(viewWidth/colletionCell-8, height);  //设置cell宽高
+    return  CGSizeMake(viewWidth/colletionCell-Adaptive(20), height);  //设置cell宽高
 }
 
 //定义每个UICollectionView 的 margin

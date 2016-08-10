@@ -30,6 +30,9 @@
     // 设置请求类型
     [manager.requestSerializer setValue:@"application/json;version=V3" forHTTPHeaderField:@"Accept"];
     [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"PLATFORM"];
+    
+    
+    
     [manager POST:urlStr parameters:params constructingBodyWithBlock:^(id  _Nonnull formData) {
         // 拼接data到请求体，这个block的参数是遵守AFMultipartFormData协议的。
         
@@ -152,12 +155,28 @@
    
    
     
+    /*
+     "Access-Control-Allow-Origin" = "*";
+     Connection = "keep-alive";
+     "Content-Encoding" = gzip;
+     "Content-Type" = "application/json";
+     Date = "Mon, 08 Aug 2016 08:37:58 GMT";
+     Server = nginx;
+     "Set-Cookie" = "uid=None; Path=/";
+     "Transfer-Encoding" = Identity;
+     Vary = "Accept-Encoding, Cookie";
+     "X-Frame-Options" = SAMEORIGIN;
+     */
+     NSLog(@"cookies %@",cookies);
     
     BOOL yesOrNo = NO;
     
     
     for (NSHTTPCookie *cookie in cookies) {
-        if ([cookie.name isEqualToString:@"sessionid"]) {
+        
+       // NSLog(@"cookie %@",cookie.value);
+        
+        if (![cookie.value isEqualToString:@"0"] && ![cookie.value isEqualToString:@"None"]) {
             yesOrNo = YES;
         }
     }
@@ -175,7 +194,7 @@
     
     for (NSHTTPCookie *cookie in cookies) {
         
-        if ([cookie.name isEqualToString:@"uid"]) {
+        if (![cookie.value isEqualToString:@"0"] && ![cookie.value isEqualToString:@"None"])  {
             value = cookie.value;
         }
     }

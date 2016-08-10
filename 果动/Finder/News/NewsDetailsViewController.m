@@ -27,6 +27,8 @@
     DetailsContentView *contentView;
     NSString       *uid;
 }
+
+
 @end
 
 @implementation NewsDetailsViewController
@@ -37,7 +39,24 @@
     self.navigationController.navigationBarHidden = YES;
     // 隐藏tabbar
     self.tabBarController.tabBar.hidden = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(distinguish:) name:@"distinguish" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeHeight:) name:@"changeHeight" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refushNewsDetails:) name:@"refushNewsDetails" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickCommentButton) name:@"clickCommentButton" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeComment:) name:@"removeComment" object:nil];
+    
     [self createUIWithDetails];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:YES];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"distinguish" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"changeHeight" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"refushNewsDetails" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"clickCommentButton" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"removeComment" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -48,8 +67,10 @@
     [self.view addSubview:navigation];
     
     
-    _scrollView       = [UIScrollView new];
-    _scrollView.frame = CGRectMake(0, CGRectGetMaxY(navigation.frame), viewWidth, viewHeight - NavigationBar_Height - Adaptive(47));
+    _scrollView       = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                       CGRectGetMaxY(navigation.frame),
+                                                                       viewWidth,
+                                                                       viewHeight - NavigationBar_Height - Adaptive(47))];
     _scrollView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     _scrollView.backgroundColor = BASECOLOR;
     [self.view addSubview:_scrollView];
@@ -65,21 +86,16 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
     
     distinguishType = @"result";
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(distinguish:) name:@"distinguish" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeHeight:) name:@"changeHeight" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refushNewsDetails:) name:@"refushNewsDetails" object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickCommentButton) name:@"clickCommentButton" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeComment:) name:@"removeComment" object:nil];
     
     
+   
 }
 
 - (void)removeNewssss:(NSString *)talk_id user_id:(NSString *)user_id{
     
    
     talk = talk_id;
-    NSLog(@"uid %@",uid);
+    
     
     if ([[HttpTool getUser_id] isEqualToString:user_id]) {
         UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"举报",@"删除", nil];
@@ -133,7 +149,7 @@
         
     } else {
         NSString *typeid;
-        if (buttonIndex <  2) {
+        if (buttonIndex <  3) {
             typeid = [NSString stringWithFormat:@"%ld",buttonIndex + 1];
             
             
@@ -150,9 +166,6 @@
                                                 repeats:YES];
             }];
         }
-        
-        
-        
     }
 }
 // 提示框消失
@@ -172,18 +185,27 @@
     }];
 }
 
+
+
+
 - (void)changeHeight:(NSNotification *)notification {
     
+ 
     NSInteger height = [[notification.userInfo objectForKey:@"height"] integerValue];
     CGSize scrollViewSize   = _scrollView.contentSize;
     
     if (CGRectGetMaxY(likeView.frame) + Adaptive(10) + height > viewHeight) {
+        
         scrollViewSize.height = CGRectGetMaxY(likeView.frame) + Adaptive(11) + height ;
     } else {
+        
+        
         scrollViewSize.height = viewHeight + Adaptive(6);
     }
     // 通过各部分View 重设的height 设置contentSize
     _scrollView.contentSize = scrollViewSize;
+
+   NSLog(@"_scrollView.contentSize %f",_scrollView.contentSize.height);
 }
 - (void)distinguish:(NSNotification *)notification {
     
@@ -249,14 +271,17 @@
         
         contentView = [[DetailsContentView alloc] initWithFrame:CGRectMake(0,0,viewWidth,0) viewController:self];
         contentView.details = details;
+        
+      
+        
         [_scrollView addSubview:contentView];
+      
         
         // 重设contentView高度
         
         CGRect contentFrame      = contentView.frame;
         contentFrame.size.height = contentView.height;
         contentView.frame        = contentFrame;
-        
         
         
         likeView = [[DetailsLikeView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(contentView.frame) + Adaptive(10), viewWidth, Adaptive(40)) viewController:self];
@@ -272,7 +297,7 @@
             _scrollView.contentSize = CGSizeMake(viewWidth - Adaptive(26), viewHeight + Adaptive(5));
         }
         
-        
+        [commentView removeFromSuperview];
         commentView = [[DetailsCommentView alloc] initWithFrame:CGRectMake(0,
                                                                            CGRectGetMaxY(likeView.frame) + Adaptive(10),
                                                                            viewWidth,
@@ -372,7 +397,7 @@
     static NewsDetailsViewController* viewController;
     
     dispatch_once(&onceToken, ^{
-        viewController = [[NewsDetailsViewController alloc] init];
+        viewController = [NewsDetailsViewController new];
     });
     
     return viewController;

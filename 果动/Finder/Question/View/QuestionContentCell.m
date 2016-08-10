@@ -69,7 +69,7 @@
         
         nickNameLabel       = [UILabel new];
         nickNameLabel.frame = CGRectMake(CGRectGetMaxX(headImageView.frame) + Adaptive(5),
-                                         Adaptive((10 + 19 - 8)),
+                                         Adaptive((10 + 19 )),
                                          Adaptive(100),
                                          Adaptive(16));
         nickNameLabel.font  = [UIFont fontWithName:FONT size:Adaptive(13)];
@@ -78,7 +78,7 @@
         
         timeLabel       = [UILabel new];
         timeLabel.frame = CGRectMake(viewWidth - Adaptive((13 + 100)),
-                                     Adaptive((10 + 19 - 8)),
+                                     Adaptive((10 + 19)),
                                      Adaptive(100),
                                      Adaptive(12));
         timeLabel.font  = [UIFont fontWithName:FONT size:Adaptive(11)];
@@ -88,6 +88,7 @@
         
         contentLabel           = [UILabel new];
         contentLabel.textColor = [UIColor whiteColor];
+      //  contentLabel.backgroundColor = [UIColor orangeColor];
         contentLabel.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
         contentLabel.numberOfLines = 0;
         [self addSubview:contentLabel];
@@ -145,7 +146,7 @@
        
         ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){i*myScrollView.bounds.size.width,0,myScrollView.bounds.size}];
         [tmpImgScrollView setContentWithFrame:convertRect];
-         NSLog(@".......... %@",tmpView.image);
+       //  NSLog(@".......... %@",tmpView.image);
         [tmpImgScrollView setImage:tmpView.image];
         [myScrollView addSubview:tmpImgScrollView];
         tmpImgScrollView.i_delegate = self;
@@ -229,7 +230,6 @@
 
 - (void)pushUserPublick:(UIGestureRecognizer *)gesture {
     
-  //  NSLog(@"user_id %@",user_id);
     NSNotification *notification = [[NSNotification alloc] initWithName:@"questionContentPushUser" object:nil userInfo:@{@"user_id":user_id}];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
@@ -240,51 +240,43 @@
     user_id = contentModel.user_id;
     
     // 图片放大
-    
     imageArray = contentModel.photoArray;
-    
     
     CGSize contentSize = myScrollView.contentSize;
     contentSize.height = viewHeight;
     contentSize.width  = viewWidth *contentModel.photoArray.count;
     myScrollView.contentSize = contentSize;
 
-    
-    
     [headImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.headImgString]];
     nickNameLabel.text = contentModel.nickName;
     timeLabel.text     = contentModel.timeString;
     
-    CGSize contentTextSize = [contentModel.content boundingRectWithSize:CGSizeMake(viewWidth - Adaptive(26), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:Adaptive(13)]} context:nil].size;
+    CGSize contentTextSize = [contentModel.content boundingRectWithSize:CGSizeMake(viewWidth - Adaptive(26), MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont fontWithName:FONT size:Adaptive(14)]} context:nil].size;
     
     
     contentLabel.frame = CGRectMake(Adaptive(13),
-                                    CGRectGetMaxY(headImageView.frame) +Adaptive(5),
+                                    CGRectGetMaxY(headImageView.frame) +Adaptive(10),
                                     viewWidth - Adaptive(26),
                                     contentTextSize.height);
     
     
     // 调整行间距
     contentLabel.attributedText = [HttpTool setLinespacingWith:contentModel.content space:4];
-    
+    [contentLabel sizeToFit];
    // contentLabel.text  = contentModel.content;
     
     
     CGFloat imageWidth    = (viewWidth - Adaptive(36)) / 3;
     CGRect  CellFrame     = self.frame;
     CGFloat imageViewMaxY = 0;
-    
-
-   // if (contentModel.photoArray.count > 0) {
-        
-        
+            
     for (int a = 0; a < 9; a++) {
         
         TapImageView * imageView = [TapImageView new];
         
         
         imageView.frame = CGRectMake(Adaptive(13) + (a%3)*(imageWidth + Adaptive(5)),
-                                     CGRectGetMaxY(contentLabel.frame) +Adaptive(5)+(a/3)*(imageWidth + Adaptive(5)),
+                                     CGRectGetMaxY(contentLabel.frame) +Adaptive(10)+(a/3)*(imageWidth + Adaptive(5)),
                                      imageWidth,
                                      imageWidth);
         imageView.tap_delegate = self;
@@ -302,7 +294,7 @@
                 tapImageView.hidden = NO;
                 
                 [tapImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.photoArray[a]]];
-                NSLog(@"tapImageView.image %@",tapImageView.image);
+           //     NSLog(@"tapImageView.image %@",tapImageView.image);
                 
             } else {
                 tapImageView.hidden = YES;

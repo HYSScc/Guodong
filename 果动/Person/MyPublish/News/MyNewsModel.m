@@ -28,6 +28,7 @@
         _comments   = [NSString stringWithFormat:@"%@",[dict objectForKey:@"comments"]];
         
         _talk_id    = [NSString stringWithFormat:@"%@",[dict objectForKey:@"talkid"]];
+        _user_id    = [NSString stringWithFormat:@"%@",[dict objectForKey:@"uid"]];
         
     }
     return self;

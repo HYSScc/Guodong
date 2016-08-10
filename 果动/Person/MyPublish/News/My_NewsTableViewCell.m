@@ -24,7 +24,8 @@
     UIView      *alphaView;
     ShareView   *share;
     NSString    *nickName;
-     UILabel     *_longLine;
+     UILabel    *_longLine;
+    NSString    *user_id;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -103,6 +104,7 @@
     nickNameLabel.text = newsModel.nickName;
     dateLabel.text     = newsModel.date;
     contentLabel.text  = newsModel.content;
+    user_id = newsModel.user_id;
     
     CGFloat  getHeight = newsModel.height / 2;
     CGFloat  getWidth  = newsModel.widht / 2;
@@ -151,9 +153,20 @@
     
 }
 - (void)moreButtonClick:(UIButton *)button {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"举报",@"删除", nil];
-    actionSheet.tag = 998;
-    [actionSheet showInView:self];
+    
+    
+    if ([[HttpTool getUser_id] isEqualToString:user_id]) {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"举报",@"删除", nil];
+        actionSheet.tag = 998;
+        [actionSheet showInView:self];
+    } else {
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"举报", nil];
+        actionSheet.tag = 999;
+        [actionSheet showInView:self];
+
+    }
+    
+   
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -177,9 +190,17 @@
                                                 repeats:NO];
             }];
         }
-    }  else {
+    }  else if (actionSheet.tag == 999)  {
+        
+        if (buttonIndex == 0) {
+            UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"不友善行为：色情、辱骂等",@"垃圾广告、推销",@"其他", nil];
+            actionSheet.tag = 1000;
+            [actionSheet showInView:self];
+            
+        } else return;
+    } else {
         NSString *typeid;
-        if (buttonIndex <  2) {
+        if (buttonIndex <  3) {
             typeid = [NSString stringWithFormat:@"%ld",buttonIndex + 1];
             NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.report&typeid=%@&talkid=%@",BASEURL,typeid,talk_idString];
             [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress *progress) {

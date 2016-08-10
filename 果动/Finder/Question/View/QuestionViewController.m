@@ -45,7 +45,7 @@
     
     _tableView.frame = CGRectMake(0, 0, viewWidth, self.view.bounds.size.height);
     
-    [self setupRefresh];
+    [self headerRereshing];
     
     
 }
@@ -58,12 +58,9 @@
     
     page = 2;
     
-   
-    
-    // 2.集成刷新控件
-   // [self setupRefresh];
    [self createUIWithtableFrame:CGRectMake(0, 0, viewWidth, self.view.bounds.size.height)];
-    
+    // 2.集成刷新控件
+    [self setupRefresh];
 }
 /**
  *  集成刷新控件
@@ -146,21 +143,21 @@
 - (void)createUIWithtableFrame:(CGRect )frame {
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    textView = [[TextFieldView alloc] initWithFrame:CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42))];
-    [textView.publishButton addTarget:self action:@selector(CommentButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    textView.backgroundColor = [UIColor colorWithRed:201/255.0
-                                               green:205/255.0
-                                                blue:211/255.0
-                                               alpha:1];
-    textView.textField.backgroundColor = [UIColor colorWithRed:187/255.0
-                                                         green:194/255.0
-                                                          blue:201/255.0
-                                                         alpha:1];
   
-      NSLog(@"self.height %f   ",self.view.bounds.size.height);
+  //  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
+  //  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+//    textView = [[TextFieldView alloc] initWithFrame:CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42))];
+//   // [textView.publishButton addTarget:self action:@selector(CommentButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+//    textView.backgroundColor = [UIColor colorWithRed:201/255.0
+//                                               green:205/255.0
+//                                                blue:211/255.0
+//                                               alpha:1];
+//    textView.textField.backgroundColor = [UIColor colorWithRed:187/255.0
+//                                                         green:194/255.0
+//                                                          blue:201/255.0
+//                                                         alpha:1];
+//  
     
     _tableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStyleGrouped];
     _tableView.delegate        = self;
@@ -294,10 +291,9 @@
      *  不追问  点击直接删除
      */
     
-    
     QuestionContent *content = contentArray[indexPath.section];
     
-    NSLog(@"user_id %@  talkid %@",content.user_id,content.talk_id);
+   // NSLog(@"user_id %@  talkid %@",content.user_id,content.talk_id);
     talk_id = content.talk_id;
     if ([[HttpTool getUser_id] isEqualToString:content.user_id]) {
         
@@ -357,7 +353,6 @@
     
             break;
        
-            
         default:
             break;
     }
@@ -409,34 +404,30 @@
             textView.textField.text = @"";
             [self headerRereshing];
             
-            
-            
-            
-            
         }
     }
 }
 
-//表随键盘高度变化
--(void)keyboardShow:(NSNotification *)note
-{
-    CGRect keyBoardRect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGFloat deltaY = keyBoardRect.size.height;
-    
-    if ([_type isEqualToString:@"myQuestion"]) {
-        textView.frame = CGRectMake(0, LastHeight - deltaY - Adaptive(22) - Adaptive(130), viewWidth, Adaptive(42));
-    } else {
-        textView.frame = CGRectMake(0, LastHeight - deltaY - Adaptive(22), viewWidth, Adaptive(42));
-    }
-    
-    
-}
--(void)keyboardHide:(NSNotification *)note
-{
-    [textView.textField resignFirstResponder];
-    textView.frame = CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42));
-    [textView removeFromSuperview];
-}
+////表随键盘高度变化
+//-(void)keyboardShow:(NSNotification *)note
+//{
+//    CGRect keyBoardRect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+//    CGFloat deltaY = keyBoardRect.size.height;
+//    
+//    if ([_type isEqualToString:@"myQuestion"]) {
+//        textView.frame = CGRectMake(0, LastHeight - deltaY - Adaptive(22) - Adaptive(130), viewWidth, Adaptive(42));
+//    } else {
+//        textView.frame = CGRectMake(0, LastHeight - deltaY - Adaptive(22), viewWidth, Adaptive(42));
+//    }
+//    
+//    
+//}
+//-(void)keyboardHide:(NSNotification *)note
+//{
+//    [textView.textField resignFirstResponder];
+//    textView.frame = CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42));
+//    [textView removeFromSuperview];
+//}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
