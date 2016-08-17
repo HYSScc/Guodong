@@ -5,7 +5,7 @@
 //  Created by mac on 16/6/2.
 //  Copyright © 2016年 Unique. All rights reserved.
 //
-#include "LoginViewController.h"
+#import "LoginViewController.h"
 #import "addMessageModel.h"
 #import "IntroduceViewController.h"
 #import "InroduceModel.h"
@@ -47,7 +47,7 @@
     _scrollView.frame = CGRectMake(0, NavigationBar_Height, viewWidth, viewHeight - NavigationBar_Height - Adaptive(50));
     [self.view addSubview:_scrollView];
     
-    
+  //  _cityAllowed = ALLOWORDERCLASS;
     [self startRequest];
 }
 

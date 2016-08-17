@@ -158,7 +158,7 @@
     
     
     _contentLabel.attributedText = [HttpTool setLinespacingWith:details.content space:4];
-    
+    [_contentLabel sizeToFit];
     lastImageMaxY = CGRectGetMaxY(_contentLabel.frame) + Adaptive(13);
     
     for (int a = 0; a < details.photoArray.count; a++) {

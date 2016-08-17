@@ -236,9 +236,7 @@
 
 - (void)setContentModel:(QuestionContent *)contentModel {
     
-    
-    user_id = contentModel.user_id;
-    
+    user_id    = contentModel.user_id;
     // 图片放大
     imageArray = contentModel.photoArray;
     
@@ -247,7 +245,7 @@
     contentSize.width  = viewWidth *contentModel.photoArray.count;
     myScrollView.contentSize = contentSize;
 
-    [headImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.headImgString]];
+    [headImageView sd_setImageWithURL:[NSURL URLWithString:contentModel.headImgString] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
     nickNameLabel.text = contentModel.nickName;
     timeLabel.text     = contentModel.timeString;
     
@@ -263,13 +261,12 @@
     // 调整行间距
     contentLabel.attributedText = [HttpTool setLinespacingWith:contentModel.content space:4];
     [contentLabel sizeToFit];
-   // contentLabel.text  = contentModel.content;
     
     
     CGFloat imageWidth    = (viewWidth - Adaptive(36)) / 3;
     CGRect  CellFrame     = self.frame;
     CGFloat imageViewMaxY = 0;
-            
+    
     for (int a = 0; a < 9; a++) {
         
         TapImageView * imageView = [TapImageView new];

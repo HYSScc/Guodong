@@ -16,5 +16,5 @@
 @property (nonatomic,retain) NSString *oneClassPrice;
 @property (nonatomic,retain) NSString *oneClassTime;
 @property (nonatomic,retain) NSString *name;
-
+@property (nonatomic,retain) NSString *class_id;
 @end

@@ -15,10 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self createUI];
-        self.backgroundColor = [UIColor colorWithRed:70/255.0
-                                                      green:70/255.0
-                                                       blue:70/255.0
-                                                      alpha:1];
+        self.backgroundColor = BASEGRYCOLOR;
     }
     return self;
 }
@@ -38,10 +35,7 @@
                                           Adaptive(2),
                                           textBlackView.bounds.size.width - Adaptive(4),
                                           textBlackView.bounds.size.height - Adaptive(4));
-    textSmallGryView.backgroundColor = [UIColor colorWithRed:70/255.0
-                                                       green:70/255.0
-                                                        blue:70/255.0
-                                                       alpha:1];
+    textSmallGryView.backgroundColor = BASEGRYCOLOR;
     [textBlackView addSubview:textSmallGryView];
     
     _textSmallBlackView = [UIView new];

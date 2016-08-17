@@ -115,7 +115,6 @@
     
     __weak ClassViewController *class = self;
     
-    
     //跳转到cityViewController
     self.pushCityViewController = ^(NSString* cityName,NSString *isSet) {
         
@@ -130,14 +129,6 @@
     
     //跳转到活动页
     self.pushActiveView = ^(NSString *number) {
-        
-//        class.hidesBottomBarWhenPushed          = YES;
-//        activeViewController *active = [activeViewController new];
-//        active.number = number;
-//        active.activeArray = class.activeArray;
-//        [class.navigationController pushViewController:active animated:YES];
-//        class.hidesBottomBarWhenPushed          = NO;
-        
         
         activeModel *active = class.activeArray[[number intValue]];
         
@@ -166,7 +157,6 @@
                 class.hidesBottomBarWhenPushed          = NO;
             }
             
-            
         } else {
             class.hidesBottomBarWhenPushed          = YES;
             activeViewController *activeVC = [activeViewController new];
@@ -188,7 +178,6 @@
     
     // 创建BannerScrollView
     [self createBannerScrollView];
-    
     
     // 请求数据
     [self startRequest];

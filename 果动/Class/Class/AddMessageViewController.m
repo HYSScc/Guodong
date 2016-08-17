@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "addMessageCourse.h"
 #import "PayViewController.h"
+#import "addCoachModel.h"
 @interface AddMessageViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 
 @end
@@ -28,6 +29,8 @@
     addMessageModel   *messageModel;
     BOOL               changeTime;
     NSDictionary       *freeDict;
+    NSString          *coach_id;
+    NSString          *classType_id;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -45,7 +48,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = BASEGRYCOLOR;
     changeTime  = YES;
-   
+    
     NavigationView *navigation = [[NavigationView alloc] initWithtitle:_className viewController:self];
     [self.view addSubview:navigation];
     
@@ -137,12 +140,14 @@
     NSArray *messageArray;
     if ([_classOrShip isEqualToString:@"class"]) {
         messageArray = @[@{@"title":@"地址",@"type":@"tian"},
+                         @{@"title":@"教练",@"type":@"xuan"},
                          @{@"title":@"时间",@"type":@"xuan"},
                          @{@"title":@"日期",@"type":@"xuan"},
                          @{@"title":@"电话",@"type":@"tian"},
                          @{@"title":@"姓名",@"type":@"tian"}];
     } else {
         messageArray = @[@{@"title":@"地址",@"type":@"tian"},
+                         @{@"title":@"教练",@"type":@"xuan"},
                          @{@"title":@"时间",@"type":@"xuan"},
                          @{@"title":@"日期",@"type":@"xuan"},
                          @{@"title":@"电话",@"type":@"tian"},
@@ -162,7 +167,7 @@
         [self.view addSubview:addMessageView];
         
         // 设置phoneTextField 的键盘样式 和 号码
-        if (a == 3) {
+        if (a == 4) {
             addMessageView.textField.keyboardType = UIKeyboardTypePhonePad;
             
             if (![_isChange isEqualToString:@"change"]) {
@@ -202,7 +207,7 @@
             
         }
         // 获取用户姓名
-        if (a == 4) {
+        if (a == 5) {
             if (![_isChange isEqualToString:@"change"]) {
                 addMessageView.textField.text = messageModel.user_name;
             }
@@ -211,11 +216,12 @@
     
     if ([_isChange isEqualToString:@"change"]) {
         AddMessageView *addressView = (AddMessageView *)[self.view viewWithTag:1];
-        AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:2];
-        AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:3];
-        AddMessageView *photoView   = (AddMessageView *)[self.view viewWithTag:4];
-        AddMessageView *nameView    = (AddMessageView *)[self.view viewWithTag:5];
-        AddMessageView *classView   = (AddMessageView *)[self.view viewWithTag:6];
+        
+        AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+        AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:4];
+        AddMessageView *photoView   = (AddMessageView *)[self.view viewWithTag:5];
+        AddMessageView *nameView    = (AddMessageView *)[self.view viewWithTag:6];
+        AddMessageView *classView   = (AddMessageView *)[self.view viewWithTag:7];
         addressView.messageLabel.text = _address;
         timeView.messageLabel.text  = _time;
         dateView.messageLabel.text  = _date;
@@ -234,8 +240,8 @@
     [addressView.textField resignFirstResponder];
     
     // 时间、日期按钮不允许点击
-    AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:2];
-    AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:4];
     timeView.userInteractionEnabled = NO;
     dateView.userInteractionEnabled = NO;
     
@@ -263,15 +269,60 @@
                                   viewHeight - Adaptive(256),
                                   viewWidth,
                                   Adaptive(256));
+        
         SHPickerView *pickerView;
         switch (button.superview.tag) {
-            case 3:
+            case 2:
             {
-                // 日期
-                pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"date" pickerArray:nil];
+                AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+                AddMessageView *classView  = (AddMessageView *)[self.view viewWithTag:7];
+                
+                if ([_classOrShip isEqualToString:@"class"]) {
+                    // 上门
+                    if ([timeView.messageLabel.text length] == 0) {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请先选择时间" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
+                        [alert show];
+                        [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                         target:self
+                                                       selector:@selector(timerFire:)
+                                                       userInfo:alert
+                                                        repeats:NO];
+                        return;
+                    } else {
+                        
+                        [self requestCoachDataWithButtonTag:button.superview.tag type:1];
+                    }
+                } else {
+                    // 体验店
+                    if ([timeView.messageLabel.text length] == 0) {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请先选择时间" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
+                        [alert show];
+                        [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                         target:self
+                                                       selector:@selector(timerFire:)
+                                                       userInfo:alert
+                                                        repeats:NO];
+                        return;
+                    } else if ([classView.messageLabel.text length] == 0) {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"请先选择课程" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
+                        [alert show];
+                        [NSTimer scheduledTimerWithTimeInterval:1.5f
+                                                         target:self
+                                                       selector:@selector(timerFire:)
+                                                       userInfo:alert
+                                                        repeats:NO];
+                        return;
+                    } else {
+                        
+                        [self requestCoachDataWithButtonTag:button.superview.tag type:1];
+                    }
+                }
+                
+                
             }
                 break;
-            case 2:
+                
+            case 3:
             {
                 // 时间
                 if (!changeTime) {
@@ -312,7 +363,7 @@
                     }
                     
                     if (changeTimeArray.count != 0) {
-                      //  [changeTimeArray removeAllObjects];
+                        
                         pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"picker" pickerArray:changeTimeArray];
                     } else {
                         // 时间过晚  提醒订第二天课程
@@ -326,8 +377,15 @@
                     }
                 }
             }
+                
                 break;
-            case 6:
+            case 4:
+            {
+                // 日期
+                pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"date" pickerArray:nil];
+            }
+                break;
+            case 7:
             {
                 // 课程
                 pickerView = [[SHPickerView alloc] initWithFrame:frame tag:button.superview.tag*10 pickerType:@"class" pickerArray:messageModel.courseArray];
@@ -339,9 +397,80 @@
         }
         [pickerView.button addTarget:self action:@selector(pickerViewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:pickerView];
-
+        
     }];
-   
+    
+}
+
+#pragma mark - 请求教练数据
+- (void)requestCoachDataWithButtonTag:(NSInteger)tag type:(NSInteger)type{
+    
+    /*
+     type  1 正常点击教练选择按钮   2 时间选择完成自动获取教练信息并显示
+     */
+    
+    
+    AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:4];
+    AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+    
+    CGRect coachFrame = CGRectMake(0,
+                                   viewHeight - Adaptive(324),
+                                   viewWidth,
+                                   Adaptive(324));
+    
+    NSString *url   = [NSString stringWithFormat:@"%@api/?method=gdcourse.coach",BASEURL];
+    NSString *types = [_classOrShip isEqualToString:@"class"] ? @"1" : @"2";
+    
+    NSString *dateString;
+    
+    
+    if ([dateView.messageLabel.text length] == 0) {
+        NSDateFormatter*df = [[NSDateFormatter alloc] init];//格式化
+        [df setDateFormat:@"yyyy年MM月dd日"];
+        dateString = [df stringFromDate:[NSDate date]];
+    } else {
+        dateString = dateView.messageLabel.text;
+    }
+    
+    
+    NSString *timeString = [NSString stringWithFormat:@"%@%@",dateString, [timeView.messageLabel.text substringToIndex:5]];
+    NSLog(@"timeString %@",timeString);
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy年MM月dd日HH:mm"];
+    NSDate *date = [dateFormatter dateFromString:timeString];
+    NSString *timeSp = [NSString stringWithFormat:@"%ld",(long)[date timeIntervalSince1970]];
+    
+    NSDictionary *dict;
+    if ([_classOrShip isEqualToString:@"class"]) {
+        dict = @{@"types":types,@"class_id":_class_id,@"time":timeSp};
+    } else {
+        dict = @{@"types":types,@"class_id":classType_id,@"time":timeSp};
+    }
+    
+
+    NSLog(@"dict %@",dict);
+    
+    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
+        
+    } success:^(id responseObject) {
+        // 教练
+        
+        if (type == 1) {
+            SHPickerView* pickerView = [[SHPickerView alloc] initWithFrame:coachFrame tag:tag *10 pickerType:@"coach" pickerArray:[responseObject objectForKey:@"data"]];
+            [pickerView.button addTarget:self action:@selector(pickerViewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:pickerView];
+        } else {
+            addCoachModel *coachModel   = [[addCoachModel alloc] initWithDictionary:[responseObject objectForKey:@"data"][0]];
+            AddMessageView *coachView   = (AddMessageView *)[self.view viewWithTag:2];
+            coachView.messageLabel.text = coachModel.coachName;
+            coach_id                    = coachModel.coach_id;
+            
+        }
+        
+    }];
+    
+    
 }
 
 #pragma mark - picker完成按钮点击事件
@@ -352,27 +481,70 @@
     SHPickerView   *pickerView       = (SHPickerView *)[self.view viewWithTag:button.tag / 10];
     addMessageView.messageLabel.text = [pickerView changeReturnString];
     
-   
-    
-    if (button.tag == 600) {
-        Func_id = [pickerView changeReturnFunc_id];
-        if ([_classOrShip isEqualToString:@"shop"]) {
-            _className = [pickerView changeReturnString];
+    switch (button.tag) {
+        case 200:
+        {
+            // 教练
+            addMessageView.messageLabel.text = [pickerView returnCoachName];
+            coach_id                         = [pickerView returnCoach_id];
         }
-        
-    }
-    
-    if (button.tag == 300) {
-        
-        NSDateFormatter*df = [[NSDateFormatter alloc]init];//格式化
-        
-        [df setDateFormat:@"yyyy年MM月dd日"];
-        
-        NSString* dateString = [df stringFromDate:[NSDate date]];
-        
-        if (![dateString isEqualToString:addMessageView.messageLabel.text]) {
-            changeTime = NO;
+            break;
+        case 300:
+        {
+            AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+            AddMessageView *classView  = (AddMessageView *)[self.view viewWithTag:7];
+            
+            // 时间 传值 2 2是教练选择按钮的tag值  type:2 表明时间选择完成自动获取教练信息并显示
+            if ([_classOrShip isEqualToString:@"class"]) {
+                [self requestCoachDataWithButtonTag:2 type:2];
+            } else {
+                // 体验店
+                if ([timeView.messageLabel.text length] != 0 && [classView.messageLabel.text length] != 0) {
+                    [self requestCoachDataWithButtonTag:2 type:2];
+                }
+            }
+            
+            
         }
+            break;
+        case 400:
+        {
+            // 日期
+            NSDateFormatter*df = [[NSDateFormatter alloc]init];//格式化
+            
+            [df setDateFormat:@"yyyy年MM月dd日"];
+            
+            NSString* dateString = [df stringFromDate:[NSDate date]];
+            
+            if (![dateString isEqualToString:addMessageView.messageLabel.text]) {
+                changeTime = NO;
+            }
+        }
+            break;
+        case 700:
+        {
+            // 课程
+            Func_id = [pickerView changeReturnFunc_id];
+            classType_id = [pickerView changeReturnClass_id];
+            if ([_classOrShip isEqualToString:@"shop"]) {
+                _className = [pickerView changeReturnString];
+            }
+            
+            AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+            AddMessageView *classView  = (AddMessageView *)[self.view viewWithTag:7];
+            
+            // 时间 传值 2 2是教练选择按钮的tag值  type:2 表明时间选择完成自动获取教练信息并显示
+            
+            // 体验店
+            if ([timeView.messageLabel.text length] != 0 && [classView.messageLabel.text length] != 0) {
+                [self requestCoachDataWithButtonTag:2 type:2];
+            }
+            
+        }
+            break;
+            
+        default:
+            break;
     }
     
     [pickerView removeFromSuperview];
@@ -384,12 +556,12 @@
     /****** 检查所有信息填写完整 ******/
     
     AddMessageView *addressView = (AddMessageView *)[self.view viewWithTag:1];
-    AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:2];
-    AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:3];
-    AddMessageView *photoView   = (AddMessageView *)[self.view viewWithTag:4];
-    AddMessageView *nameView    = (AddMessageView *)[self.view viewWithTag:5];
-    AddMessageView *classView   = (AddMessageView *)[self.view viewWithTag:6];
-    
+    AddMessageView *coachView   = (AddMessageView *)[self.view viewWithTag:2];
+    AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:4];
+    AddMessageView *photoView   = (AddMessageView *)[self.view viewWithTag:5];
+    AddMessageView *nameView    = (AddMessageView *)[self.view viewWithTag:6];
+    AddMessageView *classView   = (AddMessageView *)[self.view viewWithTag:7];
     
     
     /*************** 区分到店还是上门 ******************/
@@ -402,10 +574,11 @@
     if ([_classOrShip isEqualToString:@"class"]) {
         // 上门
         if ([addressView.messageLabel.text length] == 0 ||
-            [timeView.messageLabel.text length] == 0 ||
-            [dateView.messageLabel.text length] == 0 ||
-            [photoView.textField.text   length] == 0 ||
-            [nameView.textField.text    length] == 0) {
+            [coachView.messageLabel.text length]   == 0 ||
+            [timeView.messageLabel.text length]    == 0 ||
+            [dateView.messageLabel.text length]    == 0 ||
+            [photoView.textField.text   length]    == 0 ||
+            [nameView.textField.text    length]    == 0) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息填写不完整" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
             [alert show];
             [NSTimer scheduledTimerWithTimeInterval:1.5f
@@ -424,7 +597,8 @@
             [dateView.messageLabel.text length]    == 0 ||
             [photoView.textField.text   length]    == 0 ||
             [nameView.textField.text    length]    == 0 ||
-            [classView.messageLabel.text length]   == 0) {
+            [classView.messageLabel.text length]   == 0 ||
+            [coachView.messageLabel.text length]   == 0) {
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"信息填写不完整" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
             [alert show];
@@ -436,7 +610,6 @@
             return;
         }
     }
-    
     
     /******* 正则检查电话号码 ******/
     
@@ -453,13 +626,11 @@
     }
     /*****************************/
     
-    
-    
     // 有免费券
     
     if ([freeDict count] != 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[freeDict objectForKey:@"tips"] delegate:self cancelButtonTitle:nil otherButtonTitles:@"取消",@"确认",nil];
-       
+        
         [alert show];
     } else {
         // 有套餐课程 并且 没有免费券
@@ -478,7 +649,7 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-     if (buttonIndex == 1) [self requestSuccess];
+    if (buttonIndex == 1) [self requestSuccess];
     
 }
 
@@ -486,10 +657,10 @@
     
     
     AddMessageView *addressView = (AddMessageView *)[self.view viewWithTag:1];
-    AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:2];
-    AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:3];
-    AddMessageView *photoView   = (AddMessageView *)[self.view viewWithTag:4];
-    AddMessageView *nameView    = (AddMessageView *)[self.view viewWithTag:5];
+    AddMessageView *timeView    = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *dateView    = (AddMessageView *)[self.view viewWithTag:4];
+    AddMessageView *photoView   = (AddMessageView *)[self.view viewWithTag:5];
+    AddMessageView *nameView    = (AddMessageView *)[self.view viewWithTag:6];
     
     NSString *course_type = [_classOrShip isEqualToString:@"class"] ? @"1" : @"2";
     
@@ -515,7 +686,8 @@
     if ([_isChange isEqualToString:@"change"]) {
         url = [NSString stringWithFormat:@"%@api/?method=gdcourse.modify",BASEURL];
         
-        dict        = @{@"func_id":Func_id,
+        dict        = @{@"coach_id":coach_id,
+                        @"func_id":Func_id,
                         @"course_num":@"1",
                         @"course_type":course_type,
                         @"number":photoView.textField.text,
@@ -525,7 +697,8 @@
                         @"order_id":_order_id};
     } else {
         url = [NSString stringWithFormat:@"%@api/?method=gdcourse.get_order",BASEURL];
-        dict        = @{@"func_id":Func_id,
+        dict        = @{@"coach_id":coach_id,
+                        @"func_id":Func_id,
                         @"course_num":@"1",
                         @"course_type":course_type,
                         @"number":photoView.textField.text,
@@ -618,8 +791,8 @@
     
     offset     = textField.superview.frame.origin.y;
     textHeight = textField.bounds.size.height;
-    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:2];
-    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:4];
     timeaddMessageView.userInteractionEnabled = NO;
     dateaddMessageView.userInteractionEnabled = NO;
     
@@ -635,8 +808,8 @@
 }
 
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:2];
-    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:4];
     timeaddMessageView.userInteractionEnabled = YES;
     dateaddMessageView.userInteractionEnabled = YES;
     
@@ -657,8 +830,8 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [changeAddressView removeFromSuperview];
-    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:2];
-    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:4];
     timeaddMessageView.userInteractionEnabled = YES;
     dateaddMessageView.userInteractionEnabled = YES;
     self.view.transform = CGAffineTransformIdentity;
@@ -667,8 +840,8 @@
 -(void)endEdit:(UIGestureRecognizer *)gesture
 {
     [changeAddressView removeFromSuperview];
-    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:2];
-    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *timeaddMessageView   = (AddMessageView *)[self.view viewWithTag:3];
+    AddMessageView *dateaddMessageView   = (AddMessageView *)[self.view viewWithTag:4];
     timeaddMessageView.userInteractionEnabled = YES;
     dateaddMessageView.userInteractionEnabled = YES;
     self.view.transform = CGAffineTransformIdentity;

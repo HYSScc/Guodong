@@ -17,6 +17,7 @@
         _oneClassPrice = [NSString stringWithFormat:@"%@",[dict objectForKey:@"rmb"]];
         _oneClassTime  = [NSString stringWithFormat:@"%@",[dict objectForKey:@"course_time"]];
         _name          = [dict objectForKey:@"name"];
+        _class_id      = [NSString stringWithFormat:@"%@",[dict objectForKey:@"class_id"]];
     }
     return self;
 }

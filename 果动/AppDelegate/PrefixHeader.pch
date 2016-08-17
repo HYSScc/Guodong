@@ -27,6 +27,7 @@
 #define KEFU              @"010-65460058"
 #define SHANGYEHEZUO      @"010-65460058"
 #define MEITIHEZUO        @"admin@guodong117.com"
+#define ALLOWORDERCLASS   @"yes"
 /**
  *  项目下载链接
  */

@@ -26,6 +26,7 @@
          self.likeNumber = [NSString stringWithFormat:@"%@",[dict objectForKey:@"praises"]] ? [NSString stringWithFormat:@"%@",[dict objectForKey:@"praises"]] : NULL;
          self.commentNumber = [NSString stringWithFormat:@"%@",[dict objectForKey:@"comments"]] ? [NSString stringWithFormat:@"%@",[dict objectForKey:@"comments"]] : NULL;
         self.tail_id = [dict objectForKey:@"talkid"];
+        self.time = [NSString stringWithFormat:@"%@",[dict objectForKey:@"time"]];
     }
     return self;
 }

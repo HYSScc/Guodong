@@ -77,7 +77,7 @@
 - (UIView*)tableView:(UITableView*)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView* headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, Adaptive(70))];
-    
+    headView.backgroundColor = BASECOLOR;
     UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(Adaptive(20), headView.bounds.size.height - .5, viewWidth - Adaptive(40), .5)];
     line.backgroundColor = [UIColor colorWithRed:85 / 255.0 green:85 / 255.0 blue:85 / 255.0 alpha:1];
     [headView addSubview:line];

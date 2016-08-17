@@ -19,7 +19,7 @@
 @property (nonatomic,retain) NSString *commentNumber;
 @property (nonatomic,retain) NSString *isPraise;
 @property (nonatomic,retain) NSString *tail_id;
-
+@property (nonatomic,retain) NSString *time;
 - (instancetype)initWithDictionary:(NSDictionary *)dict;
 
 @end

@@ -16,9 +16,11 @@
 @interface NewViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     NSMutableArray   *cellHeightArray;
+    NSInteger   oldRow;
+    NSInteger   oldSection;
     
 }
-@property (nonatomic,retain)  NSMutableArray  *contentArray;
+@property (nonatomic,retain) NSMutableArray   *contentArray,*timeArray;
 @property (nonatomic,retain) UICollectionView *collection;
 @property (nonatomic,assign) int page;
 
@@ -27,36 +29,63 @@
 
 @implementation NewViewController
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:YES];
-    
-    
-    
-    
-    NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.index",BASEURL];
-    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
-        
-    } success:^(id responseObject) {
-        
-        [_contentArray removeAllObjects];
-        _page = 2;
-        if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
-            for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
-                ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
-                [self.contentArray addObject:content];
-            }
-            [self.collection reloadData];
-        }
-    }];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:YES];
+//    
+//    NSString *url = [NSString stringWithFormat:@"%@api/?method=gdb.index",BASEURL];
+//    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
+//        
+//    } success:^(id responseObject) {
+//        [_contentArray removeAllObjects];
+//        
+//        _page = 2;
+//        if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
+//            for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
+//                
+//                             
+//                
+//                ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
+//             //   [_contentArray addObject:content];
+//              
+//                if (![_contentArray containsObject:content]) {
+//                    [_contentArray addObject:content];
+//                }
+//                
+////                if (![_timeArray containsObject:content.time] ) {
+////                    
+////                    [_timeArray addObject:content.time];
+////                    [_contentArray addObject:content];
+////        
+////                }
+//                
+////                [_timeArray addObject:content.time];
+////                [_contentArray addObject:content];
+//                
+//                
+//            }
+//            
+//            
+//            
+//            // 倒序排列
+////            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+////            [_contentArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+////            NSLog(@"_contentArray %ld  timeArray %ld",_contentArray.count,_timeArray.count);
+//                 [self.collection reloadData];
+//            
+//        
+//            
+//        }
+//    }];
+//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
     _contentArray = [NSMutableArray array];
-    
-    _page = 2;
+    _timeArray    = [NSMutableArray array];
+    _page         = 2;
     [self createUI];
+    [self addHeader];
 }
 
 - (void)createUI {
@@ -104,8 +133,22 @@
             if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
                 for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
                     ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
+                  //  [vc.timeArray addObject:content.time];
                     [vc.contentArray addObject:content];
                 }
+                
+               
+//                for (ContentModel *content in _contentArray) {
+//                    if ([_timeArray containsObject:content.time]) {
+//                        [_contentArray removeObject:content];
+//                        [_timeArray removeObject:content.time];
+//                    }
+//                }
+                
+                
+                
+                NSLog(@"下拉刷新   _contentArray %ld  timeArray %ld",_contentArray.count,_timeArray.count);
+                
                 [vc.collection reloadData];
             }
             // 结束刷新
@@ -131,11 +174,45 @@
             
         } success:^(id responseObject) {
             
+           //  NSMutableArray *dataArray = [NSMutableArray array];
+            
             if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
                 for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
                     ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
+                 //   [vc.timeArray addObject:content.time];
                     [vc.contentArray addObject:content];
                 }
+                
+               
+                
+//                for (ContentModel *content in _contentArray) {
+//                    if ([_timeArray containsObject:content.time]) {
+//                        [_contentArray removeObject:content];
+//                        [_timeArray removeObject:content.time];
+//                    }
+//                }
+                
+                
+                
+                NSLog(@"上啦加载   _contentArray %ld  timeArray %ld",_contentArray.count,_timeArray.count);
+               
+//                NSSet *set = [NSSet setWithArray:dataArray];
+//                
+//                
+//                NSMutableArray * conArray = [NSMutableArray array];
+//                [conArray addObjectsFromArray:[set allObjects]];
+//                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+//                
+//                [conArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+//                
+//                
+//               
+//                
+//                [_contentArray addObjectsFromArray:conArray];
+//                
+//                NSLog(@"_contentArray %@",_contentArray);
+//                
+                
                 [vc.collection reloadData];
                 vc.page ++;
             }
@@ -291,6 +368,8 @@
 //UICollectionView被选中时调用的方法
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    oldRow = indexPath.row;
+    oldSection = indexPath.section;
     FinderViewController *finder = [FinderViewController sharedViewControllerManager];
     ContentModel *contentModel = _contentArray[indexPath.row];
     [finder pushNewsDetailsViewWithindex:[contentModel.tail_id integerValue]];

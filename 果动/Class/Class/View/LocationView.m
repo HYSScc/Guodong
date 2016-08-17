@@ -14,6 +14,7 @@
     ClassViewController *class;
     NSString            *cityName;
     NSString            *again;
+    BOOL                firstRequest;
     
 }
 - (instancetype)initWithFrame:(CGRect)frame
@@ -23,7 +24,8 @@
         
         [self createUI];
         [self createLocation]; // 开始定位
-         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"startLocation" object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"startLocation" object:nil];
     }
     return self;
 }
@@ -107,12 +109,14 @@
     
     NSDictionary *locationDict = @{ @"lnt" : [NSString stringWithFormat:@"%f", location.coordinate.longitude],@"lat" : [NSString stringWithFormat:@"%f", location.coordinate.latitude]};
     
-    if ([locationDict count] != 0) {
+    if ([locationDict count] != 0 && !firstRequest) {
         [self requestCityAllowedDataWith:locationDict];
     }
 }
 
 - (void)requestCityAllowedDataWith:(NSDictionary *)dict {
+    
+    firstRequest = !firstRequest;
     
     NSString *urlString  = [NSString stringWithFormat:@"%@geocoding/", BASEURL];
     
@@ -124,15 +128,17 @@
         if (city) {
             cityName = city;
             self.locationLabel.text = cityName;
-            _isSet    = @"";
+            _isSet   = @"";
             NSString *cityNumber = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]];
+            
+            
+           
             
             if ([[responseObject objectForKey:@"allowd"] containsObject:cityNumber]) {
                 
                 class.cityAllowed = YES;
             }
             [class removeLocationAnimation];
-            
             
             if ([again isEqualToString:@"again"]) {
                 
@@ -142,7 +148,6 @@
                 [[NSNotificationCenter defaultCenter] postNotification:notification];
                 
             }
-            
         }
     }];
 

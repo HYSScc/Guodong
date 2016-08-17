@@ -155,20 +155,6 @@
    
    
     
-    /*
-     "Access-Control-Allow-Origin" = "*";
-     Connection = "keep-alive";
-     "Content-Encoding" = gzip;
-     "Content-Type" = "application/json";
-     Date = "Mon, 08 Aug 2016 08:37:58 GMT";
-     Server = nginx;
-     "Set-Cookie" = "uid=None; Path=/";
-     "Transfer-Encoding" = Identity;
-     Vary = "Accept-Encoding, Cookie";
-     "X-Frame-Options" = SAMEORIGIN;
-     */
-     NSLog(@"cookies %@",cookies);
-    
     BOOL yesOrNo = NO;
     
     
