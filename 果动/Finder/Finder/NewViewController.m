@@ -16,6 +16,7 @@
 @interface NewViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     NSMutableArray   *cellHeightArray;
+    NSMutableArray   *writeToFileArray;
     NSInteger   oldRow;
     NSInteger   oldSection;
     
@@ -36,43 +37,59 @@
 //    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
 //        
 //    } success:^(id responseObject) {
-//        [_contentArray removeAllObjects];
+//        
+//        // 刷新回到原来的位置  就不能删除数据
+//        // [_contentArray removeAllObjects];
 //        
 //        _page = 2;
 //        if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
+//            
+//            
 //            for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
 //                
-//                             
+//                // 将每条数据打包成jsonString
+//                NSData   *writeJsonData   = [NSJSONSerialization dataWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+//                NSString *writeJsonString = [[NSString alloc] initWithData:writeJsonData encoding:NSUTF8StringEncoding];
 //                
-//                ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
-//             //   [_contentArray addObject:content];
-//              
-//                if (![_contentArray containsObject:content]) {
-//                    [_contentArray addObject:content];
-//                }
-//                
-////                if (![_timeArray containsObject:content.time] ) {
-////                    
-////                    [_timeArray addObject:content.time];
-////                    [_contentArray addObject:content];
-////        
-////                }
-//                
-////                [_timeArray addObject:content.time];
-////                [_contentArray addObject:content];
-//                
+//                // 判断当前数据的 jsonString 与
 //                
 //            }
 //            
 //            
 //            
-//            // 倒序排列
-////            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
-////            [_contentArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-////            NSLog(@"_contentArray %ld  timeArray %ld",_contentArray.count,_timeArray.count);
-//                 [self.collection reloadData];
 //            
-//        
+//            //
+//            //            NSString *readPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/d.plist"];
+//            //            NSString *readJsonString = [NSString stringWithContentsOfFile:readPath encoding:NSUTF8StringEncoding error:nil];
+//            //            if (![readJsonString isEqualToString:jsonString]) {
+//            //                for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
+//            //
+//            //                    // 遍历的时候比对本地数据
+//            //                    // json 转字符串
+//            //
+//            //
+//            //                    [_contentArray removeAllObjects];
+//            //
+//            //                    ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
+//            //                    [_contentArray addObject:content];
+//            //
+//            //
+//            //
+//            //
+//            //                }
+//            //            }
+//            //
+//            //
+//            //
+//            //
+//            //            // NSHomeDirectory() 沙盒根目录的路径
+//            //            NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/d.plist"];
+//            //            [jsonString writeToFile:path atomically:YES];
+//            //
+//            //
+//            //            [self.collection reloadData];
+//            //
+//            
 //            
 //        }
 //    }];
@@ -81,11 +98,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
-    _contentArray = [NSMutableArray array];
-    _timeArray    = [NSMutableArray array];
-    _page         = 2;
+    _contentArray    = [NSMutableArray array];
+    _timeArray       = [NSMutableArray array];
+    writeToFileArray = [NSMutableArray array];
+    _page            = 2;
     [self createUI];
-    [self addHeader];
+    //  [self addHeader];
 }
 
 - (void)createUI {
@@ -129,27 +147,20 @@
         } success:^(id responseObject) {
             
             [_contentArray removeAllObjects];
+            
             _page = 2;
-            if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
+            if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0)
+            {
+                
+                // 不相同
                 for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
                     ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
-                  //  [vc.timeArray addObject:content.time];
+                    
                     [vc.contentArray addObject:content];
                 }
-                
-               
-//                for (ContentModel *content in _contentArray) {
-//                    if ([_timeArray containsObject:content.time]) {
-//                        [_contentArray removeObject:content];
-//                        [_timeArray removeObject:content.time];
-//                    }
-//                }
-                
-                
-                
-                NSLog(@"下拉刷新   _contentArray %ld  timeArray %ld",_contentArray.count,_timeArray.count);
-                
+                NSLog(@"刷新表了");
                 [vc.collection reloadData];
+                
             }
             // 结束刷新
             [vc.collection headerEndRefreshing];
@@ -174,44 +185,44 @@
             
         } success:^(id responseObject) {
             
-           //  NSMutableArray *dataArray = [NSMutableArray array];
+            //  NSMutableArray *dataArray = [NSMutableArray array];
             
             if ([[[responseObject objectForKey:@"data"] objectForKey:@"data_list"] count] != 0) {
                 for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"data_list"]) {
                     ContentModel *content = [[ContentModel alloc] initWithDictionary:dict];
-                 //   [vc.timeArray addObject:content.time];
+                    //   [vc.timeArray addObject:content.time];
                     [vc.contentArray addObject:content];
                 }
                 
-               
                 
-//                for (ContentModel *content in _contentArray) {
-//                    if ([_timeArray containsObject:content.time]) {
-//                        [_contentArray removeObject:content];
-//                        [_timeArray removeObject:content.time];
-//                    }
-//                }
+                
+                //                for (ContentModel *content in _contentArray) {
+                //                    if ([_timeArray containsObject:content.time]) {
+                //                        [_contentArray removeObject:content];
+                //                        [_timeArray removeObject:content.time];
+                //                    }
+                //                }
                 
                 
                 
                 NSLog(@"上啦加载   _contentArray %ld  timeArray %ld",_contentArray.count,_timeArray.count);
-               
-//                NSSet *set = [NSSet setWithArray:dataArray];
-//                
-//                
-//                NSMutableArray * conArray = [NSMutableArray array];
-//                [conArray addObjectsFromArray:[set allObjects]];
-//                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
-//                
-//                [conArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-//                
-//                
-//               
-//                
-//                [_contentArray addObjectsFromArray:conArray];
-//                
-//                NSLog(@"_contentArray %@",_contentArray);
-//                
+                
+                //                NSSet *set = [NSSet setWithArray:dataArray];
+                //
+                //
+                //                NSMutableArray * conArray = [NSMutableArray array];
+                //                [conArray addObjectsFromArray:[set allObjects]];
+                //                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
+                //
+                //                [conArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+                //
+                //
+                //
+                //
+                //                [_contentArray addObjectsFromArray:conArray];
+                //
+                //                NSLog(@"_contentArray %@",_contentArray);
+                //
                 
                 [vc.collection reloadData];
                 vc.page ++;
@@ -225,7 +236,7 @@
 - (void)publishButtonClick:(UIButton *)button {
     
     if ([HttpTool judgeWhetherUserLogin]) {
-      
+        
         FinderPubViewController *publish = [FinderPubViewController new];
         publish.className = @"发布动态";
         [self.navigationController pushViewController:publish animated:YES];
@@ -281,6 +292,9 @@
     
     ContentModel *contentModel = _contentArray[indexPath.row];
     cell.talk_id               = contentModel.tail_id;
+    
+    
+    
     [cell.headerImage  sd_setImageWithURL:[NSURL URLWithString:contentModel.headImgUrl] placeholderImage:[UIImage imageNamed:@"person_nohead"]];
     [cell.contentImage sd_setImageWithURL:[NSURL URLWithString:contentModel.conetntImgArray[0]]];
     cell.nameLabel.text     = contentModel.nameString;

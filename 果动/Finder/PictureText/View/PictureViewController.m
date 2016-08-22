@@ -24,7 +24,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:YES];
     // 2.集成刷新控件
-    [self headerRereshing];
+   // [self headerRereshing];
 }
 
 - (void)viewDidLoad {

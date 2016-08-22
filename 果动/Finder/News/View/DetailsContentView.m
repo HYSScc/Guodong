@@ -145,8 +145,6 @@
     _nameLabel.text = details.nickName;
     _dateLabel.text = details.timeString;
     
-    //    _contentLabel.text = details.content;
-    
     // 调整行间距
     
     

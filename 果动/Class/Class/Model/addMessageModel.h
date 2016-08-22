@@ -32,6 +32,8 @@
 
 @property (nonatomic,retain) NSString *user_money;
 
+@property (nonatomic,assign) int limit_time;
+
 @property (nonatomic,retain) NSString *package_balance;
 @property (nonatomic,retain) NSDictionary *isHaveFree;
 

@@ -157,7 +157,7 @@
     _youhuiMoneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(line.frame) + Adaptive(15), viewWidth, Adaptive(20))];
     _youhuiMoneyLabel.textAlignment = 1;
     _youhuiMoneyLabel.font = [UIFont fontWithName:FONT size:14];
-    _youhuiMoneyLabel.text = [NSString stringWithFormat:@"您有%@元的私房钱可以使用，是否使用?",juan];
+    _youhuiMoneyLabel.text = [NSString stringWithFormat:@"您有%@元的余额可以使用，是否使用?",juan];
     [self addSubview:_youhuiMoneyLabel];
     
     if ([juan isEqualToString:@"0"]) {

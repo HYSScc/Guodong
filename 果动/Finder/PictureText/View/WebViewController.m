@@ -41,7 +41,7 @@
                                          Adaptive(20) + Adaptive((44 - 19)) / 2,
                                          Adaptive(17.5),
                                          Adaptive(19));
-    [shareButton setBackgroundImage:[UIImage imageNamed:@"find_share"] forState:UIControlStateNormal];
+    [shareButton setBackgroundImage:[UIImage imageNamed:@"find_questionShare"] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(shareButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [navigation addSubview:shareButton];
     

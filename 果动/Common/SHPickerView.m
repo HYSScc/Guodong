@@ -50,15 +50,14 @@
         [self addSubview:_button];
         
         if ([type isEqualToString:@"date"]) {
-            datePicker       = [UIDatePicker new];
-            datePicker.frame = CGRectMake(0,
-                                          CGRectGetMaxY(_button.frame),
-                                          viewWidth,
-                                          Adaptive(216));
+            datePicker        = [UIDatePicker new];
+            datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+            datePicker.frame  = CGRectMake(0,
+                                           CGRectGetMaxY(_button.frame),
+                                           viewWidth,
+                                           Adaptive(216));
             datePicker.backgroundColor = [UIColor whiteColor];
-            
-            datePicker.minimumDate = [NSDate date];
-            
+            datePicker.minimumDate     = [NSDate date];
             datePicker.datePickerMode  = UIDatePickerModeDate;
             [datePicker addTarget:self action:@selector(changeReturnString) forControlEvents:UIControlEventValueChanged];
             [self addSubview:datePicker];
@@ -94,7 +93,7 @@
             // 不选择的话 默认第一个教练名字
             addCoachModel *coachModel = coachArray[0];
             coachName = coachModel.coachName;
-            
+            coach_id  = coachModel.coach_id;
         } else {
             
             pickerView       = [UIPickerView new];
@@ -110,8 +109,8 @@
             
             if ([type isEqualToString:@"class"]) {
                 addMessageCourse *course = dataArray[0];
-                elsePickerString = course.name;
-                func_id = course.func_id;
+                elsePickerString         = course.name;
+                func_id  = course.func_id;
                 class_id = course.class_id;
             } else {
                 elsePickerString      = [dataArray objectAtIndex:0];
@@ -125,9 +124,17 @@
 - (NSString *)changeReturnString
 {
     if ([typeString isEqualToString:@"date"]) {
+        
         NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy年MM月dd日"];
         NSString* dateString = [formatter stringFromDate:datePicker.date];
+        
+//        if ([dateString isEqualToString:@"2016年08月20日"]) {
+//            [datePicker setDate:[NSDate date] animated:YES];
+//        }
+        
+        
+       
         return dateString;
     }  else {
         return elsePickerString;
@@ -166,7 +173,7 @@
 // 选中某一列中的某一行时会调用
 - (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    
+    NSLog(@"row %ld",(long)row);
     addMessageCourse *course = dataArray[row];
     
     if ([typeString isEqualToString:@"class"]) {

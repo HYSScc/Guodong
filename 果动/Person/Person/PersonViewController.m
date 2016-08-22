@@ -24,6 +24,8 @@
 {
     [super viewWillAppear:YES];
     
+    // 每次刷新  切换登陆后及时显示
+    
     if ([HttpTool judgeWhetherUserLogin]) {
         NSString *url = [NSString stringWithFormat:@"%@api/?method=user.get_userinfo",BASEURL];
         [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {

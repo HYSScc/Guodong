@@ -45,7 +45,7 @@
     
     _tableView.frame = CGRectMake(0, 0, viewWidth, self.view.bounds.size.height);
     
-    [self headerRereshing];
+  //  [self headerRereshing];
     
     
 }
