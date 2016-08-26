@@ -21,7 +21,7 @@
         _inc   = [dict objectForKey:@"inc"];
         _expires = [dict objectForKey:@"expires"];
         
-        
+       // _topTitle = [dict objectForKey:@""];
     }
     return self;
 }

@@ -9,9 +9,9 @@
 #import "MyDataModel.h"
 #import "DataCollectionViewCell.h"
 
-
 #import "ImgScrollerView.h"
 #import "TapImageView.h"
+
 @interface DataCollectionViewCell ()<TapImageViewDelegate,ImgScrollViewDelegate,UIScrollViewDelegate>
 
 @end
@@ -30,7 +30,7 @@
     UIView       *scrollPanel;
     UIButton     *jtxlButton;
     NSString     *data_id;
-     UIView            *alphaView;
+    UIView            *alphaView;
     CGFloat offset;
     CGFloat textHeight;
 }
@@ -45,38 +45,6 @@
         selfHeight = self.frame.size.height;
         selfWidth  = self.frame.size.width;
         
-//        
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShow:) name:UIKeyboardWillShowNotification object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHide:) name:UIKeyboardWillHideNotification object:nil];
-//        
-//        
-//        
-//        alphaView = [UIView new];
-//        alphaView.frame = CGRectMake(0,
-//                                     0,
-//                                     viewWidth,
-//                                     viewHeight);
-//        alphaView.backgroundColor = BASECOLOR;
-//        
-//        alphaView.alpha = .6;
-//        UITapGestureRecognizer *tapLeftDouble  = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(magnifyImage:)];
-//        [alphaView addGestureRecognizer:tapLeftDouble];
-//       
-//        
-//        
-//        textView = [[TextFieldView alloc] initWithFrame:CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42))];
-//        [textView.publishButton setTitle:@"确认" forState:UIControlStateNormal];
-//        textView.textField.placeholder  = @"输入您的静态心率";
-//        textView.textField.keyboardType = UIKeyboardTypePhonePad;
-//        [textView.publishButton addTarget:self action:@selector(CommentButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-//        textView.backgroundColor = [UIColor colorWithRed:201/255.0
-//                                                   green:205/255.0
-//                                                    blue:211/255.0
-//                                                   alpha:1];
-//        textView.textField.backgroundColor = [UIColor colorWithRed:187/255.0
-//                                                             green:194/255.0
-//                                                              blue:201/255.0
-//                                                             alpha:1];
         
         app = [UIApplication sharedApplication].delegate;
         
@@ -101,64 +69,65 @@
         contentSize.height = viewHeight;
         contentSize.width  = viewWidth *2;
         myScrollView.contentSize = contentSize;
-
         
-        dateLabel       = [UILabel new];
-        dateLabel.frame = CGRectMake(0,
-                                     Adaptive(3),
-                                     selfWidth,
-                                     Adaptive(14));
-        dateLabel.textColor = [UIColor lightGrayColor];
-        dateLabel.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
-        dateLabel.textAlignment = 1;
-        dateLabel.text      = @"2016/06/29";
-        [self addSubview:dateLabel];
         
         UILabel *orangeLine = [UILabel new];
         orangeLine.frame    = CGRectMake(0,
-                                          CGRectGetMaxY(dateLabel.frame) + Adaptive(12),
-                                          selfWidth,
-                                          1);
+                                         Adaptive(6.5),
+                                         selfWidth,
+                                         1);
         orangeLine.backgroundColor = ORANGECOLOR;
         [self addSubview:orangeLine];
         
         
         UIImageView *ringImageView = [UIImageView new];
         ringImageView.frame        = CGRectMake((selfWidth - Adaptive(13)) / 2,
-                                                CGRectGetMaxY(dateLabel.frame) + Adaptive(5.5),
+                                                0,
                                                 Adaptive(13),
                                                 Adaptive(13));
         ringImageView.image = [UIImage imageNamed:@"person_data_ring"];
         [self addSubview:ringImageView];
         
         
-        CGFloat imageWidth  = (viewWidth - Adaptive(70)) / 4;
-        CGFloat imageHeight = imageWidth * (4 / 3);
+        dateLabel       = [UILabel new];
+        dateLabel.frame = CGRectMake(0,
+                                     CGRectGetMaxY(ringImageView.frame) + Adaptive(4.75),
+                                     selfWidth,
+                                     Adaptive(9));
+        dateLabel.textColor = ORANGECOLOR;
+        dateLabel.font      = [UIFont fontWithName:FONT size:Adaptive(9)];
+        dateLabel.textAlignment = 1;
+        [self addSubview:dateLabel];
         
-        _leftImageView       = [[TapImageView alloc] initWithFrame:CGRectMake(0,
-                                                                             Adaptive(40.5),
-                                                                             imageWidth,
-                                                                             imageHeight)];
+        
+        
+        CGFloat imageWidth  = Adaptive(56);
+        CGFloat imageHeight = Adaptive(115);
+        
+        _leftImageView = [[TapImageView alloc] initWithFrame:CGRectMake(Adaptive(2),
+                                                                        CGRectGetMaxY(dateLabel.frame) + Adaptive(4.75),
+                                                                        imageWidth,
+                                                                        imageHeight)];
+        
         _leftImageView.tag = 10;
-       
         _leftImageView.tap_delegate    = self;
         _leftImageView.backgroundColor = BASEGRYCOLOR;
         [self addSubview:_leftImageView];
         
-        _rightImageView       = [[TapImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_leftImageView.frame),
-                                                                              Adaptive(40.5),
-                                                                              imageWidth,
-                                                                              imageHeight)];
+        _rightImageView       = [[TapImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_leftImageView.frame) + Adaptive(1),
+                                                                               CGRectGetMaxY(dateLabel.frame) + Adaptive(4.75),
+                                                                               imageWidth,
+                                                                               imageHeight)];
         _rightImageView.tag = 11;
-        
+        _rightImageView.contentMode = UIViewContentModeScaleAspectFill;
         _rightImageView.tap_delegate    = self;
         _rightImageView.backgroundColor = BASEGRYCOLOR;
         [self addSubview:_rightImageView];
         
         UILabel *photoLine = [UILabel new];
-        photoLine.frame    = CGRectMake(0, CGRectGetMaxY(_leftImageView.frame), selfWidth, .5);
-        photoLine.backgroundColor = [UIColor whiteColor];
-        photoLine.alpha    = .8;
+        photoLine.frame    = CGRectMake(0, CGRectGetMaxY(_leftImageView.frame), selfWidth, Adaptive(1));
+        photoLine.backgroundColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1];
+        
         [self addSubview:photoLine];
         
         
@@ -166,87 +135,31 @@
         for (int a = 0; a < 26; a++) {
             UILabel *dataLabel = [UILabel new];
             dataLabel.frame    = CGRectMake(0,
-                                            CGRectGetMaxY(photoLine.frame) + (Adaptive(40.5) * a),
+                                            CGRectGetMaxY(photoLine.frame) + (Adaptive(40) * a),
                                             selfWidth,
                                             Adaptive(40));
             dataLabel.tag       = a + 101;
-            dataLabel.textColor = [UIColor whiteColor];
+            dataLabel.textColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1];
             dataLabel.textAlignment = 1;
             dataLabel.font      = [UIFont fontWithName:FONT size:Adaptive(12)];
             [self addSubview:dataLabel];
             
             UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                      CGRectGetMaxY(dataLabel.frame) ,
+                                                                      CGRectGetMaxY(dataLabel.frame) - Adaptive(1),
                                                                       selfWidth,
-                                                                      0.5)];
-            line.backgroundColor = [UIColor whiteColor];
-            line.alpha           = .8;
+                                                                      Adaptive(1))];
+            line.backgroundColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1];
             
             [self addSubview:line];
             
-//            if (a == 23) {
-//                // 创建静态心率按钮
-//                jtxlButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//                jtxlButton.frame     = CGRectMake(0,
-//                                                  CGRectGetMaxY(photoLine.frame) + Adaptive(40.5)*a,
-//                                                  selfWidth,
-//                                                  Adaptive(40));
-//               // jtxlButton.backgroundColor = ORANGECOLOR;
-//                [jtxlButton addTarget:self action:@selector(jtxlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-//                [self addSubview:jtxlButton];
-//            }
+            
+          
+            
             
         }
     }
     return self;
 }
-
-////表随键盘高度变化
-//-(void)keyboardShow:(NSNotification *)note
-//{
-//    CGRect keyBoardRect = [note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    CGFloat deltaY = keyBoardRect.size.height;
-//    
-//    textView.frame = CGRectMake(0, viewHeight - deltaY - Adaptive(42), viewWidth, Adaptive(42));
-//    
-//}
-//-(void)keyboardHide:(NSNotification *)note
-//{
-//    [self removeKey];
-//}
-//-(void)magnifyImage:(UIGestureRecognizer *)gesture
-//{
-//    [self removeKey];
-//}
-//- (void)jtxlButtonClick:(UIButton *)button {
-//    
-//   [app.window addSubview:alphaView];
-//    [textView.textField becomeFirstResponder];
-//    [app.window addSubview:textView];
-//}
-//
-//- (void)CommentButtonClick:(UIButton *)button {
-//    
-//    NSString *url = [NSString stringWithFormat:@"%@api/?method=body.modifydata&key=static_heart_rate",BASEURL];
-//    NSDictionary *dict = @{@"value":textView.textField.text,
-//                           @"id":data_id};
-//    [HttpTool postWithUrl:url params:dict body:nil progress:^(NSProgress *progress) {
-//        
-//    } success:^(id responseObject) {
-//        [self removeKey];
-//        [(UILabel *)[self viewWithTag:124] setText:dataModel.static_heart_rate];
-//        [(UILabel *)[self viewWithTag:126] setText:dataModel.target_heart_rate];
-//    }];
-//    
-//}
-//
-//- (void)removeKey {
-//    [alphaView removeFromSuperview];
-//    [textView.textField resignFirstResponder];
-//    textView.frame = CGRectMake(0, viewHeight - NavigationBar_Height, viewWidth, Adaptive(42));
-//    [textView removeFromSuperview];
-//    
-//}
 
 #pragma mark -
 #pragma mark - custom method
@@ -351,37 +264,43 @@
 
 - (void)setDataModel:(MyDataModel *)dataModel {
     
-  //  data_id = dataModel.data_id;
-    
-   
-    
     dateLabel.text = dataModel.time;
-    [_leftImageView sd_setImageWithURL:[NSURL URLWithString:dataModel.leftImageUrl] ];
+    
+    
+    
+    [_leftImageView sd_setImageWithURL:[NSURL URLWithString:dataModel.leftImageUrl]];
+    
+    
+    
     [_rightImageView sd_setImageWithURL:[NSURL URLWithString:dataModel.rightImageUrl] ];
+    /*
+     NSArray* titleArray = @[@"照片",@"身高", @"体重", @"腰围", @"臀围", @"脂肪百分比  ", @"BMI",@"腰臀比例", @"右大腿", @"左大腿", @"右小腿", @"左小腿", @"左上臂(放松)", @"左上臂(屈曲)", @"右上臂(放松)", @"右上臂(屈曲)", @"胸围(放松)", @"胸围(扩张)", @"肱三头肌皮脂", @"髋嵴上缘皮脂", @"肩胛下缘皮脂", @"腹部皮脂", @"大腿皮脂", @"皮脂总和",  @"静态心率", @"血压", @"目标心率" ];
+     
+     */
     
     [(UILabel *)[self viewWithTag:101] setText:dataModel.height];
     [(UILabel *)[self viewWithTag:102] setText:dataModel.weight];
     [(UILabel *)[self viewWithTag:103] setText:dataModel.waistline];
     [(UILabel *)[self viewWithTag:104] setText:dataModel.hip];
-    [(UILabel *)[self viewWithTag:105] setText:dataModel.rham];
-    [(UILabel *)[self viewWithTag:106] setText:dataModel.lham];
-    [(UILabel *)[self viewWithTag:107] setText:dataModel.rcrus];
-    [(UILabel *)[self viewWithTag:108] setText:dataModel.lcrus];
-    [(UILabel *)[self viewWithTag:109] setText:dataModel.rtar];
-    [(UILabel *)[self viewWithTag:110] setText:dataModel.rtaqj];
-    [(UILabel *)[self viewWithTag:111] setText:dataModel.ltar];
-    [(UILabel *)[self viewWithTag:112] setText:dataModel.ltaqj];
-    [(UILabel *)[self viewWithTag:113] setText:dataModel.bust_relax];
-    [(UILabel *)[self viewWithTag:114] setText:dataModel.bust_exp];
-    [(UILabel *)[self viewWithTag:115] setText:dataModel.gstj];
-    [(UILabel *)[self viewWithTag:116] setText:dataModel.kjsy];
-    [(UILabel *)[self viewWithTag:117] setText:dataModel.jjxy];
-    [(UILabel *)[self viewWithTag:118] setText:dataModel.abdomen];
-    [(UILabel *)[self viewWithTag:119] setText:dataModel.fat_ham];
-    [(UILabel *)[self viewWithTag:120] setText:dataModel.total];
-    [(UILabel *)[self viewWithTag:121] setText:dataModel.fat];
-    [(UILabel *)[self viewWithTag:122] setText:dataModel.ytbl];
-    [(UILabel *)[self viewWithTag:123] setText:dataModel.bmi];
+    [(UILabel *)[self viewWithTag:105] setText:dataModel.fat];
+    [(UILabel *)[self viewWithTag:106] setText:dataModel.bmi];
+    [(UILabel *)[self viewWithTag:107] setText:dataModel.ytbl];
+    [(UILabel *)[self viewWithTag:108] setText:dataModel.rham];
+    [(UILabel *)[self viewWithTag:109] setText:dataModel.lham];
+    [(UILabel *)[self viewWithTag:110] setText:dataModel.rcrus];
+    [(UILabel *)[self viewWithTag:111] setText:dataModel.lcrus];
+    [(UILabel *)[self viewWithTag:112] setText:dataModel.ltar];
+    [(UILabel *)[self viewWithTag:113] setText:dataModel.ltaqj];
+    [(UILabel *)[self viewWithTag:114] setText:dataModel.rtar];
+    [(UILabel *)[self viewWithTag:115] setText:dataModel.rtaqj];
+    [(UILabel *)[self viewWithTag:116] setText:dataModel.bust_relax];
+    [(UILabel *)[self viewWithTag:117] setText:dataModel.bust_exp];
+    [(UILabel *)[self viewWithTag:118] setText:dataModel.gstj];
+    [(UILabel *)[self viewWithTag:119] setText:dataModel.kjsy];
+    [(UILabel *)[self viewWithTag:120] setText:dataModel.jjxy];
+    [(UILabel *)[self viewWithTag:121] setText:dataModel.abdomen];
+    [(UILabel *)[self viewWithTag:122] setText:dataModel.fat_ham];
+    [(UILabel *)[self viewWithTag:123] setText:dataModel.total];
     [(UILabel *)[self viewWithTag:124] setText:dataModel.static_heart_rate];
     [(UILabel *)[self viewWithTag:125] setText:dataModel.blood_pressure];
     [(UILabel *)[self viewWithTag:126] setText:dataModel.target_heart_rate];

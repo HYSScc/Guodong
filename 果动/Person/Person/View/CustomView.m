@@ -154,6 +154,7 @@
         {
             viewController.hidesBottomBarWhenPushed          = YES;
             DataViewController *data = [DataViewController new];
+            data.userName = nickName;
             [viewController.navigationController pushViewController:data animated:YES];
             viewController.hidesBottomBarWhenPushed          = NO;
         }

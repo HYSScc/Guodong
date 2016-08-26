@@ -75,6 +75,7 @@
 		6325BF361D5078F2006DD4DF /* activeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6325BF351D5078F2006DD4DF /* activeModel.m */; };
 		6325C0B31D5086FC006DD4DF /* libYouzan.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6325C0A81D5086FC006DD4DF /* libYouzan.a */; };
 		6325C0B41D5086FC006DD4DF /* read_me.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6325C0AB1D5086FC006DD4DF /* read_me.txt */; };
+		6326A9C11D6E9BCE00025AB3 /* DataCompareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326A9C01D6E9BCE00025AB3 /* DataCompareView.m */; };
 		6328C7DB1D1B7DCC00F878C2 /* MyNewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6328C7DA1D1B7DCC00F878C2 /* MyNewsModel.m */; };
 		632D76B21CFE7F5800B8C14E /* News_MoneyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D76B11CFE7F5800B8C14E /* News_MoneyCell.m */; };
 		632D76B51CFE7F7F00B8C14E /* News_GDBCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 632D76B41CFE7F7F00B8C14E /* News_GDBCell.m */; };
@@ -142,6 +143,7 @@
 		6379CA0F1D224B0C00896B5A /* DetailMoreLikeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6379CA0E1D224B0C00896B5A /* DetailMoreLikeViewController.m */; };
 		6379FE5F1D3F5989006557CF /* SHImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6379FE5E1D3F5989006557CF /* SHImageView.m */; };
 		638597861D0E7DCB00FC866E /* textFrameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 638597851D0E7DCB00FC866E /* textFrameView.m */; };
+		638DEAB01D6BF2E30097A9FC /* DataTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 638DEAAF1D6BF2E30097A9FC /* DataTitleView.m */; };
 		6395A0F51D13C368005751F7 /* OrderTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6395A0F41D13C368005751F7 /* OrderTitleCell.m */; };
 		6395A0F81D13C389005751F7 /* OrderUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6395A0F71D13C389005751F7 /* OrderUserCell.m */; };
 		6395A0FB1D13C3A1005751F7 /* OrderCoachCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6395A0FA1D13C3A1005751F7 /* OrderCoachCell.m */; };
@@ -211,6 +213,8 @@
 		63B658F11D0D3CEB00AFC31F /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B658E91D0D3CEB00AFC31F /* UIView+MJExtension.m */; };
 		63B8E6671D62E31300604920 /* addCoachCollectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B8E6661D62E31300604920 /* addCoachCollectCell.m */; };
 		63B8E66A1D62FF5700604920 /* addCoachModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B8E6691D62FF5700604920 /* addCoachModel.m */; };
+		63C89EDC1D6B01760057801A /* Helvetica-Narrow.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 63C89EDB1D6B01760057801A /* Helvetica-Narrow.ttf */; };
+		63C89EDD1D6B01970057801A /* Helvetica-Narrow.ttf in Sources */ = {isa = PBXBuildFile; fileRef = 63C89EDB1D6B01760057801A /* Helvetica-Narrow.ttf */; };
 		63CB57E61D3DBBDB004E97B4 /* NewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB57E51D3DBBDB004E97B4 /* NewViewController.m */; };
 		63CB57E91D3DBF34004E97B4 /* QuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63CB57E81D3DBF34004E97B4 /* QuestionViewController.m */; };
 		63CC74A71D34E6F700C9C295 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63CC74A61D34E6F700C9C295 /* MessageUI.framework */; };
@@ -428,6 +432,8 @@
 		6325C0B01D5086FC006DD4DF /* OpenTradeServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenTradeServiceProtocol.h; sourceTree = "<group>"; };
 		6325C0B11D5086FC006DD4DF /* YZSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDK.h; sourceTree = "<group>"; };
 		6325C0B21D5086FC006DD4DF /* YZSDKDefination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZSDKDefination.h; sourceTree = "<group>"; };
+		6326A9BF1D6E9BCE00025AB3 /* DataCompareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCompareView.h; sourceTree = "<group>"; };
+		6326A9C01D6E9BCE00025AB3 /* DataCompareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCompareView.m; sourceTree = "<group>"; };
 		6328C7D91D1B7DCC00F878C2 /* MyNewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNewsModel.h; sourceTree = "<group>"; };
 		6328C7DA1D1B7DCC00F878C2 /* MyNewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNewsModel.m; sourceTree = "<group>"; };
 		632D76B01CFE7F5800B8C14E /* News_MoneyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = News_MoneyCell.h; sourceTree = "<group>"; };
@@ -544,6 +550,8 @@
 		6379FE5E1D3F5989006557CF /* SHImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHImageView.m; sourceTree = "<group>"; };
 		638597841D0E7DCB00FC866E /* textFrameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textFrameView.h; sourceTree = "<group>"; };
 		638597851D0E7DCB00FC866E /* textFrameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = textFrameView.m; sourceTree = "<group>"; };
+		638DEAAE1D6BF2E30097A9FC /* DataTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTitleView.h; sourceTree = "<group>"; };
+		638DEAAF1D6BF2E30097A9FC /* DataTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataTitleView.m; sourceTree = "<group>"; };
 		6395A0F31D13C368005751F7 /* OrderTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTitleCell.h; sourceTree = "<group>"; };
 		6395A0F41D13C368005751F7 /* OrderTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTitleCell.m; sourceTree = "<group>"; };
 		6395A0F61D13C389005751F7 /* OrderUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderUserCell.h; sourceTree = "<group>"; };
@@ -685,6 +693,7 @@
 		63B8E6661D62E31300604920 /* addCoachCollectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCoachCollectCell.m; sourceTree = "<group>"; };
 		63B8E6681D62FF5700604920 /* addCoachModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addCoachModel.h; sourceTree = "<group>"; };
 		63B8E6691D62FF5700604920 /* addCoachModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addCoachModel.m; sourceTree = "<group>"; };
+		63C89EDB1D6B01760057801A /* Helvetica-Narrow.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica-Narrow.ttf"; sourceTree = "<group>"; };
 		63CB57E41D3DBBDB004E97B4 /* NewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewViewController.h; path = ../Finder/NewViewController.h; sourceTree = "<group>"; };
 		63CB57E51D3DBBDB004E97B4 /* NewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewViewController.m; path = ../Finder/NewViewController.m; sourceTree = "<group>"; };
 		63CB57E71D3DBF34004E97B4 /* QuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionViewController.h; sourceTree = "<group>"; };
@@ -915,6 +924,7 @@
 				63B635861C74039900923A35 /* AppDelegate.h */,
 				63172A8A1CEBFA2D004BEAC3 /* AppDelegate.m */,
 				6338649A1C7556BC002638C7 /* PrefixHeader.pch */,
+				63C89EDB1D6B01760057801A /* Helvetica-Narrow.ttf */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -1211,6 +1221,10 @@
 			children = (
 				630AFC761D17F4A80005FC98 /* DataCollectionViewCell.h */,
 				630AFC771D17F4A80005FC98 /* DataCollectionViewCell.m */,
+				638DEAAE1D6BF2E30097A9FC /* DataTitleView.h */,
+				638DEAAF1D6BF2E30097A9FC /* DataTitleView.m */,
+				6326A9BF1D6E9BCE00025AB3 /* DataCompareView.h */,
+				6326A9C01D6E9BCE00025AB3 /* DataCompareView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2236,6 +2250,7 @@
 				6349384F1D124E64003F5AA2 /* AlipaySDK.bundle in Resources */,
 				6305EFD11CF2B58800FE35E4 /* news_result.png in Resources */,
 				0488CB311A86E29000E0AA5E /* Main.storyboard in Resources */,
+				63C89EDC1D6B01760057801A /* Helvetica-Narrow.ttf in Resources */,
 				631555AA1D2F6E65005DA8C7 /* README.txt in Resources */,
 				6325C0B41D5086FC006DD4DF /* read_me.txt in Resources */,
 				631555A41D2F6E64005DA8C7 /* WeiboSDK.bundle in Resources */,
@@ -2277,6 +2292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63C89EDD1D6B01970057801A /* Helvetica-Narrow.ttf in Sources */,
 				639DB0341D49ABC600D6D367 /* QNConfiguration.m in Sources */,
 				639DAFE41D49ABBA00D6D367 /* QNDomain.m in Sources */,
 				639DB0281D49ABC600D6D367 /* QNAsyncRun.m in Sources */,
@@ -2384,6 +2400,7 @@
 				63197F431D406DAD000760CF /* AFNetworkReachabilityManager.m in Sources */,
 				6358DEB11CFD20F500D9EDD4 /* RegisterTextView.m in Sources */,
 				63172A9A1CEBFC21004BEAC3 /* CityViewController.m in Sources */,
+				638DEAB01D6BF2E30097A9FC /* DataTitleView.m in Sources */,
 				63CFA4CC1D4AE9D6009E286B /* IntroduceCommentCell.m in Sources */,
 				639DAFE31D49ABBA00D6D367 /* QNDnsManager.m in Sources */,
 				639DB02E1D49ABC600D6D367 /* QNSystem.m in Sources */,
@@ -2399,6 +2416,7 @@
 				63CFA4CE1D4AE9D6009E286B /* PayTableViewCell.m in Sources */,
 				639DAFE81D49ABBA00D6D367 /* QNDnspodEnterprise.m in Sources */,
 				6346F5401CF7DEB500C366EB /* NewsViewController.m in Sources */,
+				6326A9C11D6E9BCE00025AB3 /* DataCompareView.m in Sources */,
 				63172AA61CEBFC49004BEAC3 /* HttpTool.m in Sources */,
 				63B658EF1D0D3CEB00AFC31F /* UIScrollView+MJExtension.m in Sources */,
 				639DAFE71D49ABBA00D6D367 /* QNRecord.m in Sources */,

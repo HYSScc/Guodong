@@ -31,10 +31,10 @@
         [self addSubview:className];
         
         
-        classNumber       = [UILabel new];
-        
-        classNumber.font  = [UIFont fontWithName:FONT size:Adaptive(13)];
-        [self addSubview:classNumber];
+//        classNumber       = [UILabel new];
+//        
+//        classNumber.font  = [UIFont fontWithName:FONT size:Adaptive(13)];
+//        [self addSubview:classNumber];
         
         classStatus       = [UILabel new];
         
@@ -61,30 +61,16 @@
                                  classNameSize.width,
                                  classNameSize.height);
     
-    classNumber.frame = CGRectMake(CGRectGetMaxX(className.frame) + Adaptive(5),
-                                   (Adaptive(44) - classNameSize.height) / 2,
-                                   viewWidth / 3,
-                                   classNameSize.height);
+//    classNumber.frame = CGRectMake(CGRectGetMaxX(className.frame) + Adaptive(5),
+//                                   (Adaptive(44) - classNameSize.height) / 2,
+//                                   viewWidth / 3,
+//                                   classNameSize.height);
     
     classStatus.frame = CGRectMake(viewWidth - Adaptive(13) - (viewWidth / 3),
                                    (Adaptive(44) - classNameSize.height) / 2,
                                    viewWidth / 3,
                                   classNameSize.height);
     
-    NSArray *array = [dataModel.courseNumber componentsSeparatedByString:@"T"];
-    if ([array count] > 1) {
-        NSString *string = [NSString stringWithFormat:@"%@%@%@",array[0],array[1],array[2]];
-        
-        NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:string];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,[array[0] length])];
-        [str addAttribute:NSForegroundColorAttributeName value:ORANGECOLOR range:NSMakeRange([array[0] length],[array[1] length])];
-        [str addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange([array[0] length]+[array[1] length],[array[2] length])];
-        classNumber.attributedText = str;
-        
-    } else {
-        classNumber.textColor = [UIColor whiteColor];
-        classNumber.text      = dataModel.courseNumber;
-    }
     
     classStatus.text = dataModel.statusName;
     line.frame       = CGRectMake(0,

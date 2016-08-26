@@ -18,4 +18,6 @@
 @property (nonatomic,retain) NSString *inc;
 @property (nonatomic,retain) NSString *expires;
 
+@property (nonatomic,retain) NSString *topTitle;
+
 @end
