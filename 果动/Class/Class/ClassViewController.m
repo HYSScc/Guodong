@@ -75,10 +75,7 @@
     
    
     
-    
-    
-   
-    
+
     UIView *navigationView = [UIView new];
     navigationView.frame   = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
     navigationView.backgroundColor = ORANGECOLOR;

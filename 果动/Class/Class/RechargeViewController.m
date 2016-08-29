@@ -49,7 +49,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = BASECOLOR;
     
-   
+    
     UIView *navigationView = [UIView new];
     navigationView.frame   = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
     navigationView.backgroundColor = ORANGECOLOR;
@@ -64,7 +64,7 @@
     backButton.frame = CGRectMake(-Adaptive(5), Adaptive(20), viewHeight / 9.5286, Adaptive(44));
     [backButton addTarget:self action:@selector(backButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
-
+    
     
     
     UIView* titleView = [[UIView alloc]initWithFrame:CGRectMake((viewWidth - Adaptive(51.6)) / 2,
@@ -90,19 +90,19 @@
     [photoButton addTarget:self action:@selector(telePhoneClick:) forControlEvents:UIControlEventTouchUpInside];
     [navigationView addSubview:photoButton];
     
-  //  NSLog(@"[HttpTool judgeWhetherUserLogin] %@",[HttpTool judgeWhetherUserLogin]);
+    //  NSLog(@"[HttpTool judgeWhetherUserLogin] %@",[HttpTool judgeWhetherUserLogin]);
     
     if ([HttpTool judgeWhetherUserLogin]) {
-         NSLog(@"[HttpTool judgeWhetherUserLogin] %d",[HttpTool judgeWhetherUserLogin]);
+        NSLog(@"[HttpTool judgeWhetherUserLogin] %d",[HttpTool judgeWhetherUserLogin]);
         [self startRequest];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您还没有登录，请先登录" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"登录",nil];
         
         [alert show];
     }
-   
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeAlphaView:) name:@"removeAlphaView" object:nil];
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushMainView) name:@"pushMainView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushMainView) name:@"pushMainView" object:nil];
 }
 
 - (void)pushMainView {
@@ -131,13 +131,13 @@
         [payView   removeFromSuperview];
         
         AddMessageViewController *addMessageVC = (AddMessageViewController *)[self.navigationController.viewControllers objectAtIndex:2];
-
-        addMessageVC.isChange    = [_addressMessageDict objectForKey:@"isChange"];      
+        
+        addMessageVC.isChange    = [_addressMessageDict objectForKey:@"isChange"];
         addMessageVC.order_id    = [_addressMessageDict objectForKey:@"order_id"];
         
         [self.navigationController popToViewController:addMessageVC animated:YES];
     }];
-   
+    
 }
 
 - (void)telePhoneClick:(UIButton *)button {
@@ -157,38 +157,38 @@
         
     } success:^(id responseObject) {
         
-            dataArray = [NSMutableArray array];
-            for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"package_list"]) {
-                RechargeModel *recharge = [[RechargeModel alloc] initWithDictionary:dict];
-                [dataArray addObject:recharge];
-            }
-            [_tableView reloadData];
-            
-            RechargeModel *recharge = dataArray[0];
-            NSString *priceString = [NSString stringWithFormat:@"合计：%@ 元",recharge.price];
-            
-            attributedString = [[NSMutableAttributedString alloc] initWithString:priceString];
-            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(0,3)];
-            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:24] range:NSMakeRange(3,recharge.price.length)];
-            [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(3+recharge.price.length + 1,1)];
-            
-            
-            priceNumber = recharge.price;
-            price_id    = recharge.type_id;
-            classNumber = recharge.classNumber;
-            
-            width  = [[[[responseObject objectForKey:@"data"] objectForKey:@"img"] objectForKey:@"width"] floatValue] / 2;
-            height = [[[[responseObject objectForKey:@"data"] objectForKey:@"img"] objectForKey:@"height"] floatValue] / 2;
-            imageUrl   = [[[responseObject objectForKey:@"data"] objectForKey:@"img"] objectForKey:@"img"];
-            
-            [self createUI];
+        dataArray = [NSMutableArray array];
+        for (NSDictionary *dict in [[responseObject objectForKey:@"data"] objectForKey:@"package_list"]) {
+            RechargeModel *recharge = [[RechargeModel alloc] initWithDictionary:dict];
+            [dataArray addObject:recharge];
+        }
+        [_tableView reloadData];
+        
+        RechargeModel *recharge = dataArray[0];
+        NSString *priceString = [NSString stringWithFormat:@"合计：%@ 元",recharge.price];
+        
+        attributedString = [[NSMutableAttributedString alloc] initWithString:priceString];
+        [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(0,3)];
+        [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:24] range:NSMakeRange(3,recharge.price.length)];
+        [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:13] range:NSMakeRange(3+recharge.price.length + 1,1)];
+        
+        
+        priceNumber = recharge.price;
+        price_id    = recharge.type_id;
+        classNumber = recharge.classNumber;
+        _user_balance = [[responseObject objectForKey:@"data"] objectForKey:@"balance"];
+        width  = [[[[responseObject objectForKey:@"data"] objectForKey:@"img"] objectForKey:@"width"] floatValue] / 2;
+        height = [[[[responseObject objectForKey:@"data"] objectForKey:@"img"] objectForKey:@"height"] floatValue] / 2;
+        imageUrl   = [[[responseObject objectForKey:@"data"] objectForKey:@"img"] objectForKey:@"img"];
+        
+        [self createUI];
     }];
 }
 
 - (void)createUI {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"removeRechargeView" object:nil];
-
+    
     
     UIView *orangeLineView = [UIView new];
     orangeLineView.frame   = CGRectMake(Adaptive(13),
@@ -242,7 +242,7 @@
     [payButton addTarget:self action:@selector(payButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:payButton];
     
-    payView = [[RechargePayView alloc] initWithFrame:CGRectMake(0, viewHeight, viewWidth, Adaptive(216)) viewController:self];
+    payView = [[RechargePayView alloc] initWithFrame:CGRectMake(0, viewHeight, viewWidth, Adaptive(216)) balance:_user_balance viewController:self];
     
     app = [UIApplication sharedApplication].delegate;
     

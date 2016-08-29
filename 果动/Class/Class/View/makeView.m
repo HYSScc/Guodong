@@ -24,6 +24,7 @@
 
 - (void)createUI {
     
+    
      makeNotification    = [NSNotification notificationWithName:@"makeJuan" object:nil userInfo:nil];
      notMakeNotification = [NSNotification notificationWithName:@"notMakeJuan" object:nil userInfo:nil];
     

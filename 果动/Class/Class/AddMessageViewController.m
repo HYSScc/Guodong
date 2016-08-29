@@ -559,6 +559,7 @@
             pay.oneClassPrice = courese.oneClassPrice;
             pay.oneClassTime  = courese.oneClassTime;
             pay.userMoney     = messageModel.user_money;
+            pay.userBalance  = messageModel.user_balance;
             pay.packageArray  = messageModel.packageArray;
             pay.iconImageUrl  = messageModel.iconImageUrl;
             pay.iconWidth     = messageModel.iconWidth;

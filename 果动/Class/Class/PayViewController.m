@@ -10,7 +10,7 @@
 #import "PayTableViewCell.h"
 #import "PayModel.h"
 #import "payView.h"
-#import "OrderViewController.h"
+#import "PersonViewController.h"
 @interface PayViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -39,14 +39,15 @@
     
     
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushOrderView) name:@"pushOrderView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushPersonView) name:@"pushPersonView" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushRechargeVC) name:@"pushRechargeVC" object:nil];
     
 }
 
-- (void)pushOrderView {
+- (void)pushPersonView {
     
-    OrderViewController *order = [OrderViewController new];
-    [self.navigationController pushViewController:order animated:YES];
+   
+    [self.navigationController pushViewController:[PersonViewController new] animated:YES];
     
 }
 
@@ -114,31 +115,23 @@
                                  CGRectGetMaxY(line.frame) + Adaptive(5),
                                  viewWidth,
                                  viewHeight  - CGRectGetMaxY(line.frame));
-    payView *pay = [[payView alloc] initWithFrame:payFrame payMoney:_oneClassPrice classTime:_oneClassTime youhuijuan:_userMoney order_id:_order_id viewController:self];
+  //  _userBalance = @"100";
+    payView *pay = [[payView alloc] initWithFrame:payFrame payMoney:_oneClassPrice classTime:_oneClassTime youhuijuan:_userMoney balance:_userBalance  order_id:_order_id viewController:self];
     [self.view addSubview:pay];
     
 }
 
 #pragma mark - 充值
 - (void)rechargeButtonClick:(UIButton *)button {
+    [self pushRechargeVC];
+}
+
+- (void)pushRechargeVC {
     RechargeViewController *rechargeVC = [RechargeViewController new];
     rechargeVC.addressMessageDict      = _addressMessageDict;
     
     [self.navigationController pushViewController:rechargeVC animated:YES];
 }
-
-//#pragma mark - 体验券说明
-//- (void)introduceButtonClick:(UIButton *)button {
-//    NSString *url = [NSString stringWithFormat:@"%@api/?method=gdmoney.introduce",BASEURL];
-//    [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
-//        
-//    } success:^(id responseObject) {
-//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[[responseObject objectForKey:@"data"] objectForKey:@"info"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//        
-//        [alert show];
-//    }];
-//}
-
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

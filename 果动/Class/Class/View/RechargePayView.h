@@ -10,5 +10,7 @@
 
 @interface RechargePayView : UIView
 
-- (instancetype)initWithFrame:(CGRect)frame viewController:(UIViewController *)controller;
+- (instancetype)initWithFrame:(CGRect)frame balance:(NSString *)ban viewController:(UIViewController *)controller;
+@property (nonatomic,retain) UILabel *youhuiMoneyLabel;
+@property (nonatomic,retain) NSString *ishave;
 @end

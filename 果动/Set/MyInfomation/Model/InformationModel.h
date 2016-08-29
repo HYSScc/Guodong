@@ -18,6 +18,7 @@
 @property (nonatomic,retain) NSString *height;
 @property (nonatomic,retain) NSString *weight;
 @property (nonatomic,retain) NSString *user_id;
+@property (nonatomic,retain) NSString *myBalance;
 
 @property (nonatomic,retain) NSString *bannerImgUrl;
 

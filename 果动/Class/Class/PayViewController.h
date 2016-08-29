@@ -18,7 +18,7 @@
 @property (nonatomic,retain) NSString *oneClassPrice;
 @property (nonatomic,retain) NSString *oneClassTime;
 @property (nonatomic,retain) NSString *userMoney;
-
+@property (nonatomic,retain) NSString *userBalance;
 @property (nonatomic,retain) NSString *rechargeUrl;
 @property (nonatomic,retain) NSString *rechargeWidth;
 @property (nonatomic,retain) NSString *rechargeHeight;

@@ -18,6 +18,7 @@
 @implementation TopView
 {
     NSString     *headImgUrl;
+    NSString     *myBalance;
     UIScrollView *myScrollView;
     NSInteger     currentIndex;
     UIView       *markView;
@@ -37,10 +38,35 @@
 }
 
 - (void)markTopView:(NSNotification *)notification {
+    myBalance = [notification.userInfo objectForKey:@"balance"];
     headImgUrl = [notification.userInfo objectForKey:@"headImageUrl"];
     [_headImageView sd_setImageWithURL:[NSURL URLWithString:headImgUrl]
                       placeholderImage:[UIImage imageNamed:@"person_nohead"]];
     _nameLabel.text = [notification.userInfo objectForKey:@"nickName"];
+    
+    if ([myBalance intValue] != 0) {
+        _nameLabel.frame = CGRectMake(0,
+                                      self.bounds.size.height - Adaptive(34),
+                                      viewWidth,
+                                      Adaptive(13));
+        
+        _balanceLabel.frame = CGRectMake(0,
+                                         self.bounds.size.height - Adaptive(4) - Adaptive(13),
+                                         viewWidth,
+                                         Adaptive(13));
+        
+        _balanceLabel.text = [NSString stringWithFormat:@"余额:%@元",myBalance];
+        [self addSubview:_balanceLabel];
+        
+    } else {
+        _nameLabel.frame = CGRectMake(0,
+                                      self.bounds.size.height - Adaptive(13) - Adaptive(13),
+                                      viewWidth,
+                                      Adaptive(13));
+        [_balanceLabel removeFromSuperview];
+    }
+    
+    
 }
 
 - (void)createUI {
@@ -49,18 +75,18 @@
     
     scrollPanel = [[UIView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
     scrollPanel.backgroundColor = [UIColor clearColor];
-    scrollPanel.alpha = 0;
+    scrollPanel.alpha           = 0;
     [app.window addSubview:scrollPanel];
     
     markView = [[UIView alloc] initWithFrame:scrollPanel.bounds];
     markView.backgroundColor = [UIColor blackColor];
-    markView.alpha = 0.0;
+    markView.alpha           = 0.0;
     [scrollPanel addSubview:markView];
     
     myScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, viewWidth, viewHeight)];
     [scrollPanel addSubview:myScrollView];
     myScrollView.pagingEnabled = YES;
-    myScrollView.delegate = self;
+    myScrollView.delegate      = self;
     CGSize contentSize = myScrollView.contentSize;
     contentSize.height = viewHeight;
     contentSize.width  = viewWidth;
@@ -94,22 +120,28 @@
                                       Adaptive(65),
                                       Adaptive(65));
     _headImageView.tap_delegate = self;
-    _headImageView.tag = 10;
+    _headImageView.tag          = 10;
     _headImageView.layer.cornerRadius  = _headImageView.bounds.size.width / 2;
     _headImageView.layer.masksToBounds = YES;
     _headImageView.image               = [UIImage imageNamed:@"person_nohead"];
     [self addSubview:_headImageView];
     
     
-    _nameLabel       = [UILabel new];
-    _nameLabel.frame = CGRectMake(0,
-                                  self.bounds.size.height - Adaptive(20) - Adaptive(13),
-                                  viewWidth,
-                                  Adaptive(20));
+    _nameLabel               = [UILabel new];
     _nameLabel.textAlignment = 1;
     _nameLabel.font          = [UIFont fontWithName:FONT size:Adaptive(12)];
     _nameLabel.text          = @"果动";
     [self addSubview:_nameLabel];
+    
+    
+    _balanceLabel               = [UILabel new];
+    _balanceLabel.textAlignment = 1;
+    _balanceLabel.font          = [UIFont fontWithName:FONT_BOLD size:Adaptive(13)];
+    
+    
+    
+    
+    
     
     /*********************************************/
     

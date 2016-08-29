@@ -28,7 +28,7 @@
         _height     = [NSString stringWithFormat:@"%@",[dict objectForKey:@"height"]];
         _weight     = [NSString stringWithFormat:@"%@",[dict objectForKey:@"weight"]];
         _user_id    = [NSString stringWithFormat:@"%@",[dict objectForKey:@"user_id"]];
-        
+        _myBalance = [NSString stringWithFormat:@"%@",[dict objectForKey:@"balance"]];
         _bannerImgUrl = [[dict objectForKey:@"footimg"] count] != 0 ? [[dict objectForKey:@"footimg"] objectForKey:@"url"] : @"";
         
            }

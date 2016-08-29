@@ -31,6 +31,8 @@
 @property (nonatomic,retain) NSMutableArray *packageArray;
 
 @property (nonatomic,retain) NSString *user_money;
+@property (nonatomic,retain) NSString *user_balance;
+
 
 @property (nonatomic,assign) int limit_time;
 

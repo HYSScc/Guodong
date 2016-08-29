@@ -74,17 +74,21 @@
 
 - (void)setMoneyModel:(MoneyModel *)moneyModel {
     
-    _moneyLabel.frame = CGRectMake(Adaptive(40),
+    
+ //   moneyModel.money = @"￥10";
+    
+    _moneyLabel.frame = CGRectMake(Adaptive(35),
                                    Adaptive(38),
-                                   Adaptive(60),
+                                   Adaptive(80),
                                    Adaptive(27));
+ //   _moneyLabel.backgroundColor = [UIColor redColor];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:moneyModel.money];
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT size:Adaptive(16)] range:NSMakeRange(0,1)];
     [str addAttribute:NSFontAttributeName value:[UIFont fontWithName:FONT_BOLD size:Adaptive(26)] range:NSMakeRange(1,moneyModel.money.length - 1)];
     _moneyLabel.textAlignment   = 1;
     _moneyLabel.attributedText  = str;
     
-    
+ //   [_moneyLabel sizeToFit];
     statusLabel.frame = CGRectMake(Adaptive(45),
                                    CGRectGetMaxY(_moneyLabel.frame) + Adaptive(5),
                                    Adaptive(60),

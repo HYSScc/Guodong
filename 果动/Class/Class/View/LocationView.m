@@ -129,10 +129,20 @@
             cityName = city;
             self.locationLabel.text = cityName;
             _isSet   = @"";
-            NSString *cityNumber = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]];
-            
             
            
+            NSString *cityNumber = [NSString stringWithFormat:@"%@",[[responseObject objectForKey:@"city"] objectForKey:@"city_code"]];
+            NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];  // 创建cookie属性字典
+            [cookieProperties setObject:@"city_code" forKey:NSHTTPCookieName]; // 手动设置cookie的属性
+            [cookieProperties setObject:cityNumber forKey:NSHTTPCookieValue];
+            [cookieProperties setObject:@"www.guodongwl.com" forKey:NSHTTPCookieDomain];
+            [cookieProperties setObject:@"www.guodongwl.com" forKey:NSHTTPCookieOriginURL];
+            [cookieProperties setObject:@"/" forKey:NSHTTPCookiePath];
+            [cookieProperties setObject:@"0" forKey:NSHTTPCookieVersion];
+            
+            NSHTTPCookie *cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+
             
             if ([[responseObject objectForKey:@"allowd"] containsObject:cityNumber]) {
                 
@@ -152,7 +162,6 @@
     }];
 
 }
-
 #pragma mark - 按钮点击事件
 - (void)cityView:(UIButton *)button {
     

@@ -12,6 +12,7 @@
 #import "MoneyViewController.h"
 #import "MoneyTableViewCell.h"
 #import "MoneyModel.h"
+#import "ClassViewController.h"
 @interface MoneyViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     UITextField *_textField;
@@ -57,9 +58,18 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        if (alertView.tag == 99) {
+            // 兑换成功 跳转订课
+            [self.navigationController pushViewController:[ClassViewController new] animated:YES];
+        }else {
+            //未登录 跳转登录
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        }
     }
+   
+    
+    
 }
 
 /**
@@ -246,7 +256,7 @@
     [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:strRange];
     [publishButton setAttributedTitle:str forState:UIControlStateNormal];
 }
-
+//gb1fb595
 // 跳转到优惠券说明
 - (void)introduceButtonClick:(UIButton *)button {
     
@@ -271,6 +281,11 @@
     [HttpTool postWithUrl:url params:nil body:nil progress:^(NSProgress * progress) {
         
     } success:^(id responseObject) {
+        
+        _textField.text = @"";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:[[responseObject objectForKey:@"data"] objectForKey:@"data"] delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去订课", nil];
+        alert.tag = 99;
+        [alert show];
         
         [self headerRereshing];
     }];

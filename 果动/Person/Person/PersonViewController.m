@@ -37,8 +37,8 @@
                                              [responseObject objectForKey:@"data"]];
             
             NSDictionary *dict = @{@"headImageUrl":information.headImgUrl,
-                                   @"nickName":information.nickName
-                                   };
+                                   @"nickName":information.nickName,
+                                   @"balance":information.myBalance};
             
             
             [bannerImageView sd_setImageWithURL:[NSURL URLWithString:information.bannerImgUrl]];
@@ -48,13 +48,15 @@
             NSDictionary *custom = @{@"user":information.user_id,
                                      @"nickName":information.nickName,
                                      @"haveNews":_haveNews};
+        
             
             NSNotification *Customnotification = [NSNotification notificationWithName:@"Custom" object:nil userInfo:custom];
             [[NSNotificationCenter defaultCenter] postNotification:Customnotification];
         }];
     }  else {
         NSDictionary *dict = @{@"headImageUrl":@"",
-                               @"nickName":@"果动"
+                               @"nickName"    :@"果动",
+                               @"balance"     :@"0"
                                };
         
         [bannerImageView sd_setImageWithURL:[NSURL URLWithString:@""]];

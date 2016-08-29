@@ -10,7 +10,5 @@
 
 @interface makeView : UIView
 
-//@property (nonatomic,retain) UIImageView *imageView;
-//@property (nonatomic,retain) UILabel     *makeLabel;
-//@property (nonatomic,retain) UIButton    *makeBtn;
+
 @end

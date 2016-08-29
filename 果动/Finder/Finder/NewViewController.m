@@ -194,36 +194,6 @@
                     [vc.contentArray addObject:content];
                 }
                 
-                
-                
-                //                for (ContentModel *content in _contentArray) {
-                //                    if ([_timeArray containsObject:content.time]) {
-                //                        [_contentArray removeObject:content];
-                //                        [_timeArray removeObject:content.time];
-                //                    }
-                //                }
-                
-                
-                
-                NSLog(@"上啦加载   _contentArray %ld  timeArray %ld",_contentArray.count,_timeArray.count);
-                
-                //                NSSet *set = [NSSet setWithArray:dataArray];
-                //
-                //
-                //                NSMutableArray * conArray = [NSMutableArray array];
-                //                [conArray addObjectsFromArray:[set allObjects]];
-                //                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"time" ascending:NO];
-                //
-                //                [conArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-                //
-                //
-                //
-                //
-                //                [_contentArray addObjectsFromArray:conArray];
-                //
-                //                NSLog(@"_contentArray %@",_contentArray);
-                //
-                
                 [vc.collection reloadData];
                 vc.page ++;
             }

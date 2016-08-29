@@ -11,5 +11,5 @@
 @interface RechargeViewController : UIViewController
 
 @property (nonatomic,retain) NSDictionary *addressMessageDict;
-
+@property (nonatomic,retain) NSString *user_balance;
 @end

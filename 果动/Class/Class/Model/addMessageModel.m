@@ -58,9 +58,9 @@
         
         _packageArray = [dict objectForKey:@"package"];
         
-        _user_money   = [NSString stringWithFormat:@"%@",[dict objectForKey:@"money"]];
-        
-        _limit_time   = [[dict objectForKey:@"limit_time"] intValue] * 3600;
+        _user_money    = [NSString stringWithFormat:@"%@",[dict objectForKey:@"money"]];
+        _user_balance = [NSString stringWithFormat:@"%@",[dict objectForKey:@"balance"]];
+        _limit_time    = [[dict objectForKey:@"limit_time"] intValue] * 3600;
         
     }
     return self;

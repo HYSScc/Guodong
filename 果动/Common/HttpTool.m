@@ -32,6 +32,10 @@
     [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"PLATFORM"];
     
     
+   
+    
+        
+    
     
     [manager POST:urlStr parameters:params constructingBodyWithBlock:^(id  _Nonnull formData) {
         // 拼接data到请求体，这个block的参数是遵守AFMultipartFormData协议的。
@@ -157,16 +161,22 @@
     
     BOOL yesOrNo = NO;
     
-    
+    NSLog(@"cookies %@",cookies);
     for (NSHTTPCookie *cookie in cookies) {
         
-       // NSLog(@"cookie %@",cookie.value);
+    //    NSLog(@"cookie %@",cookie.properties);
         
-        if (![cookie.value isEqualToString:@"0"] && ![cookie.value isEqualToString:@"None"]) {
+        if (![cookie.value isEqualToString:@"0"] && [cookie.name isEqualToString:@"uid"]) {
             yesOrNo = YES;
+        } else {
+            yesOrNo = NO;
         }
+       
     }
     
+    
+    
+ //   NSLog(@"yesOrNO %d",yesOrNo);
     return yesOrNo;
     
 }
@@ -180,8 +190,10 @@
     
     for (NSHTTPCookie *cookie in cookies) {
         
-        if (![cookie.value isEqualToString:@"0"] && ![cookie.value isEqualToString:@"None"])  {
+        if (![cookie.value isEqualToString:@"0"] && [cookie.name isEqualToString:@"uid"])  {
             value = cookie.value;
+        }else {
+            value = @"";
         }
     }
    

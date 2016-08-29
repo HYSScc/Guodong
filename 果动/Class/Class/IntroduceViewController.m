@@ -47,7 +47,7 @@
     _scrollView.frame = CGRectMake(0, NavigationBar_Height, viewWidth, viewHeight - NavigationBar_Height - Adaptive(50));
     [self.view addSubview:_scrollView];
     
-    _cityAllowed = ALLOWORDERCLASS;
+  //  _cityAllowed = ALLOWORDERCLASS;
     [self startRequest];
 }
 

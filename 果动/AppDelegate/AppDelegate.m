@@ -190,7 +190,10 @@ static BOOL isProduction = FALSE;
 
 - (void)applicationWillTerminate:(UIApplication*)application
 {
-    //  NSLog(@"程序要退出了");
+      NSLog(@"程序要退出了");
+    NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/d.plist"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:path error:NULL];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {

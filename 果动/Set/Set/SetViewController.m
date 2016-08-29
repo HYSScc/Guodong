@@ -177,6 +177,9 @@
                 NSHTTPCookie* cookie = (NSHTTPCookie*)[cookies objectAtIndex:i];
                 [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
             }
+            
+            NSLog(@"退出登录 cookies %@",cookies);
+            
         }
         
         self.hidesBottomBarWhenPushed = YES;
