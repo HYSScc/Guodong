@@ -45,6 +45,11 @@
             NSNotification *notification = [NSNotification notificationWithName:@"Top" object:nil userInfo:dict];
             [[NSNotificationCenter defaultCenter] postNotification:notification];
             
+            
+            NSLog(@"user %@  nickName %@  haveNews %@",information.user_id,information.nickName,_haveNews);
+            
+            _haveNews = [self isBlankString:_haveNews] ? @"0" : _haveNews;
+            
             NSDictionary *custom = @{@"user":information.user_id,
                                      @"nickName":information.nickName,
                                      @"haveNews":_haveNews};
@@ -67,6 +72,18 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
 }
+
+
+- (BOOL) isBlankString:(NSString *)string {
+    
+    if (string == nil || string == NULL)       return YES;
+    if ([string isKindOfClass:[NSNull class]]) return YES;
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        
+        return YES;
+    }
+    return NO;
+} 
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];

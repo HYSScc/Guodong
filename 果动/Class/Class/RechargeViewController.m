@@ -241,7 +241,6 @@
     payButton.titleLabel.font = [UIFont fontWithName:FONT size:Adaptive(15)];
     [payButton addTarget:self action:@selector(payButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:payButton];
-    
     payView = [[RechargePayView alloc] initWithFrame:CGRectMake(0, viewHeight, viewWidth, Adaptive(216)) balance:_user_balance viewController:self];
     
     app = [UIApplication sharedApplication].delegate;

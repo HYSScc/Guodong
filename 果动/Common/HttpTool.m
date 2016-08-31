@@ -85,6 +85,8 @@
                         [UIApplication sharedApplication].applicationIconBadgeNumber = [[[dic objectForKey:@"common"] objectForKey:@"has_message"] intValue];
                     }
                     personVC.haveNews = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"common"] objectForKey:@"has_message"]];
+                    
+                    NSLog(@"哈大地方噶啥打法 %@",personVC.haveNews);
                 }
             }
             

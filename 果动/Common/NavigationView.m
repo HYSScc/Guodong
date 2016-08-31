@@ -5,12 +5,13 @@
 //  Created by mac on 16/7/11.
 //  Copyright © 2016年 Unique. All rights reserved.
 //
-
+#import "PersonViewController.h"
 #import "NavigationView.h"
 
 @implementation NavigationView
 {
     UIViewController *viewController;
+    NSString         *titleString;
 }
 
 - (instancetype)initWithtitle:(NSString *)title viewController:(UIViewController *)controller
@@ -21,7 +22,7 @@
         self.frame              = CGRectMake(0, 0, viewWidth, NavigationBar_Height);
         self.backgroundColor    = ORANGECOLOR;
         CGFloat navigationHight = 44;
-        
+        titleString    = title;
         viewController = controller;
         
         UIImageView* backArrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(Adaptive(13), Adaptive(20)+(navigationHight - Adaptive(16.5)) / 2, Adaptive(9.75), Adaptive(16.5))];
@@ -52,7 +53,11 @@
 - (void)backButton
 {
     
+    if ([titleString isEqualToString:@"我的订单"]) {
+         [viewController.navigationController popToRootViewControllerAnimated:YES];
+    } else {
+         [viewController.navigationController popViewControllerAnimated:YES];
+    }
    
-    [viewController.navigationController popViewControllerAnimated:YES];
 }
 @end

@@ -2556,9 +2556,9 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2590,8 +2590,8 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PROVISIONING_PROFILE = "1aeb81bf-d144-4d65-b795-282d4ac74c89";
-				"PROVISIONING_PROFILE[sdk=*]" = "1aeb81bf-d144-4d65-b795-282d4ac74c89";
+				PROVISIONING_PROFILE = "ce421a60-41e2-4acd-8fa4-4a57c076b288";
+				"PROVISIONING_PROFILE[sdk=*]" = "ce421a60-41e2-4acd-8fa4-4a57c076b288";
 				SDKROOT = iphoneos;
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "$(SRCROOT)/Third_files/[JPush]";
 			};
@@ -2614,8 +2614,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2638,7 +2638,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PROVISIONING_PROFILE = "1aeb81bf-d144-4d65-b795-282d4ac74c89";
+				PROVISIONING_PROFILE = "ce421a60-41e2-4acd-8fa4-4a57c076b288";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2649,8 +2649,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -2709,8 +2709,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.guodong.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1aeb81bf-d144-4d65-b795-282d4ac74c89";
-				"PROVISIONING_PROFILE[sdk=*]" = "1aeb81bf-d144-4d65-b795-282d4ac74c89";
+				PROVISIONING_PROFILE = "ce421a60-41e2-4acd-8fa4-4a57c076b288";
+				"PROVISIONING_PROFILE[sdk=*]" = "ce421a60-41e2-4acd-8fa4-4a57c076b288";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -2720,8 +2720,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bin Zhang (V7GV47DN5L)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Guodong(Beijing) Network Technology Co., Ltd. (W3F8ZLM4DL)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -2775,7 +2775,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.guodong.user;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1aeb81bf-d144-4d65-b795-282d4ac74c89";
+				PROVISIONING_PROFILE = "ce421a60-41e2-4acd-8fa4-4a57c076b288";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;

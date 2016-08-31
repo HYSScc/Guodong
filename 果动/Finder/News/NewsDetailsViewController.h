@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-
+#import "ContentModel.h"
 @interface NewsDetailsViewController : UIViewController
 
 @property (nonatomic,retain) NSString       *talk_id;
+@property (nonatomic,retain) ContentModel   *contentModel;
+
 
 + (instancetype)sharedViewControllerManager;
 - (void)removeNewssss:(NSString *)talk_id user_id:(NSString *)user_id;

@@ -32,7 +32,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(makeJuan) name:@"makeJuan" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notMakeJuan) name:@"notMakeJuan" object:nil];
         balance = ban;
-        
+        _ishave = @"0";
         self.frame     = frame;
         viewController = controller;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tongzhi:) name:@"price" object:nil];

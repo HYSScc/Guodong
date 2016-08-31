@@ -266,6 +266,14 @@
     [self.navigationController pushViewController:detailsView animated:YES];
     
 }
+- (void)pushNewsDetailsViewWithModel:(ContentModel *)content {
+    
+    NewsDetailsViewController *detailsView = [NewsDetailsViewController new];
+    detailsView.contentModel = content;
+    [self.navigationController pushViewController:detailsView animated:YES];
+    
+}
+
 
 - (void)pushWebViewWithName:(NSString *)content_id title:(NSString *)title {
     

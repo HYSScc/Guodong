@@ -10,7 +10,9 @@
 #import "PayTableViewCell.h"
 #import "PayModel.h"
 #import "payView.h"
+#import "AppDelegate.h"
 #import "PersonViewController.h"
+#import "OrderViewController.h"
 @interface PayViewController ()<UITableViewDelegate,UITableViewDataSource>
 
 @end
@@ -41,13 +43,19 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushPersonView) name:@"pushPersonView" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushRechargeVC) name:@"pushRechargeVC" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushOrderView) name:@"pushOrderView" object:nil];
     
 }
-
+- (void)pushOrderView {
+    
+    
+    [self.navigationController pushViewController:[OrderViewController new] animated:YES];
+    
+}
 - (void)pushPersonView {
     
    
-    [self.navigationController pushViewController:[PersonViewController new] animated:YES];
+   [self.navigationController pushViewController:[OrderViewController new] animated:YES];
     
 }
 

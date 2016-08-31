@@ -357,6 +357,7 @@
     FinderViewController *finder = [FinderViewController sharedViewControllerManager];
     ContentModel *contentModel = _contentArray[indexPath.row];
     [finder pushNewsDetailsViewWithindex:[contentModel.tail_id integerValue]];
+   
 }
 
 //返回这个UICollectionView是否可以被选择
