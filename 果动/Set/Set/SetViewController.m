@@ -161,6 +161,7 @@
         // 跳转的时候隐藏tabbar
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+          
         // 跳转之后显示tabbar back回来时tabbar正常显示
         self.hidesBottomBarWhenPushed = NO;
     }
@@ -178,7 +179,9 @@
                 [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
             }
             
-            NSLog(@"退出登录 cookies %@",cookies);
+            NSHTTPCookieStorage* sharedHTTPCookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+            NSArray* cookiesaaa = [sharedHTTPCookieStorage cookiesForURL:[NSURL URLWithString:BASEURL]];
+            NSLog(@"退出登录 cookies %@",cookiesaaa);
             
         }
         

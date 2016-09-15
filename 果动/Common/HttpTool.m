@@ -30,13 +30,7 @@
     // 设置请求类型
     [manager.requestSerializer setValue:@"application/json;version=V3" forHTTPHeaderField:@"Accept"];
     [manager.requestSerializer setValue:@"IOS" forHTTPHeaderField:@"PLATFORM"];
-    
-    
-   
-    
-        
-    
-    
+
     [manager POST:urlStr parameters:params constructingBodyWithBlock:^(id  _Nonnull formData) {
         // 拼接data到请求体，这个block的参数是遵守AFMultipartFormData协议的。
         
@@ -57,6 +51,9 @@
         
         // 请求成功，解析数据
         if (success) {
+            
+          
+            
             
             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
             
@@ -86,7 +83,7 @@
                     }
                     personVC.haveNews = [NSString stringWithFormat:@"%@",[[dic objectForKey:@"common"] objectForKey:@"has_message"]];
                     
-                    NSLog(@"哈大地方噶啥打法 %@",personVC.haveNews);
+                   
                 }
             }
             
@@ -138,8 +135,11 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         // 请求成功，解析数据
+        
+        
         if (success) {
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
+            
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers | NSJSONReadingMutableLeaves error:nil];
             
             success(dic);
             NSLog(@"rc存在  %@ %@", urlStr, dic);

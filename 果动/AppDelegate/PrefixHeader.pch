@@ -96,7 +96,6 @@ alpha:1]
 /**
  *   默认导入的库
  */
-#import "QiniuSDK.h"             // 七牛
 #import "AFNetworking.h"
 #import "UMMobClick/MobClick.h"
 #import "HttpTool.h"             // 自定义请求类

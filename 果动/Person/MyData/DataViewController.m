@@ -133,7 +133,8 @@
                                               NavigationBar_Height,
                                               viewWidth,
                                               viewHeight - NavigationBar_Height);
-    baseScrollView.contentSize = CGSizeMake(viewWidth, viewHeight * 2.1);
+    baseScrollView.contentSize     = CGSizeMake(viewWidth, viewHeight * 2.1);
+    baseScrollView.backgroundColor = BASECOLOR;
     [self.view addSubview:baseScrollView];
     
     
@@ -169,7 +170,7 @@
     UILabel *orangeLine = [UILabel new];
     orangeLine.frame    = CGRectMake(0,
                                      MaxTopTitleY + Adaptive(36.5),
-                                     Adaptive(128),
+                                     viewWidth,
                                      1);
     orangeLine.backgroundColor = ORANGECOLOR;
     [baseScrollView addSubview:orangeLine];
@@ -238,6 +239,7 @@
     _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(Adaptive(128), MaxTopTitleY + Adaptive(30) , viewWidth - Adaptive(141), viewHeight*2.1) collectionViewLayout:flowLayout];
     
     // _collectionView.pagingEnabled = YES;
+    _collectionView.backgroundColor = BASECOLOR;
     _collectionView.scrollEnabled = NO;
     _collectionView.delegate      = self;
     _collectionView.dataSource    = self;
@@ -297,7 +299,7 @@
                 // 移动bmiView的位置 && 改变比较结果
                 CGRect  BMIFrame   =  bmiView.frame;
                 BMIFrame.origin.x -= dataCell.bounds.size.width;
-                [self changeBMIViewWithFrame:BMIFrame title:fatDict[@"string"] compare:[fatDict[@"number"] intValue]];
+                [self changeBMIViewWithFrame:BMIFrame title:BMIDict[@"string"] compare:[BMIDict[@"number"] intValue]];
                 [[(UILabel *)[dataCell viewWithTag:106] text] length] != 0 ? [_collectionView addSubview:bmiView] :[bmiView removeFromSuperview];
                 
                 // 移动fatView的位置 && 改变比较结果
@@ -325,50 +327,52 @@
     }
     if (swipeGesture.direction == UISwipeGestureRecognizerDirectionLeft){
         // 左
-        
-        if (_row < dataArray.count-2) {
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:++_row inSection:0];
-            [UIView animateWithDuration:.3f animations:^{
-                
-                DataCollectionViewCell *dataCell = (DataCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPath];
-                
-                // 移动weightView的位置 && 改变比较结果
-                CGRect  weightFrame   =  weightView.frame;
-                weightFrame.origin.x += dataCell.bounds.size.width;
-                NSDictionary *BMIDict = [self calculateResultWithText:[(UILabel *)[dataCell viewWithTag:106] text] type:@"BMI"];
-                [self changeWeightViewWithFrame:weightFrame title:BMIDict[@"string"] compare:[BMIDict[@"number"] intValue]];
-                [[(UILabel *)[dataCell viewWithTag:106] text] length] != 0 ? [_collectionView addSubview:weightView] :[weightView removeFromSuperview];
-                
-                // 移动fatView的位置 && 改变比较结果
-                CGRect  fatFrame   =  fatView.frame;
-                fatFrame.origin.x += dataCell.bounds.size.width;
-                NSDictionary *fatDict = [self calculateResultWithText:[(UILabel *)[dataCell viewWithTag:105] text] type:@"FAT"];
-                [self changeFatViewWithFrame:fatFrame title:fatDict[@"string"] compare:[fatDict[@"number"] intValue]];
-               [[(UILabel *)[dataCell viewWithTag:105] text] length] != 0 ? [_collectionView addSubview:fatView] :[fatView removeFromSuperview];
-                
-                // 移动bmiView的位置 && 改变比较结果
-                CGRect  BMIFrame   =  bmiView.frame;
-                BMIFrame.origin.x += dataCell.bounds.size.width;
-                [self changeBMIViewWithFrame:BMIFrame title:BMIDict[@"string"] compare:[BMIDict[@"number"] intValue]];
-                [[(UILabel *)[dataCell viewWithTag:106] text] length] != 0 ? [_collectionView addSubview:bmiView] :[bmiView removeFromSuperview];
-                
-                // 移动ytblView的位置 && 改变比较结果
-                CGRect  ytblFrame   =  ytblView.frame;
-                ytblFrame.origin.x += dataCell.bounds.size.width;
-                NSDictionary *YTBLDict = [self calculateResultWithText:[(UILabel *)[dataCell viewWithTag:107] text] type:@"YTBL"];
-                [self changeYTBLViewWithFrame:ytblFrame title:YTBLDict[@"string"] compare:[YTBLDict[@"number"] intValue]];
-                [[(UILabel *)[dataCell viewWithTag:107] text] length] != 0 ? [_collectionView addSubview:ytblView] :[ytblView removeFromSuperview];
-                
-                
-                [_collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
-                // 滑动小球显示
-                CGRect ringFrame = ringImageView.frame;
-                ringFrame.origin.x = Adaptive(64);
-                ringImageView.frame = ringFrame;
-                
-                [self changeFontAndColorWithCell:dataCell  direction:@"left"];
-            }];
+        if (dataArray.count > 2) {
+            if (_row < dataArray.count-2) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:++_row inSection:0];
+                [UIView animateWithDuration:.3f animations:^{
+                    
+                    DataCollectionViewCell *dataCell = (DataCollectionViewCell *)[_collectionView cellForItemAtIndexPath:indexPath];
+                    
+                    // 移动weightView的位置 && 改变比较结果
+                    CGRect  weightFrame   =  weightView.frame;
+                    weightFrame.origin.x += dataCell.bounds.size.width;
+                    NSDictionary *BMIDict = [self calculateResultWithText:[(UILabel *)[dataCell viewWithTag:106] text] type:@"BMI"];
+                    [self changeWeightViewWithFrame:weightFrame title:BMIDict[@"string"] compare:[BMIDict[@"number"] intValue]];
+                    [[(UILabel *)[dataCell viewWithTag:106] text] length] != 0 ? [_collectionView addSubview:weightView] :[weightView removeFromSuperview];
+                    
+                    // 移动fatView的位置 && 改变比较结果
+                    CGRect  fatFrame   =  fatView.frame;
+                    fatFrame.origin.x += dataCell.bounds.size.width;
+                    NSDictionary *fatDict = [self calculateResultWithText:[(UILabel *)[dataCell viewWithTag:105] text] type:@"FAT"];
+                    [self changeFatViewWithFrame:fatFrame title:fatDict[@"string"] compare:[fatDict[@"number"] intValue]];
+                    [[(UILabel *)[dataCell viewWithTag:105] text] length] != 0 ? [_collectionView addSubview:fatView] :[fatView removeFromSuperview];
+                    
+                    // 移动bmiView的位置 && 改变比较结果
+                    CGRect  BMIFrame   =  bmiView.frame;
+                    BMIFrame.origin.x += dataCell.bounds.size.width;
+                    [self changeBMIViewWithFrame:BMIFrame title:BMIDict[@"string"] compare:[BMIDict[@"number"] intValue]];
+                    [[(UILabel *)[dataCell viewWithTag:106] text] length] != 0 ? [_collectionView addSubview:bmiView] :[bmiView removeFromSuperview];
+                    
+                    // 移动ytblView的位置 && 改变比较结果
+                    CGRect  ytblFrame   =  ytblView.frame;
+                    ytblFrame.origin.x += dataCell.bounds.size.width;
+                    NSDictionary *YTBLDict = [self calculateResultWithText:[(UILabel *)[dataCell viewWithTag:107] text] type:@"YTBL"];
+                    [self changeYTBLViewWithFrame:ytblFrame title:YTBLDict[@"string"] compare:[YTBLDict[@"number"] intValue]];
+                    [[(UILabel *)[dataCell viewWithTag:107] text] length] != 0 ? [_collectionView addSubview:ytblView] :[ytblView removeFromSuperview];
+                    
+                    
+                    [_collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+                    // 滑动小球显示
+                    CGRect ringFrame = ringImageView.frame;
+                    ringFrame.origin.x = Adaptive(64);
+                    ringImageView.frame = ringFrame;
+                    
+                    [self changeFontAndColorWithCell:dataCell  direction:@"left"];
+                }];
+            }
         }
+      
     }
 }
 
@@ -526,7 +530,7 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSLog(@"dataArray.count %lu",(unsigned long)dataArray.count);
-    return dataArray.count;
+    return dataArray.count ;
 }
 //定义展示section的个数
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -536,11 +540,15 @@
 //每个UICollectionViewCell的内容
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifier = @"UICollectionViewCell";
+    static NSString *identifier   = @"UICollectionViewCell";
     DataCollectionViewCell *cell  = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
-    MyDataModel *dataModel = dataArray[indexPath.row];
-    cell.dataModel = dataModel;
+   
+        MyDataModel *dataModel = dataArray[indexPath.row];
+        cell.dataModel = dataModel;
+
+    
+    
     
     // 当行数等于0并且没有创建weightView的时候创建 以后移动位置
     if (indexPath.row == 0 && weightView == nil) {

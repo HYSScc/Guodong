@@ -55,9 +55,9 @@
         [self addSubview:titleLabel];
         
         UILabel *gryLabel = [UILabel new];
-        gryLabel.frame    = CGRectMake(0,
+        gryLabel.frame    = CGRectMake(Adaptive(13),
                                        self.bounds.size.height - Adaptive(1),
-                                       self.bounds.size.width,
+                                       self.bounds.size.width - Adaptive(13),
                                        Adaptive(1));
         gryLabel.backgroundColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1];
         [self addSubview:gryLabel];

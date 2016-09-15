@@ -13,6 +13,7 @@
 #import "MoneyTableViewCell.h"
 #import "MoneyModel.h"
 #import "ClassViewController.h"
+#import "AppDelegate.h"
 @interface MoneyViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     UITextField *_textField;
@@ -57,10 +58,12 @@
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    //gdb3ef55
     if (buttonIndex == 1) {
         if (alertView.tag == 99) {
             // 兑换成功 跳转订课
-            [self.navigationController pushViewController:[ClassViewController new] animated:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES ];
+            
         }else {
             //未登录 跳转登录
             self.hidesBottomBarWhenPushed = YES;
@@ -275,6 +278,8 @@
 }
 
 - (void)exchangeButtonClick:(UIButton *)button {
+    
+    
     
     [_textField resignFirstResponder];
     NSString *url = [NSString stringWithFormat:@"%@api/?method=gdmoney.exchange&code=%@",BASEURL,_textField.text];
