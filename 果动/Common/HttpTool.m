@@ -170,15 +170,13 @@
         
         if (![cookie.value isEqualToString:@"0"] && [cookie.name isEqualToString:@"uid"]) {
             yesOrNo = YES;
-        } else {
-            yesOrNo = NO;
         }
        
     }
     
     
     
- //   NSLog(@"yesOrNO %d",yesOrNo);
+    NSLog(@"yesOrNO %d",yesOrNo);
     return yesOrNo;
     
 }
@@ -194,8 +192,6 @@
         
         if (![cookie.value isEqualToString:@"0"] && [cookie.name isEqualToString:@"uid"])  {
             value = cookie.value;
-        }else {
-            value = @"";
         }
     }
    
